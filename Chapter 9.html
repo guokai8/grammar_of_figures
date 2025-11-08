@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Chapter 9: Interactive and Dynamic Figures – The Complete Guide to Bash Errors: From Beginner to Expert</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Chapter 10.html" rel="next">
+<link href="./Chapter 8.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter 9.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Complete Guide to Bash Errors: From Beginner to Expert</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Grammar of Figures: The Art &amp; Science of Visualizing Data for Publications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><strong>Grammar of Figures: The Art and Science of Visualizing Data for Publication</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 1: Foundations of Visual Perception</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 9.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#when-to-use-interactive-vs.-static-figures" id="toc-when-to-use-interactive-vs.-static-figures" class="nav-link active" data-scroll-target="#when-to-use-interactive-vs.-static-figures"><span class="header-section-number">11.1</span> 9.1 When to Use Interactive vs.&nbsp;Static Figures</a>
+  <ul class="collapse">
+  <li><a href="#the-medium-determines-the-format" id="toc-the-medium-determines-the-format" class="nav-link" data-scroll-target="#the-medium-determines-the-format"><span class="header-section-number">11.1.1</span> The Medium Determines the Format</a></li>
+  <li><a href="#hybrid-approach-best-of-both-worlds" id="toc-hybrid-approach-best-of-both-worlds" class="nav-link" data-scroll-target="#hybrid-approach-best-of-both-worlds"><span class="header-section-number">11.1.2</span> Hybrid Approach: Best of Both Worlds</a></li>
+  </ul></li>
+  <li><a href="#tools-for-interactive-visualizations" id="toc-tools-for-interactive-visualizations" class="nav-link" data-scroll-target="#tools-for-interactive-visualizations"><span class="header-section-number">11.2</span> 9.2 Tools for Interactive Visualizations</a>
+  <ul class="collapse">
+  <li><a href="#python-plotly" id="toc-python-plotly" class="nav-link" data-scroll-target="#python-plotly"><span class="header-section-number">11.2.1</span> Python: Plotly</a></li>
+  <li><a href="#python-bokeh" id="toc-python-bokeh" class="nav-link" data-scroll-target="#python-bokeh"><span class="header-section-number">11.2.2</span> Python: Bokeh</a></li>
+  <li><a href="#r-plotly" id="toc-r-plotly" class="nav-link" data-scroll-target="#r-plotly"><span class="header-section-number">11.2.3</span> R: Plotly</a></li>
+  </ul></li>
+  <li><a href="#animation-for-time-series-data" id="toc-animation-for-time-series-data" class="nav-link" data-scroll-target="#animation-for-time-series-data"><span class="header-section-number">11.3</span> 9.3 Animation for Time-Series Data</a>
+  <ul class="collapse">
+  <li><a href="#when-animation-is-appropriate" id="toc-when-animation-is-appropriate" class="nav-link" data-scroll-target="#when-animation-is-appropriate"><span class="header-section-number">11.3.1</span> When Animation is Appropriate</a></li>
+  </ul></li>
+  <li><a href="#linked-plots-brushing-and-linking" id="toc-linked-plots-brushing-and-linking" class="nav-link" data-scroll-target="#linked-plots-brushing-and-linking"><span class="header-section-number">11.4</span> 9.4 Linked Plots (Brushing and Linking)</a>
+  <ul class="collapse">
+  <li><a href="#interactive-exploration-of-multi-dimensional-data" id="toc-interactive-exploration-of-multi-dimensional-data" class="nav-link" data-scroll-target="#interactive-exploration-of-multi-dimensional-data"><span class="header-section-number">11.4.1</span> Interactive Exploration of Multi-Dimensional Data</a></li>
+  </ul></li>
+  <li><a href="#interactive-figure-best-practices" id="toc-interactive-figure-best-practices" class="nav-link" data-scroll-target="#interactive-figure-best-practices"><span class="header-section-number">11.5</span> 9.5 Interactive Figure Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#accessibility-and-fallbacks" id="toc-accessibility-and-fallbacks" class="nav-link" data-scroll-target="#accessibility-and-fallbacks"><span class="header-section-number">11.5.1</span> Accessibility and Fallbacks</a></li>
+  <li><a href="#caption-requirements-for-interactive-figures" id="toc-caption-requirements-for-interactive-figures" class="nav-link" data-scroll-target="#caption-requirements-for-interactive-figures"><span class="header-section-number">11.5.2</span> Caption Requirements for Interactive Figures</a></li>
+  <li><a href="#file-size-considerations" id="toc-file-size-considerations" class="nav-link" data-scroll-target="#file-size-considerations"><span class="header-section-number">11.5.3</span> File Size Considerations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="when-to-use-interactive-vs.-static-figures" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="when-to-use-interactive-vs.-static-figures"><span class="header-section-number">11.1</span> 9.1 When to Use Interactive vs.&nbsp;Static Figures</h2>
+<section id="the-medium-determines-the-format" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="the-medium-determines-the-format"><span class="header-section-number">11.1.1</span> The Medium Determines the Format</h3>
+<p><strong>Static figures (print journals, PDFs):</strong></p>
+<pre><code>✓ Use when:
+- Final publication format is print or PDF
+- Readers need to reference specific values easily
+- Figure must work in grayscale
+- No web infrastructure for hosting
+
+Limitations:
+- Single fixed view
+- Limited data density
+- No exploration by reader</code></pre>
+<p><strong>Interactive figures (web, presentations, supplements):</strong></p>
+<pre><code>✓ Use when:
+- Hosting on journal website or personal site
+- Large datasets with multiple views
+- Time-series animations helpful
+- 3D structures need rotation
+- Zoom/pan would aid understanding
+
+Requirements:
+- HTML5/JavaScript support
+- Web hosting
+- Fallback static version for accessibility</code></pre>
+<hr>
+</section>
+<section id="hybrid-approach-best-of-both-worlds" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="hybrid-approach-best-of-both-worlds"><span class="header-section-number">11.1.2</span> Hybrid Approach: Best of Both Worlds</h3>
+<p><strong>Standard practice for modern publications:</strong></p>
+<pre><code>Main manuscript: Static figures (PDF-compatible)
+Supplementary materials: Interactive versions online
+
+Example workflow:
+1. Create interactive figure with Plotly/Bokeh
+2. Export high-quality static snapshot for manuscript
+3. Host interactive version on journal website
+4. Link static → interactive in caption:
+   "Interactive version available at [URL]"</code></pre>
+<hr>
+</section>
+</section>
+<section id="tools-for-interactive-visualizations" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="tools-for-interactive-visualizations"><span class="header-section-number">11.2</span> 9.2 Tools for Interactive Visualizations</h2>
+<section id="python-plotly" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="python-plotly"><span class="header-section-number">11.2.1</span> Python: Plotly</h3>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Easy syntax (similar to matplotlib)</li>
+<li>Exports to HTML (standalone, no server needed)</li>
+<li>Works in Jupyter notebooks</li>
+<li>Extensive chart types</li>
+</ul>
+<p><strong>Code Example (Python) - Interactive Scatter Plot with Plotly:</strong></p>
+<pre><code>import plotly.graph_objects as go
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate gene expression data
+n_genes = 500
+gene_names = [f'Gene_{i+1}' for i in range(n_genes)]
+
+# Three experimental groups
+groups = np.repeat(['Control', 'Treatment_A', 'Treatment_B'], n_genes // 3)
+groups = np.append(groups, ['Control'] * (n_genes - len(groups)))
+
+# Expression levels
+expression = np.random.lognormal(mean=5, sigma=2, size=n_genes)
+fold_change = np.where(groups == 'Control',
+                       np.random.normal(0, 0.5, n_genes),
+                       np.where(groups == 'Treatment_A',
+                               np.random.normal(1.5, 0.8, n_genes),
+                               np.random.normal(-1.2, 0.7, n_genes)))
+
+p_values = np.random.beta(0.5, 5, n_genes)
+
+# Create DataFrame
+df = pd.DataFrame({
+    'Gene': gene_names,
+    'Group': groups,
+    'Expression': expression,
+    'FoldChange': fold_change,
+    'PValue': p_values,
+    'Significant': p_values &lt; 0.05
+})
+
+# Create interactive scatter plot
+fig = go.Figure()
+
+# Add traces for each group
+for group in df['Group'].unique():
+    df_group = df[df['Group'] == group]
+
+    colors_map = {'Control': '#7F8C8D', 'Treatment_A': '#3498DB', 'Treatment_B': '#E74C3C'}
+
+    fig.add_trace(go.Scatter(
+        x=df_group['FoldChange'],
+        y=-np.log10(df_group['PValue']),
+        mode='markers',
+        name=group,
+        marker=dict(
+            size=8,
+            color=colors_map[group],
+            opacity=0.7,
+            line=dict(width=0.5, color='black')
+        ),
+        text=df_group['Gene'],  # Hover text
+        hovertemplate='&lt;b&gt;%{text}&lt;/b&gt;&lt;br&gt;' +
+                     'Fold Change: %{x:.2f}&lt;br&gt;' +
+                     'P-value: %{customdata:.4f}&lt;br&gt;' +
+                     '&lt;extra&gt;&lt;/extra&gt;',
+        customdata=df_group['PValue']
+    ))
+
+# Add threshold lines
+fig.add_hline(y=-np.log10(0.05), line_dash="dash", line_color="red",
+             annotation_text="p = 0.05", annotation_position="right")
+fig.add_vline(x=1, line_dash="dash", line_color="red")
+fig.add_vline(x=-1, line_dash="dash", line_color="red")
+
+# Layout
+fig.update_layout(
+    title=dict(
+        text='Interactive Volcano Plot: Hover to Explore Genes',
+        font=dict(size=16, family='Arial', color='black')
+    ),
+    xaxis=dict(
+        title='Log₂ Fold Change',
+        titlefont=dict(size=14, family='Arial', color='black'),
+        showgrid=True,
+        gridcolor='lightgray'
+    ),
+    yaxis=dict(
+        title='-Log₁₀ (P-value)',
+        titlefont=dict(size=14, family='Arial', color='black'),
+        showgrid=True,
+        gridcolor='lightgray'
+    ),
+    hovermode='closest',
+    plot_bgcolor='white',
+    width=900,
+    height=700,
+    legend=dict(
+        x=0.02,
+        y=0.98,
+        bgcolor='rgba(255,255,255,0.8)',
+        bordercolor='black',
+        borderwidth=1
+    )
+)
+
+# Save as interactive HTML
+fig.write_html('interactive_volcano_plot.html')
+
+# Also export static image for manuscript
+fig.write_image('static_volcano_plot.png', width=900, height=700, scale=2)  # High DPI
+
+print("✓ Interactive volcano plot created")
+print("  - HTML version: interactive_volcano_plot.html (open in browser)")
+print("  - Static PNG: static_volcano_plot.png (for manuscript)")</code></pre>
+<hr>
+</section>
+<section id="python-bokeh" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="python-bokeh"><span class="header-section-number">11.2.2</span> Python: Bokeh</h3>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Server-side applications possible</li>
+<li>Streaming data support</li>
+<li>Linked plots (brushing and linking)</li>
+<li>More control over interactivity</li>
+</ul>
+<p><strong>Code Example (Python) - Interactive Heatmap with Bokeh:</strong></p>
+<pre><code>from bokeh.plotting import figure, output_file, save
+from bokeh.models import HoverTool, ColorBar, LinearColorMapper
+from bokeh.palettes import RdBu11
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate gene expression matrix
+n_genes = 30
+n_samples = 12
+
+genes = [f'Gene_{i+1}' for i in range(n_genes)]
+samples = [f'Sample_{i+1}' for i in range(n_samples)]
+
+# Generate data with patterns
+data = np.random.randn(n_genes, n_samples)
+data[:10, :4] += 2  # Upregulated in first samples
+data[10:20, 4:8] -= 2  # Downregulated in middle samples
+
+# Flatten for Bokeh (requires long format)
+df_heatmap = pd.DataFrame({
+    'gene': np.repeat(genes, n_samples),
+    'sample': np.tile(samples, n_genes),
+    'expression': data.flatten()
+})
+
+# Create figure
+output_file('interactive_heatmap.html')
+
+# Color mapper
+mapper = LinearColorMapper(palette=RdBu11[::-1], low=-3, high=3)
+
+p = figure(
+    title="Interactive Gene Expression Heatmap (Hover for values)",
+    x_range=samples,
+    y_range=genes[::-1],  # Reverse to have Gene_1 at top
+    x_axis_location="above",
+    width=900,
+    height=700,
+    toolbar_location='right',
+    tools="pan,wheel_zoom,box_zoom,reset,save"
+)
+
+# Create rectangles for heatmap
+p.rect(x='sample', y='gene', width=1, height=1,
+      source=df_heatmap,
+      fill_color={'field': 'expression', 'transform': mapper},
+      line_color='white', line_width=0.5)
+
+# Add hover tool
+hover = HoverTool(tooltips=[
+    ('Gene', '@gene'),
+    ('Sample', '@sample'),
+    ('Expression', '@expression{0.00}')
+])
+p.add_tools(hover)
+
+# Color bar
+color_bar = ColorBar(color_mapper=mapper, width=15, location=(0, 0),
+                    title='Expression (Z-score)')
+p.add_layout(color_bar, 'right')
+
+# Styling
+p.axis.axis_line_color = None
+p.axis.major_tick_line_color = None
+p.axis.major_label_text_font_size = "8pt"
+p.axis.major_label_standoff = 0
+p.xaxis.major_label_orientation = 0.785  # 45 degrees
+
+save(p)
+
+print("✓ Interactive heatmap created: interactive_heatmap.html")
+print("  Features: Hover tooltips, pan, zoom, reset")</code></pre>
+<hr>
+</section>
+<section id="r-plotly" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="r-plotly"><span class="header-section-number">11.2.3</span> R: Plotly</h3>
+<p><strong>Code Example (R) - Interactive 3D PCA Plot:</strong></p>
+<pre><code>library(plotly)
+
+set.seed(42)
+
+# Simulate PCA data
+n_samples &lt;- 60
+group_size &lt;- 20
+
+pc1 &lt;- c(rnorm(group_size, -2, 1), rnorm(group_size, 0, 1), rnorm(group_size, 2, 1))
+pc2 &lt;- c(rnorm(group_size, 1, 1), rnorm(group_size, 0, 1), rnorm(group_size, -1, 1))
+pc3 &lt;- c(rnorm(group_size, 0, 0.5), rnorm(group_size, 1, 0.5), rnorm(group_size, -0.5, 0.5))
+
+groups &lt;- factor(rep(c('Control', 'Treatment A', 'Treatment B'), each = group_size))
+sample_names &lt;- paste0('Sample_', 1:n_samples)
+
+# Create 3D scatter plot
+fig &lt;- plot_ly(
+  x = ~pc1,
+  y = ~pc2,
+  z = ~pc3,
+  color = ~groups,
+  colors = c('Control' = '#7F8C8D', 'Treatment A' = '#3498DB', 'Treatment B' = '#E74C3C'),
+  type = 'scatter3d',
+  mode = 'markers',
+  marker = list(size = 8, line = list(color = 'black', width = 0.5)),
+  text = ~sample_names,
+  hovertemplate = paste('&lt;b&gt;%{text}&lt;/b&gt;&lt;br&gt;',
+                       'PC1: %{x:.2f}&lt;br&gt;',
+                       'PC2: %{y:.2f}&lt;br&gt;',
+                       'PC3: %{z:.2f}&lt;br&gt;',
+                       '&lt;extra&gt;&lt;/extra&gt;')
+) %&gt;%
+  layout(
+    title = list(text = 'Interactive 3D PCA Plot (Rotate to explore)',
+                font = list(size = 16, family = 'Arial')),
+    scene = list(
+      xaxis = list(title = 'PC1 (45.3% variance)', showgrid = TRUE),
+      yaxis = list(title = 'PC2 (18.7% variance)', showgrid = TRUE),
+      zaxis = list(title = 'PC3 (12.4% variance)', showgrid = TRUE),
+      camera = list(eye = list(x = 1.5, y = 1.5, z = 1.5))
+    ),
+    legend = list(x = 0.02, y = 0.98)
+  )
+
+# Save as HTML
+htmlwidgets::saveWidget(fig, 'interactive_3d_pca.html', selfcontained = TRUE)
+
+# Export static snapshot
+# Note: Requires webshot and PhantomJS or chromote
+# install.packages("webshot")
+# webshot::install_phantomjs()
+# webshot::webshot('interactive_3d_pca.html', 'static_3d_pca.png',
+#                 vwidth = 900, vheight = 700)
+
+cat("✓ Interactive 3D PCA plot created: interactive_3d_pca.html\n")
+cat("  Features: Rotate, zoom, pan, hover tooltips\n")</code></pre>
+<hr>
+</section>
+</section>
+<section id="animation-for-time-series-data" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="animation-for-time-series-data"><span class="header-section-number">11.3</span> 9.3 Animation for Time-Series Data</h2>
+<section id="when-animation-is-appropriate" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="when-animation-is-appropriate"><span class="header-section-number">11.3.1</span> When Animation is Appropriate</h3>
+<p><strong>Good use cases:</strong></p>
+<pre><code>✓ Temporal progression (time-lapse microscopy, disease spread)
+✓ Parameter sweeps (showing effect of varying one parameter)
+✓ Algorithmic processes (iterative optimization, simulation)
+✓ Spatial changes over time (geographic data)
+
+Requirements:
+- Clear temporal or sequential relationship
+- Animation adds insight (not just novelty)
+- Static alternatives available for print</code></pre>
+<p><strong>Bad use cases:</strong></p>
+<pre><code>❌ Data that requires precise value reading
+❌ Complex comparisons (hard to track while moving)
+❌ Accessibility (some readers cannot view animations)</code></pre>
+<p><strong>Code Example (Python) - Animated Time-Series:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate time-series data (e.g., cell count over time in different conditions)
+time_points = np.arange(0, 50, 0.5)  # 0 to 50 hours
+n_conditions = 3
+
+# Generate growth curves
+def growth_curve(time, growth_rate, initial_count=10):
+    return initial_count * np.exp(growth_rate * time / 10)
+
+conditions = ['Control', 'Treatment A', 'Treatment B']
+growth_rates = [0.5, 0.8, 0.3]  # Different growth rates
+colors = ['#7F8C8D', '#3498DB', '#E74C3C']
+
+# Add noise
+data = {}
+for cond, rate in zip(conditions, growth_rates):
+    counts = growth_curve(time_points, rate)
+    counts += np.random.randn(len(time_points)) * counts * 0.1  # 10% noise
+    data[cond] = counts
+
+# Create figure
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Initialize lines
+lines = []
+for cond, color in zip(conditions, colors):
+    line, = ax.plot([], [], 'o-', color=color, linewidth=3, markersize=6,
+                   label=cond, alpha=0.8)
+    lines.append(line)
+
+# Formatting
+ax.set_xlim(0, 50)
+ax.set_ylim(0, np.max([data[c] for c in conditions]) * 1.1)
+ax.set_xlabel('Time (hours)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Cell Count (×10³)', fontsize=12, fontweight='bold')
+ax.set_title('Animated Growth Curves: Bacterial Colony Growth',
+            fontsize=14, fontweight='bold')
+ax.legend(loc='upper left', frameon=True, fontsize=11)
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# Time annotation
+time_text = ax.text(0.98, 0.02, '', transform=ax.transAxes,
+                   fontsize=14, fontweight='bold', ha='right', va='bottom',
+                   bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Animation function
+def animate(frame):
+    # Update each line with data up to current frame
+    for line, cond in zip(lines, conditions):
+        line.set_data(time_points[:frame], data[cond][:frame])
+
+    # Update time text
+    time_text.set_text(f'Time: {time_points[frame-1]:.1f} h')
+
+    return lines + [time_text]
+
+# Create animation
+anim = animation.FuncAnimation(fig, animate, frames=len(time_points),
+                              interval=50, blit=True, repeat=True)
+
+# Save as GIF
+anim.save('animated_growth_curves.gif', writer='pillow', fps=20, dpi=150)
+
+# Save as MP4 (requires ffmpeg)
+# anim.save('animated_growth_curves.mp4', writer='ffmpeg', fps=20, dpi=150)
+
+plt.close()
+
+print("✓ Animated growth curves created")
+print("  - GIF: animated_growth_curves.gif (for web/presentations)")
+print("  - Note: For manuscripts, include static final frame as well")</code></pre>
+<hr>
+<p><strong>Code Example (R) - Animated Time-Series with gganimate:</strong></p>
+<pre><code>library(ggplot2)
+library(gganimate)
+library(gifski)  # For GIF rendering
+
+set.seed(42)
+
+# Simulate data
+time_points &lt;- seq(0, 50, by = 0.5)
+conditions &lt;- c('Control', 'Treatment A', 'Treatment B')
+growth_rates &lt;- c(0.5, 0.8, 0.3)
+
+# Generate growth curves
+data_list &lt;- lapply(1:length(conditions), function(i) {
+  cond &lt;- conditions[i]
+  rate &lt;- growth_rates[i]
+
+  counts &lt;- 10 * exp(rate * time_points / 10)
+  counts &lt;- counts + rnorm(length(counts), 0, counts * 0.1)
+
+  data.frame(
+    Time = time_points,
+    Condition = cond,
+    Count = counts
+  )
+})
+
+data_anim &lt;- do.call(rbind, data_list)
+
+# Color map
+colors &lt;- c('Control' = '#7F8C8D', 'Treatment A' = '#3498DB', 'Treatment B' = '#E74C3C')
+
+# Create animated plot
+p &lt;- ggplot(data_anim, aes(x = Time, y = Count, color = Condition)) +
+  geom_line(size = 2, alpha = 0.8) +
+  geom_point(size = 3, alpha = 0.8) +
+
+  scale_color_manual(values = colors) +
+
+  labs(x = 'Time (hours)',
+       y = 'Cell Count (×10³)',
+       title = 'Bacterial Colony Growth',
+       subtitle = 'Time: {frame_along} hours') +
+
+  theme_classic(base_size = 14) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 16, hjust = 0.5),
+    plot.subtitle = element_text(face = 'bold', size = 14, hjust = 0.5),
+    axis.title = element_text(face = 'bold', size = 12),
+    legend.position = c(0.15, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  ) +
+
+  # Animation
+  transition_reveal(Time)
+
+# Render animation
+anim_output &lt;- animate(p, nframes = 200, fps = 20, width = 800, height = 600,
+                      renderer = gifski_renderer('animated_growth_curves.gif'))
+
+cat("✓ Animated growth curves created: animated_growth_curves.gif\n")
+cat("  Frames: 200, FPS: 20\n")</code></pre>
+<hr>
+</section>
+</section>
+<section id="linked-plots-brushing-and-linking" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="linked-plots-brushing-and-linking"><span class="header-section-number">11.4</span> 9.4 Linked Plots (Brushing and Linking)</h2>
+<section id="interactive-exploration-of-multi-dimensional-data" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="interactive-exploration-of-multi-dimensional-data"><span class="header-section-number">11.4.1</span> Interactive Exploration of Multi-Dimensional Data</h3>
+<p><strong>Concept:</strong> Selecting data in one plot highlights corresponding points in other plots.</p>
+<p><strong>Use cases:</strong> - Exploring PCA + expression data simultaneously - Linking genotype to phenotype visualizations - Quality control dashboards</p>
+<p><strong>Code Example (Python) - Linked Scatter Plots with Bokeh:</strong></p>
+<pre><code>from bokeh.plotting import figure, output_file, save
+from bokeh.layouts import row
+from bokeh.models import ColumnDataSource
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate data
+n_samples = 200
+gene_a = np.random.randn(n_samples) * 10 + 50
+gene_b = 0.8 * gene_a + np.random.randn(n_samples) * 5
+gene_c = -0.6 * gene_a + np.random.randn(n_samples) * 7 + 40
+
+# Sample groups
+groups = np.random.choice(['Control', 'Treatment A', 'Treatment B'], n_samples)
+
+# Create DataFrame
+df = pd.DataFrame({
+    'GeneA': gene_a,
+    'GeneB': gene_b,
+    'GeneC': gene_c,
+    'Group': groups,
+    'Sample': [f'S{i+1}' for i in range(n_samples)]
+})
+
+# Bokeh requires ColumnDataSource for linked brushing
+source = ColumnDataSource(df)
+
+# Colors
+color_map = {'Control': '#7F8C8D', 'Treatment A': '#3498DB', 'Treatment B': '#E74C3C'}
+df['color'] = df['Group'].map(color_map)
+source.data['color'] = df['color']
+
+output_file('linked_scatter_plots.html')
+
+# Plot 1: Gene A vs Gene B
+p1 = figure(width=400, height=400, title="Gene A vs Gene B",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p1.circle('GeneA', 'GeneB', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Plot 2: Gene A vs Gene C
+p2 = figure(width=400, height=400, title="Gene A vs Gene C",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p2.circle('GeneA', 'GeneC', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Plot 3: Gene B vs Gene C
+p3 = figure(width=400, height=400, title="Gene B vs Gene C",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p3.circle('GeneB', 'GeneC', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Layout
+layout = row(p1, p2, p3)
+
+save(layout)
+
+print("✓ Linked scatter plots created: linked_scatter_plots.html")
+print("  Instructions: Use box/lasso select in one plot to highlight in others")</code></pre>
+<hr>
+</section>
+</section>
+<section id="interactive-figure-best-practices" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="interactive-figure-best-practices"><span class="header-section-number">11.5</span> 9.5 Interactive Figure Best Practices</h2>
+<section id="accessibility-and-fallbacks" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="accessibility-and-fallbacks"><span class="header-section-number">11.5.1</span> Accessibility and Fallbacks</h3>
+<p><strong>Critical principle:</strong> Interactive figures must have static alternatives.</p>
+<pre><code>Checklist for interactive figures:
+ Provide static version for print/PDF
+ Include alt text describing figure content
+ Ensure colorblind-safe palette (same as static rules)
+ Test on multiple browsers
+ Provide download option for underlying data
+ State software/library versions in Methods</code></pre>
+<hr>
+</section>
+<section id="caption-requirements-for-interactive-figures" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="caption-requirements-for-interactive-figures"><span class="header-section-number">11.5.2</span> Caption Requirements for Interactive Figures</h3>
+<pre><code>Enhanced caption for interactive version:
+
+"Figure 3. Interactive volcano plot of differential gene expression.
+(Interactive version available at: https://doi.org/XX.XXXX/supplementary)
+
+Instructions:
+- Hover over points to view gene names and statistics
+- Click legend to show/hide groups
+- Drag to pan, scroll to zoom
+- Double-click to reset view
+
+Static version shows final state. Full gene list available in Table S1."</code></pre>
+<hr>
+</section>
+<section id="file-size-considerations" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="file-size-considerations"><span class="header-section-number">11.5.3</span> File Size Considerations</h3>
+<p><strong>Interactive HTML files can be large:</strong></p>
+<pre><code>Optimization strategies:
+1. Downsample dense data (e.g., 10,000 points max for scatter)
+2. Use WebGL rendering for &gt;1000 points (Plotly: scatter plot_ly(..., type='scattergl'))
+3. Separate data from HTML (load JSON externally)
+4. Compress HTML files (gzip)
+5. Use CDN for libraries (don't embed full library in each file)
+
+Target: &lt;10 MB per figure for reasonable load times</code></pre>
+<hr>
+<p><strong>End of Chapter 9: Interactive and Dynamic Figures</strong></p>
+<p><strong>Summary: Static vs.&nbsp;Interactive Decision Matrix</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Static (Print/PDF)</th>
+<th>Interactive (Web)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Universality</strong></td>
+<td>✓ Works everywhere</td>
+<td>Requires browser</td>
+</tr>
+<tr class="even">
+<td><strong>Precision</strong></td>
+<td>✓ Exact value reading</td>
+<td>May require hover</td>
+</tr>
+<tr class="odd">
+<td><strong>Accessibility</strong></td>
+<td>✓ Screen readers work well</td>
+<td>Needs extra care</td>
+</tr>
+<tr class="even">
+<td><strong>Data density</strong></td>
+<td>Limited by page size</td>
+<td>Can show more with zoom</td>
+</tr>
+<tr class="odd">
+<td><strong>Exploration</strong></td>
+<td>Fixed view</td>
+<td>Multiple views/filters</td>
+</tr>
+<tr class="even">
+<td><strong>File size</strong></td>
+<td>Small (&lt;10 MB)</td>
+<td>Can be large (&gt;50 MB)</td>
+</tr>
+<tr class="odd">
+<td><strong>Best for</strong></td>
+<td>Publications, reports</td>
+<td>Supplements, dashboards</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hybrid workflow (recommended):</strong> 1. Create interactive version first (full data) 2. Export static snapshot for manuscript 3. Host interactive version online 4. Link in caption: “Interactive version: [URL]”</p>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Chapter 8.html" class="pagination-link" aria-label="Chapter 8: Specialized Field Visualizations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Chapter 10.html" class="pagination-link" aria-label="Chapter 10: Figure Troubleshooting Guide">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

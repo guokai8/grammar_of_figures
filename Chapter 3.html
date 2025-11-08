@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Chapter 3: Typography, Annotation &amp; Labels – The Complete Guide to Bash Errors: From Beginner to Expert</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Chapter 4.html" rel="next">
+<link href="./Chapter 2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter 3.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Complete Guide to Bash Errors: From Beginner to Expert</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Grammar of Figures: The Art &amp; Science of Visualizing Data for Publications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><strong>Grammar of Figures: The Art and Science of Visualizing Data for Publication</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 1: Foundations of Visual Perception</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-functional-role-of-text-in-scientific-figures" id="toc-the-functional-role-of-text-in-scientific-figures" class="nav-link active" data-scroll-target="#the-functional-role-of-text-in-scientific-figures"><span class="header-section-number">5.1</span> 3.1 The Functional Role of Text in Scientific Figures</a>
+  <ul class="collapse">
+  <li><a href="#text-is-not-decorationits-data-infrastructure" id="toc-text-is-not-decorationits-data-infrastructure" class="nav-link" data-scroll-target="#text-is-not-decorationits-data-infrastructure"><span class="header-section-number">5.1.1</span> Text is Not Decoration—It’s Data Infrastructure</a></li>
+  <li><a href="#the-hierarchy-of-text-importance" id="toc-the-hierarchy-of-text-importance" class="nav-link" data-scroll-target="#the-hierarchy-of-text-importance"><span class="header-section-number">5.1.2</span> The Hierarchy of Text Importance</a></li>
+  </ul></li>
+  <li><a href="#font-selection-for-scientific-figures" id="toc-font-selection-for-scientific-figures" class="nav-link" data-scroll-target="#font-selection-for-scientific-figures"><span class="header-section-number">5.2</span> 3.2 Font Selection for Scientific Figures</a>
+  <ul class="collapse">
+  <li><a href="#the-golden-rule-sans-serif-for-figures-serif-for-text" id="toc-the-golden-rule-sans-serif-for-figures-serif-for-text" class="nav-link" data-scroll-target="#the-golden-rule-sans-serif-for-figures-serif-for-text"><span class="header-section-number">5.2.1</span> The Golden Rule: Sans-Serif for Figures, Serif for Text</a></li>
+  </ul></li>
+  <li><a href="#axis-labels-units-and-clarity" id="toc-axis-labels-units-and-clarity" class="nav-link" data-scroll-target="#axis-labels-units-and-clarity"><span class="header-section-number">5.3</span> 3.3 Axis Labels: Units and Clarity</a>
+  <ul class="collapse">
+  <li><a href="#the-non-negotiable-rule-always-include-units" id="toc-the-non-negotiable-rule-always-include-units" class="nav-link" data-scroll-target="#the-non-negotiable-rule-always-include-units"><span class="header-section-number">5.3.1</span> The Non-Negotiable Rule: Always Include Units</a></li>
+  <li><a href="#special-cases-dimensionless-and-normalized-data" id="toc-special-cases-dimensionless-and-normalized-data" class="nav-link" data-scroll-target="#special-cases-dimensionless-and-normalized-data"><span class="header-section-number">5.3.2</span> Special Cases: Dimensionless and Normalized Data</a></li>
+  <li><a href="#logical-consistency-axes-must-match-data" id="toc-logical-consistency-axes-must-match-data" class="nav-link" data-scroll-target="#logical-consistency-axes-must-match-data"><span class="header-section-number">5.3.3</span> Logical Consistency: Axes Must Match Data</a></li>
+  </ul></li>
+  <li><a href="#panel-labels-and-multi-figure-organization" id="toc-panel-labels-and-multi-figure-organization" class="nav-link" data-scroll-target="#panel-labels-and-multi-figure-organization"><span class="header-section-number">5.4</span> 3.4 Panel Labels and Multi-Figure Organization</a>
+  <ul class="collapse">
+  <li><a href="#the-standard-convention-a-b-c-d" id="toc-the-standard-convention-a-b-c-d" class="nav-link" data-scroll-target="#the-standard-convention-a-b-c-d"><span class="header-section-number">5.4.1</span> The Standard Convention: A, B, C, D…</a></li>
+  <li><a href="#placement-options" id="toc-placement-options" class="nav-link" data-scroll-target="#placement-options"><span class="header-section-number">5.4.2</span> Placement Options</a></li>
+  <li><a href="#logical-panel-organization" id="toc-logical-panel-organization" class="nav-link" data-scroll-target="#logical-panel-organization"><span class="header-section-number">5.4.3</span> Logical Panel Organization</a></li>
+  </ul></li>
+  <li><a href="#statistical-annotations-significance-markers" id="toc-statistical-annotations-significance-markers" class="nav-link" data-scroll-target="#statistical-annotations-significance-markers"><span class="header-section-number">5.5</span> 3.5 Statistical Annotations: Significance Markers</a>
+  <ul class="collapse">
+  <li><a href="#the-standard-notation-system" id="toc-the-standard-notation-system" class="nav-link" data-scroll-target="#the-standard-notation-system"><span class="header-section-number">5.5.1</span> The Standard Notation System</a></li>
+  <li><a href="#proper-placement-and-formatting" id="toc-proper-placement-and-formatting" class="nav-link" data-scroll-target="#proper-placement-and-formatting"><span class="header-section-number">5.5.2</span> Proper Placement and Formatting</a></li>
+  <li><a href="#reporting-exact-p-values" id="toc-reporting-exact-p-values" class="nav-link" data-scroll-target="#reporting-exact-p-values"><span class="header-section-number">5.5.3</span> Reporting Exact P-Values</a></li>
+  </ul></li>
+  <li><a href="#direct-labeling-vs.-legends" id="toc-direct-labeling-vs.-legends" class="nav-link" data-scroll-target="#direct-labeling-vs.-legends"><span class="header-section-number">5.6</span> 3.6 Direct Labeling vs.&nbsp;Legends</a>
+  <ul class="collapse">
+  <li><a href="#the-usability-principle-minimize-eye-travel" id="toc-the-usability-principle-minimize-eye-travel" class="nav-link" data-scroll-target="#the-usability-principle-minimize-eye-travel"><span class="header-section-number">5.6.1</span> The Usability Principle: Minimize Eye Travel</a></li>
+  </ul></li>
+  <li><a href="#figure-captions-complete-but-concise" id="toc-figure-captions-complete-but-concise" class="nav-link" data-scroll-target="#figure-captions-complete-but-concise"><span class="header-section-number">5.7</span> 3.7 Figure Captions: Complete but Concise</a>
+  <ul class="collapse">
+  <li><a href="#the-essential-function-of-captions" id="toc-the-essential-function-of-captions" class="nav-link" data-scroll-target="#the-essential-function-of-captions"><span class="header-section-number">5.7.1</span> The Essential Function of Captions</a></li>
+  <li><a href="#the-standard-caption-structure" id="toc-the-standard-caption-structure" class="nav-link" data-scroll-target="#the-standard-caption-structure"><span class="header-section-number">5.7.2</span> The Standard Caption Structure</a></li>
+  <li><a href="#what-must-be-included" id="toc-what-must-be-included" class="nav-link" data-scroll-target="#what-must-be-included"><span class="header-section-number">5.7.3</span> What MUST Be Included</a></li>
+  <li><a href="#logical-caption-organization" id="toc-logical-caption-organization" class="nav-link" data-scroll-target="#logical-caption-organization"><span class="header-section-number">5.7.4</span> Logical Caption Organization</a></li>
+  <li><a href="#common-caption-mistakes" id="toc-common-caption-mistakes" class="nav-link" data-scroll-target="#common-caption-mistakes"><span class="header-section-number">5.7.5</span> Common Caption Mistakes</a></li>
+  <li><a href="#length-guidelines" id="toc-length-guidelines" class="nav-link" data-scroll-target="#length-guidelines"><span class="header-section-number">5.7.6</span> Length Guidelines</a></li>
+  <li><a href="#journal-specific-requirements" id="toc-journal-specific-requirements" class="nav-link" data-scroll-target="#journal-specific-requirements"><span class="header-section-number">5.7.7</span> Journal-Specific Requirements</a></li>
+  </ul></li>
+  <li><a href="#common-typography-mistakes-and-how-to-avoid-them" id="toc-common-typography-mistakes-and-how-to-avoid-them" class="nav-link" data-scroll-target="#common-typography-mistakes-and-how-to-avoid-them"><span class="header-section-number">5.8</span> 3.8 Common Typography Mistakes and How to Avoid Them</a>
+  <ul class="collapse">
+  <li><a href="#mistake-1-inconsistent-font-sizing" id="toc-mistake-1-inconsistent-font-sizing" class="nav-link" data-scroll-target="#mistake-1-inconsistent-font-sizing"><span class="header-section-number">5.8.1</span> Mistake 1: Inconsistent Font Sizing</a></li>
+  <li><a href="#mistake-2-poor-contrast-low-readability" id="toc-mistake-2-poor-contrast-low-readability" class="nav-link" data-scroll-target="#mistake-2-poor-contrast-low-readability"><span class="header-section-number">5.8.2</span> Mistake 2: Poor Contrast (Low Readability)</a></li>
+  <li><a href="#mistake-3-overlapping-text" id="toc-mistake-3-overlapping-text" class="nav-link" data-scroll-target="#mistake-3-overlapping-text"><span class="header-section-number">5.8.3</span> Mistake 3: Overlapping Text</a></li>
+  <li><a href="#mistake-4-unclear-axis-notation" id="toc-mistake-4-unclear-axis-notation" class="nav-link" data-scroll-target="#mistake-4-unclear-axis-notation"><span class="header-section-number">5.8.4</span> Mistake 4: Unclear Axis Notation</a></li>
+  <li><a href="#mistake-5-ambiguous-legends" id="toc-mistake-5-ambiguous-legends" class="nav-link" data-scroll-target="#mistake-5-ambiguous-legends"><span class="header-section-number">5.8.5</span> Mistake 5: Ambiguous Legends</a></li>
+  <li><a href="#typography-checklist-before-submission" id="toc-typography-checklist-before-submission" class="nav-link" data-scroll-target="#typography-checklist-before-submission"><span class="header-section-number">5.8.6</span> Typography Checklist Before Submission</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-functional-role-of-text-in-scientific-figures" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-functional-role-of-text-in-scientific-figures"><span class="header-section-number">5.1</span> 3.1 The Functional Role of Text in Scientific Figures</h2>
+<section id="text-is-not-decorationits-data-infrastructure" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="text-is-not-decorationits-data-infrastructure"><span class="header-section-number">5.1.1</span> Text is Not Decoration—It’s Data Infrastructure</h3>
+<p>In scientific figures, <strong>every text element serves a specific functional purpose</strong>. Unlike artistic or marketing graphics where text might be styled for aesthetic impact, scientific text must prioritize:</p>
+<ol type="1">
+<li><strong>Clarity</strong>: Instant comprehension without ambiguity</li>
+<li><strong>Hierarchy</strong>: Guide reader to information in logical order</li>
+<li><strong>Precision</strong>: Accurate communication of units, values, and relationships</li>
+<li><strong>Accessibility</strong>: Readable across viewing conditions (screen, print, projection)</li>
+<li><strong>Consistency</strong>: Predictable patterns reduce cognitive load</li>
+</ol>
+<p><strong>Text Elements in a Complete Figure:</strong></p>
+<pre><code>Essential text components:
+├─ Title/Caption (what is being shown)
+├─ Axis labels (what dimensions represent)
+├─ Axis tick labels (scale values)
+├─ Legend (what colors/symbols mean)
+├─ Data labels (optional: direct value annotation)
+├─ Statistical annotations (significance markers, p-values)
+└─ Panel labels (A, B, C for multi-panel figures)</code></pre>
+<hr>
+</section>
+<section id="the-hierarchy-of-text-importance" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="the-hierarchy-of-text-importance"><span class="header-section-number">5.1.2</span> The Hierarchy of Text Importance</h3>
+<p><strong>Level 1: Critical (Must Read)</strong> - Axis labels with units - Legend identifying groups - Panel labels (A, B, C) → <strong>Bold, 10-12pt, high contrast</strong></p>
+<p><strong>Level 2: Important (Should Read)</strong> - Axis tick values - Figure title/caption number - Statistical significance markers → <strong>Regular weight, 9-10pt</strong></p>
+<p><strong>Level 3: Supporting (May Read)</strong> - Secondary annotations - Supplementary notes → <strong>Regular weight, 8-9pt, possibly lighter gray</strong></p>
+<p><strong>Code Example (Python) - Text Hierarchy:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+# Sample data
+np.random.seed(42)
+categories = ['Control', 'Treatment A', 'Treatment B']
+values = [25, 32, 28]
+errors = [3, 4, 3.5]
+
+fig, ax = plt.subplots(figsize=(8, 6))
+
+# Data
+bars = ax.bar(categories, values, color=['#7F8C8D', '#3498DB', '#E74C3C'],
+              edgecolor='black', linewidth=1.5, width=0.6)
+ax.errorbar(categories, values, yerr=errors, fmt='none',
+            ecolor='black', capsize=8, linewidth=2)
+
+# LEVEL 1: Critical - Axis labels (bold, large)
+ax.set_xlabel('Treatment Group', fontsize=12, fontweight='bold', color='#000000')
+ax.set_ylabel('Cell Viability (%)', fontsize=12, fontweight='bold', color='#000000')
+
+# LEVEL 2: Important - Tick labels (regular, medium)
+ax.tick_params(axis='both', labelsize=10, colors='#333333')
+
+# Add statistical annotation (Level 2)
+ax.text(1, 35, '***', ha='center', va='bottom',
+        fontsize=14, fontweight='bold', color='#000000')
+ax.plot([0, 1], [34, 34], 'k-', linewidth=1.5)
+
+# LEVEL 3: Supporting - Explanatory note (smaller, lighter)
+ax.text(0.02, 0.98, '*** p &lt; 0.001', transform=ax.transAxes,
+        fontsize=8, va='top', ha='left', color='#666666', style='italic')
+
+# Title (Level 1)
+ax.set_title('Effect of Treatment on Cell Viability',
+             fontsize=13, fontweight='bold', pad=15)
+
+ax.set_ylim(0, 45)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('text_hierarchy_example.png', dpi=300,
+            bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Text Hierarchy:</strong></p>
+<pre><code>library(ggplot2)
+
+# Data
+data &lt;- data.frame(
+  group = factor(c('Control', 'Treatment A', 'Treatment B'),
+                 levels = c('Control', 'Treatment A', 'Treatment B')),
+  value = c(25, 32, 28),
+  error = c(3, 4, 3.5)
+)
+
+colors &lt;- c('Control' = '#7F8C8D', 'Treatment A' = '#3498DB', 'Treatment B' = '#E74C3C')
+
+p &lt;- ggplot(data, aes(x = group, y = value, fill = group)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.6) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),
+                width = 0.25, size = 1) +
+  scale_fill_manual(values = colors) +
+
+  # LEVEL 1: Critical - Axis labels (bold, large)
+  labs(x = 'Treatment Group',
+       y = 'Cell Viability (%)',
+       title = 'Effect of Treatment on Cell Viability') +
+
+  # Statistical annotation (Level 2)
+  annotate('segment', x = 1, xend = 2, y = 34, yend = 34, size = 1) +
+  annotate('text', x = 1.5, y = 35, label = '***',
+           size = 5, fontface = 'bold') +
+
+  # LEVEL 3: Supporting note
+  annotate('text', x = 0.6, y = 43, label = '*** p &lt; 0.001',
+           size = 2.8, hjust = 0, fontface = 'italic', color = '#666666') +
+
+  ylim(0, 45) +
+
+  theme_classic(base_size = 11) +
+  theme(
+    # Level 1: Critical text
+    axis.title = element_text(face = 'bold', size = 12, color = '#000000'),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 13),
+
+    # Level 2: Important
+    axis.text = element_text(size = 10, color = '#333333'),
+
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+ggsave('text_hierarchy_example.png', p, width = 8, height = 6,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+</section>
+<section id="font-selection-for-scientific-figures" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="font-selection-for-scientific-figures"><span class="header-section-number">5.2</span> 3.2 Font Selection for Scientific Figures</h2>
+<section id="the-golden-rule-sans-serif-for-figures-serif-for-text" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-golden-rule-sans-serif-for-figures-serif-for-text"><span class="header-section-number">5.2.1</span> The Golden Rule: Sans-Serif for Figures, Serif for Text</h3>
+<p><strong>Why sans-serif for figures:</strong> - Better legibility at small sizes - Cleaner appearance when scaled/compressed - Works better with data (numbers, symbols) - Maintains clarity in digital and print</p>
+<p><strong>Recommended Font Families:</strong></p>
+<p><strong>Tier 1: Universally Available, Publication-Ready</strong></p>
+<pre><code>Arial: Clean, neutral, universally supported
+Helvetica: Professional standard (Mac default, expensive license)
+Calibri: Modern, readable (Microsoft Office default)</code></pre>
+<p><strong>Tier 2: Enhanced Readability</strong></p>
+<pre><code>Roboto: Google's open-source, excellent screen rendering
+Open Sans: Friendly, highly legible, free
+Source Sans Pro: Adobe's open-source, designed for UI</code></pre>
+<p><strong>Tier 3: Specialized Scientific</strong></p>
+<pre><code>CMU Sans (Computer Modern): Matches LaTeX documents
+DejaVu Sans: Unicode support, open-source
+Liberation Sans: Metric-compatible with Arial (open-source)</code></pre>
+<p><strong>Fonts to AVOID in Scientific Figures:</strong></p>
+<pre><code>❌ Comic Sans: Unprofessional
+❌ Papyrus: Decorative, illegible at small sizes
+❌ Brush Script: Artistic, not data-appropriate
+❌ Elaborate serifs (Times, Garamond) in graphs: Cluttered at small sizes</code></pre>
+<p><strong>Code Example (Python) - Font Consistency:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+# Set global font parameters (do this ONCE at start of script)
+plt.rcParams.update({
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],  # Fallback order
+    'font.size': 10,
+    'axes.labelsize': 11,
+    'axes.titlesize': 12,
+    'xtick.labelsize': 9,
+    'ytick.labelsize': 9,
+    'legend.fontsize': 9,
+    'figure.titlesize': 14
+})
+
+# Sample figure
+np.random.seed(42)
+x = np.linspace(0, 10, 50)
+y = 2*x + np.random.randn(50)*2
+
+fig, ax = plt.subplots(figsize=(7, 5))
+ax.scatter(x, y, color='#3498DB', s=50, alpha=0.7, edgecolors='black', linewidths=0.5)
+ax.plot(x, 2*x, 'r--', linewidth=2, label='y = 2x')
+
+ax.set_xlabel('Independent Variable (units)')
+ax.set_ylabel('Dependent Variable (units)')
+ax.set_title('Consistent Sans-Serif Typography')
+ax.legend(loc='upper left', frameon=True)
+ax.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('font_consistency.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+print("✓ Font family: Arial/Helvetica")
+print("✓ Consistent sizing across all text elements")</code></pre>
+<p><strong>Code Example (R) - Font Consistency:</strong></p>
+<pre><code>library(ggplot2)
+
+# Sample data
+set.seed(42)
+data &lt;- data.frame(
+  x = seq(0, 10, length.out = 50),
+  y = 2 * seq(0, 10, length.out = 50) + rnorm(50, 0, 2)
+)
+
+p &lt;- ggplot(data, aes(x = x, y = y)) +
+  geom_point(color = '#3498DB', size = 3, alpha = 0.7) +
+  geom_abline(intercept = 0, slope = 2, color = 'red', linetype = 'dashed', size = 1) +
+
+  labs(x = 'Independent Variable (units)',
+       y = 'Dependent Variable (units)',
+       title = 'Consistent Sans-Serif Typography') +
+
+  # Specify font family (will fall back to system default if not available)
+  theme_classic(base_size = 10, base_family = 'Arial') +
+  theme(
+    axis.title = element_text(size = 11, face = 'bold'),
+    plot.title = element_text(hjust = 0.5, size = 12, face = 'bold'),
+    axis.text = element_text(size = 9),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+ggsave('font_consistency.png', p, width = 7, height = 5,
+       dpi = 300, bg = 'white')
+
+cat("✓ Font family: Arial\n")
+cat("✓ Consistent sizing across all text elements\n")</code></pre>
+<hr>
+</section>
+</section>
+<section id="axis-labels-units-and-clarity" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="axis-labels-units-and-clarity"><span class="header-section-number">5.3</span> 3.3 Axis Labels: Units and Clarity</h2>
+<section id="the-non-negotiable-rule-always-include-units" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="the-non-negotiable-rule-always-include-units"><span class="header-section-number">5.3.1</span> The Non-Negotiable Rule: Always Include Units</h3>
+<p><strong>Format: “Variable Name (units)”</strong></p>
+<pre><code>✓ CORRECT:
+  "Temperature (°C)"
+  "Time (hours)"
+  "Concentration (μM)"
+  "Expression Level (FPKM)"
+  "Velocity (m/s)"
+
+❌ WRONG:
+  "Temperature" (What scale? Celsius? Kelvin? Fahrenheit?)
+  "Time" (Seconds? Minutes? Hours? Days?)
+  "Expression" (Arbitrary units? Fold change? FPKM?)</code></pre>
+</section>
+<section id="special-cases-dimensionless-and-normalized-data" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="special-cases-dimensionless-and-normalized-data"><span class="header-section-number">5.3.2</span> Special Cases: Dimensionless and Normalized Data</h3>
+<p><strong>When data has no units:</strong></p>
+<pre><code>Acceptable labels for dimensionless quantities:
+✓ "Correlation Coefficient (r)" → range -1 to 1, dimensionless
+✓ "Probability (p)" → range 0 to 1, dimensionless
+✓ "Fold Change (log₂)" → ratio, logarithm specified
+✓ "Normalized Expression (AU)" → AU = Arbitrary Units (acknowledges normalization)
+✓ "Relative Abundance (%)" → percentage is the unit</code></pre>
+<p><strong>When you’ve normalized but original units existed:</strong></p>
+<pre><code>✓ GOOD: "Normalized Expression (% of maximum)"
+✓ GOOD: "Fluorescence Intensity (AU)" + note in methods about normalization
+✓ ACCEPTABLE: "Response (normalized)" + full description in caption
+
+❌ BAD: "Expression" with no indication of normalization</code></pre>
+</section>
+<section id="logical-consistency-axes-must-match-data" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="logical-consistency-axes-must-match-data"><span class="header-section-number">5.3.3</span> Logical Consistency: Axes Must Match Data</h3>
+<p><strong>Common Error: Mismatch between label and actual data</strong></p>
+<pre><code>❌ INCONSISTENT:
+Label: "Temperature (°C)"
+Data range: 273-373
+→ These are Kelvin values!
+
+✓ FIX:
+Label: "Temperature (K)" OR convert data to Celsius
+
+---
+
+❌ INCONSISTENT:
+Label: "Time (hours)"
+Tick marks: 0, 60, 120, 180, 240
+→ These are minutes!
+
+✓ FIX:
+Label: "Time (minutes)" OR convert to hours (0, 1, 2, 3, 4)</code></pre>
+<hr>
+</section>
+</section>
+<section id="panel-labels-and-multi-figure-organization" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="panel-labels-and-multi-figure-organization"><span class="header-section-number">5.4</span> 3.4 Panel Labels and Multi-Figure Organization</h2>
+<section id="the-standard-convention-a-b-c-d" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="the-standard-convention-a-b-c-d"><span class="header-section-number">5.4.1</span> The Standard Convention: A, B, C, D…</h3>
+<p>When figures contain multiple panels, <strong>panel labels</strong> provide critical navigational structure that allows the main text to reference specific subfigures precisely.</p>
+<p><strong>Standard Format:</strong></p>
+<pre><code>✓ STANDARD: Bold, uppercase letters (A, B, C, D...)
+✓ Position: Top-left corner of each panel (outside or just inside)
+✓ Size: Slightly larger than axis labels (13-14pt when axis labels are 11pt)
+✓ Color: Black or very dark gray</code></pre>
+<p><strong>Why This Matters:</strong></p>
+<pre><code>In manuscript text:
+"Treatment A showed significant improvement (Figure 2B),
+while histological analysis revealed reduced inflammation (Figure 2C)."
+
+Without clear panel labels:
+"Treatment A showed improvement (see second panel in Figure 2?)"
+→ Ambiguous, unprofessional</code></pre>
+<hr>
+</section>
+<section id="placement-options" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="placement-options"><span class="header-section-number">5.4.2</span> Placement Options</h3>
+<p><strong>Option 1: Outside panel (most common in publications)</strong></p>
+<pre><code>Advantages:
+✓ Doesn't obscure data
+✓ Clear visual separation
+✓ Consistent position across panels
+
+Disadvantages:
+✗ Requires extra space in figure layout</code></pre>
+<p><strong>Option 2: Inside panel, top-left corner</strong></p>
+<pre><code>Advantages:
+✓ Space-efficient
+✓ Works well when panels have white space in corner
+
+Disadvantages:
+✗ Can obscure data if corner contains information
+✗ May need background box for visibility</code></pre>
+<p><strong>Code Example (Python) - Panel Labels:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# Sample data for each panel
+for idx, ax in enumerate(axes.flat):
+    # Different plot type for each panel
+    if idx == 0:
+        # Scatter plot
+        x = np.random.randn(50)
+        y = 2*x + np.random.randn(50)
+        ax.scatter(x, y, color='#3498DB', s=50, alpha=0.7, edgecolors='black', linewidths=0.5)
+        ax.set_xlabel('Variable X (units)', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Variable Y (units)', fontsize=11, fontweight='bold')
+        ax.set_title('Correlation Analysis', fontsize=12, fontweight='bold')
+
+    elif idx == 1:
+        # Bar chart
+        categories = ['Group 1', 'Group 2', 'Group 3']
+        values = [25, 32, 28]
+        ax.bar(categories, values, color=['#7F8C8D', '#3498DB', '#E74C3C'],
+              edgecolor='black', linewidth=1.5)
+        ax.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+        ax.set_title('Group Comparison', fontsize=12, fontweight='bold')
+
+    elif idx == 2:
+        # Line plot
+        time = np.linspace(0, 10, 50)
+        signal = np.sin(time) + np.random.randn(50)*0.1
+        ax.plot(time, signal, color='#27AE60', linewidth=2.5)
+        ax.set_xlabel('Time (s)', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Signal (mV)', fontsize=11, fontweight='bold')
+        ax.set_title('Temporal Dynamics', fontsize=12, fontweight='bold')
+
+    else:
+        # Heatmap
+        data = np.random.randn(10, 10)
+        im = ax.imshow(data, cmap='RdBu_r', aspect='auto')
+        ax.set_xlabel('Sample', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Gene', fontsize=11, fontweight='bold')
+        ax.set_title('Expression Pattern', fontsize=12, fontweight='bold')
+        plt.colorbar(im, ax=ax, fraction=0.046)
+
+    # PANEL LABEL: Outside, top-left
+    panel_label = chr(65 + idx)  # A, B, C, D
+    ax.text(-0.15, 1.05, panel_label,
+           transform=ax.transAxes,  # Coordinates relative to panel
+           fontsize=16, fontweight='bold',
+           va='top', ha='right',
+           color='black')
+
+    # Style
+    ax.grid(alpha=0.3)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig('panel_labels_example.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+
+print("✓ Panel labels: A, B, C, D (bold, outside panels)")</code></pre>
+<p><strong>Code Example (R) - Panel Labels:</strong></p>
+<pre><code>library(ggplot2)
+library(patchwork)
+
+set.seed(42)
+
+# Panel A: Scatter plot
+p_a &lt;- ggplot(data.frame(x = rnorm(50), y = 2*rnorm(50) + rnorm(50)),
+             aes(x = x, y = y)) +
+  geom_point(color = '#3498DB', size = 3, alpha = 0.7) +
+  labs(x = 'Variable X (units)', y = 'Variable Y (units)',
+       title = 'Correlation Analysis') +
+  theme_classic(base_size = 11) +
+  theme(
+    axis.title = element_text(face = 'bold', size = 11),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Panel B: Bar chart
+p_b &lt;- ggplot(data.frame(group = c('Group 1', 'Group 2', 'Group 3'),
+                        value = c(25, 32, 28)),
+             aes(x = group, y = value, fill = group)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1) +
+  scale_fill_manual(values = c('#7F8C8D', '#3498DB', '#E74C3C')) +
+  labs(y = 'Response (AU)', title = 'Group Comparison') +
+  theme_classic(base_size = 11) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold', size = 11),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Panel C: Line plot
+p_c &lt;- ggplot(data.frame(time = seq(0, 10, length.out = 50),
+                        signal = sin(seq(0, 10, length.out = 50)) + rnorm(50, 0, 0.1)),
+             aes(x = time, y = signal)) +
+  geom_line(color = '#27AE60', size = 1.5) +
+  labs(x = 'Time (s)', y = 'Signal (mV)',
+       title = 'Temporal Dynamics') +
+  theme_classic(base_size = 11) +
+  theme(
+    axis.title = element_text(face = 'bold', size = 11),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Panel D: Heatmap
+library(reshape2)
+heatmap_data &lt;- melt(matrix(rnorm(100), 10, 10))
+p_d &lt;- ggplot(heatmap_data, aes(x = Var2, y = Var1, fill = value)) +
+  geom_tile() +
+  scale_fill_gradient2(low = '#2166AC', mid = 'white', high = '#B2182B',
+                       midpoint = 0, name = 'Value') +
+  labs(x = 'Sample', y = 'Gene', title = 'Expression Pattern') +
+  theme_minimal(base_size = 11) +
+  theme(
+    axis.title = element_text(face = 'bold', size = 11),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    panel.grid = element_blank()
+  )
+
+# Combine with panel labels
+combined &lt;- (p_a + p_b) / (p_c + p_d) +
+  plot_annotation(tag_levels = 'A') +  # Automatic A, B, C, D labeling
+  plot_layout(guides = 'collect') &amp;
+  theme(
+    plot.tag = element_text(size = 16, face = 'bold'),
+    plot.tag.position = c(0, 1)  # Top-left
+  )
+
+ggsave('panel_labels_example.png', combined, width = 12, height = 10,
+       dpi = 300, bg = 'white')
+
+cat("✓ Panel labels: A, B, C, D (bold, outside panels)\n")</code></pre>
+<hr>
+</section>
+<section id="logical-panel-organization" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="logical-panel-organization"><span class="header-section-number">5.4.3</span> Logical Panel Organization</h3>
+<p><strong>Principle: Arrange panels to support narrative flow</strong></p>
+<p><strong>Reading Order Conventions:</strong></p>
+<pre><code>Western convention (most journals):
+└─ Left-to-right, top-to-bottom (like text)
+   A  B
+   C  D
+
+Some journals accept:
+└─ Top-to-bottom, left-to-right (column-wise)
+   A  C
+   B  D
+
+✓ State clearly in caption if non-standard order</code></pre>
+<p><strong>Logical Grouping Strategies:</strong></p>
+<p><strong>Strategy 1: Temporal Progression</strong></p>
+<pre><code>Panel A: Baseline (time 0)
+Panel B: Early response (6 hours)
+Panel C: Late response (24 hours)
+Panel D: Recovery (48 hours)
+
+→ Left-to-right naturally represents time flow</code></pre>
+<p><strong>Strategy 2: Methodological Hierarchy</strong></p>
+<pre><code>Panel A: Raw data (microscopy image)
+Panel B: Processed data (segmented/quantified)
+Panel C: Summary statistics (bar chart)
+Panel D: Model fitting (correlation plot)
+
+→ Top-to-bottom represents analysis pipeline</code></pre>
+<p><strong>Strategy 3: Comparative Structure</strong></p>
+<pre><code>      Control    Treatment
+A, B: [Image]    [Image]
+C, D: [Quant]    [Quant]
+
+→ Columns = conditions, Rows = data types
+→ Facilitates direct comparison</code></pre>
+<hr>
+</section>
+</section>
+<section id="statistical-annotations-significance-markers" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="statistical-annotations-significance-markers"><span class="header-section-number">5.5</span> 3.5 Statistical Annotations: Significance Markers</h2>
+<section id="the-standard-notation-system" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="the-standard-notation-system"><span class="header-section-number">5.5.1</span> The Standard Notation System</h3>
+<p><strong>Asterisk convention (most common):</strong></p>
+<pre><code>*     p &lt; 0.05  (significant)
+**    p &lt; 0.01  (highly significant)
+***   p &lt; 0.001 (very highly significant)
+n.s.  p ≥ 0.05  (not significant)</code></pre>
+<p><strong>When to Use:</strong> - Quick visual indication of significance - Comparing multiple groups - Space constraints prevent detailed statistics</p>
+<p><strong>When NOT to Use:</strong> - Exact p-values are critical (report actual values) - Only one comparison (just state p-value) - Effect sizes matter more than p-values</p>
+<hr>
+</section>
+<section id="proper-placement-and-formatting" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="proper-placement-and-formatting"><span class="header-section-number">5.5.2</span> Proper Placement and Formatting</h3>
+<p><strong>Code Example (Python) - Statistical Annotations:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Sample data: comparing 4 groups
+groups = ['Control', 'Drug A', 'Drug B', 'Drug C']
+values = [25, 32, 28, 35]
+errors = [3, 3.5, 3, 4]
+
+# P-values for comparisons (vs. control)
+p_values = [None, 0.008, 0.15, 0.0003]  # None for control (no self-comparison)
+
+fig, ax = plt.subplots(figsize=(9, 6))
+
+# Colors: gray for control, blue/red for treatments
+colors = ['#7F8C8D', '#3498DB', '#3498DB', '#E74C3C']
+
+bars = ax.bar(groups, values, color=colors,
+              edgecolor='black', linewidth=1.5, width=0.6)
+ax.errorbar(groups, values, yerr=errors, fmt='none',
+           ecolor='black', capsize=8, linewidth=2)
+
+# Add significance annotations
+for i, (group, value, error, p) in enumerate(zip(groups, values, errors, p_values)):
+    if p is not None:
+        # Determine significance marker
+        if p &lt; 0.001:
+            marker = '***'
+        elif p &lt; 0.01:
+            marker = '**'
+        elif p &lt; 0.05:
+            marker = '*'
+        else:
+            marker = 'n.s.'
+
+        # Position above error bar
+        y_pos = value + error + 1.5
+
+        # Bracket connecting to control
+        bracket_y = value + error + 0.5
+        ax.plot([0, i], [bracket_y, bracket_y], 'k-', linewidth=1.2)
+        ax.plot([0, 0], [bracket_y - 0.3, bracket_y], 'k-', linewidth=1.2)
+        ax.plot([i, i], [bracket_y - 0.3, bracket_y], 'k-', linewidth=1.2)
+
+        # Marker
+        ax.text(i/2, y_pos, marker, ha='center', va='bottom',
+               fontsize=12, fontweight='bold')
+
+# Labels
+ax.set_ylabel('Response (AU)', fontsize=12, fontweight='bold')
+ax.set_title('Statistical Annotations: Comparison to Control',
+            fontsize=13, fontweight='bold', pad=15)
+
+# Legend for significance
+legend_text = '* p &lt; 0.05\n** p &lt; 0.01\n*** p &lt; 0.001\nn.s. = not significant'
+ax.text(0.98, 0.98, legend_text, transform=ax.transAxes,
+       fontsize=9, va='top', ha='right',
+       bbox=dict(boxstyle='round', facecolor='white', edgecolor='black'))
+
+ax.set_ylim(0, 50)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('statistical_annotations.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Statistical Annotations:</strong></p>
+<pre><code>library(ggplot2)
+library(ggsignif)
+
+# Data
+data &lt;- data.frame(
+  group = factor(c('Control', 'Drug A', 'Drug B', 'Drug C'),
+                levels = c('Control', 'Drug A', 'Drug B', 'Drug C')),
+  value = c(25, 32, 28, 35),
+  error = c(3, 3.5, 3, 4)
+)
+
+colors &lt;- c('Control' = '#7F8C8D', 'Drug A' = '#3498DB',
+            'Drug B' = '#3498DB', 'Drug C' = '#E74C3C')
+
+# P-values
+comparisons &lt;- list(
+  c('Control', 'Drug A'),
+  c('Control', 'Drug B'),
+  c('Control', 'Drug C')
+)
+
+p_values &lt;- c(0.008, 0.15, 0.0003)
+
+# Convert to annotation format
+annotations &lt;- sapply(p_values, function(p) {
+  if (p &lt; 0.001) '***'
+  else if (p &lt; 0.01) '**'
+  else if (p &lt; 0.05) '*'
+  else 'n.s.'
+})
+
+p &lt;- ggplot(data, aes(x = group, y = value, fill = group)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.6) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),
+               width = 0.25, size = 1) +
+  scale_fill_manual(values = colors) +
+
+  # Add significance brackets
+  geom_signif(comparisons = comparisons,
+              annotations = annotations,
+              y_position = c(36, 33, 40),
+              tip_length = 0.02,
+              textsize = 4,
+              fontface = 'bold') +
+
+  labs(y = 'Response (AU)',
+       title = 'Statistical Annotations: Comparison to Control') +
+
+  # Legend for markers
+  annotate('text', x = 3.7, y = 48,
+           label = '* p &lt; 0.05\n** p &lt; 0.01\n*** p &lt; 0.001\nn.s. = not significant',
+           hjust = 0, vjust = 1, size = 3,
+           lineheight = 0.9) +
+
+  ylim(0, 50) +
+
+  theme_classic(base_size = 12) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold', size = 12),
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 13),
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+ggsave('statistical_annotations.png', p, width = 9, height = 6,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="reporting-exact-p-values" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="reporting-exact-p-values"><span class="header-section-number">5.5.3</span> Reporting Exact P-Values</h3>
+<p><strong>When exact values matter:</strong></p>
+<pre><code>✓ GOOD: Include in caption or on figure
+"Drug A vs. Control: p = 0.008"
+"Drug C vs. Control: p = 0.0003"
+
+✓ BETTER: Combine visual markers with exact values
+Markers on figure (**)
+Caption: "** p = 0.008, *** p = 0.0003 (unpaired t-test)"</code></pre>
+<p><strong>Journal requirements vary:</strong> - Nature: Often prefers exact p-values in text/caption - Cell: Accepts asterisk notation with key - Science: Varies by article type</p>
+<p><strong>Check target journal guidelines!</strong></p>
+<hr>
+</section>
+</section>
+<section id="direct-labeling-vs.-legends" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="direct-labeling-vs.-legends"><span class="header-section-number">5.6</span> 3.6 Direct Labeling vs.&nbsp;Legends</h2>
+<section id="the-usability-principle-minimize-eye-travel" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="the-usability-principle-minimize-eye-travel"><span class="header-section-number">5.6.1</span> The Usability Principle: Minimize Eye Travel</h3>
+<p><strong>Legend disadvantages:</strong> - Requires back-and-forth eye movement - Matching colors to categories requires working memory - Easy to misinterpret if legend order doesn’t match visual prominence</p>
+<p><strong>Direct labeling advantages:</strong> - Instant association (no memory needed) - Faster interpretation - Better for colorblind readers (less reliance on color alone)</p>
+<p><strong>When to use each:</strong></p>
+<p><strong>Use DIRECT LABELS when:</strong></p>
+<pre><code>✓ Few categories (≤5)
+✓ Space available near data
+✓ Lines/points spatially separated
+✓ Presentation/poster context (distant viewing)</code></pre>
+<p><strong>Use LEGEND when:</strong></p>
+<pre><code>✓ Many categories (&gt;5)
+✓ Data elements overlap (no space for labels)
+✓ Consistency across multi-panel figure (shared legend)</code></pre>
+<p><strong>Code Example (Python) - Direct Labeling:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+time = np.linspace(0, 24, 100)
+
+# Three treatment groups
+data = {
+    'Control': 100 + np.cumsum(np.random.randn(100) * 2),
+    'Treatment A': 100 + np.cumsum(np.random.randn(100) * 2 + 0.3),
+    'Treatment B': 100 + np.cumsum(np.random.randn(100) * 2 + 0.6)
+}
+
+colors = {
+    'Control': '#7F8C8D',
+    'Treatment A': '#3498DB',
+    'Treatment B': '#E74C3C'
+}
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Panel A: Traditional legend
+ax1 = axes[0]
+for group, values in data.items():
+    ax1.plot(time, values, color=colors[group], linewidth=2.5, label=group)
+
+ax1.set_xlabel('Time (hours)', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Response (%)', fontsize=11, fontweight='bold')
+ax1.set_title('A. Traditional Legend\n(Requires eye travel)',
+             fontsize=12, fontweight='bold')
+ax1.legend(loc='upper left', frameon=True, fontsize=10)
+ax1.grid(alpha=0.3)
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# Panel B: Direct labeling
+ax2 = axes[1]
+for group, values in data.items():
+    ax2.plot(time, values, color=colors[group], linewidth=2.5)
+
+    # Place label at end of line
+    ax2.text(time[-1] + 0.5, values[-1], group,
+            color=colors[group], fontsize=10, fontweight='bold',
+            va='center', ha='left')
+
+ax2.set_xlabel('Time (hours)', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Response (%)', fontsize=11, fontweight='bold')
+ax2.set_title('B. Direct Labeling\n(Instant association)',
+             fontsize=12, fontweight='bold')
+ax2.grid(alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+ax2.set_xlim(0, 27)  # Extra space for labels
+
+plt.tight_layout()
+plt.savefig('direct_labeling_vs_legend.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Direct Labeling:</strong></p>
+<pre><code>library(ggplot2)
+library(dplyr)
+library(patchwork)
+library(directlabels)
+
+set.seed(42)
+time &lt;- seq(0, 24, length.out = 100)
+
+data &lt;- data.frame(
+  time = rep(time, 3),
+  response = c(
+    100 + cumsum(rnorm(100, 0, 2)),
+    100 + cumsum(rnorm(100, 0.3, 2)),
+    100 + cumsum(rnorm(100, 0.6, 2))
+  ),
+  group = rep(c('Control', 'Treatment A', 'Treatment B'), each = 100)
+)
+
+colors &lt;- c('Control' = '#7F8C8D',
+            'Treatment A' = '#3498DB',
+            'Treatment B' = '#E74C3C')
+
+# Panel A: Traditional legend
+p_a &lt;- ggplot(data, aes(x = time, y = response, color = group)) +
+  geom_line(size = 1.5) +
+  scale_color_manual(values = colors) +
+  labs(x = 'Time (hours)', y = 'Response (%)',
+       title = 'A. Traditional Legend\n(Requires eye travel)',
+       color = NULL) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.2, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Panel B: Direct labeling
+p_b &lt;- ggplot(data, aes(x = time, y = response, color = group)) +
+  geom_line(size = 1.5) +
+  scale_color_manual(values = colors) +
+  geom_text(data = data %&gt;% group_by(group) %&gt;% slice_tail(n = 1),
+            aes(label = group, x = time + 1),
+            hjust = 0, fontface = 'bold', size = 3.5) +
+  labs(x = 'Time (hours)', y = 'Response (%)',
+       title = 'B. Direct Labeling\n(Instant association)') +
+  xlim(0, 27) +  # Extra space for labels
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    axis.title = element_text(face = 'bold'),
+    legend.position = 'none',
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+combined &lt;- p_a | p_b
+ggsave('direct_labeling_vs_legend.png', combined, width = 14, height = 5,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+<p><strong>Summary of Chapter 3 so far:</strong></p>
+<p>✓ <strong>Text hierarchy</strong>: Critical (bold, large) &gt; Important (regular) &gt; Supporting (small, light) ✓ <strong>Font choice</strong>: Sans-serif (Arial/Helvetica) for figures ✓ <strong>Axis labels</strong>: Always include units: “Variable (unit)” ✓ <strong>Panel labels</strong>: Bold A, B, C, D in top-left corners ✓ <strong>Statistical annotations</strong>: Asterisks with clear legend; exact p-values when needed ✓ <strong>Direct labeling</strong>: Preferred over legends when space allows</p>
+</section>
+</section>
+<section id="figure-captions-complete-but-concise" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="figure-captions-complete-but-concise"><span class="header-section-number">5.7</span> 3.7 Figure Captions: Complete but Concise</h2>
+<section id="the-essential-function-of-captions" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="the-essential-function-of-captions"><span class="header-section-number">5.7.1</span> The Essential Function of Captions</h3>
+<p>A well-written caption allows a figure to be <strong>self-contained</strong>—a reader should understand the key message without reading the full manuscript text. This is critical because:</p>
+<ol type="1">
+<li><strong>Readers scan figures first</strong> before committing to reading the full paper</li>
+<li><strong>Figures get reused</strong> in presentations, reviews, where full context isn’t available</li>
+<li><strong>Journal requirements</strong> mandate self-explanatory figures</li>
+<li><strong>Accessibility</strong> for readers who skip to results</li>
+</ol>
+<hr>
+</section>
+<section id="the-standard-caption-structure" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="the-standard-caption-structure"><span class="header-section-number">5.7.2</span> The Standard Caption Structure</h3>
+<p><strong>Template Format:</strong></p>
+<pre><code>[Figure Number]. [One-sentence summary]. [Detailed description].
+[Sample size/statistics]. [Significance indicators]. [Technical details].</code></pre>
+<p><strong>Example Anatomy:</strong></p>
+<pre><code>Figure 3. Treatment A reduces tumor volume in xenograft mice.
+(A) Representative H&amp;E staining of tumor sections from control and
+treatment groups at day 21 (scale bar: 100 μm). (B) Quantification
+of tumor volume over time (n=8 mice per group, mean ± SEM).
+(C) Kaplan-Meier survival curves showing improved survival in
+treatment group (log-rank test, ***p &lt; 0.001). All experiments
+performed in triplicate. Error bars: SEM. * p&lt;0.05, ** p&lt;0.01,
+*** p&lt;0.001 (two-way ANOVA with Tukey post-hoc).</code></pre>
+<p><strong>Breakdown:</strong></p>
+<pre><code>✓ Title sentence: "Treatment A reduces tumor volume..."
+  → States main finding clearly
+
+✓ Panel descriptions: "(A) Representative H&amp;E staining..."
+  → Maps to panel labels, describes content
+
+✓ Sample sizes: "n=8 mice per group"
+  → Essential for interpretation
+
+✓ Statistical methods: "two-way ANOVA with Tukey post-hoc"
+  → Allows reader to assess rigor
+
+✓ Technical specs: "scale bar: 100 μm"
+  → Critical for microscopy/imaging</code></pre>
+<hr>
+</section>
+<section id="what-must-be-included" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="what-must-be-included"><span class="header-section-number">5.7.3</span> What MUST Be Included</h3>
+<p><strong>Non-negotiable elements:</strong></p>
+<p><strong>1. Sample size (n)</strong></p>
+<pre><code>✓ "n=3 biological replicates"
+✓ "n=50 cells per condition from 3 independent experiments"
+✓ "n=15 patients per group"
+
+❌ Never omit sample size
+→ Reader cannot assess statistical power or reliability</code></pre>
+<p><strong>2. Error bar definition</strong></p>
+<pre><code>✓ "Error bars: SEM"
+✓ "Error bars: SD"
+✓ "Boxes: IQR, whiskers: 1.5×IQR"
+
+❌ "Error bars shown" (which type?)
+→ SEM vs SD dramatically affects interpretation</code></pre>
+<p><strong>3. Statistical test and significance threshold</strong></p>
+<pre><code>✓ "Unpaired t-test, *p&lt;0.05"
+✓ "One-way ANOVA with Dunnett's post-hoc, **p&lt;0.01"
+✓ "Mann-Whitney U test (non-parametric), p=0.003"
+
+❌ "Groups were significantly different" (what test? what p?)</code></pre>
+<p><strong>4. Scale information (for images)</strong></p>
+<pre><code>✓ "Scale bar: 50 μm"
+✓ "Field of view: 200×200 μm"
+✓ "All images same magnification (40×)"
+
+❌ No scale information on microscopy
+→ Renders images scientifically useless</code></pre>
+<hr>
+</section>
+<section id="logical-caption-organization" class="level3" data-number="5.7.4">
+<h3 data-number="5.7.4" class="anchored" data-anchor-id="logical-caption-organization"><span class="header-section-number">5.7.4</span> Logical Caption Organization</h3>
+<p><strong>For multi-panel figures, use consistent structure:</strong></p>
+<p><strong>Format A: Panel-by-panel description</strong></p>
+<pre><code>Figure 2. [Overall title].
+(A) [Panel A description with methods and n].
+(B) [Panel B description with methods and n].
+(C) [Panel C description with methods and n].
+[Shared statistical details]. [Abbreviations].</code></pre>
+<p><strong>Format B: Grouped description</strong></p>
+<pre><code>Figure 2. [Overall title].
+(A-C) [Common description for panels A-C].
+(D, E) [Related panels described together].
+[All statistics and methods]. [Abbreviations].</code></pre>
+<p><strong>Code Example Caption (for figure from section 3.4):</strong></p>
+<pre><code>Figure 2. Multi-modal analysis of treatment effects on cellular response.
+(A) Correlation between baseline marker X and response variable Y in
+control cells (n=50 cells, Pearson r=0.73, p&lt;0.001). (B) Quantification
+of cellular response across treatment groups (n=3 biological replicates,
+each with 200 cells per condition, mean ± SEM, one-way ANOVA with Tukey
+post-hoc, **p&lt;0.01 vs control). (C) Temporal dynamics of signal intensity
+following treatment application (n=4 independent experiments, mean ± SEM,
+sampling rate: 100 Hz). (D) Hierarchical clustering heatmap of gene
+expression changes (n=10 genes, 8 samples per condition, color scale:
+log₂ fold change, diverging blue-white-red). All experiments performed
+at 37°C in standard culture conditions. AU: arbitrary units.</code></pre>
+<p><strong>What this caption does well:</strong> - Every panel explicitly labeled - Sample sizes clear for each analysis - Statistical methods specified - Technical details included (sampling rate, temperature) - Abbreviations defined - Stands alone without main text</p>
+<hr>
+</section>
+<section id="common-caption-mistakes" class="level3" data-number="5.7.5">
+<h3 data-number="5.7.5" class="anchored" data-anchor-id="common-caption-mistakes"><span class="header-section-number">5.7.5</span> Common Caption Mistakes</h3>
+<p><strong>Mistake 1: Vague descriptions</strong></p>
+<pre><code>❌ "Expression levels are shown"
+✓ "qRT-PCR quantification of gene X expression normalized to β-actin
+   (n=4 biological replicates, mean ± SD, **p&lt;0.01, unpaired t-test)"</code></pre>
+<p><strong>Mistake 2: Missing critical methods</strong></p>
+<pre><code>❌ "Cells were stained and imaged"
+✓ "Cells were immunostained with anti-tubulin antibody (1:500, Abcam
+   ab11304) and imaged on confocal microscope (Zeiss LSM 880, 63×
+   objective, scale bar: 10 μm)"</code></pre>
+<p><strong>Mistake 3: Undefined abbreviations</strong></p>
+<pre><code>❌ "FPKM values shown in heatmap"
+✓ "FPKM (Fragments Per Kilobase Million) values shown in heatmap"
+
+Or define at first use:
+"Expression quantified as FPKM (Fragments Per Kilobase Million)"</code></pre>
+<p><strong>Mistake 4: No error bar definition</strong></p>
+<pre><code>❌ "Error bars represent variability"
+✓ "Error bars: standard error of the mean (SEM)"</code></pre>
+<p><strong>Mistake 5: Statistical significance without context</strong></p>
+<pre><code>❌ "***p&lt;0.001"
+✓ "***p&lt;0.001 by two-way ANOVA with Bonferroni correction"</code></pre>
+<hr>
+</section>
+<section id="length-guidelines" class="level3" data-number="5.7.6">
+<h3 data-number="5.7.6" class="anchored" data-anchor-id="length-guidelines"><span class="header-section-number">5.7.6</span> Length Guidelines</h3>
+<p><strong>Target length:</strong></p>
+<pre><code>Simple single-panel figure: 2-4 sentences
+Complex multi-panel figure: 6-10 sentences
+Avoid: &gt;15 sentences (break into multiple figures)</code></pre>
+<p><strong>Balance completeness with readability:</strong></p>
+<pre><code>Too short (incomplete):
+"Figure 1. Expression data. Error bars: SEM."
+→ Missing methods, n, statistics
+
+Too long (overwhelming):
+"Figure 1. We performed RNA-seq on samples collected at multiple
+timepoints using Illumina NextSeq with 75bp paired-end reads,
+which were then aligned to the reference genome using STAR aligner
+version 2.7.3a with default parameters except... [300 words]"
+→ Methods belong in Methods section, not caption
+
+Just right:
+"Figure 1. Temporal gene expression dynamics. RNA-seq quantification
+of differentially expressed genes (DESeq2, adjusted p&lt;0.05) across
+timepoints (n=3 biological replicates per timepoint). Heatmap colors:
+log₂ fold change vs. t=0. See Methods for sequencing details."
+→ Essential info + pointer to full methods</code></pre>
+<hr>
+</section>
+<section id="journal-specific-requirements" class="level3" data-number="5.7.7">
+<h3 data-number="5.7.7" class="anchored" data-anchor-id="journal-specific-requirements"><span class="header-section-number">5.7.7</span> Journal-Specific Requirements</h3>
+<p><strong>Check your target journal’s guidelines:</strong></p>
+<p><strong>Nature family:</strong></p>
+<pre><code>- Captions should be concise but complete
+- Define all abbreviations
+- Include statistical tests and n
+- Methods details belong in Methods, not captions</code></pre>
+<p><strong>Cell family:</strong></p>
+<pre><code>- Similar to Nature
+- Emphasize reproducibility info (n, replicates)
+- Related panels can share some description</code></pre>
+<p><strong>PLOS family:</strong></p>
+<pre><code>- Very detailed captions encouraged
+- Must be understandable without main text
+- Can include more methods details than Nature/Cell</code></pre>
+<p><strong>IEEE/ACM (computational):</strong></p>
+<pre><code>- Focus on algorithm/model details
+- Parameter settings in caption acceptable
+- Less emphasis on biological replicates</code></pre>
+<hr>
+</section>
+</section>
+<section id="common-typography-mistakes-and-how-to-avoid-them" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="common-typography-mistakes-and-how-to-avoid-them"><span class="header-section-number">5.8</span> 3.8 Common Typography Mistakes and How to Avoid Them</h2>
+<section id="mistake-1-inconsistent-font-sizing" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="mistake-1-inconsistent-font-sizing"><span class="header-section-number">5.8.1</span> Mistake 1: Inconsistent Font Sizing</h3>
+<p><strong>The Problem:</strong></p>
+<pre><code>❌ BAD EXAMPLE:
+- Axis labels: 11pt
+- Panel A title: 14pt
+- Panel B title: 12pt (inconsistent!)
+- Legend: 8pt in panel A, 10pt in panel B
+→ Looks unprofessional, distracts reader</code></pre>
+<p><strong>The Fix:</strong></p>
+<pre><code>✓ ESTABLISH HIERARCHY ONCE, APPLY EVERYWHERE:
+
+Font size scale:
+- Panel labels: 14pt bold
+- Titles: 12pt bold
+- Axis labels: 11pt bold
+- Tick labels: 9pt regular
+- Legends: 9pt regular
+- Annotations: 9pt regular/italic
+- Footnotes: 8pt regular
+
+Code implementation: Set rcParams globally (Python) or theme (R)</code></pre>
+<p><strong>Code Example (Python) - Consistent Sizing:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+
+# SET ONCE at beginning of script
+FONT_SIZES = {
+    'panel_label': 14,
+    'title': 12,
+    'axis_label': 11,
+    'tick_label': 9,
+    'legend': 9,
+    'annotation': 9
+}
+
+plt.rcParams.update({
+    'font.size': FONT_SIZES['tick_label'],
+    'axes.labelsize': FONT_SIZES['axis_label'],
+    'axes.titlesize': FONT_SIZES['title'],
+    'legend.fontsize': FONT_SIZES['legend'],
+    'xtick.labelsize': FONT_SIZES['tick_label'],
+    'ytick.labelsize': FONT_SIZES['tick_label']
+})
+
+# Now all figures use consistent sizing
+# Panel labels added manually with FONT_SIZES['panel_label']</code></pre>
+<p><strong>Code Example (R) - Consistent Sizing:</strong></p>
+<pre><code>library(ggplot2)
+
+# DEFINE ONCE
+FONT_SIZES &lt;- list(
+  panel_label = 14,
+  title = 12,
+  axis_label = 11,
+  tick_label = 9,
+  legend = 9,
+  annotation = 9
+)
+
+# Create reusable theme
+my_theme &lt;- theme_classic(base_size = FONT_SIZES$tick_label) +
+  theme(
+    axis.title = element_text(size = FONT_SIZES$axis_label, face = 'bold'),
+    plot.title = element_text(size = FONT_SIZES$title, face = 'bold', hjust = 0.5),
+    legend.text = element_text(size = FONT_SIZES$legend),
+    legend.title = element_text(size = FONT_SIZES$legend, face = 'bold'),
+    axis.text = element_text(size = FONT_SIZES$tick_label)
+  )
+
+# Apply to all plots
+p &lt;- ggplot(...) + ... + my_theme</code></pre>
+<hr>
+</section>
+<section id="mistake-2-poor-contrast-low-readability" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="mistake-2-poor-contrast-low-readability"><span class="header-section-number">5.8.2</span> Mistake 2: Poor Contrast (Low Readability)</h3>
+<p><strong>The Problem:</strong></p>
+<pre><code>❌ Light gray text on white background
+❌ Yellow text on white background (invisible)
+❌ Low-contrast colors for critical labels
+
+Result: Illegible when printed, invisible in bright rooms</code></pre>
+<p><strong>The Fix:</strong></p>
+<pre><code>✓ ALWAYS test contrast ratio:
+
+Minimum WCAG AA standard: 4.5:1 for normal text
+Better: 7:1 (AAA standard)
+
+Safe text colors on white background:
+✓ Black (#000000) - 21:1 contrast
+✓ Dark gray (#333333) - 12.6:1 contrast
+✓ Dark blue (#003366) - 10.4:1 contrast
+
+Unsafe:
+❌ Light gray (#CCCCCC) - 1.6:1 contrast
+❌ Pastel yellow (#FFFF99) - 1.2:1 contrast</code></pre>
+<p><strong>Testing tool:</strong></p>
+<pre><code>WebAIM Contrast Checker: webaim.org/resources/contrastchecker/
+Input: Background color + Text color
+Output: Pass/Fail for WCAG standards</code></pre>
+<hr>
+</section>
+<section id="mistake-3-overlapping-text" class="level3" data-number="5.8.3">
+<h3 data-number="5.8.3" class="anchored" data-anchor-id="mistake-3-overlapping-text"><span class="header-section-number">5.8.3</span> Mistake 3: Overlapping Text</h3>
+<p><strong>The Problem:</strong></p>
+<pre><code>❌ Axis labels collide with tick labels
+❌ Data labels overlap each other
+❌ Legend obscures data points</code></pre>
+<p><strong>The Fix:</strong></p>
+<pre><code>✓ Rotate text when necessary:
+- X-axis labels at 45° if long category names
+- Never rotate &gt;90° (unreadable)
+
+✓ Adjust label positions programmatically:
+- matplotlib: adjustText library for automatic label placement
+- R: ggrepel package for non-overlapping labels
+
+✓ Increase figure size if crowded
+✓ Consider splitting into multiple panels</code></pre>
+<p><strong>Code Example (Python) - Avoiding Overlap:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from adjustText import adjust_text  # pip install adjustText
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Generate scatter data
+x = np.random.rand(20) * 10
+y = np.random.rand(20) * 10
+labels = [f'Gene{i+1}' for i in range(20)]
+
+# BAD: Overlapping labels
+ax1 = axes[0]
+ax1.scatter(x, y, s=50, color='#3498DB', edgecolors='black', linewidths=0.5)
+for i, label in enumerate(labels):
+    ax1.text(x[i], y[i], label, fontsize=8, ha='center')
+
+ax1.set_title('❌ BAD: Overlapping Labels', fontsize=12, fontweight='bold', color='red')
+ax1.set_xlabel('Variable X', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Variable Y', fontsize=11, fontweight='bold')
+
+# GOOD: Adjusted labels (non-overlapping)
+ax2 = axes[1]
+ax2.scatter(x, y, s=50, color='#3498DB', edgecolors='black', linewidths=0.5)
+
+texts = []
+for i, label in enumerate(labels):
+    texts.append(ax2.text(x[i], y[i], label, fontsize=8, ha='center'))
+
+# Automatically adjust positions to avoid overlap
+adjust_text(texts, ax=ax2, arrowprops=dict(arrowstyle='-', color='gray', lw=0.5))
+
+ax2.set_title('✓ GOOD: Adjusted Labels', fontsize=12, fontweight='bold', color='green')
+ax2.set_xlabel('Variable X', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Variable Y', fontsize=11, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('overlapping_text_fix.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Avoiding Overlap:</strong></p>
+<pre><code>library(ggplot2)
+library(ggrepel)  # For non-overlapping labels
+
+set.seed(42)
+data &lt;- data.frame(
+  x = runif(20, 0, 10),
+  y = runif(20, 0, 10),
+  label = paste0('Gene', 1:20)
+)
+
+# BAD: Overlapping labels
+p_bad &lt;- ggplot(data, aes(x = x, y = y)) +
+  geom_point(color = '#3498DB', size = 3) +
+  geom_text(aes(label = label), size = 3, hjust = 0.5, vjust = 0.5) +
+  labs(title = '❌ BAD: Overlapping Labels',
+       x = 'Variable X', y = 'Variable Y') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 12),
+    axis.title = element_text(face = 'bold')
+  )
+
+# GOOD: Adjusted labels with ggrepel
+p_good &lt;- ggplot(data, aes(x = x, y = y)) +
+  geom_point(color = '#3498DB', size = 3) +
+  geom_text_repel(aes(label = label), size = 3,
+                  box.padding = 0.5, point.padding = 0.3,
+                  segment.color = 'gray50', segment.size = 0.3) +
+  labs(title = '✓ GOOD: Adjusted Labels',
+       x = 'Variable X', y = 'Variable Y') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 12),
+    axis.title = element_text(face = 'bold')
+  )
+
+library(patchwork)
+combined &lt;- p_bad | p_good
+ggsave('overlapping_text_fix.png', combined, width = 14, height = 5,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="mistake-4-unclear-axis-notation" class="level3" data-number="5.8.4">
+<h3 data-number="5.8.4" class="anchored" data-anchor-id="mistake-4-unclear-axis-notation"><span class="header-section-number">5.8.4</span> Mistake 4: Unclear Axis Notation</h3>
+<p><strong>The Problem:</strong></p>
+<pre><code>❌ Scientific notation without clear base:
+Axis label: "1e6" (is this 1×10⁶? 1e⁶?)
+
+❌ Confusing multiplication symbols:
+"Time (x10³ s)" — what does x mean here?
+
+❌ Units in tick labels instead of axis label:
+Y-axis ticks: "5 mg/mL", "10 mg/mL", "15 mg/mL"
+→ Redundant, cluttered</code></pre>
+<p><strong>The Fix:</strong></p>
+<pre><code>✓ USE PROPER SUPERSCRIPTS for exponents:
+"Concentration (×10⁶ cells/mL)" or "Concentration (10⁶ cells/mL)"
+
+✓ UNITS ON AXIS LABEL, not tick labels:
+Label: "Concentration (mg/mL)"
+Ticks: "5", "10", "15"
+
+✓ EXPLICIT scientific notation:
+Label: "Distance (10³ km)" meaning values are in thousands of km
+Tick showing "5" = 5000 km</code></pre>
+<p><strong>Code Example (Python) - Proper Axis Notation:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.ticker import FuncFormatter
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Sample data in large numbers
+x = np.linspace(0, 10, 50)
+y = np.random.rand(50) * 1e6  # Values in millions
+
+# BAD: Automatic scientific notation (unclear)
+ax1 = axes[0]
+ax1.plot(x, y, 'o-', color='#3498DB', linewidth=2, markersize=4)
+ax1.set_xlabel('Time (s)', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Cell Count', fontsize=11, fontweight='bold')  # No units!
+ax1.set_title('❌ BAD: Unclear Notation', fontsize=12, fontweight='bold', color='red')
+ax1.grid(alpha=0.3)
+
+# GOOD: Explicit scaling in label
+ax2 = axes[1]
+ax2.plot(x, y/1e6, 'o-', color='#27AE60', linewidth=2, markersize=4)  # Scale data
+ax2.set_xlabel('Time (s)', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Cell Count (×10⁶)', fontsize=11, fontweight='bold')  # Clear units
+ax2.set_title('✓ GOOD: Explicit Scaling', fontsize=12, fontweight='bold', color='green')
+ax2.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('axis_notation_fix.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Proper Axis Notation:</strong></p>
+<pre><code>library(ggplot2)
+library(scales)
+library(patchwork)
+
+set.seed(42)
+data &lt;- data.frame(
+  time = seq(0, 10, length.out = 50),
+  count = runif(50, 0, 1) * 1e6  # Values in millions
+)
+
+# BAD: Automatic scientific notation
+p_bad &lt;- ggplot(data, aes(x = time, y = count)) +
+  geom_line(color = '#3498DB', size = 1.2) +
+  geom_point(color = '#3498DB', size = 2) +
+  labs(x = 'Time (s)', y = 'Cell Count',  # No scale indicated!
+       title = '❌ BAD: Unclear Notation') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 12),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# GOOD: Explicit scaling
+p_good &lt;- ggplot(data, aes(x = time, y = count / 1e6)) +  # Scale data
+  geom_line(color = '#27AE60', size = 1.2) +
+  geom_point(color = '#27AE60', size = 2) +
+  labs(x = 'Time (s)', y = 'Cell Count (×10⁶)',  # Clear units
+       title = '✓ GOOD: Explicit Scaling') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 12),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+combined &lt;- p_bad | p_good
+ggsave('axis_notation_fix.png', combined, width = 12, height = 5,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="mistake-5-ambiguous-legends" class="level3" data-number="5.8.5">
+<h3 data-number="5.8.5" class="anchored" data-anchor-id="mistake-5-ambiguous-legends"><span class="header-section-number">5.8.5</span> Mistake 5: Ambiguous Legends</h3>
+<p><strong>The Problem:</strong></p>
+<pre><code>❌ Legend says: "Treatment"
+→ Which treatment? A, B, or C?
+
+❌ Legend uses symbols without explanation:
+"●" (what does circle mean?)
+"▲" (triangle significance?)
+
+❌ Legend order doesn't match visual prominence</code></pre>
+<p><strong>The Fix:</strong></p>
+<pre><code>✓ SPECIFIC labels:
+Not: "Treatment"
+But: "Treatment A (10 μM)", "Treatment B (50 μM)"
+
+✓ COMBINE symbols with text:
+"● Control (n=15)"
+"▲ Drug A (n=15)"
+"■ Drug B (n=15)"
+
+✓ ORDER logically:
+- Control first
+- Experimental conditions in ascending dose/time
+- Or match left-to-right/top-to-bottom order in figure</code></pre>
+<hr>
+</section>
+<section id="typography-checklist-before-submission" class="level3" data-number="5.8.6">
+<h3 data-number="5.8.6" class="anchored" data-anchor-id="typography-checklist-before-submission"><span class="header-section-number">5.8.6</span> Typography Checklist Before Submission</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>Font family consistent</strong> across all panels (Arial/Helvetica)</label></li>
+<li><label><input type="checkbox"><strong>Font sizes consistent</strong> within hierarchy (use template)</label></li>
+<li><label><input type="checkbox"><strong>High contrast</strong> (black or #333333 on white)</label></li>
+<li><label><input type="checkbox"><strong>No overlapping text</strong> (use adjustText/ggrepel if needed)</label></li>
+<li><label><input type="checkbox"><strong>Axis labels include units</strong> in format “Variable (unit)”</label></li>
+<li><label><input type="checkbox"><strong>Scientific notation explicit</strong> (×10⁶ not 1e6)</label></li>
+<li><label><input type="checkbox"><strong>Legends specific</strong> (“Drug A 10μM” not just “Drug A”)</label></li>
+<li><label><input type="checkbox"><strong>Panel labels bold</strong> (A, B, C…) and consistently placed</label></li>
+<li><label><input type="checkbox"><strong>Statistical annotations clear</strong> (<em>, <strong>, </strong></em> defined)</label></li>
+<li><label><input type="checkbox"><strong>Caption complete</strong>: n, statistics, error bar type, scale bars</label></li>
+</ul>
+<hr>
+<p><strong>End of Chapter 3: Typography, Annotation &amp; Labels</strong></p>
+<p><strong>Key Takeaways:</strong> - <strong>Text is functional infrastructure</strong>, not decoration - <strong>Hierarchy guides attention</strong>: Bold/large for critical, regular/small for supporting - <strong>Sans-serif fonts</strong> (Arial/Helvetica) for all figures - <strong>Axis labels must include units</strong>: “Variable (unit)” - <strong>Panel labels</strong> (A, B, C) enable precise referencing - <strong>Statistical annotations</strong> need clear notation and legend - <strong>Direct labeling &gt; Legends</strong> when space allows - <strong>Captions must be self-contained</strong>: n, methods, statistics, definitions - <strong>Consistency</strong> in sizing, spacing, and formatting signals professionalism</p>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Chapter 2.html" class="pagination-link" aria-label="Chapter 2: The Language of Color">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Chapter 4.html" class="pagination-link" aria-label="Chapter 4: Data Encoding &amp; Graph Selection">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
