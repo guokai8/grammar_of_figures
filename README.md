@@ -1,6 +1,3 @@
-Here’s a polished **README.md** you can drop into the repo. It mirrors your current files (`index.md`, `Chapter 0.md` … `Chapter 10.md`), adds quick-start workflows for Python/R, and includes licensing + citation.
-
-````markdown
 # Grammar of Figures
 **The Art & Science of Visualizing Data for Publications**
 
@@ -202,8 +199,5 @@ See `LICENSE` files (add if not present).
 
 Questions or suggestions? Open an issue or email **[guokai8@gmail.com](mailto:guokai8@gmail.com)**.
 
-```
 
-Want me to save this into your repo as `README.md` too?
-```
 
