@@ -1,0 +1,675 @@
+# Chapter 9: Interactive and Dynamic Figures
+
+## 9.1 When to Use Interactive vs. Static Figures
+
+### The Medium Determines the Format
+
+**Static figures (print journals, PDFs):**
+
+```
+✓ Use when:
+- Final publication format is print or PDF
+- Readers need to reference specific values easily
+- Figure must work in grayscale
+- No web infrastructure for hosting
+
+Limitations:
+- Single fixed view
+- Limited data density
+- No exploration by reader
+```
+
+**Interactive figures (web, presentations, supplements):**
+
+```
+✓ Use when:
+- Hosting on journal website or personal site
+- Large datasets with multiple views
+- Time-series animations helpful
+- 3D structures need rotation
+- Zoom/pan would aid understanding
+
+Requirements:
+- HTML5/JavaScript support
+- Web hosting
+- Fallback static version for accessibility
+```
+
+---
+
+### Hybrid Approach: Best of Both Worlds
+
+**Standard practice for modern publications:**
+
+```
+Main manuscript: Static figures (PDF-compatible)
+Supplementary materials: Interactive versions online
+
+Example workflow:
+1. Create interactive figure with Plotly/Bokeh
+2. Export high-quality static snapshot for manuscript
+3. Host interactive version on journal website
+4. Link static → interactive in caption:
+   "Interactive version available at [URL]"
+```
+
+---
+
+## 9.2 Tools for Interactive Visualizations
+
+### Python: Plotly
+
+**Advantages:**
+
+- Easy syntax (similar to matplotlib)
+- Exports to HTML (standalone, no server needed)
+- Works in Jupyter notebooks
+- Extensive chart types
+
+**Code Example (Python) - Interactive Scatter Plot with Plotly:**
+
+```
+import plotly.graph_objects as go
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate gene expression data
+n_genes = 500
+gene_names = [f'Gene_{i+1}' for i in range(n_genes)]
+
+# Three experimental groups
+groups = np.repeat(['Control', 'Treatment_A', 'Treatment_B'], n_genes // 3)
+groups = np.append(groups, ['Control'] * (n_genes - len(groups)))
+
+# Expression levels
+expression = np.random.lognormal(mean=5, sigma=2, size=n_genes)
+fold_change = np.where(groups == 'Control',
+                       np.random.normal(0, 0.5, n_genes),
+                       np.where(groups == 'Treatment_A',
+                               np.random.normal(1.5, 0.8, n_genes),
+                               np.random.normal(-1.2, 0.7, n_genes)))
+
+p_values = np.random.beta(0.5, 5, n_genes)
+
+# Create DataFrame
+df = pd.DataFrame({
+    'Gene': gene_names,
+    'Group': groups,
+    'Expression': expression,
+    'FoldChange': fold_change,
+    'PValue': p_values,
+    'Significant': p_values < 0.05
+})
+
+# Create interactive scatter plot
+fig = go.Figure()
+
+# Add traces for each group
+for group in df['Group'].unique():
+    df_group = df[df['Group'] == group]
+
+    colors_map = {'Control': '#7F8C8D', 'Treatment_A': '#3498DB', 'Treatment_B': '#E74C3C'}
+
+    fig.add_trace(go.Scatter(
+        x=df_group['FoldChange'],
+        y=-np.log10(df_group['PValue']),
+        mode='markers',
+        name=group,
+        marker=dict(
+            size=8,
+            color=colors_map[group],
+            opacity=0.7,
+            line=dict(width=0.5, color='black')
+        ),
+        text=df_group['Gene'],  # Hover text
+        hovertemplate='<b>%{text}</b><br>' +
+                     'Fold Change: %{x:.2f}<br>' +
+                     'P-value: %{customdata:.4f}<br>' +
+                     '<extra></extra>',
+        customdata=df_group['PValue']
+    ))
+
+# Add threshold lines
+fig.add_hline(y=-np.log10(0.05), line_dash="dash", line_color="red",
+             annotation_text="p = 0.05", annotation_position="right")
+fig.add_vline(x=1, line_dash="dash", line_color="red")
+fig.add_vline(x=-1, line_dash="dash", line_color="red")
+
+# Layout
+fig.update_layout(
+    title=dict(
+        text='Interactive Volcano Plot: Hover to Explore Genes',
+        font=dict(size=16, family='Arial', color='black')
+    ),
+    xaxis=dict(
+        title='Log₂ Fold Change',
+        titlefont=dict(size=14, family='Arial', color='black'),
+        showgrid=True,
+        gridcolor='lightgray'
+    ),
+    yaxis=dict(
+        title='-Log₁₀ (P-value)',
+        titlefont=dict(size=14, family='Arial', color='black'),
+        showgrid=True,
+        gridcolor='lightgray'
+    ),
+    hovermode='closest',
+    plot_bgcolor='white',
+    width=900,
+    height=700,
+    legend=dict(
+        x=0.02,
+        y=0.98,
+        bgcolor='rgba(255,255,255,0.8)',
+        bordercolor='black',
+        borderwidth=1
+    )
+)
+
+# Save as interactive HTML
+fig.write_html('interactive_volcano_plot.html')
+
+# Also export static image for manuscript
+fig.write_image('static_volcano_plot.png', width=900, height=700, scale=2)  # High DPI
+
+print("✓ Interactive volcano plot created")
+print("  - HTML version: interactive_volcano_plot.html (open in browser)")
+print("  - Static PNG: static_volcano_plot.png (for manuscript)")
+```
+
+---
+
+### Python: Bokeh
+
+**Advantages:**
+
+- Server-side applications possible
+- Streaming data support
+- Linked plots (brushing and linking)
+- More control over interactivity
+
+**Code Example (Python) - Interactive Heatmap with Bokeh:**
+
+```
+from bokeh.plotting import figure, output_file, save
+from bokeh.models import HoverTool, ColorBar, LinearColorMapper
+from bokeh.palettes import RdBu11
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate gene expression matrix
+n_genes = 30
+n_samples = 12
+
+genes = [f'Gene_{i+1}' for i in range(n_genes)]
+samples = [f'Sample_{i+1}' for i in range(n_samples)]
+
+# Generate data with patterns
+data = np.random.randn(n_genes, n_samples)
+data[:10, :4] += 2  # Upregulated in first samples
+data[10:20, 4:8] -= 2  # Downregulated in middle samples
+
+# Flatten for Bokeh (requires long format)
+df_heatmap = pd.DataFrame({
+    'gene': np.repeat(genes, n_samples),
+    'sample': np.tile(samples, n_genes),
+    'expression': data.flatten()
+})
+
+# Create figure
+output_file('interactive_heatmap.html')
+
+# Color mapper
+mapper = LinearColorMapper(palette=RdBu11[::-1], low=-3, high=3)
+
+p = figure(
+    title="Interactive Gene Expression Heatmap (Hover for values)",
+    x_range=samples,
+    y_range=genes[::-1],  # Reverse to have Gene_1 at top
+    x_axis_location="above",
+    width=900,
+    height=700,
+    toolbar_location='right',
+    tools="pan,wheel_zoom,box_zoom,reset,save"
+)
+
+# Create rectangles for heatmap
+p.rect(x='sample', y='gene', width=1, height=1,
+      source=df_heatmap,
+      fill_color={'field': 'expression', 'transform': mapper},
+      line_color='white', line_width=0.5)
+
+# Add hover tool
+hover = HoverTool(tooltips=[
+    ('Gene', '@gene'),
+    ('Sample', '@sample'),
+    ('Expression', '@expression{0.00}')
+])
+p.add_tools(hover)
+
+# Color bar
+color_bar = ColorBar(color_mapper=mapper, width=15, location=(0, 0),
+                    title='Expression (Z-score)')
+p.add_layout(color_bar, 'right')
+
+# Styling
+p.axis.axis_line_color = None
+p.axis.major_tick_line_color = None
+p.axis.major_label_text_font_size = "8pt"
+p.axis.major_label_standoff = 0
+p.xaxis.major_label_orientation = 0.785  # 45 degrees
+
+save(p)
+
+print("✓ Interactive heatmap created: interactive_heatmap.html")
+print("  Features: Hover tooltips, pan, zoom, reset")
+```
+
+---
+
+### R: Plotly
+
+**Code Example (R) - Interactive 3D PCA Plot:**
+
+```
+library(plotly)
+
+set.seed(42)
+
+# Simulate PCA data
+n_samples <- 60
+group_size <- 20
+
+pc1 <- c(rnorm(group_size, -2, 1), rnorm(group_size, 0, 1), rnorm(group_size, 2, 1))
+pc2 <- c(rnorm(group_size, 1, 1), rnorm(group_size, 0, 1), rnorm(group_size, -1, 1))
+pc3 <- c(rnorm(group_size, 0, 0.5), rnorm(group_size, 1, 0.5), rnorm(group_size, -0.5, 0.5))
+
+groups <- factor(rep(c('Control', 'Treatment A', 'Treatment B'), each = group_size))
+sample_names <- paste0('Sample_', 1:n_samples)
+
+# Create 3D scatter plot
+fig <- plot_ly(
+  x = ~pc1,
+  y = ~pc2,
+  z = ~pc3,
+  color = ~groups,
+  colors = c('Control' = '#7F8C8D', 'Treatment A' = '#3498DB', 'Treatment B' = '#E74C3C'),
+  type = 'scatter3d',
+  mode = 'markers',
+  marker = list(size = 8, line = list(color = 'black', width = 0.5)),
+  text = ~sample_names,
+  hovertemplate = paste('<b>%{text}</b><br>',
+                       'PC1: %{x:.2f}<br>',
+                       'PC2: %{y:.2f}<br>',
+                       'PC3: %{z:.2f}<br>',
+                       '<extra></extra>')
+) %>%
+  layout(
+    title = list(text = 'Interactive 3D PCA Plot (Rotate to explore)',
+                font = list(size = 16, family = 'Arial')),
+    scene = list(
+      xaxis = list(title = 'PC1 (45.3% variance)', showgrid = TRUE),
+      yaxis = list(title = 'PC2 (18.7% variance)', showgrid = TRUE),
+      zaxis = list(title = 'PC3 (12.4% variance)', showgrid = TRUE),
+      camera = list(eye = list(x = 1.5, y = 1.5, z = 1.5))
+    ),
+    legend = list(x = 0.02, y = 0.98)
+  )
+
+# Save as HTML
+htmlwidgets::saveWidget(fig, 'interactive_3d_pca.html', selfcontained = TRUE)
+
+# Export static snapshot
+# Note: Requires webshot and PhantomJS or chromote
+# install.packages("webshot")
+# webshot::install_phantomjs()
+# webshot::webshot('interactive_3d_pca.html', 'static_3d_pca.png',
+#                 vwidth = 900, vheight = 700)
+
+cat("✓ Interactive 3D PCA plot created: interactive_3d_pca.html\n")
+cat("  Features: Rotate, zoom, pan, hover tooltips\n")
+```
+
+---
+
+## 9.3 Animation for Time-Series Data
+
+### When Animation is Appropriate
+
+**Good use cases:**
+
+```
+✓ Temporal progression (time-lapse microscopy, disease spread)
+✓ Parameter sweeps (showing effect of varying one parameter)
+✓ Algorithmic processes (iterative optimization, simulation)
+✓ Spatial changes over time (geographic data)
+
+Requirements:
+- Clear temporal or sequential relationship
+- Animation adds insight (not just novelty)
+- Static alternatives available for print
+```
+
+**Bad use cases:**
+
+```
+❌ Data that requires precise value reading
+❌ Complex comparisons (hard to track while moving)
+❌ Accessibility (some readers cannot view animations)
+```
+
+**Code Example (Python) - Animated Time-Series:**
+
+```
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate time-series data (e.g., cell count over time in different conditions)
+time_points = np.arange(0, 50, 0.5)  # 0 to 50 hours
+n_conditions = 3
+
+# Generate growth curves
+def growth_curve(time, growth_rate, initial_count=10):
+    return initial_count * np.exp(growth_rate * time / 10)
+
+conditions = ['Control', 'Treatment A', 'Treatment B']
+growth_rates = [0.5, 0.8, 0.3]  # Different growth rates
+colors = ['#7F8C8D', '#3498DB', '#E74C3C']
+
+# Add noise
+data = {}
+for cond, rate in zip(conditions, growth_rates):
+    counts = growth_curve(time_points, rate)
+    counts += np.random.randn(len(time_points)) * counts * 0.1  # 10% noise
+    data[cond] = counts
+
+# Create figure
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Initialize lines
+lines = []
+for cond, color in zip(conditions, colors):
+    line, = ax.plot([], [], 'o-', color=color, linewidth=3, markersize=6,
+                   label=cond, alpha=0.8)
+    lines.append(line)
+
+# Formatting
+ax.set_xlim(0, 50)
+ax.set_ylim(0, np.max([data[c] for c in conditions]) * 1.1)
+ax.set_xlabel('Time (hours)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Cell Count (×10³)', fontsize=12, fontweight='bold')
+ax.set_title('Animated Growth Curves: Bacterial Colony Growth',
+            fontsize=14, fontweight='bold')
+ax.legend(loc='upper left', frameon=True, fontsize=11)
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# Time annotation
+time_text = ax.text(0.98, 0.02, '', transform=ax.transAxes,
+                   fontsize=14, fontweight='bold', ha='right', va='bottom',
+                   bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Animation function
+def animate(frame):
+    # Update each line with data up to current frame
+    for line, cond in zip(lines, conditions):
+        line.set_data(time_points[:frame], data[cond][:frame])
+
+    # Update time text
+    time_text.set_text(f'Time: {time_points[frame-1]:.1f} h')
+
+    return lines + [time_text]
+
+# Create animation
+anim = animation.FuncAnimation(fig, animate, frames=len(time_points),
+                              interval=50, blit=True, repeat=True)
+
+# Save as GIF
+anim.save('animated_growth_curves.gif', writer='pillow', fps=20, dpi=150)
+
+# Save as MP4 (requires ffmpeg)
+# anim.save('animated_growth_curves.mp4', writer='ffmpeg', fps=20, dpi=150)
+
+plt.close()
+
+print("✓ Animated growth curves created")
+print("  - GIF: animated_growth_curves.gif (for web/presentations)")
+print("  - Note: For manuscripts, include static final frame as well")
+```
+
+---
+
+**Code Example (R) - Animated Time-Series with gganimate:**
+
+```
+library(ggplot2)
+library(gganimate)
+library(gifski)  # For GIF rendering
+
+set.seed(42)
+
+# Simulate data
+time_points <- seq(0, 50, by = 0.5)
+conditions <- c('Control', 'Treatment A', 'Treatment B')
+growth_rates <- c(0.5, 0.8, 0.3)
+
+# Generate growth curves
+data_list <- lapply(1:length(conditions), function(i) {
+  cond <- conditions[i]
+  rate <- growth_rates[i]
+
+  counts <- 10 * exp(rate * time_points / 10)
+  counts <- counts + rnorm(length(counts), 0, counts * 0.1)
+
+  data.frame(
+    Time = time_points,
+    Condition = cond,
+    Count = counts
+  )
+})
+
+data_anim <- do.call(rbind, data_list)
+
+# Color map
+colors <- c('Control' = '#7F8C8D', 'Treatment A' = '#3498DB', 'Treatment B' = '#E74C3C')
+
+# Create animated plot
+p <- ggplot(data_anim, aes(x = Time, y = Count, color = Condition)) +
+  geom_line(size = 2, alpha = 0.8) +
+  geom_point(size = 3, alpha = 0.8) +
+
+  scale_color_manual(values = colors) +
+
+  labs(x = 'Time (hours)',
+       y = 'Cell Count (×10³)',
+       title = 'Bacterial Colony Growth',
+       subtitle = 'Time: {frame_along} hours') +
+
+  theme_classic(base_size = 14) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 16, hjust = 0.5),
+    plot.subtitle = element_text(face = 'bold', size = 14, hjust = 0.5),
+    axis.title = element_text(face = 'bold', size = 12),
+    legend.position = c(0.15, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  ) +
+
+  # Animation
+  transition_reveal(Time)
+
+# Render animation
+anim_output <- animate(p, nframes = 200, fps = 20, width = 800, height = 600,
+                      renderer = gifski_renderer('animated_growth_curves.gif'))
+
+cat("✓ Animated growth curves created: animated_growth_curves.gif\n")
+cat("  Frames: 200, FPS: 20\n")
+```
+
+---
+
+## 9.4 Linked Plots (Brushing and Linking)
+
+### Interactive Exploration of Multi-Dimensional Data
+
+**Concept:** Selecting data in one plot highlights corresponding points in other plots.
+
+**Use cases:**
+- Exploring PCA + expression data simultaneously
+- Linking genotype to phenotype visualizations
+- Quality control dashboards
+
+**Code Example (Python) - Linked Scatter Plots with Bokeh:**
+
+```
+from bokeh.plotting import figure, output_file, save
+from bokeh.layouts import row
+from bokeh.models import ColumnDataSource
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate data
+n_samples = 200
+gene_a = np.random.randn(n_samples) * 10 + 50
+gene_b = 0.8 * gene_a + np.random.randn(n_samples) * 5
+gene_c = -0.6 * gene_a + np.random.randn(n_samples) * 7 + 40
+
+# Sample groups
+groups = np.random.choice(['Control', 'Treatment A', 'Treatment B'], n_samples)
+
+# Create DataFrame
+df = pd.DataFrame({
+    'GeneA': gene_a,
+    'GeneB': gene_b,
+    'GeneC': gene_c,
+    'Group': groups,
+    'Sample': [f'S{i+1}' for i in range(n_samples)]
+})
+
+# Bokeh requires ColumnDataSource for linked brushing
+source = ColumnDataSource(df)
+
+# Colors
+color_map = {'Control': '#7F8C8D', 'Treatment A': '#3498DB', 'Treatment B': '#E74C3C'}
+df['color'] = df['Group'].map(color_map)
+source.data['color'] = df['color']
+
+output_file('linked_scatter_plots.html')
+
+# Plot 1: Gene A vs Gene B
+p1 = figure(width=400, height=400, title="Gene A vs Gene B",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p1.circle('GeneA', 'GeneB', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Plot 2: Gene A vs Gene C
+p2 = figure(width=400, height=400, title="Gene A vs Gene C",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p2.circle('GeneA', 'GeneC', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Plot 3: Gene B vs Gene C
+p3 = figure(width=400, height=400, title="Gene B vs Gene C",
+           tools="pan,wheel_zoom,box_select,lasso_select,reset")
+p3.circle('GeneB', 'GeneC', source=source, size=8, color='color',
+         alpha=0.6, selection_color='color', selection_alpha=1.0,
+         nonselection_alpha=0.1)
+
+# Layout
+layout = row(p1, p2, p3)
+
+save(layout)
+
+print("✓ Linked scatter plots created: linked_scatter_plots.html")
+print("  Instructions: Use box/lasso select in one plot to highlight in others")
+```
+
+---
+
+## 9.5 Interactive Figure Best Practices
+
+### Accessibility and Fallbacks
+
+**Critical principle:** Interactive figures must have static alternatives.
+
+```
+Checklist for interactive figures:
+ Provide static version for print/PDF
+ Include alt text describing figure content
+ Ensure colorblind-safe palette (same as static rules)
+ Test on multiple browsers
+ Provide download option for underlying data
+ State software/library versions in Methods
+```
+
+---
+
+### Caption Requirements for Interactive Figures
+
+```
+Enhanced caption for interactive version:
+
+"Figure 3. Interactive volcano plot of differential gene expression.
+(Interactive version available at: https://doi.org/XX.XXXX/supplementary)
+
+Instructions:
+- Hover over points to view gene names and statistics
+- Click legend to show/hide groups
+- Drag to pan, scroll to zoom
+- Double-click to reset view
+
+Static version shows final state. Full gene list available in Table S1."
+```
+
+---
+
+### File Size Considerations
+
+**Interactive HTML files can be large:**
+
+```
+Optimization strategies:
+1. Downsample dense data (e.g., 10,000 points max for scatter)
+2. Use WebGL rendering for >1000 points (Plotly: scatter plot_ly(..., type='scattergl'))
+3. Separate data from HTML (load JSON externally)
+4. Compress HTML files (gzip)
+5. Use CDN for libraries (don't embed full library in each file)
+
+Target: <10 MB per figure for reasonable load times
+```
+
+---
+
+**End of Chapter 9: Interactive and Dynamic Figures**
+
+**Summary: Static vs. Interactive Decision Matrix**
+
+| Feature | Static (Print/PDF) | Interactive (Web) |
+|---------|-------------------|------------------|
+| **Universality** | ✓ Works everywhere | Requires browser |
+| **Precision** | ✓ Exact value reading | May require hover |
+| **Accessibility** | ✓ Screen readers work well | Needs extra care |
+| **Data density** | Limited by page size | Can show more with zoom |
+| **Exploration** | Fixed view | Multiple views/filters |
+| **File size** | Small (<10 MB) | Can be large (>50 MB) |
+| **Best for** | Publications, reports | Supplements, dashboards |
+
+**Hybrid workflow (recommended):**
+1. Create interactive version first (full data)
+2. Export static snapshot for manuscript
+3. Host interactive version online
+4. Link in caption: "Interactive version: [URL]"
+
+-----

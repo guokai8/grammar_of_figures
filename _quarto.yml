@@ -1,0 +1,35 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "The Complete Guide to Bash Errors: From Beginner to Expert"
+  author: "Kai Guo"
+  chapters:
+    - index.md
+    - Chapter 0.md
+    - Chapter 1.md
+    - Chapter 2.md
+    - Chapter 3.md
+    - Chapter 4.md
+    - Chapter 5.md
+    - Chapter 6.md
+    - Chapter 7.md
+    - Chapter 8.md
+    - Chapter 9.md
+    - Chapter 10.md
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    code-fold: true
+    code-summary: "Show code"
+  pdf:
+    documentclass: book
+    toc: true
+    number-sections: true
+  epub:
+    toc: true
+
