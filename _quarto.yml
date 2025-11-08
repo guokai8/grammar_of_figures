@@ -23,7 +23,7 @@ format:
   html:
     theme: cosmo
     toc: true
-    number-sections: true
+    number-sections: false
     code-fold: true
     code-summary: "Show code"
 
