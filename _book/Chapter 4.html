@@ -1,0 +1,2268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Chapter 4: Data Encoding &amp; Graph Selection – The Complete Guide to Bash Errors: From Beginner to Expert</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Chapter 5.html" rel="next">
+<link href="./Chapter 3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter 4.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Complete Guide to Bash Errors: From Beginner to Expert</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Grammar of Figures: The Art &amp; Science of Visualizing Data for Publications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><strong>Grammar of Figures: The Art and Science of Visualizing Data for Publication</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 1: Foundations of Visual Perception</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-fundamental-principle-match-plot-type-to-data-structure" id="toc-the-fundamental-principle-match-plot-type-to-data-structure" class="nav-link active" data-scroll-target="#the-fundamental-principle-match-plot-type-to-data-structure"><span class="header-section-number">6.1</span> 4.1 The Fundamental Principle: Match Plot Type to Data Structure</a>
+  <ul class="collapse">
+  <li><a href="#why-graph-selection-matters" id="toc-why-graph-selection-matters" class="nav-link" data-scroll-target="#why-graph-selection-matters"><span class="header-section-number">6.1.1</span> Why Graph Selection Matters</a></li>
+  <li><a href="#the-data-plot-decision-tree" id="toc-the-data-plot-decision-tree" class="nav-link" data-scroll-target="#the-data-plot-decision-tree"><span class="header-section-number">6.1.2</span> The Data-Plot Decision Tree</a></li>
+  </ul></li>
+  <li><a href="#comparison-showing-differences-between-groups" id="toc-comparison-showing-differences-between-groups" class="nav-link" data-scroll-target="#comparison-showing-differences-between-groups"><span class="header-section-number">6.2</span> 4.2 Comparison: Showing Differences Between Groups</a>
+  <ul class="collapse">
+  <li><a href="#bar-charts-the-standard-for-categorical-comparisons" id="toc-bar-charts-the-standard-for-categorical-comparisons" class="nav-link" data-scroll-target="#bar-charts-the-standard-for-categorical-comparisons"><span class="header-section-number">6.2.1</span> Bar Charts: The Standard for Categorical Comparisons</a></li>
+  <li><a href="#box-plots-showing-full-distribution" id="toc-box-plots-showing-full-distribution" class="nav-link" data-scroll-target="#box-plots-showing-full-distribution"><span class="header-section-number">6.2.2</span> Box Plots: Showing Full Distribution</a></li>
+  <li><a href="#violin-plots-enhanced-distribution-visualization" id="toc-violin-plots-enhanced-distribution-visualization" class="nav-link" data-scroll-target="#violin-plots-enhanced-distribution-visualization"><span class="header-section-number">6.2.3</span> Violin Plots: Enhanced Distribution Visualization</a></li>
+  </ul></li>
+  <li><a href="#distribution-revealing-data-structure" id="toc-distribution-revealing-data-structure" class="nav-link" data-scroll-target="#distribution-revealing-data-structure"><span class="header-section-number">6.3</span> 4.3 Distribution: Revealing Data Structure</a>
+  <ul class="collapse">
+  <li><a href="#histograms-binning-continuous-data" id="toc-histograms-binning-continuous-data" class="nav-link" data-scroll-target="#histograms-binning-continuous-data"><span class="header-section-number">6.3.1</span> Histograms: Binning Continuous Data</a></li>
+  <li><a href="#density-plots-smooth-distribution-curves" id="toc-density-plots-smooth-distribution-curves" class="nav-link" data-scroll-target="#density-plots-smooth-distribution-curves"><span class="header-section-number">6.3.2</span> Density Plots: Smooth Distribution Curves</a></li>
+  </ul></li>
+  <li><a href="#relationships-scatter-plots-and-correlation" id="toc-relationships-scatter-plots-and-correlation" class="nav-link" data-scroll-target="#relationships-scatter-plots-and-correlation"><span class="header-section-number">6.4</span> 4.4 Relationships: Scatter Plots and Correlation</a>
+  <ul class="collapse">
+  <li><a href="#scatter-plots-the-gold-standard-for-continuous-relationships" id="toc-scatter-plots-the-gold-standard-for-continuous-relationships" class="nav-link" data-scroll-target="#scatter-plots-the-gold-standard-for-continuous-relationships"><span class="header-section-number">6.4.1</span> Scatter Plots: The Gold Standard for Continuous Relationships</a></li>
+  <li><a href="#scatter-plot-best-practices" id="toc-scatter-plot-best-practices" class="nav-link" data-scroll-target="#scatter-plot-best-practices"><span class="header-section-number">6.4.2</span> Scatter Plot Best Practices</a></li>
+  </ul></li>
+  <li><a href="#temporal-data-time-series-best-practices" id="toc-temporal-data-time-series-best-practices" class="nav-link" data-scroll-target="#temporal-data-time-series-best-practices"><span class="header-section-number">6.5</span> 4.5 Temporal Data: Time Series Best Practices</a>
+  <ul class="collapse">
+  <li><a href="#line-graphs-the-standard-for-continuous-time" id="toc-line-graphs-the-standard-for-continuous-time" class="nav-link" data-scroll-target="#line-graphs-the-standard-for-continuous-time"><span class="header-section-number">6.5.1</span> Line Graphs: The Standard for Continuous Time</a></li>
+  <li><a href="#the-multiple-time-series-challenge" id="toc-the-multiple-time-series-challenge" class="nav-link" data-scroll-target="#the-multiple-time-series-challenge"><span class="header-section-number">6.5.2</span> The Multiple Time Series Challenge</a></li>
+  <li><a href="#error-bands-for-time-series" id="toc-error-bands-for-time-series" class="nav-link" data-scroll-target="#error-bands-for-time-series"><span class="header-section-number">6.5.3</span> Error Bands for Time Series</a></li>
+  </ul></li>
+  <li><a href="#when-not-to-use-certain-plot-types" id="toc-when-not-to-use-certain-plot-types" class="nav-link" data-scroll-target="#when-not-to-use-certain-plot-types"><span class="header-section-number">6.6</span> 4.6 When NOT to Use Certain Plot Types</a>
+  <ul class="collapse">
+  <li><a href="#pie-charts-generally-avoid-in-scientific-figures" id="toc-pie-charts-generally-avoid-in-scientific-figures" class="nav-link" data-scroll-target="#pie-charts-generally-avoid-in-scientific-figures"><span class="header-section-number">6.6.1</span> Pie Charts: Generally Avoid in Scientific Figures</a></li>
+  <li><a href="#dual-y-axes-use-with-extreme-caution" id="toc-dual-y-axes-use-with-extreme-caution" class="nav-link" data-scroll-target="#dual-y-axes-use-with-extreme-caution"><span class="header-section-number">6.6.2</span> Dual Y-Axes: Use with Extreme Caution</a></li>
+  <li><a href="#d-plots-almost-always-avoid" id="toc-d-plots-almost-always-avoid" class="nav-link" data-scroll-target="#d-plots-almost-always-avoid"><span class="header-section-number">6.6.3</span> 3D Plots: Almost Always Avoid</a></li>
+  <li><a href="#the-chartjunk-principle" id="toc-the-chartjunk-principle" class="nav-link" data-scroll-target="#the-chartjunk-principle"><span class="header-section-number">6.6.4</span> The “Chartjunk” Principle</a></li>
+  </ul></li>
+  <li><a href="#chapter-4-summary-complete-graph-selection-guide" id="toc-chapter-4-summary-complete-graph-selection-guide" class="nav-link" data-scroll-target="#chapter-4-summary-complete-graph-selection-guide"><span class="header-section-number">6.7</span> Chapter 4 Summary: Complete Graph Selection Guide</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-fundamental-principle-match-plot-type-to-data-structure" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-fundamental-principle-match-plot-type-to-data-structure"><span class="header-section-number">6.1</span> 4.1 The Fundamental Principle: Match Plot Type to Data Structure</h2>
+<section id="why-graph-selection-matters" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="why-graph-selection-matters"><span class="header-section-number">6.1.1</span> Why Graph Selection Matters</h3>
+<p>The choice of visualization type is <strong>not arbitrary or aesthetic</strong>—it must be determined by:</p>
+<ol type="1">
+<li><strong>Data structure</strong> (continuous, categorical, temporal, hierarchical, etc.)</li>
+<li><strong>Comparison type</strong> (distribution, relationship, composition, temporal change)</li>
+<li><strong>Number of variables</strong> (univariate, bivariate, multivariate)</li>
+<li><strong>Message priority</strong> (what insight should jump out immediately?)</li>
+</ol>
+<p><strong>Using the wrong plot type is not a stylistic choice—it’s a scientific error that misrepresents your data.</strong></p>
+<hr>
+</section>
+<section id="the-data-plot-decision-tree" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="the-data-plot-decision-tree"><span class="header-section-number">6.1.2</span> The Data-Plot Decision Tree</h3>
+<pre><code>START: What am I trying to show?
+
+├─ COMPARISON between groups
+│   ├─ Few groups (&lt;10), one variable
+│   │   └─ Bar chart, dot plot, box plot
+│   ├─ Many groups (&gt;10), one variable
+│   │   └─ Violin plot, ridgeline plot, small multiples
+│   └─ Two+ variables across groups
+│       └─ Grouped bar chart, heatmap, PCA plot
+│
+├─ DISTRIBUTION of one variable
+│   ├─ Single distribution
+│   │   └─ Histogram, density plot, box plot
+│   ├─ Multiple distributions to compare
+│   │   └─ Overlapping density, violin plot, box plot grid
+│   └─ Distribution + summary stats
+│       └─ Box plot, violin plot with mean/median
+│
+├─ RELATIONSHIP between two variables
+│   ├─ Both continuous (quantitative)
+│   │   └─ Scatter plot, line graph (if ordered), hexbin (if dense)
+│   ├─ One continuous, one categorical
+│   │   └─ Box plot, violin plot, strip plot
+│   └─ Both categorical
+│       └─ Heatmap, mosaic plot, grouped bar chart
+│
+├─ CHANGE OVER TIME (temporal)
+│   ├─ Single time series
+│   │   └─ Line graph
+│   ├─ Multiple time series (few)
+│   │   └─ Line graph with multiple lines
+│   ├─ Multiple time series (many)
+│   │   └─ Small multiples, spaghetti plot, heatmap
+│   └─ Cyclic patterns
+│       └─ Circular/polar plot, seasonal decomposition
+│
+├─ COMPOSITION (parts of a whole)
+│   ├─ Static composition
+│   │   └─ Stacked bar chart (avoid pie charts)
+│   ├─ Composition changing over time
+│   │   └─ Area chart, stacked bar chart over time
+│   └─ Hierarchical composition
+│       └─ Treemap, sunburst diagram
+│
+└─ SPATIAL/NETWORK relationships
+    ├─ Geographic data
+    │   └─ Choropleth map, point map, heat map
+    ├─ Network/graph data
+    │   └─ Node-link diagram, adjacency matrix
+    └─ Hierarchical relationships
+        └─ Dendrogram, tree diagram, sankey diagram</code></pre>
+<hr>
+</section>
+</section>
+<section id="comparison-showing-differences-between-groups" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="comparison-showing-differences-between-groups"><span class="header-section-number">6.2</span> 4.2 Comparison: Showing Differences Between Groups</h2>
+<section id="bar-charts-the-standard-for-categorical-comparisons" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="bar-charts-the-standard-for-categorical-comparisons"><span class="header-section-number">6.2.1</span> Bar Charts: The Standard for Categorical Comparisons</h3>
+<p><strong>When to use:</strong> - Comparing discrete categories - Showing absolute values (not proportions) - Few to moderate number of categories (&lt;15) - When exact values matter</p>
+<p><strong>Best practices:</strong></p>
+<pre><code>✓ Always start y-axis at zero (bars represent magnitude)
+✓ Order categories logically (not alphabetically unless necessary)
+✓ Use consistent bar width
+✓ Leave space between bars (width:gap ratio ~3:1)
+✓ Add error bars if showing means (specify SEM or SD)</code></pre>
+<p><strong>Common mistakes:</strong></p>
+<pre><code>❌ Truncated y-axis (exaggerates small differences)
+❌ 3D bars (perspective distortion)
+❌ Too many categories (visual clutter)
+❌ Inconsistent ordering across panels</code></pre>
+<p><strong>Code Example (Python) - Proper Bar Chart:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Sample data: treatment comparison
+categories = ['Control', 'Drug A\n(10 μM)', 'Drug B\n(50 μM)', 'Drug C\n(100 μM)']
+values = [25.3, 32.7, 28.1, 35.9]
+errors = [2.8, 3.1, 3.5, 4.2]
+n_samples = [15, 15, 15, 15]
+
+# Color scheme: gray for control, blue/red for treatments
+colors = ['#7F8C8D', '#3498DB', '#3498DB', '#E74C3C']
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# BAD: Truncated axis, no error bars
+ax1 = axes[0]
+ax1.bar(categories, values, color=colors, edgecolor='black', linewidth=1.5, width=0.6)
+ax1.set_ylim(20, 40)  # Truncated!
+ax1.set_ylabel('Cell Viability (%)', fontsize=11, fontweight='bold')
+ax1.set_title('❌ BAD: Truncated Axis\n(Exaggerates differences)',
+             fontsize=12, fontweight='bold', color='red')
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# GOOD: Full axis, error bars, sample sizes
+ax2 = axes[1]
+bars = ax2.bar(categories, values, color=colors,
+              edgecolor='black', linewidth=1.5, width=0.6)
+ax2.errorbar(categories, values, yerr=errors, fmt='none',
+            ecolor='black', capsize=8, linewidth=2)
+
+# Add sample sizes on bars
+for i, (bar, n) in enumerate(zip(bars, n_samples)):
+    height = bar.get_height()
+    ax2.text(bar.get_x() + bar.get_width()/2., height + errors[i] + 1,
+            f'n={n}', ha='center', va='bottom', fontsize=9)
+
+ax2.set_ylim(0, 50)  # Full scale from zero
+ax2.set_ylabel('Cell Viability (%)', fontsize=11, fontweight='bold')
+ax2.set_title('✓ GOOD: Full Scale + Error Bars + n\n(Honest representation)',
+             fontsize=12, fontweight='bold', color='green')
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+ax2.grid(axis='y', alpha=0.3)
+
+# Add statistical comparison
+ax2.plot([1, 3], [42, 42], 'k-', linewidth=1.5)
+ax2.text(2, 43, '**', ha='center', fontsize=14, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('bar_chart_best_practices.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Proper Bar Chart:</strong></p>
+<pre><code>library(ggplot2)
+library(dplyr)
+library(patchwork)
+
+# Data
+data &lt;- data.frame(
+  category = factor(c('Control', 'Drug A\n(10 μM)', 'Drug B\n(50 μM)', 'Drug C\n(100 μM)'),
+                   levels = c('Control', 'Drug A\n(10 μM)', 'Drug B\n(50 μM)', 'Drug C\n(100 μM)')),
+  value = c(25.3, 32.7, 28.1, 35.9),
+  error = c(2.8, 3.1, 3.5, 4.2),
+  n = c(15, 15, 15, 15)
+)
+
+colors &lt;- c('Control' = '#7F8C8D', 'Drug A\n(10 μM)' = '#3498DB',
+            'Drug B\n(50 μM)' = '#3498DB', 'Drug C\n(100 μM)' = '#E74C3C')
+
+# BAD: Truncated axis
+p_bad &lt;- ggplot(data, aes(x = category, y = value, fill = category)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.6) +
+  scale_fill_manual(values = colors) +
+  coord_cartesian(ylim = c(20, 40)) +  # Truncated!
+  labs(y = 'Cell Viability (%)',
+       title = '❌ BAD: Truncated Axis\n(Exaggerates differences)') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 12),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold'),
+    legend.position = 'none'
+  )
+
+# GOOD: Full scale, error bars, sample sizes
+p_good &lt;- ggplot(data, aes(x = category, y = value, fill = category)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.6) +
+  geom_errorbar(aes(ymin = value - error, ymax = value + error),
+               width = 0.25, size = 1) +
+  scale_fill_manual(values = colors) +
+
+  # Add sample sizes
+  geom_text(aes(label = paste0('n=', n), y = value + error + 2),
+           size = 3, vjust = 0) +
+
+  # Statistical annotation
+  annotate('segment', x = 2, xend = 4, y = 42, yend = 42, size = 1) +
+  annotate('text', x = 3, y = 43, label = '**', size = 5, fontface = 'bold') +
+
+  ylim(0, 50) +
+  labs(y = 'Cell Viability (%)',
+       title = '✓ GOOD: Full Scale + Error Bars + n\n(Honest representation)') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 12),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold'),
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+combined &lt;- p_bad | p_good
+ggsave('bar_chart_best_practices.png', combined, width = 14, height = 5,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="box-plots-showing-full-distribution" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="box-plots-showing-full-distribution"><span class="header-section-number">6.2.2</span> Box Plots: Showing Full Distribution</h3>
+<p><strong>When to use:</strong> - Showing distribution shape, not just mean - Comparing distributions across groups - Detecting outliers - When sample size is moderate to large (n&gt;20 recommended)</p>
+<p><strong>What box plots show:</strong></p>
+<pre><code>Components:
+├─ Box: Interquartile range (IQR = 25th to 75th percentile)
+├─ Line inside box: Median (50th percentile)
+├─ Whiskers: Typically extend to 1.5×IQR or min/max
+└─ Points beyond whiskers: Outliers
+
+✓ Shows: distribution shape, spread, skewness, outliers
+❌ Hides: exact sample size (unless noted), bimodality (if subtle)
+</code></pre>
+<p><strong>Advantages over bar charts:</strong> - Shows data distribution, not just mean - Highlights outliers automatically - More informative for skewed data - Better for comparing variability</p>
+<p><strong>Code Example (Python) - Box Plot:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Generate data with different distributions
+control = np.random.normal(25, 5, 50)
+drug_a = np.random.normal(32, 4, 50)
+drug_b = np.concatenate([np.random.normal(28, 3, 45),
+                         np.array([15, 18, 42, 45, 48])])  # With outliers
+drug_c = np.random.lognormal(3.5, 0.3, 50)  # Skewed distribution
+
+data = [control, drug_a, drug_b, drug_c]
+labels = ['Control', 'Drug A', 'Drug B', 'Drug C']
+colors = ['#7F8C8D', '#3498DB', '#3498DB', '#E74C3C']
+
+fig, ax = plt.subplots(figsize=(9, 6))
+
+# Create box plot
+bp = ax.boxplot(data, labels=labels, patch_artist=True,
+               widths=0.6,
+               boxprops=dict(linewidth=1.5),
+               whiskerprops=dict(linewidth=1.5),
+               capprops=dict(linewidth=1.5),
+               medianprops=dict(color='red', linewidth=2),
+               flierprops=dict(marker='o', markerfacecolor='black',
+                             markersize=6, alpha=0.5))
+
+# Color boxes
+for patch, color in zip(bp['boxes'], colors):
+    patch.set_facecolor(color)
+    patch.set_alpha(0.7)
+
+# Add mean markers (in addition to median line)
+means = [np.mean(d) for d in data]
+ax.scatter(range(1, len(means)+1), means, marker='D', s=80,
+          color='white', edgecolors='black', linewidths=2,
+          zorder=3, label='Mean')
+
+ax.set_ylabel('Cell Viability (%)', fontsize=12, fontweight='bold')
+ax.set_title('Box Plot: Full Distribution Comparison',
+            fontsize=13, fontweight='bold')
+
+# Add legend
+ax.legend(loc='upper left', frameon=True, fontsize=10)
+
+# Add sample sizes
+for i, n in enumerate([len(d) for d in data]):
+    ax.text(i+1, ax.get_ylim()[0] + 2, f'n={n}',
+           ha='center', fontsize=9, style='italic')
+
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.grid(axis='y', alpha=0.3)
+
+# Add explanation annotations
+ax.annotate('', xy=(1.2, np.percentile(control, 75)),
+           xytext=(1.5, np.percentile(control, 75)),
+           arrowprops=dict(arrowstyle='-&gt;', lw=1.5))
+ax.text(1.6, np.percentile(control, 75), '75th percentile',
+       fontsize=8, va='center')
+
+ax.annotate('', xy=(1.2, np.percentile(control, 50)),
+           xytext=(1.5, np.percentile(control, 50)),
+           arrowprops=dict(arrowstyle='-&gt;', lw=1.5, color='red'))
+ax.text(1.6, np.percentile(control, 50), 'Median',
+       fontsize=8, va='center', color='red')
+
+plt.tight_layout()
+plt.savefig('box_plot_example.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Box Plot:</strong></p>
+<pre><code>library(ggplot2)
+library(dplyr)
+
+set.seed(42)
+
+# Generate data
+data &lt;- data.frame(
+  group = rep(c('Control', 'Drug A', 'Drug B', 'Drug C'), each = 50),
+  value = c(
+    rnorm(50, 25, 5),
+    rnorm(50, 32, 4),
+    c(rnorm(45, 28, 3), c(15, 18, 42, 45, 48)),  # With outliers
+    rlnorm(50, 3.5, 0.3)  # Skewed
+  )
+)
+
+data$group &lt;- factor(data$group, levels = c('Control', 'Drug A', 'Drug B', 'Drug C'))
+
+colors &lt;- c('Control' = '#7F8C8D', 'Drug A' = '#3498DB',
+            'Drug B' = '#3498DB', 'Drug C' = '#E74C3C')
+
+# Calculate means for overlay
+means &lt;- data %&gt;%
+  group_by(group) %&gt;%
+  summarise(mean_val = mean(value))
+
+# Calculate sample sizes
+sample_sizes &lt;- data %&gt;%
+  group_by(group) %&gt;%
+  summarise(n = n(), min_val = min(value) - 5)
+
+p &lt;- ggplot(data, aes(x = group, y = value, fill = group)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2,
+              outlier.alpha = 0.5, width = 0.6) +
+
+  # Add mean markers
+  geom_point(data = means, aes(y = mean_val),
+            shape = 23, size = 4, fill = 'white', color = 'black', stroke = 1.5) +
+
+  # Color scheme
+  scale_fill_manual(values = colors) +
+
+  # Add sample sizes
+  geom_text(data = sample_sizes, aes(y = min_val, label = paste0('n=', n)),
+           size = 3, fontface = 'italic') +
+
+  labs(y = 'Cell Viability (%)',
+       title = 'Box Plot: Full Distribution Comparison') +
+
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 13),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold'),
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Add annotations
+p &lt;- p +
+  annotate('segment', x = 1.2, xend = 1.5,
+          y = quantile(data$value[data$group == 'Control'], 0.75),
+          yend = quantile(data$value[data$group == 'Control'], 0.75),
+          arrow = arrow(length = unit(0.2, 'cm')), size = 1) +
+  annotate('text', x = 1.6, y = quantile(data$value[data$group == 'Control'], 0.75),
+          label = '75th percentile', hjust = 0, size = 3) +
+  annotate('segment', x = 1.2, xend = 1.5,
+          y = median(data$value[data$group == 'Control']),
+          yend = median(data$value[data$group == 'Control']),
+          arrow = arrow(length = unit(0.2, 'cm')), size = 1, color = 'red') +
+  annotate('text', x = 1.6, y = median(data$value[data$group == 'Control']),
+          label = 'Median', hjust = 0, size = 3, color = 'red')
+
+ggsave('box_plot_example.png', p, width = 9, height = 6,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="violin-plots-enhanced-distribution-visualization" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="violin-plots-enhanced-distribution-visualization"><span class="header-section-number">6.2.3</span> Violin Plots: Enhanced Distribution Visualization</h3>
+<p><strong>When to use:</strong> - Showing full distribution density (better than box plots for bimodal/multimodal data) - Comparing distribution shapes across groups - When you want both density and quartiles visible</p>
+<p><strong>Advantages:</strong> - Shows distribution shape more clearly than box plots - Reveals bimodality (two peaks) that box plots hide - More informative than histograms for comparisons</p>
+<p><strong>Code Example (Python) - Violin Plot:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
+np.random.seed(42)
+
+# Generate bimodal data (two peaks) - box plot would hide this!
+control = np.random.normal(25, 3, 50)
+drug_a = np.concatenate([np.random.normal(20, 2, 25),
+                         np.random.normal(35, 2, 25)])  # Bimodal!
+drug_b = np.random.normal(32, 4, 50)
+
+# Combine into DataFrame for seaborn
+import pandas as pd
+df = pd.DataFrame({
+    'Group': ['Control']*50 + ['Drug A']*50 + ['Drug B']*50,
+    'Value': np.concatenate([control, drug_a, drug_b])
+})
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Box plot (HIDES bimodality)
+ax1 = axes[0]
+sns.boxplot(data=df, x='Group', y='Value', ax=ax1,
+           palette=['#7F8C8D', '#3498DB', '#E74C3C'])
+ax1.set_ylabel('Cell Viability (%)', fontsize=12, fontweight='bold')
+ax1.set_xlabel('')
+ax1.set_title('Box Plot: Hides Bimodal Distribution\n(Drug A appears normal)',
+             fontsize=12, fontweight='bold', color='red')
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# Violin plot (REVEALS bimodality)
+ax2 = axes[1]
+sns.violinplot(data=df, x='Group', y='Value', ax=ax2,
+              palette=['#7F8C8D', '#3498DB', '#E74C3C'],
+              inner='box')  # Add box plot inside
+ax2.set_ylabel('Cell Viability (%)', fontsize=12, fontweight='bold')
+ax2.set_xlabel('')
+ax2.set_title('Violin Plot: Reveals Bimodal Distribution\n(Drug A has two response populations)',
+             fontsize=12, fontweight='bold', color='green')
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+# Highlight bimodal peaks in Drug A
+ax2.annotate('', xy=(1, 20), xytext=(1.3, 20),
+            arrowprops=dict(arrowstyle='-&gt;', lw=2, color='red'))
+ax2.text(1.4, 20, 'Peak 1:\nNon-responders', fontsize=9, va='center', color='red')
+
+ax2.annotate('', xy=(1, 35), xytext=(1.3, 35),
+            arrowprops=dict(arrowstyle='-&gt;', lw=2, color='red'))
+ax2.text(1.4, 35, 'Peak 2:\nResponders', fontsize=9, va='center', color='red')
+
+plt.tight_layout()
+plt.savefig('violin_vs_box_bimodal.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<hr>
+</section>
+</section>
+<section id="distribution-revealing-data-structure" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="distribution-revealing-data-structure"><span class="header-section-number">6.3</span> 4.3 Distribution: Revealing Data Structure</h2>
+<section id="histograms-binning-continuous-data" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="histograms-binning-continuous-data"><span class="header-section-number">6.3.1</span> Histograms: Binning Continuous Data</h3>
+<p><strong>When to use:</strong> - Showing frequency distribution of continuous data - Revealing distribution shape (normal, skewed, bimodal) - Understanding data spread before statistical analysis - Sample size: moderate to large (n&gt;30 recommended)</p>
+<p><strong>Critical Decision: Bin Width</strong></p>
+<p>The choice of bin width (or number of bins) <strong>dramatically affects interpretation</strong>—this is NOT a trivial aesthetic choice.</p>
+<p><strong>The Problem:</strong></p>
+<pre><code>Too few bins (wide bins):
+→ Over-smoothing, lose detail, miss patterns
+
+Too many bins (narrow bins):
+→ Over-granular, random noise dominates, no pattern visible
+
+Goldilocks zone:
+→ Reveals true structure without artificial patterns</code></pre>
+<p><strong>Bin Selection Rules:</strong></p>
+<pre><code>Rule of thumb formulas:
+1. Sturges' formula: k = ⌈log₂(n) + 1⌉
+   → Works for normal distributions, n &gt; 30
+
+2. Freedman-Diaconis: bin width = 2×IQR×n^(-1/3)
+   → Robust to outliers, good for skewed data
+
+3. Scott's rule: bin width = 3.49×σ×n^(-1/3)
+   → Optimal for normal distributions
+
+Modern approach: Try multiple, choose most informative</code></pre>
+<p><strong>Code Example (Python) - Histogram Bin Selection:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Generate data with known structure (bimodal)
+data = np.concatenate([
+    np.random.normal(20, 3, 300),  # First peak
+    np.random.normal(35, 4, 200)   # Second peak
+])
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# Too few bins (misses bimodality)
+ax1 = axes[0, 0]
+ax1.hist(data, bins=5, color='#3498DB', edgecolor='black', linewidth=1.5, alpha=0.7)
+ax1.set_xlabel('Value', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Frequency', fontsize=11, fontweight='bold')
+ax1.set_title('❌ TOO FEW BINS (n=5)\n(Misses bimodal structure)',
+             fontsize=11, fontweight='bold', color='red')
+ax1.grid(axis='y', alpha=0.3)
+
+# Too many bins (over-granular, noisy)
+ax2 = axes[0, 1]
+ax2.hist(data, bins=100, color='#3498DB', edgecolor='black', linewidth=0.5, alpha=0.7)
+ax2.set_xlabel('Value', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Frequency', fontsize=11, fontweight='bold')
+ax2.set_title('❌ TOO MANY BINS (n=100)\n(Noisy, no clear pattern)',
+             fontsize=11, fontweight='bold', color='red')
+ax2.grid(axis='y', alpha=0.3)
+
+# Just right: Sturges' formula
+n_sturges = int(np.ceil(np.log2(len(data)) + 1))
+ax3 = axes[1, 0]
+ax3.hist(data, bins=n_sturges, color='#27AE60', edgecolor='black', linewidth=1.5, alpha=0.7)
+ax3.set_xlabel('Value', fontsize=11, fontweight='bold')
+ax3.set_ylabel('Frequency', fontsize=11, fontweight='bold')
+ax3.set_title(f'✓ STURGES\' RULE (n={n_sturges})\n(Reveals bimodal structure)',
+             fontsize=11, fontweight='bold', color='green')
+ax3.grid(axis='y', alpha=0.3)
+
+# Freedman-Diaconis (alternative)
+iqr = np.percentile(data, 75) - np.percentile(data, 25)
+bin_width_fd = 2 * iqr * len(data)**(-1/3)
+n_fd = int(np.ceil((data.max() - data.min()) / bin_width_fd))
+ax4 = axes[1, 1]
+ax4.hist(data, bins=n_fd, color='#E67E22', edgecolor='black', linewidth=1.5, alpha=0.7)
+ax4.set_xlabel('Value', fontsize=11, fontweight='bold')
+ax4.set_ylabel('Frequency', fontsize=11, fontweight='bold')
+ax4.set_title(f'✓ FREEDMAN-DIACONIS (n={n_fd})\n(Alternative, robust to outliers)',
+             fontsize=11, fontweight='bold', color='green')
+ax4.grid(axis='y', alpha=0.3)
+
+# Highlight the two peaks in correct histograms
+for ax in [ax3, ax4]:
+    ax.axvline(20, color='red', linestyle='--', linewidth=2, alpha=0.7)
+    ax.axvline(35, color='red', linestyle='--', linewidth=2, alpha=0.7)
+    ax.text(20, ax.get_ylim()[1]*0.9, 'Peak 1', ha='center', fontsize=9,
+           color='red', fontweight='bold')
+    ax.text(35, ax.get_ylim()[1]*0.9, 'Peak 2', ha='center', fontsize=9,
+           color='red', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('histogram_bin_selection.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+
+print(f"Data: n={len(data)}")
+print(f"Sturges' bins: {n_sturges}")
+print(f"Freedman-Diaconis bins: {n_fd}")</code></pre>
+<p><strong>Code Example (R) - Histogram Bin Selection:</strong></p>
+<pre><code>library(ggplot2)
+library(patchwork)
+
+set.seed(42)
+
+# Generate bimodal data
+data &lt;- data.frame(
+  value = c(rnorm(300, 20, 3), rnorm(200, 35, 4))
+)
+
+# Calculate bin numbers
+n &lt;- nrow(data)
+n_sturges &lt;- ceiling(log2(n) + 1)
+
+iqr &lt;- IQR(data$value)
+bin_width_fd &lt;- 2 * iqr * n^(-1/3)
+n_fd &lt;- ceiling((max(data$value) - min(data$value)) / bin_width_fd)
+
+# Too few bins
+p1 &lt;- ggplot(data, aes(x = value)) +
+  geom_histogram(bins = 5, fill = '#3498DB', color = 'black',
+                size = 1, alpha = 0.7) +
+  labs(x = 'Value', y = 'Frequency',
+       title = paste0('❌ TOO FEW BINS (n=5)\n(Misses bimodal structure)')) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 11),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Too many bins
+p2 &lt;- ggplot(data, aes(x = value)) +
+  geom_histogram(bins = 100, fill = '#3498DB', color = 'black',
+                size = 0.3, alpha = 0.7) +
+  labs(x = 'Value', y = 'Frequency',
+       title = paste0('❌ TOO MANY BINS (n=100)\n(Noisy, no clear pattern)')) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 11),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Sturges' rule
+p3 &lt;- ggplot(data, aes(x = value)) +
+  geom_histogram(bins = n_sturges, fill = '#27AE60', color = 'black',
+                size = 1, alpha = 0.7) +
+  geom_vline(xintercept = c(20, 35), color = 'red', linetype = 'dashed', size = 1, alpha = 0.7) +
+  annotate('text', x = 20, y = Inf, label = 'Peak 1', vjust = 1.5, hjust = 0.5,
+          color = 'red', fontface = 'bold', size = 3) +
+  annotate('text', x = 35, y = Inf, label = 'Peak 2', vjust = 1.5, hjust = 0.5,
+          color = 'red', fontface = 'bold', size = 3) +
+  labs(x = 'Value', y = 'Frequency',
+       title = paste0('✓ STURGES\' RULE (n=', n_sturges, ')\n(Reveals bimodal structure)')) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 11),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Freedman-Diaconis
+p4 &lt;- ggplot(data, aes(x = value)) +
+  geom_histogram(bins = n_fd, fill = '#E67E22', color = 'black',
+                size = 1, alpha = 0.7) +
+  geom_vline(xintercept = c(20, 35), color = 'red', linetype = 'dashed', size = 1, alpha = 0.7) +
+  annotate('text', x = 20, y = Inf, label = 'Peak 1', vjust = 1.5, hjust = 0.5,
+          color = 'red', fontface = 'bold', size = 3) +
+  annotate('text', x = 35, y = Inf, label = 'Peak 2', vjust = 1.5, hjust = 0.5,
+          color = 'red', fontface = 'bold', size = 3) +
+  labs(x = 'Value', y = 'Frequency',
+       title = paste0('✓ FREEDMAN-DIACONIS (n=', n_fd, ')\n(Alternative, robust to outliers)')) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 11),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+combined &lt;- (p1 | p2) / (p3 | p4)
+ggsave('histogram_bin_selection.png', combined, width = 12, height = 10,
+       dpi = 300, bg = 'white')
+
+cat(paste0("Data: n=", n, "\n"))
+cat(paste0("Sturges' bins: ", n_sturges, "\n"))
+cat(paste0("Freedman-Diaconis bins: ", n_fd, "\n"))</code></pre>
+<hr>
+</section>
+<section id="density-plots-smooth-distribution-curves" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="density-plots-smooth-distribution-curves"><span class="header-section-number">6.3.2</span> Density Plots: Smooth Distribution Curves</h3>
+<p><strong>When to use:</strong> - Comparing multiple distributions (overlay easier than multiple histograms) - Emphasizing distribution shape over exact frequencies - When you want a smoothed representation (less dependent on binning)</p>
+<p><strong>Advantages over histograms:</strong> - No bin width decision needed - Cleaner visual for overlapping distributions - Better for presentations (smoother = more professional appearance)</p>
+<p><strong>Disadvantages:</strong> - Can over-smooth and hide real features - Requires bandwidth parameter (similar issue to bin width) - May extend beyond actual data range (creates impossible values)</p>
+<p><strong>Code Example (Python) - Density Plot Comparison:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from scipy import stats
+
+np.random.seed(42)
+
+# Three treatment groups with different distributions
+control = np.random.normal(25, 5, 100)
+drug_a = np.random.normal(32, 4, 100)
+drug_b = np.random.lognormal(3.3, 0.3, 100)  # Skewed
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Overlapping histograms (cluttered)
+ax1 = axes[0]
+ax1.hist(control, bins=20, alpha=0.5, label='Control', color='#7F8C8D', edgecolor='black')
+ax1.hist(drug_a, bins=20, alpha=0.5, label='Drug A', color='#3498DB', edgecolor='black')
+ax1.hist(drug_b, bins=20, alpha=0.5, label='Drug B', color='#E74C3C', edgecolor='black')
+ax1.set_xlabel('Response', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Frequency', fontsize=11, fontweight='bold')
+ax1.set_title('Histograms: Overlapping (Cluttered)',
+             fontsize=12, fontweight='bold')
+ax1.legend(loc='upper right', frameon=True, fontsize=10)
+ax1.grid(axis='y', alpha=0.3)
+
+# Density plots (cleaner)
+ax2 = axes[1]
+
+# Calculate density
+density_control = stats.gaussian_kde(control)
+density_drug_a = stats.gaussian_kde(drug_a)
+density_drug_b = stats.gaussian_kde(drug_b)
+
+x_range = np.linspace(0, 60, 300)
+
+ax2.plot(x_range, density_control(x_range), color='#7F8C8D',
+        linewidth=3, label='Control')
+ax2.fill_between(x_range, density_control(x_range), alpha=0.3, color='#7F8C8D')
+
+ax2.plot(x_range, density_drug_a(x_range), color='#3498DB',
+        linewidth=3, label='Drug A')
+ax2.fill_between(x_range, density_drug_a(x_range), alpha=0.3, color='#3498DB')
+
+ax2.plot(x_range, density_drug_b(x_range), color='#E74C3C',
+        linewidth=3, label='Drug B')
+ax2.fill_between(x_range, density_drug_b(x_range), alpha=0.3, color='#E74C3C')
+
+ax2.set_xlabel('Response', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Density', fontsize=11, fontweight='bold')
+ax2.set_title('Density Plots: Smooth Comparison',
+             fontsize=12, fontweight='bold')
+ax2.legend(loc='upper right', frameon=True, fontsize=10)
+ax2.grid(axis='y', alpha=0.3)
+
+# Annotate distribution characteristics
+ax2.text(32, 0.08, 'Normal\n(symmetric)', ha='center', fontsize=9,
+        bbox=dict(boxstyle='round', facecolor='#3498DB', alpha=0.3))
+ax2.text(35, 0.05, 'Skewed right\n(long tail)', ha='center', fontsize=9,
+        bbox=dict(boxstyle='round', facecolor='#E74C3C', alpha=0.3))
+
+plt.tight_layout()
+plt.savefig('density_vs_histogram.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Density Plot Comparison:</strong></p>
+<pre><code>library(ggplot2)
+library(dplyr)
+library(patchwork)
+
+set.seed(42)
+
+# Generate data
+data &lt;- data.frame(
+  value = c(
+    rnorm(100, 25, 5),          # Control
+    rnorm(100, 32, 4),          # Drug A
+    rlnorm(100, 3.3, 0.3)       # Drug B (skewed)
+  ),
+  group = rep(c('Control', 'Drug A', 'Drug B'), each = 100)
+)
+
+colors &lt;- c('Control' = '#7F8C8D', 'Drug A' = '#3498DB', 'Drug B' = '#E74C3C')
+
+# Overlapping histograms
+p1 &lt;- ggplot(data, aes(x = value, fill = group)) +
+  geom_histogram(bins = 20, alpha = 0.5, color = 'black', size = 0.5, position = 'identity') +
+  scale_fill_manual(values = colors) +
+  labs(x = 'Response', y = 'Frequency',
+       title = 'Histograms: Overlapping (Cluttered)',
+       fill = NULL) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.85, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Density plots
+p2 &lt;- ggplot(data, aes(x = value, fill = group, color = group)) +
+  geom_density(alpha = 0.3, size = 1.5) +
+  scale_fill_manual(values = colors) +
+  scale_color_manual(values = colors) +
+  labs(x = 'Response', y = 'Density',
+       title = 'Density Plots: Smooth Comparison',
+       fill = NULL, color = NULL) +
+
+  # Annotations
+  annotate('text', x = 32, y = 0.08, label = 'Normal\n(symmetric)', hjust = 0.5,
+          size = 3, lineheight = 0.9) +
+  annotate('rect', xmin = 29, xmax = 35, ymin = 0.065, ymax = 0.095,
+          fill = '#3498DB', alpha = 0.3) +
+  annotate('text', x = 35, y = 0.05, label = 'Skewed right\n(long tail)', hjust = 0.5,
+          size = 3, lineheight = 0.9) +
+  annotate('rect', xmin = 32, xmax = 38, ymin = 0.035, ymax = 0.065,
+          fill = '#E74C3C', alpha = 0.3) +
+
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', size = 12),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.85, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
+  )
+
+combined &lt;- p1 | p2
+ggsave('density_vs_histogram.png', combined, width = 14, height = 6,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+</section>
+<section id="relationships-scatter-plots-and-correlation" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="relationships-scatter-plots-and-correlation"><span class="header-section-number">6.4</span> 4.4 Relationships: Scatter Plots and Correlation</h2>
+<section id="scatter-plots-the-gold-standard-for-continuous-relationships" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="scatter-plots-the-gold-standard-for-continuous-relationships"><span class="header-section-number">6.4.1</span> Scatter Plots: The Gold Standard for Continuous Relationships</h3>
+<p><strong>When to use:</strong> - Showing relationship between two continuous variables - Detecting correlation, clusters, or outliers - Visualizing raw data before statistical modeling</p>
+<p><strong>Critical: Never Rely on Correlation Coefficient Alone</strong></p>
+<p><strong>Anscombe’s Quartet: The Classic Warning</strong></p>
+<p>Four datasets with <strong>identical</strong> statistics: - Mean of X: 9.0 - Mean of Y: 7.5 - Correlation: r = 0.816 - Linear regression: y = 3 + 0.5x</p>
+<p><strong>But completely different visual patterns!</strong></p>
+<p><strong>Code Example (Python) - Anscombe’s Quartet:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+# Anscombe's Quartet data
+anscombe = {
+    'I': {
+        'x': [10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5],
+        'y': [8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68]
+    },
+    'II': {
+        'x': [10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5],
+        'y': [9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74]
+    },
+    'III': {
+        'x': [10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5],
+        'y': [7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73]
+    },
+    'IV': {
+        'x': [8, 8, 8, 8, 8, 8, 8, 19, 8, 8, 8],
+        'y': [6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 12.50, 5.56, 7.91, 6.89]
+    }
+}
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+axes = axes.flatten()
+
+for idx, (label, data) in enumerate(anscombe.items()):
+    ax = axes[idx]
+    x = np.array(data['x'])
+    y = np.array(data['y'])
+
+    # Scatter plot
+    ax.scatter(x, y, s=100, color='#3498DB', edgecolors='black', linewidths=1.5, alpha=0.7)
+
+    # Fit line
+    z = np.polyfit(x, y, 1)
+    p = np.poly1d(z)
+    x_line = np.linspace(x.min(), x.max(), 100)
+    ax.plot(x_line, p(x_line), 'r--', linewidth=2, label=f'y = {z[1]:.2f} + {z[0]:.2f}x')
+
+    # Calculate correlation
+    r = np.corrcoef(x, y)[0, 1]
+
+    # Labels
+    ax.set_xlabel('X', fontsize=11, fontweight='bold')
+    ax.set_ylabel('Y', fontsize=11, fontweight='bold')
+    ax.set_title(f'Dataset {label}\nr = {r:.3f}, y = {z[1]:.2f} + {z[0]:.2f}x',
+                fontsize=11, fontweight='bold')
+    ax.set_xlim(0, 20)
+    ax.set_ylim(0, 14)
+    ax.grid(alpha=0.3)
+    ax.legend(loc='upper left', frameon=True, fontsize=9)
+
+    # Add interpretation
+    interpretations = {
+        'I': 'Linear relationship\n(as expected)',
+        'II': 'Nonlinear relationship\n(parabolic)',
+        'III': 'Linear with outlier\n(one point distorts)',
+        'IV': 'No relationship\n(one point creates false correlation)'
+    }
+
+    ax.text(0.98, 0.02, interpretations[label],
+           transform=ax.transAxes, fontsize=9, va='bottom', ha='right',
+           bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.3))
+
+plt.suptitle('Anscombe\'s Quartet: Same Statistics, Different Patterns\nALWAYS PLOT YOUR DATA!',
+            fontsize=14, fontweight='bold', y=1.00)
+plt.tight_layout()
+plt.savefig('anscombes_quartet.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Anscombe’s Quartet:</strong></p>
+<pre><code>library(ggplot2)
+library(patchwork)
+library(dplyr)
+
+# Anscombe's quartet is built into R
+data(anscombe)
+
+# Reshape for plotting
+anscombe_long &lt;- data.frame(
+  set = rep(c('I', 'II', 'III', 'IV'), each = 11),
+  x = c(anscombe$x1, anscombe$x2, anscombe$x3, anscombe$x4),
+  y = c(anscombe$y1, anscombe$y2, anscombe$y3, anscombe$y4)
+)
+
+# Calculate stats for each set
+stats_df &lt;- anscombe_long %&gt;%
+  group_by(set) %&gt;%
+  summarise(
+    r = cor(x, y),
+    lm_intercept = coef(lm(y ~ x))[1],
+    lm_slope = coef(lm(y ~ x))[2]
+  )
+
+# Merge with data
+anscombe_long &lt;- anscombe_long %&gt;%
+  left_join(stats_df, by = 'set')
+
+# Interpretations
+interpretations &lt;- data.frame(
+  set = c('I', 'II', 'III', 'IV'),
+  interpretation = c(
+    'Linear relationship\n(as expected)',
+    'Nonlinear relationship\n(parabolic)',
+    'Linear with outlier\n(one point distorts)',
+    'No relationship\n(one point creates false correlation)'
+  )
+)
+
+anscombe_long &lt;- anscombe_long %&gt;%
+  left_join(interpretations, by = 'set')
+
+# Plot
+plots &lt;- lapply(c('I', 'II', 'III', 'IV'), function(dataset) {
+  data_subset &lt;- anscombe_long %&gt;% filter(set == dataset)
+
+  ggplot(data_subset, aes(x = x, y = y)) +
+    geom_point(size = 4, color = '#3498DB', alpha = 0.7) +
+    geom_smooth(method = 'lm', se = FALSE, color = 'red', linetype = 'dashed', size = 1.2) +
+
+    labs(x = 'X', y = 'Y',
+         title = paste0('Dataset ', dataset, '\n',
+                       sprintf('r = %.3f, y = %.2f + %.2fx',
+                              data_subset$r[1],
+                              data_subset$lm_intercept[1],
+                              data_subset$lm_slope[1]))) +
+
+    annotate('label', x = 18, y = 2, label = unique(data_subset$interpretation),
+            hjust = 1, vjust = 0, size = 3, lineheight = 0.9,
+            fill = 'yellow', alpha = 0.3) +
+
+    xlim(0, 20) +
+    ylim(0, 14) +
+
+    theme_classic(base_size = 11) +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = 'bold', size = 10),
+      axis.title = element_text(face = 'bold'),
+      panel.grid.major = element_line(color = 'gray90', size = 0.3)
+    )
+})
+
+combined &lt;- (plots[[1]] | plots[[2]]) / (plots[[3]] | plots[[4]]) +
+  plot_annotation(
+    title = 'Anscombe\'s Quartet: Same Statistics, Different Patterns\nALWAYS PLOT YOUR DATA!',
+    theme = theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 14))
+  )
+
+ggsave('anscombes_quartet.png', combined, width = 12, height = 10,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="scatter-plot-best-practices" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="scatter-plot-best-practices"><span class="header-section-number">6.4.2</span> Scatter Plot Best Practices</h3>
+<p><strong>1. Show ALL data points (unless n is very large)</strong></p>
+<pre><code>✓ GOOD: Every observation visible
+→ Reveals outliers, clusters, patterns
+
+❌ BAD: Only showing means or aggregated summaries
+→ Hides individual variation and data structure</code></pre>
+<p><strong>2. Add transparency when points overlap</strong></p>
+<pre><code># For overlapping points
+plt.scatter(x, y, alpha=0.5)  # 50% transparency</code></pre>
+<p><strong>3. Include uncertainty/confidence intervals for trend lines</strong></p>
+<pre><code># Show confidence band
+sns.regplot(x='var1', y='var2', data=df, scatter_kws={'alpha':0.5})</code></pre>
+<p><strong>4. Report correlation AND test significance</strong></p>
+<pre><code>In caption:
+"Pearson r = 0.73, p &lt; 0.001, n = 50"
+
+Not just:
+"Strong correlation observed" (vague, unquantified)</code></pre>
+<p><strong>5. Consider scale transformations for skewed data</strong></p>
+<pre><code>If data spans orders of magnitude:
+→ Log-transform one or both axes
+→ State transformation in axis label: "log₁₀(Concentration)"</code></pre>
+<hr>
+<p><strong>Summary of Chapter 4 so far:</strong></p>
+<p>✓ <strong>Match plot type to data structure</strong> (not personal preference) ✓ <strong>Bar charts</strong>: Start at zero, include error bars, show n ✓ <strong>Box plots</strong>: Show full distribution, reveal outliers ✓ <strong>Violin plots</strong>: Better for bimodal/complex distributions ✓ <strong>Histograms</strong>: Choose bin width carefully (Sturges’, FD rule) ✓ <strong>Density plots</strong>: Cleaner for comparisons, but avoid over-smoothing ✓ <strong>Scatter plots</strong>: Show raw data, always plot (don’t just report r)</p>
+<hr>
+</section>
+</section>
+<section id="temporal-data-time-series-best-practices" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="temporal-data-time-series-best-practices"><span class="header-section-number">6.5</span> 4.5 Temporal Data: Time Series Best Practices</h2>
+<section id="line-graphs-the-standard-for-continuous-time" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="line-graphs-the-standard-for-continuous-time"><span class="header-section-number">6.5.1</span> Line Graphs: The Standard for Continuous Time</h3>
+<p><strong>When to use:</strong> - Showing change over continuous time - Comparing trends across groups - When order matters (temporal, sequential processes)</p>
+<p><strong>Critical Principle: Lines Imply Continuity</strong></p>
+<pre><code>✓ USE LINES when:
+- Data collected continuously or at regular intervals
+- Interpolation between points is reasonable
+- Time is truly continuous
+
+❌ DO NOT use lines when:
+- Data points are independent categories
+- No meaningful values exist between points
+- Comparing discrete, unordered groups</code></pre>
+<hr>
+</section>
+<section id="the-multiple-time-series-challenge" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="the-multiple-time-series-challenge"><span class="header-section-number">6.5.2</span> The Multiple Time Series Challenge</h3>
+<p><strong>Problem:</strong> More than 3-4 time series become visually cluttered</p>
+<p><strong>Solutions:</strong></p>
+<p><strong>Option 1: Small Multiples (Faceting)</strong></p>
+<pre><code>Instead of: 10 overlapping lines in one panel
+Use: 10 small panels, each with one line
+→ Clearer individual patterns
+→ Easier to compare specific features</code></pre>
+<p><strong>Option 2: Highlight Key Series</strong></p>
+<pre><code>Background: All series in light gray (de-emphasized)
+Foreground: Key series in bold color
+→ Context without clutter
+→ Focus on important comparison</code></pre>
+<p><strong>Option 3: Interactive (for digital formats)</strong></p>
+<pre><code>Hover/click to highlight specific series
+Not viable for print, but powerful for web/presentations</code></pre>
+<p><strong>Code Example (Python) - Time Series Strategies:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate 8 time series
+time = np.linspace(0, 24, 100)
+n_series = 8
+
+# Generate different trends
+series_data = []
+for i in range(n_series):
+    trend = 100 + (i-4)*5  # Different baselines
+    noise = np.random.randn(100) * 3
+    seasonal = 10 * np.sin(2 * np.pi * time / 24 + i * np.pi/4)
+    series_data.append(trend + seasonal + noise)
+
+labels = [f'Sample {i+1}' for i in range(n_series)]
+
+fig = plt.figure(figsize=(16, 12))
+
+# BAD: All series overlapping (cluttered)
+ax1 = plt.subplot(3, 2, 1)
+for i, data in enumerate(series_data):
+    ax1.plot(time, data, linewidth=2, label=labels[i])
+ax1.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
+ax1.set_ylabel('Response', fontsize=10, fontweight='bold')
+ax1.set_title('❌ BAD: All Overlapping\n(Impossible to distinguish)',
+             fontsize=11, fontweight='bold', color='red')
+ax1.legend(loc='upper right', fontsize=7, ncol=2)
+ax1.grid(alpha=0.3)
+
+# GOOD: Small multiples
+for i in range(n_series):
+    ax = plt.subplot(3, 4, i+5)
+    ax.plot(time, series_data[i], linewidth=2, color='#3498DB')
+    ax.set_title(labels[i], fontsize=9, fontweight='bold')
+    ax.set_ylim(70, 130)
+    if i &gt;= 4:
+        ax.set_xlabel('Time (h)', fontsize=8)
+    if i % 4 == 0:
+        ax.set_ylabel('Response', fontsize=8)
+    ax.grid(alpha=0.3)
+    ax.tick_params(labelsize=7)
+
+# Add title for small multiples section
+fig.text(0.55, 0.63, '✓ GOOD: Small Multiples\n(Each series clear)',
+        fontsize=11, fontweight='bold', color='green', ha='center')
+
+# GOOD: Highlight one series
+ax3 = plt.subplot(3, 2, 2)
+# Plot all in gray (background)
+for i, data in enumerate(series_data):
+    ax3.plot(time, data, linewidth=1, color='#CCCCCC', alpha=0.6)
+# Highlight one in color
+ax3.plot(time, series_data[3], linewidth=3, color='#E74C3C', label='Sample 4 (highlighted)')
+ax3.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
+ax3.set_ylabel('Response', fontsize=10, fontweight='bold')
+ax3.set_title('✓ GOOD: Highlight Key Series\n(Context without clutter)',
+             fontsize=11, fontweight='bold', color='green')
+ax3.legend(loc='upper right', fontsize=9)
+ax3.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('time_series_strategies.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Time Series Strategies:</strong></p>
+<pre><code>library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+
+set.seed(42)
+
+# Generate data
+time &lt;- seq(0, 24, length.out = 100)
+n_series &lt;- 8
+
+data_long &lt;- do.call(rbind, lapply(1:n_series, function(i) {
+  trend &lt;- 100 + (i-4)*5
+  noise &lt;- rnorm(100, 0, 3)
+  seasonal &lt;- 10 * sin(2 * pi * time / 24 + i * pi/4)
+
+  data.frame(
+    time = time,
+    value = trend + seasonal + noise,
+    sample = paste0('Sample ', i)
+  )
+}))
+
+# BAD: All overlapping
+p_bad &lt;- ggplot(data_long, aes(x = time, y = value, color = sample)) +
+  geom_line(size = 1.2) +
+  labs(x = 'Time (hours)', y = 'Response',
+       title = '❌ BAD: All Overlapping\n(Impossible to distinguish)',
+       color = NULL) +
+  theme_classic(base_size = 10) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 11),
+    axis.title = element_text(face = 'bold'),
+    legend.position = 'right',
+    legend.text = element_text(size = 7),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# GOOD: Small multiples
+p_small_multiples &lt;- ggplot(data_long, aes(x = time, y = value)) +
+  geom_line(color = '#3498DB', size = 1) +
+  facet_wrap(~ sample, ncol = 4) +
+  labs(x = 'Time (h)', y = 'Response',
+       title = '✓ GOOD: Small Multiples\n(Each series clear)') +
+  theme_classic(base_size = 9) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 11),
+    axis.title = element_text(face = 'bold', size = 8),
+    strip.text = element_text(face = 'bold', size = 8),
+    strip.background = element_rect(fill = 'gray90'),
+    panel.grid.major = element_line(color = 'gray90', size = 0.2)
+  )
+
+# GOOD: Highlight key series
+data_highlight &lt;- data_long %&gt;%
+  mutate(highlight = ifelse(sample == 'Sample 4', 'Sample 4 (highlighted)', 'Other'))
+
+p_highlight &lt;- ggplot(data_highlight, aes(x = time, y = value, group = sample)) +
+  # Background (all gray)
+  geom_line(data = data_highlight %&gt;% filter(highlight == 'Other'),
+           color = '#CCCCCC', size = 0.8, alpha = 0.6) +
+  # Foreground (highlighted)
+  geom_line(data = data_highlight %&gt;% filter(highlight == 'Sample 4 (highlighted)'),
+           aes(color = highlight), size = 2) +
+  scale_color_manual(values = c('Sample 4 (highlighted)' = '#E74C3C')) +
+  labs(x = 'Time (hours)', y = 'Response',
+       title = '✓ GOOD: Highlight Key Series\n(Context without clutter)',
+       color = NULL) +
+  theme_classic(base_size = 10) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 11),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.8, 0.9),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Combine
+combined &lt;- (p_bad | p_highlight) / p_small_multiples +
+  plot_layout(heights = c(1, 1.5))
+
+ggsave('time_series_strategies.png', combined, width = 16, height = 12,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="error-bands-for-time-series" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="error-bands-for-time-series"><span class="header-section-number">6.5.3</span> Error Bands for Time Series</h3>
+<p><strong>When multiple replicates exist:</strong></p>
+<pre><code>Options for showing variability:
+1. Mean line + shaded error band (SEM or SD)
+2. Mean line + error bars at key timepoints (not every point)
+3. Individual traces in light color + mean in bold
+
+✓ BEST: Shaded band (cleanest, doesn't clutter)
+✓ ACCEPTABLE: Error bars at sparse intervals
+❌ AVOID: Error bars at every point (cluttered)</code></pre>
+<p><strong>Code Example (Python) - Error Bands:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate repeated measurements
+time = np.linspace(0, 24, 50)
+n_replicates = 8
+
+# Generate replicates
+replicates = []
+for i in range(n_replicates):
+    baseline = 100
+    signal = 20 * np.sin(2 * np.pi * time / 24)
+    noise = np.random.randn(len(time)) * 5
+    replicates.append(baseline + signal + noise)
+
+replicates = np.array(replicates)
+
+# Calculate statistics
+mean_signal = np.mean(replicates, axis=0)
+sem_signal = np.std(replicates, axis=0) / np.sqrt(n_replicates)
+sd_signal = np.std(replicates, axis=0)
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# CLUTTERED: Error bars at every point
+ax1 = axes[0]
+ax1.errorbar(time, mean_signal, yerr=sem_signal,
+            fmt='o-', color='#3498DB', linewidth=2, markersize=4,
+            capsize=3, capthick=1, elinewidth=1)
+ax1.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
+ax1.set_ylabel('Response', fontsize=10, fontweight='bold')
+ax1.set_title('❌ CLUTTERED: Error Bars Every Point\n(Visually overwhelming)',
+             fontsize=11, fontweight='bold', color='red')
+ax1.grid(alpha=0.3)
+ax1.set_ylim(60, 140)
+
+# ACCEPTABLE: Error bars at sparse intervals
+ax2 = axes[1]
+ax2.plot(time, mean_signal, 'o-', color='#3498DB', linewidth=2.5, markersize=3)
+# Error bars only every 10th point
+sparse_indices = range(0, len(time), 10)
+ax2.errorbar(time[sparse_indices], mean_signal[sparse_indices],
+            yerr=sem_signal[sparse_indices],
+            fmt='none', ecolor='black', capsize=5, capthick=2, elinewidth=2)
+ax2.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
+ax2.set_ylabel('Response', fontsize=10, fontweight='bold')
+ax2.set_title('✓ ACCEPTABLE: Sparse Error Bars\n(Clear but informative)',
+             fontsize=11, fontweight='bold', color='green')
+ax2.grid(alpha=0.3)
+ax2.set_ylim(60, 140)
+
+# BEST: Shaded error band
+ax3 = axes[2]
+ax3.plot(time, mean_signal, color='#3498DB', linewidth=3, label='Mean')
+ax3.fill_between(time, mean_signal - sem_signal, mean_signal + sem_signal,
+                color='#3498DB', alpha=0.3, label='±SEM')
+ax3.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
+ax3.set_ylabel('Response', fontsize=10, fontweight='bold')
+ax3.set_title('✓ BEST: Shaded Error Band\n(Clean and informative)',
+             fontsize=11, fontweight='bold', color='green')
+ax3.legend(loc='upper right', frameon=True, fontsize=9)
+ax3.grid(alpha=0.3)
+ax3.set_ylim(60, 140)
+
+# Add sample size annotation
+for ax in axes:
+    ax.text(0.02, 0.98, f'n={n_replicates} replicates',
+           transform=ax.transAxes, fontsize=9, va='top', ha='left',
+           bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+
+plt.tight_layout()
+plt.savefig('time_series_error_bands.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<hr>
+</section>
+</section>
+<section id="when-not-to-use-certain-plot-types" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="when-not-to-use-certain-plot-types"><span class="header-section-number">6.6</span> 4.6 When NOT to Use Certain Plot Types</h2>
+<section id="pie-charts-generally-avoid-in-scientific-figures" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="pie-charts-generally-avoid-in-scientific-figures"><span class="header-section-number">6.6.1</span> Pie Charts: Generally Avoid in Scientific Figures</h3>
+<p><strong>Why pie charts fail:</strong></p>
+<pre><code>Problems:
+1. Humans are bad at comparing angles (worse than lengths)
+2. Hard to read exact values
+3. Doesn't work well for many categories (&gt;5)
+4. 3D pie charts are even worse (perspective distortion)
+5. Slices arranged by size require extra cognitive processing
+
+Evidence: Cleveland &amp; McGill (1984) hierarchy of visual encoding:
+Position along scale &gt; Length &gt; Angle &gt; Area
+→ Pie charts use weakest encoding (angle)</code></pre>
+<p><strong>Better alternatives:</strong></p>
+<pre><code>Instead of pie chart, use:
+✓ Bar chart (horizontal if long labels)
+✓ Dot plot (when space limited)
+✓ Stacked bar chart (if showing composition over time/groups)</code></pre>
+<p><strong>Code Example (Python) - Pie Chart vs.&nbsp;Bar Chart:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Sample data: cell type composition
+categories = ['T cells', 'B cells', 'Macrophages', 'Neutrophils', 'NK cells', 'Other']
+values = [32, 18, 25, 12, 8, 5]
+colors = ['#E74C3C', '#3498DB', '#2ECC71', '#F39C12', '#9B59B6', '#95A5A6']
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Pie chart (hard to compare)
+ax1 = axes[0]
+wedges, texts, autotexts = ax1.pie(values, labels=categories, colors=colors,
+                                    autopct='%1.1f%%', startangle=90)
+for autotext in autotexts:
+    autotext.set_color('white')
+    autotext.set_fontweight('bold')
+    autotext.set_fontsize(9)
+ax1.set_title('❌ PIE CHART: Hard to Compare Angles\n(Which is larger: B cells or Neutrophils?)',
+             fontsize=11, fontweight='bold', color='red')
+
+# Bar chart (easy to compare)
+ax2 = axes[1]
+# Sort by value for easier comparison
+sorted_indices = np.argsort(values)[::-1]
+sorted_categories = [categories[i] for i in sorted_indices]
+sorted_values = [values[i] for i in sorted_indices]
+sorted_colors = [colors[i] for i in sorted_indices]
+
+bars = ax2.barh(sorted_categories, sorted_values, color=sorted_colors,
+               edgecolor='black', linewidth=1.5)
+ax2.set_xlabel('Percentage (%)', fontsize=11, fontweight='bold')
+ax2.set_title('✓ BAR CHART: Easy to Compare Lengths\n(Clear ordering: T cells &gt; Macrophages &gt; B cells)',
+             fontsize=11, fontweight='bold', color='green')
+ax2.invert_yaxis()  # Highest at top
+ax2.grid(axis='x', alpha=0.3)
+
+# Add value labels
+for i, (bar, val) in enumerate(zip(bars, sorted_values)):
+    ax2.text(val + 0.5, i, f'{val}%', va='center', fontsize=10, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('pie_vs_bar_comparison.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<p><strong>Code Example (R) - Pie Chart vs.&nbsp;Bar Chart:</strong></p>
+<pre><code>library(ggplot2)
+library(patchwork)
+
+# Data
+data &lt;- data.frame(
+  category = factor(c('T cells', 'B cells', 'Macrophages', 'Neutrophils', 'NK cells', 'Other')),
+  value = c(32, 18, 25, 12, 8, 5)
+)
+
+colors &lt;- c('T cells' = '#E74C3C', 'B cells' = '#3498DB',
+            'Macrophages' = '#2ECC71', 'Neutrophils' = '#F39C12',
+            'NK cells' = '#9B59B6', 'Other' = '#95A5A6')
+
+# Pie chart (ggplot doesn't encourage pies, but we'll make one to show why they're bad)
+p_pie &lt;- ggplot(data, aes(x = "", y = value, fill = category)) +
+  geom_bar(stat = "identity", width = 1, color = 'black', size = 1) +
+  coord_polar("y", start = 0) +
+  geom_text(aes(label = paste0(value, '%')),
+            position = position_stack(vjust = 0.5),
+            color = 'white', fontface = 'bold', size = 3.5) +
+  scale_fill_manual(values = colors) +
+  labs(title = '❌ PIE CHART: Hard to Compare Angles\n(Which is larger: B cells or Neutrophils?)',
+       fill = NULL) +
+  theme_void() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'red', size = 11),
+    legend.position = 'right'
+  )
+
+# Bar chart (sorted for clarity)
+data_sorted &lt;- data %&gt;%
+  arrange(desc(value)) %&gt;%
+  mutate(category = factor(category, levels = category))
+
+p_bar &lt;- ggplot(data_sorted, aes(x = category, y = value, fill = category)) +
+  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.7) +
+  geom_text(aes(label = paste0(value, '%')),
+           vjust = -0.5, fontface = 'bold', size = 3.5) +
+  scale_fill_manual(values = colors) +
+  labs(y = 'Percentage (%)',
+       title = '✓ BAR CHART: Easy to Compare Lengths\n(Clear ordering: T cells &gt; Macrophages &gt; B cells)') +
+  ylim(0, 40) +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = 'bold', color = 'darkgreen', size = 11),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(face = 'bold'),
+    legend.position = 'none',
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+combined &lt;- p_pie | p_bar
+ggsave('pie_vs_bar_comparison.png', combined, width = 14, height = 6,
+       dpi = 300, bg = 'white')</code></pre>
+<hr>
+</section>
+<section id="dual-y-axes-use-with-extreme-caution" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="dual-y-axes-use-with-extreme-caution"><span class="header-section-number">6.6.2</span> Dual Y-Axes: Use with Extreme Caution</h3>
+<p><strong>Why dual y-axes are problematic:</strong></p>
+<pre><code>Problems:
+1. Scale manipulation can create false correlations
+2. Cognitively demanding (which line matches which axis?)
+3. Can be used to mislead (intentionally or accidentally)
+4. No standard for which variable goes on which axis
+
+Example of manipulation:
+By adjusting scale ranges, you can make ANY two variables
+appear correlated or anti-correlated</code></pre>
+<p><strong>When dual y-axes ARE acceptable:</strong></p>
+<pre><code>✓ Same variable, different units (e.g., °C and °F)
+✓ Tightly coupled variables (input/output of same process)
+✓ When separate panels would lose temporal alignment
+
+BUT: Always justify in caption why dual axes are necessary</code></pre>
+<p><strong>Better alternatives:</strong></p>
+<pre><code>✓ Two separate panels (stacked vertically, aligned time axes)
+✓ Normalize both variables to 0-100% scale
+✓ Show correlation as scatter plot instead</code></pre>
+<p><strong>Code Example (Python) - Dual Axes Problem:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Two unrelated variables
+time = np.linspace(0, 10, 100)
+variable_1 = 50 + 10*np.sin(time) + np.random.randn(100)*2
+variable_2 = 200 + 50*np.sin(time + 1.5) + np.random.randn(100)*5
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# MISLEADING: Dual axes with manipulated scales
+ax1 = axes[0]
+color1 = '#E74C3C'
+color2 = '#3498DB'
+
+# Plot variable 1
+l1 = ax1.plot(time, variable_1, color=color1, linewidth=2.5, label='Variable 1')
+ax1.set_xlabel('Time (hours)', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Variable 1 (units)', color=color1, fontsize=11, fontweight='bold')
+ax1.tick_params(axis='y', labelcolor=color1)
+ax1.set_ylim(20, 80)  # Manipulated range
+
+# Plot variable 2 on second y-axis
+ax1_twin = ax1.twinx()
+l2 = ax1_twin.plot(time, variable_2, color=color2, linewidth=2.5, label='Variable 2')
+ax1_twin.set_ylabel('Variable 2 (units)', color=color2, fontsize=11, fontweight='bold')
+ax1_twin.tick_params(axis='y', labelcolor=color2)
+ax1_twin.set_ylim(120, 280)  # Manipulated to make lines appear correlated
+
+ax1.set_title('❌ MISLEADING: Dual Y-Axes\n(Scales manipulated to suggest correlation)',
+             fontsize=11, fontweight='bold', color='red')
+ax1.grid(alpha=0.3)
+
+# Add warning annotation
+ax1.text(0.5, 0.5, 'WARNING:\nScales can be adjusted\nto create false patterns!',
+         transform=ax1.transAxes, ha='center', va='center',
+         fontsize=10, fontweight='bold', color='red',
+         bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# BETTER: Separate panels (aligned)
+ax2 = axes[1]
+
+# Normalize both to 0-100 scale for fair comparison
+var1_norm = (variable_1 - variable_1.min()) / (variable_1.max() - variable_1.min()) * 100
+var2_norm = (variable_2 - variable_2.min()) / (variable_2.max() - variable_2.min()) * 100
+
+ax2.plot(time, var1_norm, color=color1, linewidth=2.5, label='Variable 1 (normalized)')
+ax2.plot(time, var2_norm, color=color2, linewidth=2.5, label='Variable 2 (normalized)')
+ax2.set_xlabel('Time (hours)', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Normalized Value (0-100%)', fontsize=11, fontweight='bold')
+ax2.set_title('✓ BETTER: Normalized to Same Scale\n(Honest comparison)',
+             fontsize=11, fontweight='bold', color='green')
+ax2.legend(loc='upper right', frameon=True, fontsize=10)
+ax2.grid(alpha=0.3)
+ax2.set_ylim(0, 100)
+
+plt.tight_layout()
+plt.savefig('dual_axes_problem.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()</code></pre>
+<hr>
+</section>
+<section id="d-plots-almost-always-avoid" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="d-plots-almost-always-avoid"><span class="header-section-number">6.6.3</span> 3D Plots: Almost Always Avoid</h3>
+<p><strong>Why 3D plots fail in publications:</strong></p>
+<pre><code>Problems:
+1. Perspective distortion (closer points look bigger)
+2. Occlusion (front objects hide back objects)
+3. Difficult to read exact values
+4. Rotation angle is arbitrary (different angles = different story)
+5. Doesn't print well (loses depth cues)
+
+The 3D illusion only works on screen with rotation interaction</code></pre>
+<p><strong>When 3D is acceptable:</strong></p>
+<pre><code>✓ 3D molecular structures (actual 3D objects)
+✓ Medical imaging (CT/MRI reconstructions)
+✓ Spatial mapping (genuine 3D physical phenomena)
+
+❌ NOT for: Bar charts, pie charts, scatter plots (use 2D instead)</code></pre>
+<p><strong>Alternatives to 3D scatter plots:</strong></p>
+<pre><code>Instead of 3D scatter:
+✓ Color/size as 3rd dimension in 2D plot
+✓ Multiple 2D projections (XY, XZ, YZ panels)
+✓ Interactive HTML plots (for digital only)
+✓ Contour plots or heatmaps</code></pre>
+<hr>
+</section>
+<section id="the-chartjunk-principle" class="level3" data-number="6.6.4">
+<h3 data-number="6.6.4" class="anchored" data-anchor-id="the-chartjunk-principle"><span class="header-section-number">6.6.4</span> The “Chartjunk” Principle</h3>
+<p><strong>Edward Tufte’s concept: Maximize data-ink ratio</strong></p>
+<pre><code>Data-ink ratio = Ink used for data / Total ink used
+
+✓ GOOD: High ratio (most ink shows data)
+❌ BAD: Low ratio (decorations dominate)
+
+Examples of chartjunk to avoid:
+- 3D effects on 2D data
+- Gradients/textures on bars (use solid colors)
+- Grid lines that overwhelm data
+- Excessive decorative elements
+- Unnecessary backgrounds
+- Ornamental fonts</code></pre>
+<p><strong>Modern Minimalism in Scientific Figures:</strong></p>
+<pre><code>Keep:
+✓ Data points/lines
+✓ Axes and labels
+✓ Legend (if necessary)
+✓ Minimal grid (light, unobtrusive)
+✓ Error bars/confidence bands
+
+Remove:
+❌ Chart borders (top/right spines)
+❌ Background colors (use white)
+❌ 3D effects
+❌ Drop shadows
+❌ Decorative clip art</code></pre>
+<hr>
+</section>
+</section>
+<section id="chapter-4-summary-complete-graph-selection-guide" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="chapter-4-summary-complete-graph-selection-guide"><span class="header-section-number">6.7</span> Chapter 4 Summary: Complete Graph Selection Guide</h2>
+<p><strong>Quick Reference Table:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 45%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Best Plot</th>
+<th>Acceptable Alternatives</th>
+<th>Avoid</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Compare groups (continuous)</strong></td>
+<td>Bar chart, Box plot, Violin plot</td>
+<td>Dot plot, Strip plot</td>
+<td>Pie chart, 3D bars</td>
+</tr>
+<tr class="even">
+<td><strong>Compare groups (many)</strong></td>
+<td>Small multiples, Heatmap</td>
+<td>Grouped violin, Faceted box</td>
+<td>Single cluttered plot</td>
+</tr>
+<tr class="odd">
+<td><strong>Distribution (single)</strong></td>
+<td>Histogram, Density, Box plot</td>
+<td>Violin plot, ECDF</td>
+<td>Pie chart (not applicable)</td>
+</tr>
+<tr class="even">
+<td><strong>Distribution (multiple)</strong></td>
+<td>Overlapping density, Violin, Box</td>
+<td>Ridgeline plot</td>
+<td>Multiple pie charts</td>
+</tr>
+<tr class="odd">
+<td><strong>Relationship (continuous)</strong></td>
+<td>Scatter plot</td>
+<td>Hexbin (if dense), 2D density</td>
+<td>Line plot (if not ordered)</td>
+</tr>
+<tr class="even">
+<td><strong>Time series (few)</strong></td>
+<td>Line graph</td>
+<td>Area chart</td>
+<td>Bar chart, Pie chart</td>
+</tr>
+<tr class="odd">
+<td><strong>Time series (many)</strong></td>
+<td>Small multiples, Highlight key</td>
+<td>Heatmap, Spaghetti plot</td>
+<td>All overlapping</td>
+</tr>
+<tr class="even">
+<td><strong>Composition (parts of whole)</strong></td>
+<td>Stacked bar, Treemap</td>
+<td>Stacked area (over time)</td>
+<td>Pie chart</td>
+</tr>
+<tr class="odd">
+<td><strong>Spatial data</strong></td>
+<td>Map (choropleth/point), Heatmap</td>
+<td>Contour plot</td>
+<td>3D surface (in print)</td>
+</tr>
+<tr class="even">
+<td><strong>Correlation matrix</strong></td>
+<td>Heatmap, Corrplot</td>
+<td>Network diagram</td>
+<td>Table only</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>End of Chapter 4: Data Encoding &amp; Graph Selection</strong></p>
+<p><strong>Key Takeaways:</strong> - <strong>Match plot to data structure</strong>, not personal preference - <strong>Bar charts</strong>: Zero baseline, error bars, sorted logically - <strong>Box/Violin plots</strong>: Show full distribution, not just mean - <strong>Histograms</strong>: Bin width matters (use Sturges’ or FD rule) - <strong>Scatter plots</strong>: Always plot raw data (Anscombe’s warning) - <strong>Time series</strong>: Use lines for continuous, small multiples for many - <strong>Avoid</strong>: Pie charts, dual y-axes (unless justified), 3D effects - <strong>Maximize data-ink ratio</strong>: Remove chartjunk, keep focus on data</p>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Chapter 3.html" class="pagination-link" aria-label="Chapter 3: Typography, Annotation &amp; Labels">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Chapter 5.html" class="pagination-link" aria-label="Chapter 5: Layout, Composition &amp; Figure Assembly">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

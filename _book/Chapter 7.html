@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Chapter 7: Common Figure Types Deep Dive – The Complete Guide to Bash Errors: From Beginner to Expert</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Chapter 8.html" rel="next">
+<link href="./Chapter 6.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter 7.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Complete Guide to Bash Errors: From Beginner to Expert</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Grammar of Figures: The Art &amp; Science of Visualizing Data for Publications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><strong>Grammar of Figures: The Art and Science of Visualizing Data for Publication</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 1: Foundations of Visual Perception</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 7.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#heatmaps-visualizing-matrix-data" id="toc-heatmaps-visualizing-matrix-data" class="nav-link active" data-scroll-target="#heatmaps-visualizing-matrix-data"><span class="header-section-number">9.1</span> 7.1 Heatmaps: Visualizing Matrix Data</a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-heatmaps" id="toc-when-to-use-heatmaps" class="nav-link" data-scroll-target="#when-to-use-heatmaps"><span class="header-section-number">9.1.1</span> When to Use Heatmaps</a></li>
+  <li><a href="#critical-design-decisions-for-heatmaps" id="toc-critical-design-decisions-for-heatmaps" class="nav-link" data-scroll-target="#critical-design-decisions-for-heatmaps"><span class="header-section-number">9.1.2</span> Critical Design Decisions for Heatmaps</a></li>
+  <li><a href="#heatmap-best-practices-checklist" id="toc-heatmap-best-practices-checklist" class="nav-link" data-scroll-target="#heatmap-best-practices-checklist"><span class="header-section-number">9.1.3</span> Heatmap Best Practices Checklist</a></li>
+  </ul></li>
+  <li><a href="#volcano-plots-differential-expression-analysis" id="toc-volcano-plots-differential-expression-analysis" class="nav-link" data-scroll-target="#volcano-plots-differential-expression-analysis"><span class="header-section-number">9.2</span> 7.2 Volcano Plots: Differential Expression Analysis</a>
+  <ul class="collapse">
+  <li><a href="#what-volcano-plots-show" id="toc-what-volcano-plots-show" class="nav-link" data-scroll-target="#what-volcano-plots-show"><span class="header-section-number">9.2.1</span> What Volcano Plots Show</a></li>
+  <li><a href="#anatomy-of-a-volcano-plot" id="toc-anatomy-of-a-volcano-plot" class="nav-link" data-scroll-target="#anatomy-of-a-volcano-plot"><span class="header-section-number">9.2.2</span> Anatomy of a Volcano Plot</a></li>
+  <li><a href="#volcano-plot-best-practices" id="toc-volcano-plot-best-practices" class="nav-link" data-scroll-target="#volcano-plot-best-practices"><span class="header-section-number">9.2.3</span> Volcano Plot Best Practices</a></li>
+  </ul></li>
+  <li><a href="#pca-plots-and-dimensionality-reduction" id="toc-pca-plots-and-dimensionality-reduction" class="nav-link" data-scroll-target="#pca-plots-and-dimensionality-reduction"><span class="header-section-number">9.3</span> 7.3 PCA Plots and Dimensionality Reduction</a>
+  <ul class="collapse">
+  <li><a href="#understanding-pca-visualization" id="toc-understanding-pca-visualization" class="nav-link" data-scroll-target="#understanding-pca-visualization"><span class="header-section-number">9.3.1</span> Understanding PCA Visualization</a></li>
+  <li><a href="#critical-pca-design-elements" id="toc-critical-pca-design-elements" class="nav-link" data-scroll-target="#critical-pca-design-elements"><span class="header-section-number">9.3.2</span> Critical PCA Design Elements</a></li>
+  <li><a href="#pca-plot-best-practices-checklist" id="toc-pca-plot-best-practices-checklist" class="nav-link" data-scroll-target="#pca-plot-best-practices-checklist"><span class="header-section-number">9.3.3</span> PCA Plot Best Practices Checklist</a></li>
+  </ul></li>
+  <li><a href="#survival-curves-kaplan-meier-plots" id="toc-survival-curves-kaplan-meier-plots" class="nav-link" data-scroll-target="#survival-curves-kaplan-meier-plots"><span class="header-section-number">9.4</span> 7.4 Survival Curves (Kaplan-Meier Plots)</a>
+  <ul class="collapse">
+  <li><a href="#understanding-survival-analysis-visualization" id="toc-understanding-survival-analysis-visualization" class="nav-link" data-scroll-target="#understanding-survival-analysis-visualization"><span class="header-section-number">9.4.1</span> Understanding Survival Analysis Visualization</a></li>
+  <li><a href="#survival-curve-best-practices" id="toc-survival-curve-best-practices" class="nav-link" data-scroll-target="#survival-curve-best-practices"><span class="header-section-number">9.4.2</span> Survival Curve Best Practices</a></li>
+  </ul></li>
+  <li><a href="#roc-curves-and-performance-metrics" id="toc-roc-curves-and-performance-metrics" class="nav-link" data-scroll-target="#roc-curves-and-performance-metrics"><span class="header-section-number">9.5</span> 7.5 ROC Curves and Performance Metrics</a>
+  <ul class="collapse">
+  <li><a href="#understanding-roc-receiver-operating-characteristic-curves" id="toc-understanding-roc-receiver-operating-characteristic-curves" class="nav-link" data-scroll-target="#understanding-roc-receiver-operating-characteristic-curves"><span class="header-section-number">9.5.1</span> Understanding ROC (Receiver Operating Characteristic) Curves</a></li>
+  <li><a href="#critical-roc-design-elements" id="toc-critical-roc-design-elements" class="nav-link" data-scroll-target="#critical-roc-design-elements"><span class="header-section-number">9.5.2</span> Critical ROC Design Elements</a></li>
+  <li><a href="#roc-curve-best-practices-checklist" id="toc-roc-curve-best-practices-checklist" class="nav-link" data-scroll-target="#roc-curve-best-practices-checklist"><span class="header-section-number">9.5.3</span> ROC Curve Best Practices Checklist</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="heatmaps-visualizing-matrix-data" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="heatmaps-visualizing-matrix-data"><span class="header-section-number">9.1</span> 7.1 Heatmaps: Visualizing Matrix Data</h2>
+<section id="when-to-use-heatmaps" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="when-to-use-heatmaps"><span class="header-section-number">9.1.1</span> When to Use Heatmaps</h3>
+<p><strong>Ideal scenarios:</strong></p>
+<pre><code>✓ Gene expression matrices (genes × samples)
+✓ Correlation matrices (variables × variables)
+✓ Spatial patterns (location × location)
+✓ Time-course data (features × time points)
+✓ Any large matrix where patterns &gt; individual values</code></pre>
+<p><strong>When NOT to use:</strong></p>
+<pre><code>❌ Few data points (&lt;10×10) — use bar charts or tables
+❌ When exact values are critical — add numbers or use alternative
+❌ Categorical data without ordering — consider other encodings</code></pre>
+<hr>
+</section>
+<section id="critical-design-decisions-for-heatmaps" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="critical-design-decisions-for-heatmaps"><span class="header-section-number">9.1.2</span> Critical Design Decisions for Heatmaps</h3>
+<p><strong>Decision 1: Colormap Selection</strong></p>
+<pre><code>Type of data → Colormap choice
+
+Sequential (one direction, e.g., 0 to max):
+✓ Use: Viridis, Plasma, YlOrRd, Blues
+Example: Gene expression (FPKM 0-1000)
+
+Diverging (two directions from center):
+✓ Use: RdBu (red-blue), RdYlGn, PiYG
+Example: Fold change (log₂ -3 to +3, center at 0)
+
+Categorical (unordered groups):
+✓ Use: Distinct hues, equal saturation
+Example: Cluster assignments</code></pre>
+<p><strong>Decision 2: Normalization Strategy</strong></p>
+<pre><code>Row normalization (Z-score by gene):
+- Highlights relative patterns across samples
+- Each row mean=0, SD=1
+- Use when: Comparing patterns, not absolute levels
+
+Column normalization (by sample):
+- Highlights relative patterns across genes
+- Use when: Sample-to-sample differences are key
+
+No normalization (raw values):
+- Shows absolute magnitudes
+- Use when: Actual values matter (e.g., concentrations)</code></pre>
+<p><strong>Decision 3: Clustering and Ordering</strong></p>
+<pre><code>Hierarchical clustering:
+✓ Reveals groups/patterns automatically
+✓ Shows dendrogram (tree structure)
+✓ Use: Exploratory analysis
+
+Manual ordering:
+✓ Test specific hypotheses
+✓ Control presentation order
+✓ Use: Confirmatory analysis, known groups
+
+Ordered by value:
+✓ Simple sorting (high to low)
+✓ Use: Ranking, prioritization</code></pre>
+<hr>
+<p><strong>Code Example (Python) - Comprehensive Heatmap:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+from scipy.cluster.hierarchy import dendrogram, linkage
+from scipy.spatial.distance import pdist
+
+np.random.seed(42)
+
+# Generate synthetic gene expression data
+n_genes = 50
+n_samples = 12
+
+# Three sample groups with different expression patterns
+group1 = np.random.normal(5, 1, (n_genes, 4))
+group2 = np.random.normal(8, 1.5, (n_genes, 4))
+group3 = np.random.normal(6, 1, (n_genes, 4))
+
+# Some genes upregulated in group2
+group2[:15, :] += 3
+
+data = np.hstack([group1, group2, group3])
+
+# Sample and gene names
+genes = [f'Gene{i+1}' for i in range(n_genes)]
+samples = [f'Ctrl{i+1}' for i in range(4)] + \
+          [f'TrtA{i+1}' for i in range(4)] + \
+          [f'TrtB{i+1}' for i in range(4)]
+
+# Create figure with subplots
+fig = plt.figure(figsize=(16, 12))
+
+# Layout: Main heatmap + dendrograms + colorbars
+gs = fig.add_gridspec(3, 3,
+                      width_ratios=[0.5, 4, 0.15],  # Dendrogram | Heatmap | Colorbar
+                      height_ratios=[0.5, 4, 0.15],  # Dendrogram | Heatmap | Sample labels
+                      hspace=0.02, wspace=0.02)
+
+# === PANEL 1: Basic heatmap (no clustering) ===
+ax_basic = fig.add_subplot(3, 3, 1)
+sns.heatmap(data[:20, :6], cmap='viridis', cbar=False, ax=ax_basic,
+            xticklabels=samples[:6], yticklabels=genes[:20])
+ax_basic.set_title('A. Basic Heatmap\n(No clustering)',
+                   fontsize=11, fontweight='bold', pad=10)
+ax_basic.set_xlabel('')
+ax_basic.set_ylabel('Genes', fontsize=10, fontweight='bold')
+
+# === PANEL 2: Hierarchical clustering ===
+ax_clust = fig.add_subplot(3, 3, 2)
+
+# Perform hierarchical clustering
+row_linkage = linkage(data, method='average', metric='euclidean')
+col_linkage = linkage(data.T, method='average', metric='euclidean')
+
+# Plot with clustered rows and columns
+sns.clustermap(data, cmap='RdBu_r', center=6.5,
+               row_linkage=row_linkage, col_linkage=col_linkage,
+               figsize=(8, 10), cbar_pos=(0.02, 0.8, 0.03, 0.15),
+               dendrogram_ratio=0.15,
+               xticklabels=samples, yticklabels=False)
+
+# Note: clustermap creates its own figure, so we save separately
+plt.savefig('heatmap_clustered.png', dpi=300, bbox_inches='tight')
+plt.close()
+
+# === PANEL 3: With annotations ===
+ax_annot = fig.add_subplot(3, 3, 3)
+
+# Normalized data (Z-score by row)
+data_norm = (data - data.mean(axis=1, keepdims=True)) / data.std(axis=1, keepdims=True)
+
+sns.heatmap(data_norm[:20, :6], cmap='RdBu_r', center=0,
+            cbar=True, ax=ax_annot,
+            xticklabels=samples[:6], yticklabels=False,
+            cbar_kws={'label': 'Z-score'})
+ax_annot.set_title('C. Row-Normalized\n(Z-score)',
+                   fontsize=11, fontweight='bold', pad=10)
+ax_annot.set_xlabel('Samples', fontsize=10, fontweight='bold')
+
+# Add sample group annotations
+for i in range(6):
+    if i &lt; 2:
+        color = '#7F8C8D'  # Control
+    elif i &lt; 4:
+        color = '#3498DB'  # Treatment A
+    else:
+        color = '#E74C3C'  # Treatment B
+
+    ax_annot.add_patch(plt.Rectangle((i, -1), 1, 0.5,
+                                     facecolor=color, edgecolor='black', linewidth=2,
+                                     clip_on=False))
+
+# === PANEL 4: Common mistakes ===
+ax_bad = fig.add_subplot(3, 3, 4)
+
+# Bad: Rainbow colormap (not perceptually uniform)
+sns.heatmap(data[:20, :6], cmap='jet', cbar=False, ax=ax_bad,
+            xticklabels=samples[:6], yticklabels=False)
+ax_bad.set_title('❌ BAD: Rainbow Colormap\n(Not perceptually uniform)',
+                 fontsize=11, fontweight='bold', color='red', pad=10)
+ax_bad.set_xlabel('Samples', fontsize=10, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('heatmap_comprehensive.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+print("Heatmap examples created:")
+print("1. heatmap_comprehensive.png - Multiple panels showing best practices")
+print("2. heatmap_clustered.png - Full hierarchical clustering example")</code></pre>
+<p><strong>Code Example (R) - Comprehensive Heatmap:</strong></p>
+<pre><code>library(ggplot2)
+library(pheatmap)
+library(RColorBrewer)
+library(viridis)
+
+set.seed(42)
+
+# Generate synthetic data
+n_genes &lt;- 50
+n_samples &lt;- 12
+
+group1 &lt;- matrix(rnorm(n_genes * 4, mean = 5, sd = 1), n_genes, 4)
+group2 &lt;- matrix(rnorm(n_genes * 4, mean = 8, sd = 1.5), n_genes, 4)
+group3 &lt;- matrix(rnorm(n_genes * 4, mean = 6, sd = 1), n_genes, 4)
+
+# Upregulate some genes in group2
+group2[1:15, ] &lt;- group2[1:15, ] + 3
+
+data &lt;- cbind(group1, group2, group3)
+
+# Names
+rownames(data) &lt;- paste0('Gene', 1:n_genes)
+colnames(data) &lt;- c(paste0('Ctrl', 1:4),
+                    paste0('TrtA', 1:4),
+                    paste0('TrtB', 1:4))
+
+# Sample annotations
+sample_groups &lt;- data.frame(
+  Group = factor(rep(c('Control', 'Treatment A', 'Treatment B'), each = 4))
+)
+rownames(sample_groups) &lt;- colnames(data)
+
+# Annotation colors
+ann_colors &lt;- list(
+  Group = c('Control' = '#7F8C8D',
+            'Treatment A' = '#3498DB',
+            'Treatment B' = '#E74C3C')
+)
+
+# === HEATMAP 1: Basic (no clustering) ===
+png('heatmap_basic.png', width = 2400, height = 2000, res = 300)
+pheatmap(data[1:20, 1:6],
+         color = viridis(100),
+         cluster_rows = FALSE,
+         cluster_cols = FALSE,
+         main = 'Basic Heatmap (No clustering)',
+         fontsize = 10,
+         fontsize_row = 8,
+         fontsize_col = 9)
+dev.off()
+
+# === HEATMAP 2: Hierarchical clustering with annotations ===
+png('heatmap_clustered_annotated.png', width = 2800, height = 3000, res = 300)
+pheatmap(data,
+         color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(100),
+         scale = "row",  # Z-score normalization
+         clustering_distance_rows = "euclidean",
+         clustering_distance_cols = "euclidean",
+         clustering_method = "average",
+         annotation_col = sample_groups,
+         annotation_colors = ann_colors,
+         show_rownames = FALSE,
+         fontsize = 10,
+         fontsize_col = 9,
+         main = 'Hierarchical Clustering with Annotations')
+dev.off()
+
+# === HEATMAP 3: Row-normalized (Z-score) ===
+data_norm &lt;- t(scale(t(data)))  # Z-score by row
+
+png('heatmap_normalized.png', width = 2800, height = 3000, res = 300)
+pheatmap(data_norm,
+         color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdBu")))(100),
+         breaks = seq(-3, 3, length.out = 101),  # Symmetric scale
+         cluster_rows = TRUE,
+         cluster_cols = TRUE,
+         annotation_col = sample_groups,
+         annotation_colors = ann_colors,
+         show_rownames = FALSE,
+         fontsize = 10,
+         fontsize_col = 9,
+         main = 'Row-Normalized (Z-score)')
+dev.off()
+
+# === HEATMAP 4: BAD EXAMPLE (rainbow colormap) ===
+png('heatmap_bad_rainbow.png', width = 2400, height = 2000, res = 300)
+pheatmap(data[1:20, 1:6],
+         color = rainbow(100),  # BAD: Rainbow colormap
+         cluster_rows = FALSE,
+         cluster_cols = FALSE,
+         main = '❌ BAD: Rainbow Colormap (Not perceptually uniform)',
+         fontsize = 10,
+         fontsize_row = 8,
+         fontsize_col = 9)
+dev.off()
+
+cat("Heatmap examples created:\n")
+cat("1. heatmap_basic.png\n")
+cat("2. heatmap_clustered_annotated.png\n")
+cat("3. heatmap_normalized.png\n")
+cat("4. heatmap_bad_rainbow.png\n")</code></pre>
+<hr>
+</section>
+<section id="heatmap-best-practices-checklist" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="heatmap-best-practices-checklist"><span class="header-section-number">9.1.3</span> Heatmap Best Practices Checklist</h3>
+<pre><code>Before creating heatmap:
+ Decide normalization strategy (raw, row Z-score, column Z-score)
+ Choose appropriate colormap (sequential vs. diverging)
+ Determine clustering method (or manual ordering)
+ Set symmetric scale if diverging (e.g., -3 to +3)
+
+Visual elements:
+ Colorbar with clear label and units
+ Sample/row annotations if grouped
+ Dendrogram if using hierarchical clustering
+ Grid lines (subtle) if helpful for reading specific cells
+
+Avoid:
+❌ Rainbow colormap (jet, hsv)
+❌ Asymmetric scales for diverging data
+❌ Too many rows/columns (&gt;100 makes individual cells unreadable)
+❌ Missing colorbar or unlabeled colorbar</code></pre>
+<hr>
+</section>
+</section>
+<section id="volcano-plots-differential-expression-analysis" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="volcano-plots-differential-expression-analysis"><span class="header-section-number">9.2</span> 7.2 Volcano Plots: Differential Expression Analysis</h2>
+<section id="what-volcano-plots-show" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="what-volcano-plots-show"><span class="header-section-number">9.2.1</span> What Volcano Plots Show</h3>
+<p><strong>Purpose:</strong> Simultaneously visualize: 1. <strong>Magnitude of change</strong> (x-axis: fold change) 2. <strong>Statistical significance</strong> (y-axis: -log₁₀(p-value))</p>
+<p><strong>Common in:</strong> Genomics, proteomics, metabolomics</p>
+<hr>
+</section>
+<section id="anatomy-of-a-volcano-plot" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="anatomy-of-a-volcano-plot"><span class="header-section-number">9.2.2</span> Anatomy of a Volcano Plot</h3>
+<pre><code>Structure:
+                  High significance
+                         ↑
+                         │
+  Down-regulated    │    Up-regulated
+  (significant)     │    (significant)
+        ←───────────┼───────────→
+     -log₂FC    Center   +log₂FC
+                    (0)
+                         │
+                         ↓
+                  Low significance
+
+Quadrants:
+- Top-left: Down-regulated + significant
+- Top-right: Up-regulated + significant
+- Bottom: Not significant (regardless of fold change)</code></pre>
+<hr>
+<p><strong>Code Example (Python) - Volcano Plot:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate differential expression data
+n_genes = 2000
+
+# Log2 fold changes (mostly around 0, some large changes)
+log2fc = np.random.normal(0, 1.5, n_genes)
+log2fc[:50] += 3  # 50 upregulated genes
+log2fc[50:100] -= 3  # 50 downregulated genes
+
+# P-values (mostly high, some low for significant genes)
+p_values = np.random.uniform(0.01, 1, n_genes)
+p_values[:100] = np.random.uniform(0.0001, 0.01, 100)  # Significant genes
+
+# Convert to -log10(p)
+neg_log10_p = -np.log10(p_values)
+
+# Define significance thresholds
+fc_threshold = 1.0  # Log2 fold change threshold
+p_threshold = 0.05  # P-value threshold
+neg_log10_p_threshold = -np.log10(p_threshold)
+
+# Classify genes
+significant_up = (log2fc &gt; fc_threshold) &amp; (p_values &lt; p_threshold)
+significant_down = (log2fc &lt; -fc_threshold) &amp; (p_values &lt; p_threshold)
+not_significant = ~(significant_up | significant_down)
+
+# Create figure
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# === PANEL A: Basic volcano plot ===
+ax1 = axes[0]
+
+# Plot not significant genes (gray, in background)
+ax1.scatter(log2fc[not_significant], neg_log10_p[not_significant],
+           s=15, color='#CCCCCC', alpha=0.5, label='Not significant')
+
+# Plot significant down-regulated (blue)
+ax1.scatter(log2fc[significant_down], neg_log10_p[significant_down],
+           s=30, color='#3498DB', alpha=0.8, edgecolors='black', linewidths=0.5,
+           label=f'Down ({np.sum(significant_down)})')
+
+# Plot significant up-regulated (red)
+ax1.scatter(log2fc[significant_up], neg_log10_p[significant_up],
+           s=30, color='#E74C3C', alpha=0.8, edgecolors='black', linewidths=0.5,
+           label=f'Up ({np.sum(significant_up)})')
+
+# Add threshold lines
+ax1.axhline(neg_log10_p_threshold, color='black', linestyle='--', linewidth=1.5, alpha=0.7)
+ax1.axvline(fc_threshold, color='black', linestyle='--', linewidth=1.5, alpha=0.7)
+ax1.axvline(-fc_threshold, color='black', linestyle='--', linewidth=1.5, alpha=0.7)
+
+# Labels
+ax1.set_xlabel('Log₂ Fold Change', fontsize=12, fontweight='bold')
+ax1.set_ylabel('-Log₁₀ (P-value)', fontsize=12, fontweight='bold')
+ax1.set_title('A. Volcano Plot: Differential Expression',
+             fontsize=13, fontweight='bold')
+
+# Add threshold annotations
+ax1.text(fc_threshold + 0.2, ax1.get_ylim()[0] + 0.5,
+        f'FC &gt; {2**fc_threshold:.1f}×', fontsize=9, rotation=90, va='bottom')
+ax1.text(-fc_threshold - 0.2, ax1.get_ylim()[0] + 0.5,
+        f'FC &lt; {2**-fc_threshold:.1f}×', fontsize=9, rotation=90, va='bottom', ha='right')
+ax1.text(ax1.get_xlim()[0] + 0.5, neg_log10_p_threshold + 0.3,
+        f'p &lt; {p_threshold}', fontsize=9)
+
+ax1.legend(loc='upper right', frameon=True, fontsize=10)
+ax1.grid(alpha=0.3)
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# === PANEL B: Common mistakes ===
+ax2 = axes[1]
+
+# BAD: No fold change threshold (only p-value)
+significant_p_only = p_values &lt; p_threshold
+
+ax2.scatter(log2fc[~significant_p_only], neg_log10_p[~significant_p_only],
+           s=15, color='#CCCCCC', alpha=0.5, label='Not significant')
+ax2.scatter(log2fc[significant_p_only], neg_log10_p[significant_p_only],
+           s=30, color='#E74C3C', alpha=0.8, edgecolors='black', linewidths=0.5,
+           label=f'p &lt; {p_threshold} (ignoring FC)')
+
+# Only p-value threshold line
+ax2.axhline(neg_log10_p_threshold, color='black', linestyle='--', linewidth=1.5, alpha=0.7)
+
+ax2.set_xlabel('Log₂ Fold Change', fontsize=12, fontweight='bold')
+ax2.set_ylabel('-Log₁₀ (P-value)', fontsize=12, fontweight='bold')
+ax2.set_title('❌ B. BAD: No Fold Change Threshold\n(Includes small, insignificant changes)',
+             fontsize=13, fontweight='bold', color='red')
+
+ax2.legend(loc='upper right', frameon=True, fontsize=10)
+ax2.grid(alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig('volcano_plot_comparison.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+# Print summary statistics
+print("Volcano Plot Summary:")
+print(f"Total genes: {n_genes}")
+print(f"Significant up-regulated: {np.sum(significant_up)}")
+print(f"Significant down-regulated: {np.sum(significant_down)}")
+print(f"Not significant: {np.sum(not_significant)}")
+print(f"\nThresholds:")
+print(f"- Fold change: ±{2**fc_threshold:.2f}× (log₂ ±{fc_threshold})")
+print(f"- P-value: {p_threshold} (-log₁₀ = {neg_log10_p_threshold:.2f})")</code></pre>
+<p><strong>Code Example (R) - Volcano Plot:</strong></p>
+<pre><code>library(ggplot2)
+library(ggrepel)
+
+set.seed(42)
+
+# Simulate data
+n_genes &lt;- 2000
+
+log2fc &lt;- rnorm(n_genes, 0, 1.5)
+log2fc[1:50] &lt;- log2fc[1:50] + 3  # Upregulated
+log2fc[51:100] &lt;- log2fc[51:100] - 3  # Downregulated
+
+p_values &lt;- runif(n_genes, 0.01, 1)
+p_values[1:100] &lt;- runif(100, 0.0001, 0.01)  # Significant
+
+neg_log10_p &lt;- -log10(p_values)
+
+# Thresholds
+fc_threshold &lt;- 1.0
+p_threshold &lt;- 0.05
+neg_log10_p_threshold &lt;- -log10(p_threshold)
+
+# Create dataframe
+data &lt;- data.frame(
+  gene = paste0('Gene', 1:n_genes),
+  log2fc = log2fc,
+  neg_log10_p = neg_log10_p,
+  p_value = p_values
+)
+
+# Classify
+data$status &lt;- 'Not significant'
+data$status[data$log2fc &gt; fc_threshold &amp; data$p_value &lt; p_threshold] &lt;- 'Up-regulated'
+data$status[data$log2fc &lt; -fc_threshold &amp; data$p_value &lt; p_threshold] &lt;- 'Down-regulated'
+data$status &lt;- factor(data$status, levels = c('Down-regulated', 'Not significant', 'Up-regulated'))
+
+# Colors
+colors &lt;- c('Down-regulated' = '#3498DB',
+            'Not significant' = '#CCCCCC',
+            'Up-regulated' = '#E74C3C')
+
+# === PLOT A: Good volcano plot ===
+p_good &lt;- ggplot(data, aes(x = log2fc, y = neg_log10_p, color = status)) +
+  geom_point(aes(size = status, alpha = status)) +
+  scale_color_manual(values = colors) +
+  scale_size_manual(values = c('Down-regulated' = 3, 'Not significant' = 1.5, 'Up-regulated' = 3)) +
+  scale_alpha_manual(values = c('Down-regulated' = 0.8, 'Not significant' = 0.5, 'Up-regulated' = 0.8)) +
+
+  # Threshold lines
+  geom_hline(yintercept = neg_log10_p_threshold, linetype = 'dashed', size = 1, alpha = 0.7) +
+  geom_vline(xintercept = c(-fc_threshold, fc_threshold), linetype = 'dashed', size = 1, alpha = 0.7) +
+
+  # Annotations
+  annotate('text', x = fc_threshold + 0.3, y = 1,
+          label = paste0('FC &gt; ', round(2^fc_threshold, 1), '×'),
+          angle = 90, vjust = -0.5, size = 3) +
+  annotate('text', x = -fc_threshold - 0.3, y = 1,
+          label = paste0('FC &lt; ', round(2^-fc_threshold, 1), '×'),
+          angle = 90, vjust = 1.5, size = 3) +
+  annotate('text', x = min(data$log2fc) + 1, y = neg_log10_p_threshold + 0.3,
+          label = paste0('p &lt; ', p_threshold), size = 3) +
+
+  labs(x = 'Log₂ Fold Change',
+       y = '-Log₁₀ (P-value)',
+       title = 'A. Volcano Plot: Differential Expression',
+       color = NULL, size = NULL, alpha = NULL) +
+
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5),
+    axis.title = element_text(face = 'bold', size = 12),
+    legend.position = c(0.85, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+ggsave('volcano_plot_good.png', p_good, width = 8, height = 6, dpi = 300, bg = 'white')
+
+# === PLOT B: BAD (no FC threshold) ===
+data_bad &lt;- data
+data_bad$status_bad &lt;- ifelse(data_bad$p_value &lt; p_threshold,
+                              'p &lt; 0.05 (ignoring FC)',
+                              'Not significant')
+
+p_bad &lt;- ggplot(data_bad, aes(x = log2fc, y = neg_log10_p, color = status_bad)) +
+  geom_point(aes(size = status_bad, alpha = status_bad)) +
+  scale_color_manual(values = c('p &lt; 0.05 (ignoring FC)' = '#E74C3C',
+                                'Not significant' = '#CCCCCC')) +
+  scale_size_manual(values = c('p &lt; 0.05 (ignoring FC)' = 3, 'Not significant' = 1.5)) +
+  scale_alpha_manual(values = c('p &lt; 0.05 (ignoring FC)' = 0.8, 'Not significant' = 0.5)) +
+
+  geom_hline(yintercept = neg_log10_p_threshold, linetype = 'dashed', size = 1, alpha = 0.7) +
+
+  labs(x = 'Log₂ Fold Change',
+       y = '-Log₁₀ (P-value)',
+       title = '❌ B. BAD: No Fold Change Threshold\n(Includes small, insignificant changes)',
+       color = NULL, size = NULL, alpha = NULL) +
+
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5, color = 'red'),
+    axis.title = element_text(face = 'bold', size = 12),
+    legend.position = c(0.8, 0.85),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+ggsave('volcano_plot_bad.png', p_bad, width = 8, height = 6, dpi = 300, bg = 'white')
+
+# Print summary
+cat("Volcano Plot Summary:\n")
+cat(sprintf("Total genes: %d\n", n_genes))
+cat(sprintf("Significant up-regulated: %d\n", sum(data$status == 'Up-regulated')))
+cat(sprintf("Significant down-regulated: %d\n", sum(data$status == 'Down-regulated')))
+cat(sprintf("Not significant: %d\n", sum(data$status == 'Not significant')))
+cat(sprintf("\nThresholds:\n"))
+cat(sprintf("- Fold change: ±%.2f× (log₂ ±%.1f)\n", 2^fc_threshold, fc_threshold))
+cat(sprintf("- P-value: %.2f (-log₁₀ = %.2f)\n", p_threshold, neg_log10_p_threshold))</code></pre>
+<hr>
+</section>
+<section id="volcano-plot-best-practices" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="volcano-plot-best-practices"><span class="header-section-number">9.2.3</span> Volcano Plot Best Practices</h3>
+<pre><code>Essential elements:
+ Log₂ fold change on x-axis (NOT linear fold change)
+ -Log₁₀ p-value on y-axis (emphasizes small p-values)
+ BOTH fold change AND p-value thresholds (two-criteria filtering)
+ Clear color distinction (up vs. down vs. not significant)
+ Threshold lines marked
+
+Common thresholds:
+- Fold change: ±1 (log₂) = ±2× linear
+- P-value: 0.05 or adjusted p-value (FDR &lt; 0.05)
+
+Avoid:
+❌ Using only p-value threshold (includes biologically irrelevant small changes)
+❌ Linear fold change on x-axis (compresses negative values)
+❌ Unlabeled axes (reader can't interpret scale)
+❌ Missing threshold lines</code></pre>
+<hr>
+</section>
+</section>
+<section id="pca-plots-and-dimensionality-reduction" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="pca-plots-and-dimensionality-reduction"><span class="header-section-number">9.3</span> 7.3 PCA Plots and Dimensionality Reduction</h2>
+<section id="understanding-pca-visualization" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="understanding-pca-visualization"><span class="header-section-number">9.3.1</span> Understanding PCA Visualization</h3>
+<p><strong>Principal Component Analysis (PCA):</strong> Reduces high-dimensional data (e.g., thousands of genes) to 2-3 principal components for visualization.</p>
+<p><strong>What PCA Shows:</strong></p>
+<pre><code>Purpose: Reveal overall structure in high-dimensional data
+- Clusters: Similar samples group together
+- Outliers: Samples that deviate from groups
+- Variance: How much variation each PC explains
+- Batch effects: Unwanted technical variation
+
+Common in: Genomics, metabolomics, single-cell analysis</code></pre>
+<hr>
+</section>
+<section id="critical-pca-design-elements" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="critical-pca-design-elements"><span class="header-section-number">9.3.2</span> Critical PCA Design Elements</h3>
+<p><strong>Element 1: Explained Variance</strong></p>
+<pre><code>✓ ALWAYS report variance explained by each PC:
+"PC1 (45.3%), PC2 (18.7%)"
+
+Why it matters:
+- Low variance (e.g., PC1=12%) suggests weak signal or many factors
+- High variance (e.g., PC1=80%) suggests dominant pattern
+- Helps interpret biological meaning</code></pre>
+<p><strong>Element 2: Color Encoding</strong></p>
+<pre><code>Color by biological variable of interest:
+✓ Treatment group, tissue type, disease status, time point
+
+NOT by technical variables (unless investigating batch effects):
+❌ Sequencing batch, extraction date, plate number (unless that's the focus)</code></pre>
+<p><strong>Element 3: Confidence Ellipses</strong></p>
+<pre><code>Show group spread:
+✓ 95% confidence ellipses around groups
+✓ Convex hulls (enclose all points in group)
+
+Reveals:
+- Within-group variability
+- Between-group separation
+- Overlap between conditions</code></pre>
+<hr>
+<p><strong>Code Example (Python) - Comprehensive PCA Plot:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from matplotlib.patches import Ellipse
+import matplotlib.transforms as transforms
+
+np.random.seed(42)
+
+# Generate synthetic high-dimensional data (e.g., gene expression)
+n_samples = 60
+n_features = 1000
+
+# Three groups with different patterns
+group_size = 20
+
+# Group 1: Control
+group1 = np.random.randn(group_size, n_features) * 0.5
+group1[:, :100] += 2  # Shift first 100 features
+
+# Group 2: Treatment A
+group2 = np.random.randn(group_size, n_features) * 0.6
+group2[:, 100:200] += 3  # Shift different features
+
+# Group 3: Treatment B
+group3 = np.random.randn(group_size, n_features) * 0.55
+group3[:, 200:300] += 2.5  # Yet different features
+
+# Combine data
+X = np.vstack([group1, group2, group3])
+labels = np.array(['Control']*group_size + ['Treatment A']*group_size + ['Treatment B']*group_size)
+
+# Standardize features (critical for PCA)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Perform PCA
+pca = PCA(n_components=3)
+X_pca = pca.fit_transform(X_scaled)
+
+# Extract PC scores
+pc1 = X_pca[:, 0]
+pc2 = X_pca[:, 1]
+pc3 = X_pca[:, 2]
+
+# Variance explained
+var_explained = pca.explained_variance_ratio_ * 100
+
+# Create figure
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# === PANEL A: Basic PCA (PC1 vs PC2) ===
+ax1 = axes[0, 0]
+
+colors_map = {'Control': '#7F8C8D', 'Treatment A': '#3498DB', 'Treatment B': '#E74C3C'}
+markers_map = {'Control': 'o', 'Treatment A': 's', 'Treatment B': '^'}
+
+for group in ['Control', 'Treatment A', 'Treatment B']:
+    mask = labels == group
+    ax1.scatter(pc1[mask], pc2[mask],
+               s=80, color=colors_map[group], marker=markers_map[group],
+               alpha=0.7, edgecolors='black', linewidths=1,
+               label=f'{group} (n={np.sum(mask)})')
+
+ax1.set_xlabel(f'PC1 ({var_explained[0]:.1f}% variance)', fontsize=11, fontweight='bold')
+ax1.set_ylabel(f'PC2 ({var_explained[1]:.1f}% variance)', fontsize=11, fontweight='bold')
+ax1.set_title('A. Basic PCA Plot\n(Without confidence regions)',
+             fontsize=12, fontweight='bold')
+ax1.legend(loc='upper right', frameon=True, fontsize=10)
+ax1.grid(alpha=0.3)
+ax1.axhline(0, color='black', linewidth=0.8, alpha=0.3)
+ax1.axvline(0, color='black', linewidth=0.8, alpha=0.3)
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# Panel label
+ax1.text(-0.12, 1.05, 'A', transform=ax1.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+# === PANEL B: PCA with 95% confidence ellipses ===
+ax2 = axes[0, 1]
+
+def confidence_ellipse(x, y, ax, n_std=2.0, facecolor='none', **kwargs):
+    """Draw confidence ellipse"""
+    if x.size != y.size:
+        raise ValueError("x and y must be the same size")
+
+    cov = np.cov(x, y)
+    pearson = cov[0, 1]/np.sqrt(cov[0, 0] * cov[1, 1])
+
+    ell_radius_x = np.sqrt(1 + pearson)
+    ell_radius_y = np.sqrt(1 - pearson)
+    ellipse = Ellipse((0, 0), width=ell_radius_x * 2, height=ell_radius_y * 2,
+                     facecolor=facecolor, **kwargs)
+
+    scaleov[0, 0]) * n_std
+    mean_x = np.mean(x)
+
+    scale_y = np.sqrt(cov[1, 1]) * n_std
+    mean_y = np.mean(y)
+
+    transf = transforms.Affine2D() \
+        .scale(scale_x, scale_y) \
+        .translate(mean_x, mean_y)
+
+    ellipse.set_transform(transf + ax.transData)
+    return ax.add_patch(ellipse)
+
+# Plot points and ellipses
+for group in ['Control', 'Treatment A', 'Treatment B']:
+    mask = labels == group
+    ax2.scatter(pc1[mask], pc2[mask],
+               s=80, color=colors_map[group], marker=markers_map[group],
+               alpha=0.7, edgecolors='black', linewidths=1,
+               label=f'{group} (n={np.sum(mask)})')
+
+    # Add 95% confidence ellipse
+    confidence_ellipse(pc1[mask], pc2[mask], ax2, n_std=2.0,
+                      edgecolor=colors_map[group], linewidth=2.5,
+                      facecolor=colors_map[group], alpha=0.1)
+
+ax2.set_xlabel(f'PC1 ({var_explained[0]:.1f}% variance)', fontsize=11, fontweight='bold')
+ax2.set_ylabel(f'PC2 ({var_explained[1]:.1f}% variance)', fontsize=11, fontweight='bold')
+ax2.set_title('B. PCA with 95% Confidence Ellipses\n(Shows group spread)',
+             fontsize=12, fontweight='bold')
+ax2.legend(loc='upper right', frameon=True, fontsize=10)
+ax2.grid(alpha=0.3)
+ax2.axhline(0, color='black', linewidth=0.8, alpha=0.3)
+ax2.axvline(0, color='black', linewidth=0.8, alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+ax2.text(-0.12, 1.05, 'B', transform=ax2.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+# === PANEL C: Scree plot (variance explained) ===
+ax3 = axes[1, 0]
+
+n_components = min(10, X_scaled.shape[1])
+pca_full = PCA(n_components=n_components)
+pca_full.fit(X_scaled)
+
+components = range(1, n_components + 1)
+var_exp = pca_full.explained_variance_ratio_ * 100
+
+ax3.bar(components, var_exp, color='#3498DB', edgecolor='black', linewidth=1.5, alpha=0.7)
+ax3.plot(components, var_exp, 'ro-', linewidth=2, markersize=8)
+
+ax3.set_xlabel('Principal Component', fontsize=11, fontweight='bold')
+ax3.set_ylabel('Variance Explained (%)', fontsize=11, fontweight='bold')
+ax3.set_title('C. Scree Plot\n(How many PCs to consider?)',
+             fontsize=12, fontweight='bold')
+ax3.set_xticks(components)
+ax3.grid(axis='y', alpha=0.3)
+ax3.spines['top'].set_visible(False)
+ax3.spines['right'].set_visible(False)
+
+# Add cumulative variance line
+ax3_twin = ax3.twinx()
+cumvar = np.cumsum(var_exp)
+ax3_twin.plot(components, cumvar, 'g^--', linewidth=2, markersize=8, alpha=0.7,
+             label='Cumulative')
+ax3_twin.set_ylabel('Cumulative Variance (%)', fontsize=11, fontweight='bold', color='green')
+ax3_twin.tick_params(axis='y', labelcolor='green')
+ax3_twin.spines['top'].set_visible(False)
+ax3_twin.legend(loc='lower right', frameon=True, fontsize=9)
+
+ax3.text(-0.12, 1.05, 'C', transform=ax3.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+# === PANEL D: 3D PCA (PC1 vs PC2 vs PC3) ===
+ax4 = fig.add_subplot(2, 2, 4, projection='3d')
+
+for group in ['Control', 'Treatment A', 'Treatment B']:
+    mask = labels == group
+    ax4.scatter(pc1[mask], pc2[mask], pc3[mask],
+               s=80, color=colors_map[group], marker=markers_map[group],
+               alpha=0.7, edgecolors='black', linewidths=1,
+               label=f'{group}')
+
+ax4.set_xlabel(f'PC1 ({var_explained[0]:.1f}%)', fontsize=10, fontweight='bold')
+ax4.set_ylabel(f'PC2 ({var_explained[1]:.1f}%)', fontsize=10, fontweight='bold')
+ax4.set_zlabel(f'PC3 ({var_explained[2]:.1f}%)', fontsize=10, fontweight='bold')
+ax4.set_title('D. 3D PCA Plot\n(PC1-PC2-PC3)', fontsize=12, fontweight='bold', pad=20)
+ax4.legend(loc='upper left', frameon=True, fontsize=9)
+
+ax4.text2D(-0.12, 1.05, 'D', transform=ax4.transAxes,
+          fontsize=16, fontweight='bold', va='top')
+
+plt.tight_layout()
+plt.savefig('pca_comprehensive.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+# Print summary
+print("PCA Analysis Summary:")
+print(f"Total samples: {n_samples}")
+print(f"Total features: {n_features}")
+print(f"\nVariance explained:")
+for i, var in enumerate(var_explained[:5]):
+    print(f"  PC{i+1}: {var:.2f}%")
+print(f"\nCumulative variance (first 3 PCs): {np.sum(var_explained[:3]):.2f}%")</code></pre>
+<p><strong>Code Example (R) - Comprehensive PCA Plot:</strong></p>
+<pre><code>library(ggplot2)
+library(ggrepel)
+library(patchwork)
+library(ggforce)  # For stat_ellipse
+
+set.seed(42)
+
+# Generate synthetic data
+n_samples &lt;- 60
+n_features &lt;- 1000
+group_size &lt;- 20
+
+# Three groups
+group1 &lt;- matrix(rnorm(group_size * n_features, 0, 0.5), group_size, n_features)
+group1[, 1:100] &lt;- group1[, 1:100] + 2
+
+group2 &lt;- matrix(rnorm(group_size * n_features, 0, 0.6), group_size, n_features)
+group2[, 101:200] &lt;- group2[, 101:200] + 3
+
+group3 &lt;- matrix(rnorm(group_size * n_features, 0, 0.55), group_size, n_features)
+group3[, 201:300] &lt;- group3[, 201:300] + 2.5
+
+X &lt;- rbind(group1, group2, group3)
+labels &lt;- factor(rep(c('Control', 'Treatment A', 'Treatment B'), each = group_size))
+
+# Standardize and perform PCA
+X_scaled &lt;- scale(X)
+pca_result &lt;- prcomp(X_scaled, center = FALSE, scale. = FALSE)
+
+# Extract PC scores
+pca_data &lt;- data.frame(
+  PC1 = pca_result$x[, 1],
+  PC2 = pca_result$x[, 2],
+  PC3 = pca_result$x[, 3],
+  Group = labels
+)
+
+# Variance explained
+var_explained &lt;- summary(pca_result)$importance[2, ] * 100
+
+# Colors
+colors &lt;- c('Control' = '#7F8C8D',
+            'Treatment A' = '#3498DB',
+            'Treatment B' = '#E74C3C')
+
+# === PANEL A: Basic PCA ===
+p_a &lt;- ggplot(pca_data, aes(x = PC1, y = PC2, color = Group, shape = Group)) +
+  geom_point(size = 4, alpha = 0.7) +
+  scale_color_manual(values = colors) +
+  scale_shape_manual(values = c(16, 15, 17)) +  # circle, square, triangle
+
+  geom_hline(yintercept = 0, color = 'black', size = 0.5, alpha = 0.3) +
+  geom_vline(xintercept = 0, color = 'black', size = 0.5, alpha = 0.3) +
+
+  labs(x = sprintf('PC1 (%.1f%% variance)', var_explained[1]),
+       y = sprintf('PC2 (%.1f%% variance)', var_explained[2]),
+       title = 'A. Basic PCA Plot\n(Without confidence regions)',
+       color = NULL, shape = NULL) +
+
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.85, 0.15),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3),
+    plot.tag = element_text(size = 16, face = 'bold')
+  )
+
+# === PANEL B: PCA with confidence ellipses ===
+p_b &lt;- ggplot(pca_data, aes(x = PC1, y = PC2, color = Group, fill = Group, shape = Group)) +
+  geom_point(size = 4, alpha = 0.7) +
+  stat_ellipse(aes(fill = Group), geom = "polygon", alpha = 0.1, level = 0.95, size = 1.5) +
+
+  scale_color_manual(values = colors) +
+  scale_fill_manual(values = colors) +
+  scale_shape_manual(values = c(16, 15, 17)) +
+
+  geom_hline(yintercept = 0, color = 'black', size = 0.5, alpha = 0.3) +
+  geom_vline(xintercept = 0, color = 'black', size = 0.5, alpha = 0.3) +
+
+  labs(x = sprintf('PC1 (%.1f%% variance)', var_explained[1]),
+       y = sprintf('PC2 (%.1f%% variance)', var_explained[2]),
+       title = 'B. PCA with 95% Confidence Ellipses\n(Shows group spread)',
+       color = NULL, fill = NULL, shape = NULL) +
+
+  guides(fill = guide_legend(override.aes = list(alpha = 0.3))) +
+
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
+    axis.title = element_text(face = 'bold'),
+    legend.position = c(0.85, 0.15),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3),
+    plot.tag = element_text(size = 16, face = 'bold')
+  )
+
+# === PANEL C: Scree plot ===
+scree_data &lt;- data.frame(
+  PC = 1:10,
+  Variance = var_explained[1:10],
+  Cumulative = cumsum(var_explained[1:10])
+)
+
+p_c &lt;- ggplot(scree_data, aes(x = PC, y = Variance)) +
+  geom_bar(stat = 'identity', fill = '#3498DB', color = 'black', size = 1, alpha = 0.7) +
+  geom_line(color = 'red', size = 1.5) +
+  geom_point(color = 'red', size = 3) +
+
+  labs(x = 'Principal Component',
+       y = 'Variance Explained (%)',
+       title = 'C. Scree Plot\n(How many PCs to consider?)') +
+
+  scale_x_continuous(breaks = 1:10) +
+
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major.y = element_line(color = 'gray90', size = 0.3),
+    plot.tag = element_text(size = 16, face = 'bold')
+  )
+
+# Add cumulative line
+p_c &lt;- p_c +
+  geom_line(aes(y = Cumulative), color = 'darkgreen', size = 1.5, linetype = 'dashed') +
+  geom_point(aes(y = Cumulative), color = 'darkgreen', size = 3, shape = 17)
+
+# Combine plots
+combined &lt;- (p_a | p_b) / (p_c | plot_spacer()) +
+  plot_annotation(tag_levels = 'A') &amp;
+  theme(plot.tag = element_text(size = 16, face = 'bold'))
+
+ggsave('pca_comprehensive.png', combined, width = 14, height = 12, dpi = 300, bg = 'white')
+
+# Print summary
+cat("PCA Analysis Summary:\n")
+cat(sprintf("Total samples: %d\n", n_samples))
+cat(sprintf("Total features: %d\n", n_features))
+cat("\nVariance explained:\n")
+for(i in 1:5) {
+  cat(sprintf("  PC%d: %.2f%%\n", i, var_explained[i]))
+}
+cat(sprintf("\nCumulative variance (first 3 PCs): %.2f%%\n", sum(var_explained[1:3])))</code></pre>
+<hr>
+</section>
+<section id="pca-plot-best-practices-checklist" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="pca-plot-best-practices-checklist"><span class="header-section-number">9.3.3</span> PCA Plot Best Practices Checklist</h3>
+<pre><code>Essential elements:
+ Variance explained in axis labels: "PC1 (45.3% variance)"
+ Clear color/shape encoding by biological variable
+ Confidence ellipses or convex hulls for groups
+ Grid lines at x=0, y=0 (show PC center)
+ Legend with sample sizes per group
+
+Interpretation aids:
+ Scree plot (show how many PCs capture variance)
+ Loadings plot (which features drive separation) — optional
+ 3D plot if PC3 explains &gt;10% variance
+
+Avoid:
+❌ No variance explained reported (reader can't assess importance)
+❌ Coloring by technical batch without justification
+❌ Truncated axes that hide outliers
+❌ Using PCA on non-normalized data (scale features first!)</code></pre>
+<hr>
+</section>
+</section>
+<section id="survival-curves-kaplan-meier-plots" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="survival-curves-kaplan-meier-plots"><span class="header-section-number">9.4</span> 7.4 Survival Curves (Kaplan-Meier Plots)</h2>
+<section id="understanding-survival-analysis-visualization" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="understanding-survival-analysis-visualization"><span class="header-section-number">9.4.1</span> Understanding Survival Analysis Visualization</h3>
+<p><strong>Kaplan-Meier (KM) curve:</strong> Shows probability of survival over time, accounting for censored data (subjects lost to follow-up or still alive at study end).</p>
+<p><strong>Common in:</strong> Clinical trials, cancer research, reliability engineering</p>
+<p><strong>Key components:</strong></p>
+<pre><code>1. Survival probability (y-axis): 0 to 1 (or 0% to 100%)
+2. Time (x-axis): Days, months, years since baseline
+3. Step function: Drops at each event (death, failure)
+4. Censored data markers: Tick marks for subjects without event
+5. Confidence bands: Uncertainty around survival estimate
+6. Log-rank test: Statistical comparison between groups</code></pre>
+<hr>
+<p><strong>Code Example (Python) - Kaplan-Meier Survival Curve:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from lifelines import KaplanMeierFitter
+from lifelines.statistics import logrank_test
+
+np.random.seed(42)
+
+# Simulate survival data for two treatment groups
+n_control = 50
+n_treatment = 50
+
+# Control group: Worse survival
+time_control = np.random.exponential(scale=12, size=n_control)  # Months
+event_control = np.random.rand(n_control) &lt; 0.7  # 70% events (deaths)
+
+# Treatment group: Better survival
+time_treatment = np.random.exponential(scale=20, size=n_treatment)  # Months
+event_treatment = np.random.rand(n_treatment) &lt; 0.5  # 50% events
+
+# Fit Kaplan-Meier curves
+kmf_control = KaplanMeierFitter()
+kmf_control.fit(time_control, event_control, label='Control')
+
+kmf_treatment = KaplanMeierFitter()
+kmf_treatment.fit(time_treatment, event_treatment, label='Treatment')
+
+# Statistical test
+results = logrank_test(time_control, time_treatment,
+                       event_control, event_treatment)
+p_value = results.p_value
+
+# Create figure
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# === PANEL A: Good KM curve ===
+ax1 = axes[0]
+
+# Plot survival curves
+kmf_control.plot_survival_function(ax=ax1, ci_show=True,
+                                   color='#7F8C8D', linewidth=3,
+                                   alpha=0.8)
+kmf_treatment.plot_survival_function(ax=ax1, ci_show=True,
+                                     color='#E74C3C', linewidth=3,
+                                     alpha=0.8)
+
+# Add censored markers (tick marks)
+# Note: lifelines plots these automatically as '+' markers
+
+# Formatting
+ax1.set_xlabel('Time (months)', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Survival Probability', fontsize=12, fontweight='bold')
+ax1.set_title('✓ Kaplan-Meier Survival Curves\n(With confidence bands)',
+             fontsize=13, fontweight='bold', color='green')
+ax1.set_ylim(0, 1.05)
+ax1.set_xlim(0, None)
+ax1.grid(alpha=0.3)
+ax1.legend(loc='lower left', frameon=True, fontsize=11,
+          title=f'Log-rank p = {p_value:.3f}')
+
+# Add median survival lines
+median_control = kmf_control.median_survival_time_
+median_treatment = kmf_treatment.median_survival_time_
+
+ax1.axhline(0.5, color='black', linestyle='--', linewidth=1, alpha=0.5)
+ax1.axvline(median_control, color='#7F8C8D', linestyle=':', linewidth=2, alpha=0.7)
+ax1.axvline(median_treatment, color='#E74C3C', linestyle=':', linewidth=2, alpha=0.7)
+
+# Annotate median survival
+ax1.text(median_control + 1, 0.52, f'Median: {median_control:.1f} mo',
+        fontsize=9, color='#7F8C8D', fontweight='bold')
+ax1.text(median_treatment + 1, 0.47, f'Median: {median_treatment:.1f} mo',
+        fontsize=9, color='#E74C3C', fontweight='bold')
+
+# Number at risk table (simplified annotation)
+ax1.text(0.02, 0.05,
+        f'Numbers at risk:\nControl: {n_control} patients\nTreatment: {n_treatment} patients',
+        transform=ax1.transAxes, fontsize=9, va='bottom',
+        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# Panel label
+ax1.text(-0.12, 1.05, 'A', transform=ax1.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+# === PANEL B: Common mistakes ===
+ax2 = axes[1]
+
+# Plot without confidence bands (less informative)
+kmf_control.plot_survival_function(ax=ax2, ci_show=False,
+                                   color='#7F8C8D', linewidth=3,
+                                   alpha=0.8)
+kmf_treatment.plot_survival_function(ax=ax2, ci_show=False,
+                                     color='#E74C3C', linewidth=3,
+                                     alpha=0.8)
+
+ax2.set_xlabel('Time (months)', fontsize=12, fontweight='bold')
+ax2.set_ylabel('Survival Probability', fontsize=12, fontweight='bold')
+ax2.set_title('❌ Common Mistakes:\n(No confidence bands, no statistics)',
+             fontsize=13, fontweight='bold', color='red')
+ax2.set_ylim(0, 1.05)
+ax2.set_xlim(0, None)
+ax2.grid(alpha=0.3)
+ax2.legend(loc='lower left', frameon=True, fontsize=11)
+
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+ax2.text(-0.12, 1.05, 'B', transform=ax2.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+plt.tight_layout()
+plt.savefig('kaplan_meier_survival.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+# Print summary statistics
+print("Survival Analysis Summary:")
+print(f"\nControl group (n={n_control}):")
+print(f"  Median survival: {median_control:.2f} months")
+print(f"  Events (deaths): {np.sum(event_control)} ({np.sum(event_control)/n_control*100:.1f}%)")
+
+print(f"\nTreatment group (n={n_treatment}):")
+print(f"  Median survival: {median_treatment:.2f} months")
+print(f"  Events (deaths): {np.sum(event_treatment)} ({np.sum(event_treatment)/n_treatment*100:.1f}%)")
+
+print(f"\nLog-rank test:")
+print(f"  p-value: {p_value:.4f}")
+if p_value &lt; 0.05:
+    print("  Conclusion: Significant difference between groups")
+else:
+    print("  Conclusion: No significant difference between groups")</code></pre>
+<hr>
+</section>
+<section id="survival-curve-best-practices" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="survival-curve-best-practices"><span class="header-section-number">9.4.2</span> Survival Curve Best Practices</h3>
+<pre><code>Essential elements:
+ Y-axis: 0 to 1 (or 0% to 100%), starts at 1.0
+ X-axis: Starts at 0 (baseline)
+ Step function (NOT smooth curve)
+ Confidence bands (95% CI) shaded or as dashed lines
+ Censored data marked (tick marks or '+' symbols)
+ Log-rank test p-value reported
+ Median survival times noted (optional lines)
+ Number at risk table below plot (or in legend)
+
+Caption must include:
+- Sample size per group
+- Number of events (deaths) per group
+- Follow-up duration
+- Statistical test used (log-rank test)
+
+Avoid:
+❌ Smooth interpolation (survival probability drops only at events)
+❌ No confidence bands (hides uncertainty)
+❌ Missing censored data indicators
+❌ No statistical comparison (log-rank test)
+❌ Y-axis not starting at 1.0</code></pre>
+<hr>
+</section>
+</section>
+<section id="roc-curves-and-performance-metrics" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="roc-curves-and-performance-metrics"><span class="header-section-number">9.5</span> 7.5 ROC Curves and Performance Metrics</h2>
+<section id="understanding-roc-receiver-operating-characteristic-curves" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="understanding-roc-receiver-operating-characteristic-curves"><span class="header-section-number">9.5.1</span> Understanding ROC (Receiver Operating Characteristic) Curves</h3>
+<p><strong>Purpose:</strong> Evaluate classifier or diagnostic test performance across all possible decision thresholds.</p>
+<p><strong>What ROC shows:</strong></p>
+<pre><code>X-axis: False Positive Rate (FPR) = 1 - Specificity
+Y-axis: True Positive Rate (TPR) = Sensitivity
+
+Key metrics:
+- AUC (Area Under Curve): Overall discriminative ability
+  * AUC = 1.0: Perfect classifier
+  * AUC = 0.5: Random guessing (diagonal line)
+  * AUC &lt; 0.5: Worse than random (inverse predictions)
+
+Common in: Machine learning, diagnostics, biomarker validation</code></pre>
+<hr>
+</section>
+<section id="critical-roc-design-elements" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="critical-roc-design-elements"><span class="header-section-number">9.5.2</span> Critical ROC Design Elements</h3>
+<p><strong>Element 1: Diagonal Reference Line</strong></p>
+<pre><code>✓ ALWAYS include diagonal (y=x) line representing random chance
+→ Shows baseline performance
+→ Curves above = better than random
+→ Curves below = worse than random (possibly inverted predictions)</code></pre>
+<p><strong>Element 2: AUC with Confidence Interval</strong></p>
+<pre><code>✓ Report: AUC = 0.85 (95% CI: 0.78-0.91)
+❌ NEVER report AUC alone without CI
+→ CI indicates uncertainty/sample size effect</code></pre>
+<p><strong>Element 3: Optimal Operating Point</strong></p>
+<pre><code>Mark optimal threshold on curve:
+- Balance sensitivity and specificity
+- Often chosen by Youden's index: max(Sensitivity + Specificity - 1)
+- Or based on clinical cost/benefit considerations</code></pre>
+<hr>
+<p><strong>Code Example (Python) - ROC Curve Analysis:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import roc_curve, auc, roc_auc_score
+from scipy import stats
+
+np.random.seed(42)
+
+# Simulate binary classification results
+n_samples = 500
+
+# True labels (0 = negative, 1 = positive)
+y_true = np.random.binomial(1, 0.4, n_samples)
+
+# Predicted probabilities (imperfect classifier)
+# Positive cases have higher scores on average
+y_scores_good = np.where(y_true == 1,
+                         np.random.beta(7, 3, n_samples),  # Higher scores
+                         np.random.beta(3, 7, n_samples))  # Lower scores
+
+y_scores_poor = np.where(y_true == 1,
+                         np.random.beta(5, 5, n_samples),  # Only slightly higher
+                         np.random.beta(5, 5, n_samples))  # Similar distribution
+
+# Calculate ROC curves
+fpr_good, tpr_good, thresholds_good = roc_curve(y_true, y_scores_good)
+fpr_poor, tpr_poor, thresholds_poor = roc_curve(y_true, y_scores_poor)
+
+# Calculate AUC
+auc_good = auc(fpr_good, tpr_good)
+auc_poor = auc(fpr_poor, tpr_poor)
+
+# Bootstrap confidence intervals for AUC (simplified)
+def bootstrap_auc(y_true, y_scores, n_bootstrap=1000):
+    aucs = []
+    n = len(y_true)
+    for _ in range(n_bootstrap):
+        idx = np.random.choice(n, n, replace=True)
+        try:
+            aucs.append(roc_auc_score(y_true[idx], y_scores[idx]))
+        except:
+            continue
+    return np.percentile(aucs, [2.5, 97.5])
+
+ci_good = bootstrap_auc(y_true, y_scores_good, 1000)
+ci_poor = bootstrap_auc(y_true, y_scores_poor, 1000)
+
+# Find optimal threshold (Youden's index)
+j_good = tpr_good - fpr_good
+optimal_idx_good = np.argmax(j_good)
+optimal_threshold_good = thresholds_good[optimal_idx_good]
+optimal_fpr_good = fpr_good[optimal_idx_good]
+optimal_tpr_good = tpr_good[optimal_idx_good]
+
+# Create figure
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# === PANEL A: Good ROC curve ===
+ax1 = axes[0]
+
+# Plot diagonal (random chance)
+ax1.plot([0, 1], [0, 1], 'k--', linewidth=2, alpha=0.5, label='Random (AUC=0.50)')
+
+# Plot good classifier
+ax1.plot(fpr_good, tpr_good, color='#E74C3C', linewidth=3,
+        label=f'Good Classifier (AUC={auc_good:.3f}, 95% CI: {ci_good[0]:.3f}-{ci_good[1]:.3f})')
+
+# Fill area under curve
+ax1.fill_between(fpr_good, tpr_good, alpha=0.2, color='#E74C3C')
+
+# Mark optimal operating point
+ax1.plot(optimal_fpr_good, optimal_tpr_good, 'bo', markersize=12,
+        label=f'Optimal threshold = {optimal_threshold_good:.3f}')
+ax1.annotate(f'Sensitivity: {optimal_tpr_good:.3f}\nSpecificity: {1-optimal_fpr_good:.3f}',
+            xy=(optimal_fpr_good, optimal_tpr_good),
+            xytext=(optimal_fpr_good + 0.15, optimal_tpr_good - 0.15),
+            fontsize=9, bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+            arrowprops=dict(arrowstyle='-&gt;', lw=1.5))
+
+# Formatting
+ax1.set_xlabel('False Positive Rate (1 - Specificity)', fontsize=12, fontweight='bold')
+ax1.set_ylabel('True Positive Rate (Sensitivity)', fontsize=12, fontweight='bold')
+ax1.set_title('✓ A. ROC Curve: Good Classifier\n(AUC &gt;&gt; 0.5)',
+             fontsize=13, fontweight='bold', color='green')
+ax1.set_xlim(-0.05, 1.05)
+ax1.set_ylim(-0.05, 1.05)
+ax1.set_aspect('equal')
+ax1.legend(loc='lower right', frameon=True, fontsize=10)
+ax1.grid(alpha=0.3)
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+
+# Panel label
+ax1.text(-0.12, 1.05, 'A', transform=ax1.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+# === PANEL B: Comparison with poor classifier ===
+ax2 = axes[1]
+
+# Plot diagonal
+ax2.plot([0, 1], [0, 1], 'k--', linewidth=2, alpha=0.5, label='Random (AUC=0.50)')
+
+# Plot good classifier
+ax2.plot(fpr_good, tpr_good, color='#E74C3C', linewidth=3,
+        label=f'Good Classifier (AUC={auc_good:.3f})')
+
+# Plot poor classifier
+ax2.plot(fpr_poor, tpr_poor, color='#7F8C8D', linewidth=3,
+        label=f'Poor Classifier (AUC={auc_poor:.3f})')
+
+# Statistical comparison annotation
+ax2.text(0.5, 0.2, f'ΔAUC = {auc_good - auc_poor:.3f}',
+        ha='center', fontsize=11, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.5))
+
+# Formatting
+ax2.set_xlabel('False Positive Rate (1 - Specificity)', fontsize=12, fontweight='bold')
+ax2.set_ylabel('True Positive Rate (Sensitivity)', fontsize=12, fontweight='bold')
+ax2.set_title('B. ROC Comparison:\nGood vs. Poor Classifier',
+             fontsize=13, fontweight='bold')
+ax2.set_xlim(-0.05, 1.05)
+ax2.set_ylim(-0.05, 1.05)
+ax2.set_aspect('equal')
+ax2.legend(loc='lower right', frameon=True, fontsize=10)
+ax2.grid(alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+ax2.text(-0.12, 1.05, 'B', transform=ax2.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+plt.tight_layout()
+plt.savefig('roc_curve_analysis.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+# Print summary
+print("ROC Curve Analysis Summary:")
+print(f"\nGood Classifier:")
+print(f"  AUC: {auc_good:.4f}")
+print(f"  95% CI: [{ci_good[0]:.4f}, {ci_good[1]:.4f}]")
+print(f"  Optimal threshold: {optimal_threshold_good:.4f}")
+print(f"  At optimal: Sensitivity={optimal_tpr_good:.3f}, Specificity={1-optimal_fpr_good:.3f}")
+
+print(f"\nPoor Classifier:")
+print(f"  AUC: {auc_poor:.4f}")
+print(f"  95% CI: [{ci_poor[0]:.4f}, {ci_poor[1]:.4f}]")
+
+print(f"\nInterpretation:")
+if auc_good &gt; 0.9:
+    print("  Good classifier: Excellent discrimination")
+elif auc_good &gt; 0.8:
+    print("  Good classifier: Good discrimination")
+elif auc_good &gt; 0.7:
+    print("  Good classifier: Acceptable discrimination")
+else:
+    print("  Good classifier: Poor discrimination")</code></pre>
+<p><strong>Code Example (R) - ROC Curve Analysis:</strong></p>
+<pre><code>library(ggplot2)
+library(pROC)
+library(patchwork)
+
+set.seed(42)
+
+# Simulate data
+n_samples &lt;- 500
+y_true &lt;- rbinom(n_samples, 1, 0.4)
+
+# Good classifier
+y_scores_good &lt;- ifelse(y_true == 1,
+                       rbeta(n_samples, 7, 3),
+                       rbeta(n_samples, 3, 7))
+
+# Poor classifier
+y_scores_poor &lt;- ifelse(y_true == 1,
+                       rbeta(n_samples, 5, 5),
+                       rbeta(n_samples, 5, 5))
+
+# Calculate ROC curves using pROC
+roc_good &lt;- roc(y_true, y_scores_good, ci = TRUE)
+roc_poor &lt;- roc(y_true, y_scores_poor, ci = TRUE)
+
+# Extract data for plotting
+roc_good_df &lt;- data.frame(
+  fpr = 1 - roc_good$specificities,
+  tpr = roc_good$sensitivities,
+  classifier = 'Good'
+)
+
+roc_poor_df &lt;- data.frame(
+  fpr = 1 - roc_poor$specificities,
+  tpr = roc_poor$sensitivities,
+  classifier = 'Poor'
+)
+
+# Find optimal threshold (Youden's index)
+optimal_idx &lt;- which.max(roc_good$sensitivities + roc_good$specificities - 1)
+optimal_point &lt;- data.frame(
+  fpr = 1 - roc_good$specificities[optimal_idx],
+  tpr = roc_good$sensitivities[optimal_idx],
+  threshold = roc_good$thresholds[optimal_idx]
+)
+
+# === PANEL A: Good ROC curve ===
+p_a &lt;- ggplot(roc_good_df, aes(x = fpr, y = tpr)) +
+  # Diagonal reference line
+  geom_abline(intercept = 0, slope = 1, linetype = 'dashed', size = 1.5, alpha = 0.5) +
+
+  # ROC curve
+  geom_line(color = '#E74C3C', size = 2) +
+  geom_ribbon(aes(ymin = 0, ymax = tpr), fill = '#E74C3C', alpha = 0.2) +
+
+  # Optimal point
+  geom_point(data = optimal_point, aes(x = fpr, y = tpr),
+            color = 'blue', size = 5, shape = 19) +
+  annotate('text', x = optimal_point$fpr + 0.15, y = optimal_point$tpr - 0.12,
+          label = sprintf('Optimal\nSensitivity: %.3f\nSpecificity: %.3f',
+                         optimal_point$tpr, 1 - optimal_point$fpr),
+          size = 3, hjust = 0,
+          lineheight = 0.9) +
+
+  annotate('segment', x = optimal_point$fpr, y = optimal_point$tpr,
+          xend = optimal_point$fpr + 0.14, yend = optimal_point$tpr - 0.08,
+          arrow = arrow(length = unit(0.3, 'cm')), size = 1) +
+
+  # AUC annotation
+  annotate('text', x = 0.6, y = 0.25,
+          label = sprintf('AUC = %.3f\n95%% CI: [%.3f, %.3f]',
+                         roc_good$auc, roc_good$ci[1], roc_good$ci[3]),
+          size = 4, fontface = 'bold',
+          hjust = 0, lineheight = 1.2) +
+
+  labs(x = 'False Positive Rate (1 - Specificity)',
+       y = 'True Positive Rate (Sensitivity)',
+       title = '✓ A. ROC Curve: Good Classifier\n(AUC &gt;&gt; 0.5)') +
+
+  coord_fixed(ratio = 1, xlim = c(0, 1), ylim = c(0, 1)) +
+
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5, color = 'darkgreen'),
+    axis.title = element_text(face = 'bold', size = 12),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3),
+    plot.tag = element_text(size = 16, face = 'bold')
+  )
+
+# === PANEL B: Comparison ===
+roc_combined &lt;- rbind(roc_good_df, roc_poor_df)
+
+p_b &lt;- ggplot(roc_combined, aes(x = fpr, y = tpr, color = classifier)) +
+  # Diagonal reference line
+  geom_abline(intercept = 0, slope = 1, linetype = 'dashed', size = 1.5, alpha = 0.5,
+             show.legend = FALSE) +
+
+  # ROC curves
+  geom_line(size = 2) +
+
+  scale_color_manual(values = c('Good' = '#E74C3C', 'Poor' = '#7F8C8D'),
+                    labels = c(sprintf('Good Classifier (AUC=%.3f)', roc_good$auc),
+                              sprintf('Poor Classifier (AUC=%.3f)', roc_poor$auc))) +
+
+  # Delta AUC annotation
+  annotate('text', x = 0.5, y = 0.2,
+          label = sprintf('ΔAUC = %.3f', roc_good$auc - roc_poor$auc),
+          size = 4.5, fontface = 'bold',
+          hjust = 0.5) +
+  annotate('rect', xmin = 0.35, xmax = 0.65, ymin = 0.15, ymax = 0.25,
+          fill = 'yellow', alpha = 0.3) +
+
+  labs(x = 'False Positive Rate (1 - Specificity)',
+       y = 'True Positive Rate (Sensitivity)',
+       title = 'B. ROC Comparison:\nGood vs. Poor Classifier',
+       color = NULL) +
+
+  coord_fixed(ratio = 1, xlim = c(0, 1), ylim = c(0, 1)) +
+
+  theme_classic(base_size = 12) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5),
+    axis.title = element_text(face = 'bold', size = 12),
+    legend.position = c(0.65, 0.15),
+    legend.background = element_rect(fill = 'white', color = 'black', size = 0.5),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3),
+    plot.tag = element_text(size = 16, face = 'bold')
+  )
+
+# Combine plots
+combined &lt;- p_a | p_b
+combined &lt;- combined +
+  plot_annotation(tag_levels = 'A') &amp;
+  theme(plot.tag = element_text(size = 16, face = 'bold'))
+
+ggsave('roc_curve_analysis.png', combined, width = 14, height = 6, dpi = 300, bg = 'white')
+
+# Print summary
+cat("ROC Curve Analysis Summary:\n")
+cat(sprintf("\nGood Classifier:\n"))
+cat(sprintf("  AUC: %.4f\n", roc_good$auc))
+cat(sprintf("  95%% CI: [%.4f, %.4f]\n", roc_good$ci[1], roc_good$ci[3]))
+cat(sprintf("  Optimal threshold: %.4f\n", optimal_point$threshold))
+cat(sprintf("  At optimal: Sensitivity=%.3f, Specificity=%.3f\n",
+           optimal_point$tpr, 1 - optimal_point$fpr))
+
+cat(sprintf("\nPoor Classifier:\n"))
+cat(sprintf("  AUC: %.4f\n", roc_poor$auc))
+cat(sprintf("  95%% CI: [%.4f, %.4f]\n", roc_poor$ci[1], roc_poor$ci[3]))
+
+cat(sprintf("\nInterpretation:\n"))
+if (roc_good$auc &gt; 0.9) {
+  cat("  Good classifier: Excellent discrimination\n")
+} else if (roc_good$auc &gt; 0.8) {
+  cat("  Good classifier: Good discrimination\n")
+} else if (roc_good$auc &gt; 0.7) {
+  cat("  Good classifier: Acceptable discrimination\n")
+} else {
+  cat("  Good classifier: Poor discrimination\n")
+}</code></pre>
+<hr>
+</section>
+<section id="roc-curve-best-practices-checklist" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="roc-curve-best-practices-checklist"><span class="header-section-number">9.5.3</span> ROC Curve Best Practices Checklist</h3>
+<pre><code>Essential elements:
+ Diagonal reference line (random chance, AUC=0.5)
+ AUC value with 95% confidence interval
+ Both axes 0 to 1, equal aspect ratio (square plot)
+ Optimal operating point marked (if applicable)
+ Sample size stated (n positives, n negatives)
+
+Interpretation guide:
+AUC = 0.90-1.00: Excellent
+AUC = 0.80-0.90: Good
+AUC = 0.70-0.80: Fair
+AUC = 0.60-0.70: Poor
+AUC = 0.50-0.60: Fail (barely better than random)
+
+Common mistakes to avoid:
+❌ No diagonal reference line
+❌ AUC reported without confidence interval
+❌ Non-square aspect ratio (distorts curve appearance)
+❌ Missing sample size
+❌ Comparing AUCs without statistical test
+❌ No indication of optimal threshold</code></pre>
+<hr>
+<p><strong>End of Chapter 7 Core Content</strong></p>
+<p><strong>Summary: Common Scientific Figure Types</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 18%">
+<col style="width: 25%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Figure Type</th>
+<th>Best For</th>
+<th>Key Elements</th>
+<th>Common Pitfalls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Heatmap</strong></td>
+<td>Matrix data, patterns</td>
+<td>Colormap choice, clustering, colorbar</td>
+<td>Rainbow colormap, asymmetric diverging scale</td>
+</tr>
+<tr class="even">
+<td><strong>Volcano Plot</strong></td>
+<td>Differential analysis</td>
+<td>Log2FC, -log10(p), thresholds</td>
+<td>No FC threshold, missing significance lines</td>
+</tr>
+<tr class="odd">
+<td><strong>PCA Plot</strong></td>
+<td>Dimensionality reduction</td>
+<td>Variance explained, confidence ellipses</td>
+<td>No variance reported, wrong color encoding</td>
+</tr>
+<tr class="even">
+<td><strong>Survival Curve</strong></td>
+<td>Time-to-event data</td>
+<td>Step function, CI bands, log-rank test</td>
+<td>Smooth curve, no CI, missing censored markers</td>
+</tr>
+<tr class="odd">
+<td><strong>ROC Curve</strong></td>
+<td>Classifier performance</td>
+<td>Diagonal line, AUC+CI, optimal point</td>
+<td>No reference line, AUC without CI</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Chapter 6.html" class="pagination-link" aria-label="Chapter 6: Technical Specifications &amp; Publication Requirements">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Chapter 8.html" class="pagination-link" aria-label="Chapter 8: Specialized Field Visualizations">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

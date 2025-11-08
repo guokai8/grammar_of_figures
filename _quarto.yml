@@ -26,10 +26,4 @@ format:
     number-sections: true
     code-fold: true
     code-summary: "Show code"
-  pdf:
-    documentclass: book
-    toc: true
-    number-sections: true
-  epub:
-    toc: true
 

@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Chapter 6: Technical Specifications &amp; Publication Requirements – The Complete Guide to Bash Errors: From Beginner to Expert</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Chapter 7.html" rel="next">
+<link href="./Chapter 5.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter 6.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Complete Guide to Bash Errors: From Beginner to Expert</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Grammar of Figures: The Art &amp; Science of Visualizing Data for Publications</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title"><strong>Grammar of Figures: The Art and Science of Visualizing Data for Publication</strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 1: Foundations of Visual Perception</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 2: The Language of Color</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 3: Typography, Annotation &amp; Labels</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 4: Data Encoding &amp; Graph Selection</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 8: Specialized Field Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 9: Interactive and Dynamic Figures</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Chapter 10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 10: Figure Troubleshooting Guide</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#resolution-and-image-quality" id="toc-resolution-and-image-quality" class="nav-link active" data-scroll-target="#resolution-and-image-quality"><span class="header-section-number">8.1</span> 6.1 Resolution and Image Quality</a>
+  <ul class="collapse">
+  <li><a href="#understanding-dpi-dots-per-inch" id="toc-understanding-dpi-dots-per-inch" class="nav-link" data-scroll-target="#understanding-dpi-dots-per-inch"><span class="header-section-number">8.1.1</span> Understanding DPI (Dots Per Inch)</a></li>
+  <li><a href="#publication-dpi-standards" id="toc-publication-dpi-standards" class="nav-link" data-scroll-target="#publication-dpi-standards"><span class="header-section-number">8.1.2</span> Publication DPI Standards</a></li>
+  <li><a href="#common-resolution-mistakes" id="toc-common-resolution-mistakes" class="nav-link" data-scroll-target="#common-resolution-mistakes"><span class="header-section-number">8.1.3</span> Common Resolution Mistakes</a></li>
+  </ul></li>
+  <li><a href="#file-formats-for-publication" id="toc-file-formats-for-publication" class="nav-link" data-scroll-target="#file-formats-for-publication"><span class="header-section-number">8.2</span> 6.2 File Formats for Publication</a>
+  <ul class="collapse">
+  <li><a href="#format-decision-tree" id="toc-format-decision-tree" class="nav-link" data-scroll-target="#format-decision-tree"><span class="header-section-number">8.2.1</span> Format Decision Tree</a></li>
+  <li><a href="#format-comparison" id="toc-format-comparison" class="nav-link" data-scroll-target="#format-comparison"><span class="header-section-number">8.2.2</span> Format Comparison</a></li>
+  <li><a href="#why-jpeg-is-dangerous-for-scientific-figures" id="toc-why-jpeg-is-dangerous-for-scientific-figures" class="nav-link" data-scroll-target="#why-jpeg-is-dangerous-for-scientific-figures"><span class="header-section-number">8.2.3</span> Why JPEG is Dangerous for Scientific Figures</a></li>
+  </ul></li>
+  <li><a href="#color-modes-rgb-vs.-cmyk" id="toc-color-modes-rgb-vs.-cmyk" class="nav-link" data-scroll-target="#color-modes-rgb-vs.-cmyk"><span class="header-section-number">8.3</span> 6.3 Color Modes: RGB vs.&nbsp;CMYK</a>
+  <ul class="collapse">
+  <li><a href="#understanding-color-spaces" id="toc-understanding-color-spaces" class="nav-link" data-scroll-target="#understanding-color-spaces"><span class="header-section-number">8.3.1</span> Understanding Color Spaces</a></li>
+  <li><a href="#rgb-vs.-cmyk-decision" id="toc-rgb-vs.-cmyk-decision" class="nav-link" data-scroll-target="#rgb-vs.-cmyk-decision"><span class="header-section-number">8.3.2</span> RGB vs.&nbsp;CMYK Decision</a></li>
+  </ul></li>
+  <li><a href="#journal-specific-requirements" id="toc-journal-specific-requirements" class="nav-link" data-scroll-target="#journal-specific-requirements"><span class="header-section-number">8.4</span> 6.4 Journal-Specific Requirements</a>
+  <ul class="collapse">
+  <li><a href="#reading-and-interpreting-figure-guidelines" id="toc-reading-and-interpreting-figure-guidelines" class="nav-link" data-scroll-target="#reading-and-interpreting-figure-guidelines"><span class="header-section-number">8.4.1</span> Reading and Interpreting Figure Guidelines</a></li>
+  <li><a href="#example-journal-requirements" id="toc-example-journal-requirements" class="nav-link" data-scroll-target="#example-journal-requirements"><span class="header-section-number">8.4.2</span> Example Journal Requirements</a></li>
+  <li><a href="#pre-submission-checklist-builder" id="toc-pre-submission-checklist-builder" class="nav-link" data-scroll-target="#pre-submission-checklist-builder"><span class="header-section-number">8.4.3</span> Pre-Submission Checklist Builder</a></li>
+  </ul></li>
+  <li><a href="#image-compression-and-file-optimization" id="toc-image-compression-and-file-optimization" class="nav-link" data-scroll-target="#image-compression-and-file-optimization"><span class="header-section-number">8.5</span> 6.5 Image Compression and File Optimization</a>
+  <ul class="collapse">
+  <li><a href="#balancing-quality-and-file-size" id="toc-balancing-quality-and-file-size" class="nav-link" data-scroll-target="#balancing-quality-and-file-size"><span class="header-section-number">8.5.1</span> Balancing Quality and File Size</a></li>
+  <li><a href="#when-file-sizes-are-too-large" id="toc-when-file-sizes-are-too-large" class="nav-link" data-scroll-target="#when-file-sizes-are-too-large"><span class="header-section-number">8.5.2</span> When File Sizes Are Too Large</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 6: Technical Specifications &amp; Publication Requirements</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="resolution-and-image-quality" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="resolution-and-image-quality"><span class="header-section-number">8.1</span> 6.1 Resolution and Image Quality</h2>
+<section id="understanding-dpi-dots-per-inch" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="understanding-dpi-dots-per-inch"><span class="header-section-number">8.1.1</span> Understanding DPI (Dots Per Inch)</h3>
+<p><strong>The Critical Rule:</strong> Resolution must match final print size, not screen appearance.</p>
+<p><strong>What DPI means:</strong></p>
+<pre><code>DPI = Dots (pixels) Per Inch when printed
+
+Example:
+- Image: 3000 × 2000 pixels
+- Printed at 10" × 6.67": 3000/10 = 300 DPI ✓
+- Printed at 20" × 13.33": 3000/20 = 150 DPI ❌ (too low)
+
+Key insight: Same image file, different DPI depending on print size</code></pre>
+<hr>
+</section>
+<section id="publication-dpi-standards" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="publication-dpi-standards"><span class="header-section-number">8.1.2</span> Publication DPI Standards</h3>
+<p><strong>Minimum requirements by content type:</strong></p>
+<pre><code>Line art (graphs, charts, diagrams):
+- Minimum: 300 DPI
+- Recommended: 600 DPI
+- Reasoning: Sharp edges, crisp text
+
+Photographs/Microscopy:
+- Minimum: 300 DPI
+- Recommended: 600 DPI for fine details
+- Maximum practical: 1200 DPI (diminishing returns beyond this)
+
+Combination (line art + photos):
+- Minimum: 300 DPI
+- Recommended: 600 DPI
+- Reasoning: Must satisfy highest requirement
+
+Screen/web only:
+- 72-96 DPI acceptable
+- But export print versions at 300 DPI anyway</code></pre>
+<hr>
+</section>
+<section id="common-resolution-mistakes" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="common-resolution-mistakes"><span class="header-section-number">8.1.3</span> Common Resolution Mistakes</h3>
+<p><strong>Mistake 1: Upsampling low-resolution images</strong></p>
+<pre><code>❌ WRONG approach:
+1. Create figure at 100 DPI (screen resolution)
+2. "Increase resolution" to 300 DPI in image editor
+→ Doesn't add information, just enlarges pixels (blurry)
+
+✓ CORRECT approach:
+1. Create figure at 300 DPI from the start
+2. Set figure size in inches at creation
+→ Generates true high-resolution image</code></pre>
+<p><strong>Mistake 2: Relying on vector formats incorrectly</strong></p>
+<pre><code>Vector formats (PDF, EPS, SVG):
+✓ Good for: Line graphs, bar charts, scatter plots
+✓ Scales infinitely without quality loss
+✓ Small file sizes
+
+❌ Not good for: Rasterized components (imagesasterized components (images, complex gradients)
+→ Embedded images still need 300 DPI
+
+Hybrid approach:
+- Save graph as vector
+- Ensure embedded images are high-resolution</code></pre>
+<p><strong>Code Example (Python) - Setting DPI Correctly:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Method 1: Set figure size and DPI at creation
+fig, ax = plt.subplots(figsize=(7, 5), dpi=300)  # 7"×5" at 300 DPI = 2100×1500 pixels
+
+x = np.random.randn(100)
+y = 2*x + np.random.randn(100)
+ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7, edgecolors='black', linewidths=0.5)
+ax.set_xlabel('Variable X (units)', fontsize=11, fontweight='bold')
+ax.set_ylabel('Variable Y (units)', fontsize=11, fontweight='bold')
+ax.set_title('High-Resolution Figure (300 DPI)', fontsize=12, fontweight='bold')
+ax.grid(alpha=0.3)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# Save with explicit DPI (this overrides figure DPI if different)
+plt.savefig('figure_300dpi.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.savefig('figure_600dpi.png', dpi=600, bbox_inches='tight', facecolor='white')  # For fine details
+
+plt.close()
+
+# Check file sizes
+import os
+size_300 = os.path.getsize('figure_300dpi.png') / 1024  # KB
+size_600 = os.path.getsize('figure_600dpi.png') / 1024  # KB
+
+print(f"300 DPI file size: {size_300:.1f} KB")
+print(f"600 DPI file size: {size_600:.1f} KB")
+print(f"Ratio: {size_600/size_300:.1f}x larger at 600 DPI")</code></pre>
+<p><strong>Code Example (R) - Setting DPI Correctly:</strong></p>
+<pre><code>library(ggplot2)
+
+set.seed(42)
+data &lt;- data.frame(
+  x = rnorm(100),
+  y = 2*rnorm(100) + rnorm(100)
+)
+
+p &lt;- ggplot(data, aes(x = x, y = y)) +
+  geom_point(size = 3, color = '#3498DB', alpha = 0.7) +
+  labs(x = 'Variable X (units)',
+       y = 'Variable Y (units)',
+       title = 'High-Resolution Figure (300 DPI)') +
+  theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
+    axis.title = element_text(face = 'bold'),
+    panel.grid.major = element_line(color = 'gray90', size = 0.3)
+  )
+
+# Save at different DPI levels
+ggsave('figure_300dpi.png', p,
+       width = 7, height = 5, dpi = 300, bg = 'white')
+
+ggsave('figure_600dpi.png', p,
+       width = 7, height = 5, dpi = 600, bg = 'white')
+
+# Check file sizes
+file_info_300 &lt;- file.info('figure_300dpi.png')
+file_info_600 &lt;- file.info('figure_600dpi.png')
+
+cat(sprintf("300 DPI file size: %.1f KB\n", file_info_300$size / 1024))
+cat(sprintf("600 DPI file size: %.1f KB\n", file_info_600$size / 1024))
+cat(sprintf("Ratio: %.1fx larger at 600 DPI\n",
+            file_info_600$size / file_info_300$size))</code></pre>
+<hr>
+</section>
+</section>
+<section id="file-formats-for-publication" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="file-formats-for-publication"><span class="header-section-number">8.2</span> 6.2 File Formats for Publication</h2>
+<section id="format-decision-tree" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="format-decision-tree"><span class="header-section-number">8.2.1</span> Format Decision Tree</h3>
+<pre><code>Is your figure purely vector (lines, shapes, text)?
+├─ YES → Use vector format
+│   ├─ PDF (most universal)
+│   ├─ EPS (legacy journals)
+│   └─ SVG (web/interactive)
+│
+└─ NO (contains images/raster elements) → Use raster format
+    ├─ TIFF (publication standard, lossless)
+    ├─ PNG (good alternative, lossless, smaller files)
+    └─ AVOID JPEG (lossy compression, artifacts)</code></pre>
+<hr>
+</section>
+<section id="format-comparison" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="format-comparison"><span class="header-section-number">8.2.2</span> Format Comparison</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 26%">
+<col style="width: 24%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Format</th>
+<th>Lossless?</th>
+<th>Best For</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>TIFF</strong></td>
+<td>Yes</td>
+<td>Final publication submission</td>
+<td>Industry standard, supports layers/alpha</td>
+<td>Large files</td>
+</tr>
+<tr class="even">
+<td><strong>PNG</strong></td>
+<td>Yes</td>
+<td>Web, supplementary materials</td>
+<td>Smaller than TIFF, transparency support</td>
+<td>Limited metadata</td>
+</tr>
+<tr class="odd">
+<td><strong>PDF</strong></td>
+<td>Depends</td>
+<td>Vector graphics, multi-page</td>
+<td>Universal, scalable, embeds fonts</td>
+<td>Can include low-res images if not careful</td>
+</tr>
+<tr class="even">
+<td><strong>EPS</strong></td>
+<td>Yes</td>
+<td>Vector for print</td>
+<td>PostScript standard, scalable</td>
+<td>Being phased out by PDF</td>
+</tr>
+<tr class="odd">
+<td><strong>SVG</strong></td>
+<td>Yes</td>
+<td>Web/interactive graphics</td>
+<td>Scalable, editable, small files</td>
+<td>Limited journal support</td>
+</tr>
+<tr class="even">
+<td><strong>JPEG</strong></td>
+<td><strong>NO</strong> ❌</td>
+<td>AVOID for science</td>
+<td>Small files</td>
+<td><strong>Lossy compression creates artifacts</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="why-jpeg-is-dangerous-for-scientific-figures" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="why-jpeg-is-dangerous-for-scientific-figures"><span class="header-section-number">8.2.3</span> Why JPEG is Dangerous for Scientific Figures</h3>
+<p><strong>JPEG compression creates artifacts that can distort data:</strong></p>
+<p><strong>Code Example (Python) - JPEG Artifact Demonstration:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
+# Create a figure with sharp edges
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+
+# Original high-quality image
+ax1 = axes[0]
+data = np.random.randint(0, 256, (100, 100, 3), dtype=np.uint8)
+ax1.imshow(data)
+ax1.set_title('Original (Random Pixels)', fontsize=12, fontweight='bold')
+ax1.axis('off')
+
+# Save and reload as PNG (lossless)
+plt.savefig('temp_lossless.png', dpi=300, bbox_inches='tight')
+img_png = Image.open('temp_lossless.png')
+ax2 = axes[1]
+ax2.imshow(img_png)
+ax2.set_title('✓ PNG (Lossless)\nNo artifacts', fontsize=12, fontweight='bold', color='green')
+ax2.axis('off')
+
+# Save and reload as JPEG (lossy)
+plt.savefig('temp_lossy.jpg', dpi=300, bbox_inches='tight', quality=85)
+img_jpg = Image.open('temp_lossy.jpg')
+ax3 = axes[2]
+ax3.imshow(img_jpg)
+ax3.set_title('❌ JPEG (Lossy)\nCompression artifacts visible',
+             fontsize=12, fontweight='bold', color='red')
+ax3.axis('off')
+
+plt.tight_layout()
+plt.savefig('jpeg_artifacts_demo.png', dpi=300, bbox_inches='tight')
+plt.close()
+
+# Clean up temp files
+import os
+os.remove('temp_lossless.png')
+os.remove('temp_lossy.jpg')
+
+print("JPEG artifacts demonstration created")
+print("Notice: Blocky patterns (8×8 pixel blocks) visible in JPEG version")</code></pre>
+<p><strong>Visual evidence of JPEG problems:</strong></p>
+<pre><code>Sharp edges → Ringing artifacts (halos around edges)
+Flat colors → Blockiness (8×8 pixel compression blocks)
+Fine details → Loss of subtle features
+Text → Blurry/fuzzy edges</code></pre>
+<p><strong>Journals that explicitly FORBID JPEG:</strong> - Nature family (Nature, Nature Methods, etc.) - Cell family (Cell, Molecular Cell, etc.) - Science - PLOS family (strongly discouraged)</p>
+<hr>
+</section>
+</section>
+<section id="color-modes-rgb-vs.-cmyk" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="color-modes-rgb-vs.-cmyk"><span class="header-section-number">8.3</span> 6.3 Color Modes: RGB vs.&nbsp;CMYK</h2>
+<section id="understanding-color-spaces" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="understanding-color-spaces"><span class="header-section-number">8.3.1</span> Understanding Color Spaces</h3>
+<p><strong>RGB (Red, Green, Blue):</strong></p>
+<pre><code>Use: Screen display, digital publication
+Color range: Wide gamut (more colors available)
+Standard for: Online journals, supplementary materials, presentations
+
+How it works:
+- Additive color (light-based)
+- Black = no light (0, 0, 0)
+- White = all light (255, 255, 255)</code></pre>
+<p><strong>CMYK (Cyan, Magenta, Yellow, Black):</strong></p>
+<pre><code>Use: Print publication
+Color range: Smaller gamut (some RGB colors can't be printed)
+Standard for: Traditional print journals
+
+How it works:
+- Subtractive color (ink-based)
+- White = no ink (paper color)
+- Black = all inks mixed</code></pre>
+<hr>
+</section>
+<section id="rgb-vs.-cmyk-decision" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="rgb-vs.-cmyk-decision"><span class="header-section-number">8.3.2</span> RGB vs.&nbsp;CMYK Decision</h3>
+<p><strong>Modern reality: Most journals want RGB</strong></p>
+<pre><code>✓ Use RGB when:
+- Journal specifies RGB (most do now)
+- Figures will be online (increasing standard)
+- Unsure (RGB is safer default)
+- Your figures use vivid colors (wider gamut)
+
+✓ Use CMYK when:
+- Journal explicitly requires CMYK
+- Print-only publication (rare)
+- Preparing for commercial printing</code></pre>
+<p><strong>Common mistake: Converting RGB → CMYK yourself</strong></p>
+<pre><code>❌ WRONG:
+You convert to CMYK → Colors shift → Looks dull
+
+✓ CORRECT:
+Submit RGB → Journal's printer converts → Optimized conversion</code></pre>
+<p><strong>How to check your image color mode:</strong></p>
+<pre><code># Python
+from PIL import Image
+img = Image.open('figure.png')
+print(f"Color mode: {img.mode}")  # Should be 'RGB' or 'RGBA'</code></pre>
+<pre><code># R
+library(png)
+img &lt;- readPNG('figure.png')
+if (dim(img)[3] == 3) {
+  cat("Color mode: RGB\n")
+} else if (dim(img)[3] == 4) {
+  cat("Color mode: RGBA (RGB + alpha channel)\n")
+}</code></pre>
+<hr>
+</section>
+</section>
+<section id="journal-specific-requirements" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="journal-specific-requirements"><span class="header-section-number">8.4</span> 6.4 Journal-Specific Requirements</h2>
+<section id="reading-and-interpreting-figure-guidelines" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="reading-and-interpreting-figure-guidelines"><span class="header-section-number">8.4.1</span> Reading and Interpreting Figure Guidelines</h3>
+<p><strong>Every journal has a “Guide for Authors” or “Figure Guidelines”—READ IT CAREFULLY</strong></p>
+<p><strong>Common specification categories:</strong></p>
+<pre><code>1. Dimensions
+   - Single column width (usually 3.5 inches / 89 mm)
+   - Double column width (usually 7 inches / 178 mm)
+   - Full page width (varies)
+   - Maximum height (often 9-10 inches)
+
+2. Resolution
+   - Line art: 600-1000 DPI
+   - Photos: 300-600 DPI
+   - Combination: 300-600 DPI
+
+3. File format
+   - Preferred: TIFF, EPS, PDF
+   - Acceptable: PNG (some journals)
+   - Avoid: JPEG, GIF, BMP
+
+4. Color mode
+   - RGB (most common now)
+   - CMYK (traditional print journals)
+
+5. File size limits
+   - Per figure: 5-20 MB common
+   - Total submission: 50-100 MB typical
+
+6. Fonts
+   - Embedded/outlined required
+   - Minimum size: 6-8 pt after reduction
+   - Preferred: Arial, Helvetica, Times
+
+7. Special requirements
+   - Separate files for each panel (some journals)
+   - Layered files (editable)
+   - Color charge (rare now, but check)</code></pre>
+<hr>
+</section>
+<section id="example-journal-requirements" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="example-journal-requirements"><span class="header-section-number">8.4.2</span> Example Journal Requirements</h3>
+<p><strong>Nature:</strong></p>
+<pre><code>- Dimensions: Single column 89 mm, double 183 mm, full 247 mm
+- Format: TIFF, EPS, or PDF
+- Resolution: 300 DPI photos, 600 DPI line art
+- Color: RGB preferred
+- Fonts: Must be embedded
+- Labels: Bold sans-serif, minimum 7 pt final size
+- Special: Submit figures at intended publication size</code></pre>
+<p><strong>Cell:</strong></p>
+<pre><code>- Dimensions: 1 column 85 mm, 2 columns 178 mm
+- Format: TIFF, EPS, PDF, or AI (Adobe Illustrator)
+- Resolution: 300 DPI minimum, 600 preferred for line art
+- Color: RGB
+- Fonts: Arial or Helvetica, embedded
+- Special: Figures may be reduced up to 75% for publication</code></pre>
+<p><strong>PLOS ONE:</strong></p>
+<pre><code>- Dimensions: Width 670-2010 pixels
+- Format: TIFF, EPS, PDF, PNG acceptable
+- Resolution: 300-600 DPI
+- Color: RGB
+- Fonts: No specific requirement (but Arial/Helvetica recommended)
+- Special: Figures published under CC-BY license (open access)</code></pre>
+<p><strong>Science:</strong></p>
+<pre><code>- Dimensions: 1 column 5.5 cm, 2 columns 12 cm, 3 columns 18.3 cm
+- Format: PDF, TIFF, EPS, PNG
+- Resolution: 300 DPI minimum
+- Color: RGB or CMYK acceptable
+- Fonts: Sans-serif preferred, minimum 6 pt after reduction
+- Special: Very strict image integrity policies</code></pre>
+<hr>
+</section>
+<section id="pre-submission-checklist-builder" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="pre-submission-checklist-builder"><span class="header-section-number">8.4.3</span> Pre-Submission Checklist Builder</h3>
+<p><strong>Generate custom checklist based on target journal:</strong></p>
+<pre><code>def generate_journal_checklist(journal_name):
+    """
+    Create custom pre-submission checklist for specific journal
+    """
+    guidelines = {
+        'Nature': {
+            'dimensions': ['89mm (single column)', '183mm (double)', '247mm (full)'],
+            'format': ['TIFF', 'EPS', 'PDF'],
+            'resolution': '300 DPI (photos), 600 DPI (line art)',
+            'color': 'RGB',
+            'font_min': '7pt after reduction',
+            'special': 'Submit at intended size, embed fonts'
+        },
+        'Cell': {
+            'dimensions': ['85mm (1 col)', '178mm (2 col)'],
+            'format': ['TIFF', 'EPS', 'PDF', 'AI'],
+            'resolution': '300-600 DPI',
+            'color': 'RGB',
+            'font_min': 'Readable after 75% reduction',
+            'special': 'May be reduced up to 75%'
+        },
+        'PLOS ONE': {
+            'dimensions': ['670-2010 pixels width'],
+            'format': ['TIFF', 'EPS', 'PDF', 'PNG'],
+            'resolution': '300-600 DPI',
+            'color': 'RGB',
+            'font_min': 'No minimum specified',
+            'special': 'CC-BY license (open access)'
+        }
+    }
+
+    if journal_name not in guidelines:
+        return "Journal not in database. Check journal website."
+
+    specs = guidelines[journal_name]
+
+    checklist = f"""
+    === {journal_name} Figure Submission Checklist ===
+
+     Dimensions match journal specs: {', '.join(specs['dimensions'])}
+     File format: {', '.join(specs['format'])}
+     Resolution: {specs['resolution']}
+     Color mode: {specs['color']}
+     Font size: {specs['font_min']}
+     Special requirements: {specs['special']}
+
+     All panels labeled (A, B, C...)
+     Scale bars present (if applicable)
+     Captions complete and self-contained
+     Supplementary figures numbered separately
+     Files named according to journal convention
+     Image integrity: No manipulation beyond linear adjustments
+    """
+
+    return checklist
+
+# Example usage
+print(generate_journal_checklist('Nature'))</code></pre>
+<hr>
+</section>
+</section>
+<section id="image-compression-and-file-optimization" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="image-compression-and-file-optimization"><span class="header-section-number">8.5</span> 6.5 Image Compression and File Optimization</h2>
+<section id="balancing-quality-and-file-size" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="balancing-quality-and-file-size"><span class="header-section-number">8.5.1</span> Balancing Quality and File Size</h3>
+<p><strong>The challenge:</strong> High-resolution images = large files, but journals have size limits</p>
+<p><strong>Optimization strategies:</strong></p>
+<p><strong>1. Choose appropriate file format</strong></p>
+<pre><code>For line graphs/charts:
+✓ PDF (vector, small file, scalable)
+✓ EPS (if journal requires)
+
+For photos/images:
+✓ PNG with compression level 6-9 (lossless but smaller)
+✓ TIFF with LZW compression (lossless)
+
+For combinations:
+✓ PDF with high-quality raster settings
+✓ TIFF with LZW compression</code></pre>
+<p><strong>2. Optimize image dimensions</strong></p>
+<pre><code>Don't create unnecessarily large images:
+❌ WASTEFUL: 10,000 × 10,000 pixels for 7-inch figure
+✓ OPTIMAL: 2,100 × 1,500 pixels (7" × 5" at 300 DPI)
+
+Rule: Pixels = Inches × DPI</code></pre>
+<p><strong>3. Flatten layers if not needed</strong></p>
+<pre><code>Layered TIFF files can be 10x larger:
+✓ Keep layers if journal requires editable files
+✓ Flatten layers for final submission if allowed</code></pre>
+<p><strong>Code Example (Python) - Image Optimization:</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+import os
+
+np.random.seed(42)
+
+# Create sample figure
+fig, ax = plt.subplots(figsize=(7, 5))
+x = np.random.randn(100)
+y = 2*x + np.random.randn(100)
+ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
+ax.set_xlabel('Variable X', fontsize=11, fontweight='bold')
+ax.set_ylabel('Variable Y', fontsize=11, fontweight='bold')
+ax.set_title('File Size Optimization Demo', fontsize=12, fontweight='bold')
+ax.grid(alpha=0.3)
+
+# Save with different formats and settings
+formats = {
+    'PNG_default': {'format': 'png', 'dpi': 300},
+    'PNG_compressed': {'format': 'png', 'dpi': 300, 'optimize': True},
+    'TIFF_uncompressed': {'format': 'tiff', 'dpi': 300},
+    'TIFF_LZW': {'format': 'tiff', 'dpi': 300, 'compression': 'tiff_lzw'},
+    'PDF_vector': {'format': 'pdf', 'dpi': 300}
+}
+
+file_sizes = {}
+
+for name, kwargs in formats.items():
+    filename = f'test_{name}.{kwargs["format"]}'
+    plt.savefig(filename, bbox_inches='tight', facecolor='white', **kwargs)
+    file_sizes[name] = os.path.getsize(filename) / 1024  # KB
+
+    # Clean up
+    os.remove(filename)
+
+plt.close()
+
+# Display comparison
+print("File Size Comparison (same figure, different formats):")
+print("=" * 50)
+for name, size in sorted(file_sizes.items(), key=lambda x: x[1]):
+    print(f"{name:20} : {size:6.1f} KB")
+
+# Calculate savings
+largest = max(file_sizes.values())
+smallest = min(file_sizes.values())
+print(f"\nOptimization savings: {(1 - smallest/largest)*100:.1f}% size reduction")</code></pre>
+<p><strong>Expected output:</strong></p>
+<pre><code>File Size Comparison (same figure, different formats):
+==================================================
+PDF_vector           :   45.2 KB  ← Smallest (vector)
+PNG_compressed       :  156.8 KB  ← Good balance
+PNG_default          :  203.5 KB
+TIFF_LZW            :  287.3 KB
+TIFF_uncompressed   :  892.1 KB  ← Largest
+
+Optimization savings: 94.9% size reduction</code></pre>
+<hr>
+</section>
+<section id="when-file-sizes-are-too-large" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="when-file-sizes-are-too-large"><span class="header-section-number">8.5.2</span> When File Sizes Are Too Large</h3>
+<p><strong>Problem:</strong> Figure exceeds journal’s file size limit (e.g., 10 MB)</p>
+<p><strong>Solutions (in order of preference):</strong></p>
+<pre><code>1. Optimize compression (lossless)
+   - Use PNG with optimization
+   - Use TIFF with LZW compression
+   - Flatten unnecessary layers
+
+2. Reduce unnecessary resolution
+   - If figure is 600 DPI but journal requires 300 DPI, downsample
+   - If figure is larger than needed, resize to exact print dimensions
+
+3. Split complex figures
+   - Break into multiple files (Figure 1A, 1B, 1C as separate files)
+   - Some journals prefer this anyway
+
+4. Reduce color depth (carefully!)
+   - If grayscale image, save as 8-bit grayscale (not RGB)
+   - If indexed color appropriate, convert (rare in science)
+
+5. Move to supplementary materials
+   - Less critical figures → supplement
+   - High-resolution originals → supplement, lower-res in main text</code></pre>
+<p><strong>Code Example (Python) - Batch Image Optimization:</strong></p>
+<pre><code>from PIL import Image
+import os
+
+def optimize_image(input_path, output_path, max_size_mb=10, target_dpi=300):
+    """
+    Optimize image while preserving quality
+
+    Parameters:
+    - input_path: Source image file
+    - output_path: Destination file
+    - max_size_mb: Maximum file size in MB
+    - target_dpi: Target DPI (will downsample if higher)
+    """
+    img = Image.open(input_path)
+
+    # Get current DPI
+    dpi = img.info.get('dpi', (300, 300))
+    current_dpi = dpi[0] if isinstance(dpi, tuple) else dpi
+
+    # Downsample if exceeds target DPI
+    if current_dpi &gt; target_dpi:
+        scale_factor = target_dpi / current_dpi
+        new_size = tuple(int(dim * scale_factor) for dim in img.size)
+        img = img.resize(new_size, Image.Resampling.LANCZOS)
+        print(f"Downsampled from {current_dpi} to {target_dpi} DPI")
+
+    # Save with optimization
+    save_kwargs = {
+        'dpi': (target_dpi, target_dpi),
+        'optimize': True
+    }
+
+    if output_path.lower().endswith('.png'):
+        save_kwargs['compress_level'] = 9  # Maximum PNG compression
+    elif output_path.lower().endswith(('.tif', '.tiff')):
+        save_kwargs['compression'] = 'tiff_lzw'  # LZW compression for TIFF
+
+    img.save(output_path, **save_kwargs)
+
+    # Check file size
+    size_mb = os.path.getsize(output_path) / (1024 * 1024)
+
+    if size_mb &gt; max_size_mb:
+        print(f"Warning: File size {size_mb:.2f} MB exceeds {max_size_mb} MB")
+        print("Consider: Reducing dimensions, splitting figure, or moving to supplement")
+    else:
+        print(f"✓ Optimized file size: {size_mb:.2f} MB (within {max_size_mb} MB limit)")
+
+    return size_mb
+
+# Example usage
+# optimize_image('large_figure.png', 'optimized_figure.png', max_size_mb=10, target_dpi=300)</code></pre>
+<hr>
+<p><strong>End of Chapter 6: Technical Specifications &amp; Publication Requirements</strong></p>
+<p><strong>Key Takeaways:</strong> - <strong>300 DPI minimum</strong> for publication (600 DPI for line art) - <strong>Create at target size</strong>, don’t upsample later - <strong>TIFF or PNG</strong> for raster images (never JPEG) - <strong>PDF</strong> for vector graphics - <strong>RGB color mode</strong> (unless journal specifies CMYK) - <strong>Read journal guidelines</strong> carefully—requirements vary - <strong>Optimize file sizes</strong> without losing quality (compression, appropriate dimensions) - <strong>Check before submission</strong>: DPI, format, color mode, file size, dimensions</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Chapter 5.html" class="pagination-link" aria-label="Chapter 5: Layout, Composition &amp; Figure Assembly">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 5: Layout, Composition &amp; Figure Assembly</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Chapter 7.html" class="pagination-link" aria-label="Chapter 7: Common Figure Types Deep Dive">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 7: Common Figure Types Deep Dive</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
