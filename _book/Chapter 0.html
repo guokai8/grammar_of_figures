@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -411,24 +446,24 @@ ul.task-list li input[type="checkbox"] {
 <section id="stage-2-draft-prototype-initial-code" class="level4">
 <h4 class="anchored" data-anchor-id="stage-2-draft-prototype-initial-code">Stage 2: Draft &amp; Prototype (Initial Code)</h4>
 <p><strong>Create a functional but not polished version:</strong></p>
-<pre><code># Python example - quick draft
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Generate sample data
-x = np.linspace(0, 10, 50)
-y1 = np.sin(x) + np.random.normal(0, 0.1, 50)
-y2 = np.cos(x) + np.random.normal(0, 0.1, 50)
-
-# Quick draft plot
-fig, ax = plt.subplots()
-ax.plot(x, y1, label='Treatment A')
-ax.plot(x, y2, label='Treatment B')
-ax.legend()
-ax.set_xlabel('Time')
-ax.set_ylabel('Response')
-plt.tight_layout()
-plt.savefig('draft_v1.png', dpi=150)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python example - quick draft</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y1 <span class="op">=</span> np.sin(x) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">50</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y2 <span class="op">=</span> np.cos(x) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">50</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick draft plot</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y1, label<span class="op">=</span><span class="st">'Treatment A'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y2, label<span class="op">=</span><span class="st">'Treatment B'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Response'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'draft_v1.png'</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>At this stage:</strong> - Use default colors and styles - Focus on getting data correctly represented - Ensure all necessary elements are present - Check that the data tell the story you intend</p>
 <p><strong>Don’t worry about:</strong> - Perfect aesthetics - Final color choices - Publication-quality resolution - Typography details</p>
 </section>
@@ -447,51 +482,51 @@ You: (thinking: Oh no, I wanted them to notice the divergence at week 3)
 <section id="stage-4-refine-polish-implement-improvements" class="level4">
 <h4 class="anchored" data-anchor-id="stage-4-refine-polish-implement-improvements">Stage 4: Refine &amp; Polish (Implement Improvements)</h4>
 <p><strong>Now focus on quality and professionalism:</strong></p>
-<pre><code># Python example - polished version
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Rectangle
-
-# Set professional style
-plt.style.use('seaborn-v0_8-darkgrid')
-plt.rcParams['font.family'] = 'Arial'
-plt.rcParams['font.size'] = 10
-
-# Data (same as before)
-x = np.linspace(0, 10, 50)
-y1 = np.sin(x) + np.random.normal(0, 0.1, 50)
-y2 = np.cos(x) + np.random.normal(0, 0.1, 50)
-
-# Create figure at publication size
-fig, ax = plt.subplots(figsize=(3.5, 2.5))  # Single column width
-
-# Plot with carefully chosen colors
-color1 = '#2E86AB'  # Blue - colorblind safe
-color2 = '#A23B72'  # Purple - colorblind safe
-
-ax.plot(x, y1, color=color1, linewidth=2, label='Treatment A', zorder=3)
-ax.plot(x, y2, color=color2, linewidth=2, label='Treatment B', zorder=3)
-
-# Highlight key region (week 3 equivalent)
-ax.axvspan(5, 7, alpha=0.1, color='gray', zorder=1)
-ax.text(6, 1.2, 'Critical\nperiod', ha='center', fontsize=9,
-        style='italic', color='dimgray')
-
-# Clean up axes
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.set_xlabel('Time (weeks)', fontsize=10, fontweight='bold')
-ax.set_ylabel('Response (arbitrary units)', fontsize=10, fontweight='bold')
-
-# Legend with good placement
-ax.legend(frameon=True, loc='upper left', fontsize=9)
-
-# Adjust layout
-plt.tight_layout()
-
-# Save at publication quality
-plt.savefig('figure_final.pdf', dpi=300, bbox_inches='tight')
-plt.savefig('figure_final.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python example - polished version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set professional style</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'seaborn-v0_8-darkgrid'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.family'</span>] <span class="op">=</span> <span class="st">'Arial'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Data (same as before)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>y1 <span class="op">=</span> np.sin(x) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">50</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>y2 <span class="op">=</span> np.cos(x) <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">50</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure at publication size</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="fl">3.5</span>, <span class="fl">2.5</span>))  <span class="co"># Single column width</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with carefully chosen colors</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>color1 <span class="op">=</span> <span class="st">'#2E86AB'</span>  <span class="co"># Blue - colorblind safe</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>color2 <span class="op">=</span> <span class="st">'#A23B72'</span>  <span class="co"># Purple - colorblind safe</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y1, color<span class="op">=</span>color1, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Treatment A'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y2, color<span class="op">=</span>color2, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Treatment B'</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlight key region (week 3 equivalent)</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>ax.axvspan(<span class="dv">5</span>, <span class="dv">7</span>, alpha<span class="op">=</span><span class="fl">0.1</span>, color<span class="op">=</span><span class="st">'gray'</span>, zorder<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">6</span>, <span class="fl">1.2</span>, <span class="st">'Critical</span><span class="ch">\n</span><span class="st">period'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span><span class="st">'italic'</span>, color<span class="op">=</span><span class="st">'dimgray'</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up axes</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (weeks)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Response (arbitrary units)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend with good placement</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">True</span>, loc<span class="op">=</span><span class="st">'upper left'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust layout</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Save at publication quality</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_final.pdf'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_final.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Refinement checklist:</strong> - [ ] Colorblind-accessible palette - [ ] All text legible at publication size - [ ] Consistent font styles throughout - [ ] Clear axis labels with units - [ ] Legend positioned logically - [ ] Annotations guide attention to key points - [ ] White space used effectively - [ ] No chartjunk or unnecessary elements - [ ] Data-to-ink ratio optimized - [ ] File format and resolution appropriate</p>
 </section>
 <section id="stage-5-test-validate-final-check" class="level4">
@@ -591,34 +626,34 @@ git tag -a v1.0-manuscript-submission -m "Figures for initial submission"</code>
 <p><strong>Core Libraries:</strong></p>
 <section id="matplotlib-the-foundation" class="level4">
 <h4 class="anchored" data-anchor-id="matplotlib-the-foundation">1. Matplotlib – The Foundation</h4>
-<pre><code>import matplotlib.pyplot as plt
-
-# Basic but flexible
-fig, ax = plt.subplots()
-ax.plot(x, y)
-ax.set_xlabel('X Label')
-ax.set_ylabel('Y Label')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic but flexible</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X Label'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y Label'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>When to use:</strong> - Maximum control over every element - Custom or unusual plot types - Publication-quality static figures - When you need precise positioning</p>
 <p><strong>Limitations:</strong> - Verbose syntax - Default aesthetics need work - Steeper learning curve</p>
 </section>
 <section id="seaborn-statistical-visualization" class="level4">
 <h4 class="anchored" data-anchor-id="seaborn-statistical-visualization">2. Seaborn – Statistical Visualization</h4>
-<pre><code>import seaborn as sns
-
-# High-level interface with good defaults
-sns.set_style("whitegrid")
-sns.boxplot(data=df, x='group', y='value', palette='Set2')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># High-level interface with good defaults</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'group'</span>, y<span class="op">=</span><span class="st">'value'</span>, palette<span class="op">=</span><span class="st">'Set2'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>When to use:</strong> - Statistical plots (distributions, relationships) - Quick exploratory analysis - Better default aesthetics than matplotlib - Integrates well with pandas dataframes</p>
 <p><strong>Limitations:</strong> - Less control than matplotlib - Limited to statistical plot types - Customization requires matplotlib knowledge</p>
 </section>
 <section id="plotly-interactive-figures" class="level4">
 <h4 class="anchored" data-anchor-id="plotly-interactive-figures">3. Plotly – Interactive Figures</h4>
-<pre><code>import plotly.express as px
-
-# Interactive plots with hover information
-fig = px.scatter(df, x='var1', y='var2', color='group',
-                 hover_data=['sample_id'])
-fig.show()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive plots with hover information</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(df, x<span class="op">=</span><span class="st">'var1'</span>, y<span class="op">=</span><span class="st">'var2'</span>, color<span class="op">=</span><span class="st">'group'</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                 hover_data<span class="op">=</span>[<span class="st">'sample_id'</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>When to use:</strong> - Web-based presentations - Exploratory data analysis - Interactive dashboards - Supplementary online materials</p>
 <p><strong>Limitations:</strong> - File sizes can be large - Not ideal for print journals - Requires JavaScript for full functionality</p>
 </section>
@@ -631,49 +666,49 @@ fig.show()</code></pre>
 <li><strong>Yellowbrick</strong>: Machine learning visualization</li>
 </ul>
 <p><strong>Example: Complete Python Workflow</strong></p>
-<pre><code># generate_figure1.py
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Configuration
-plt.rcParams.update({
-    'font.size': 10,
-    'font.family': 'Arial',
-    'axes.linewidth': 1.0,
-    'figure.dpi': 300
-})
-
-# Load data
-data = pd.read_csv('../data/experiment_data.csv')
-
-# Create figure
-fig, axes = plt.subplots(1, 2, figsize=(7, 3))
-
-# Panel A: Time series
-axes[0].plot(data['time'], data['control'],
-             label='Control', color='#333333', linewidth=2)
-axes[0].plot(data['time'], data['treatment'],
-             label='Treatment', color='#E63946', linewidth=2)
-axes[0].set_xlabel('Time (hours)')
-axes[0].set_ylabel('Cell viability (%)')
-axes[0].legend(frameon=False)
-axes[0].text(-0.15, 1.05, 'A', transform=axes[0].transAxes,
-             fontsize=12, fontweight='bold')
-
-# Panel B: Bar chart with stats
-sns.barplot(data=data, x='condition', y='final_viability',
-            ax=axes[1], palette=['#333333', '#E63946'])
-axes[1].set_xlabel('Condition')
-axes[1].set_ylabel('Final viability (%)')
-axes[1].text(-0.15, 1.05, 'B', transform=axes[1].transAxes,
-             fontsize=12, fontweight='bold')
-
-# Save
-plt.tight_layout()
-plt.savefig('../figures/figure1.pdf', bbox_inches='tight')
-plt.savefig('../figures/figure1.png', dpi=300, bbox_inches='tight')
-print("Figure saved successfully")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate_figure1.py</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.size'</span>: <span class="dv">10</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.family'</span>: <span class="st">'Arial'</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.linewidth'</span>: <span class="fl">1.0</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'figure.dpi'</span>: <span class="dv">300</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'../data/experiment_data.csv'</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">3</span>))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Time series</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(data[<span class="st">'time'</span>], data[<span class="st">'control'</span>],</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">'Control'</span>, color<span class="op">=</span><span class="st">'#333333'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(data[<span class="st">'time'</span>], data[<span class="st">'treatment'</span>],</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">'Treatment'</span>, color<span class="op">=</span><span class="st">'#E63946'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Time (hours)'</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Cell viability (%)'</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(frameon<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].text(<span class="op">-</span><span class="fl">0.15</span>, <span class="fl">1.05</span>, <span class="st">'A'</span>, transform<span class="op">=</span>axes[<span class="dv">0</span>].transAxes,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Bar chart with stats</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'condition'</span>, y<span class="op">=</span><span class="st">'final_viability'</span>,</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>axes[<span class="dv">1</span>], palette<span class="op">=</span>[<span class="st">'#333333'</span>, <span class="st">'#E63946'</span>])</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Condition'</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Final viability (%)'</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="op">-</span><span class="fl">0.15</span>, <span class="fl">1.05</span>, <span class="st">'B'</span>, transform<span class="op">=</span>axes[<span class="dv">1</span>].transAxes,</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Save</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'../figures/figure1.pdf'</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'../figures/figure1.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Figure saved successfully"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -682,31 +717,31 @@ print("Figure saved successfully")</code></pre>
 <p><strong>Core Libraries:</strong></p>
 <section id="ggplot2-grammar-of-graphics" class="level4">
 <h4 class="anchored" data-anchor-id="ggplot2-grammar-of-graphics">1. ggplot2 – Grammar of Graphics</h4>
-<pre><code>library(ggplot2)
-
-# Layered approach
-ggplot(data, aes(x = time, y = value, color = group)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
-  theme_minimal() +
-  labs(x = "Time (hours)", y = "Response")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Layered approach</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value, <span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (hours)"</span>, <span class="at">y =</span> <span class="st">"Response"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>When to use:</strong> - Elegant, consistent syntax - Excellent for publication figures - Strong statistical integration - Extensive ecosystem (ggplot extensions)</p>
 <p><strong>Strengths:</strong> - More intuitive than matplotlib for many - Better default aesthetics - Consistent API across plot types - Huge community and resources</p>
 </section>
 <section id="cowplot-patchwork-multi-panel-layouts" class="level4">
 <h4 class="anchored" data-anchor-id="cowplot-patchwork-multi-panel-layouts">2. Cowplot &amp; Patchwork – Multi-panel Layouts</h4>
-<pre><code>library(cowplot)
-library(patchwork)
-
-# Combine multiple plots
-p1 &lt;- ggplot(...) + ...
-p2 &lt;- ggplot(...) + ...
-
-# Using patchwork
-combined &lt;- p1 + p2 + plot_annotation(tag_levels = 'A')
-
-# Or cowplot
-plot_grid(p1, p2, labels = c('A', 'B'), ncol = 2)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine multiple plots</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(...) <span class="sc">+</span> ...</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(...) <span class="sc">+</span> ...</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Using patchwork</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> p1 <span class="sc">+</span> p2 <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">'A'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Or cowplot</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p1, p2, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>When to use:</strong> - Complex multi-panel figures - Combining different plot types - Adding annotations across panels - Publication-ready layouts</p>
 </section>
 <section id="specialized-r-packages" class="level4">
@@ -719,48 +754,48 @@ plot_grid(p1, p2, labels = c('A', 'B'), ncol = 2)</code></pre>
 <li><strong>ggpubr</strong>: Publication-ready plots with stats</li>
 </ul>
 <p><strong>Example: Complete R Workflow</strong></p>
-<pre><code># generate_figure1.R
-library(tidyverse)
-library(cowplot)
-library(scales)
-
-# Set theme
-theme_set(theme_classic(base_size = 10, base_family = "Arial"))
-
-# Load data
-data &lt;- read_csv("../data/experiment_data.csv")
-
-# Panel A: Time series
-p1 &lt;- ggplot(data, aes(x = time, y = viability, color = condition)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
-  scale_color_manual(values = c("Control" = "#333333",
-                                  "Treatment" = "#E63946")) +
-  labs(x = "Time (hours)",
-       y = "Cell viability (%)",
-       color = NULL) +
-  theme(legend.position = c(0.8, 0.9),
-        legend.background = element_blank())
-
-# Panel B: Final values with stats
-p2 &lt;- ggplot(data %&gt;% filter(time == max(time)),
-             aes(x = condition, y = viability, fill = condition)) +
-  geom_bar(stat = "summary", fun = "mean", width = 0.6) +
-  geom_errorbar(stat = "summary", fun.data = "mean_se", width = 0.2) +
-  scale_fill_manual(values = c("Control" = "#333333",
-                                "Treatment" = "#E63946")) +
-  labs(x = "Condition", y = "Final viability (%)") +
-  theme(legend.position = "none")
-
-# Combine panels
-fig1 &lt;- plot_grid(p1, p2, labels = c('A', 'B'),
-                  ncol = 2, rel_widths = c(1.2, 1))
-
-# Save
-ggsave("../figures/figure1.pdf", fig1, width = 7, height = 3, units = "in")
-ggsave("../figures/figure1.png", fig1, width = 7, height = 3, units = "in", dpi = 300)
-
-message("Figure saved successfully")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate_figure1.R</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theme</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">10</span>, <span class="at">base_family =</span> <span class="st">"Arial"</span>))</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/experiment_data.csv"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Time series</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> viability, <span class="at">color =</span> condition)) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"#333333"</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Treatment"</span> <span class="ot">=</span> <span class="st">"#E63946"</span>)) <span class="sc">+</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time (hours)"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Cell viability (%)"</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.9</span>),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.background =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Final values with stats</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">==</span> <span class="fu">max</span>(time)),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> condition, <span class="at">y =</span> viability, <span class="at">fill =</span> condition)) <span class="sc">+</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Control"</span> <span class="ot">=</span> <span class="st">"#333333"</span>,</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Treatment"</span> <span class="ot">=</span> <span class="st">"#E63946"</span>)) <span class="sc">+</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Condition"</span>, <span class="at">y =</span> <span class="st">"Final viability (%)"</span>) <span class="sc">+</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine panels</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>fig1 <span class="ot">&lt;-</span> <span class="fu">plot_grid</span>(p1, p2, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>),</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">rel_widths =</span> <span class="fu">c</span>(<span class="fl">1.2</span>, <span class="dv">1</span>))</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Save</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"../figures/figure1.pdf"</span>, fig1, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">units =</span> <span class="st">"in"</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"../figures/figure1.png"</span>, fig1, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Figure saved successfully"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>

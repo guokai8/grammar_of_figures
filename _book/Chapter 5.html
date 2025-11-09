@@ -376,162 +376,162 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 - Legend far from plot (requires search)
 - Caption separated from figure by page break</code></pre>
 <p><strong>Code Example (Python) - Proximity in Multi-Panel Layouts:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Generate sample data for 6 panels
-data_sets = [np.random.randn(50) + i*2 for i in range(6)]
-
-fig = plt.figure(figsize=(16, 10))
-
-# BAD: Equal spacing (no grouping information)
-fig.text(0.25, 0.95, '❌ BAD: Equal Spacing (No Visual Grouping)',
-         ha='center', fontsize=14, fontweight='bold', color='red')
-
-gs_bad = fig.add_gridspec(3, 2, left=0.05, right=0.45, top=0.85, bottom=0.55,
-                          wspace=0.3, hspace=0.4)  # Equal spacing
-
-for i in range(6):
-    ax = fig.add_subplot(gs_bad[i//2, i%2])
-    ax.hist(data_sets[i], bins=15, color='#3498DB', edgecolor='black', alpha=0.7)
-    ax.set_title(f'Panel {chr(65+i)}', fontsize=10, fontweight='bold')
-    ax.set_ylabel('Frequency', fontsize=9)
-    ax.tick_params(labelsize=8)
-
-# Add misleading text
-fig.text(0.25, 0.52, 'All panels equally spaced\n→ No visual hierarchy or grouping',
-         ha='center', fontsize=9, style='italic', color='red')
-
-# GOOD: Grouped spacing (proximity shows relationship)
-fig.text(0.75, 0.95, '✓ GOOD: Grouped Spacing (Clear Relationship)',
-         ha='center', fontsize=14, fontweight='bold', color='green')
-
-# Create two groups: Control (A-C) and Treatment (D-F)
-# Group 1: Tighter spacing within group
-gs_good_ctrl = fig.add_gridspec(3, 1, left=0.55, right=0.68, top=0.85, bottom=0.55,
-                                hspace=0.15)  # Tight spacing
-
-# Group 2: Separated from group 1
-gs_good_trt = fig.add_gridspec(3, 1, left=0.77, right=0.90, top=0.85, bottom=0.55,
-                               hspace=0.15)  # Tight spacing
-
-# Plot Control group
-for i in range(3):
-    ax = fig.add_subplot(gs_good_ctrl[i])
-    ax.hist(data_sets[i], bins=15, color='#7F8C8D', edgecolor='black', alpha=0.7)
-    ax.set_title(f'Panel {chr(65+i)}', fontsize=10, fontweight='bold')
-    ax.set_ylabel('Frequency', fontsize=9)
-    ax.tick_params(labelsize=8)
-    if i == 0:
-        ax.text(0.5, 1.15, 'CONTROL', transform=ax.transAxes,
-               ha='center', fontsize=11, fontweight='bold',
-               bbox=dict(boxstyle='round', facecolor='#7F8C8D', alpha=0.3))
-
-# Plot Treatment group
-for i in range(3, 6):
-    ax = fig.add_subplot(gs_good_trt[i-3])
-    ax.hist(data_sets[i], bins=15, color='#E74C3C', edgecolor='black', alpha=0.7)
-    ax.set_title(f'Panel {chr(65+i)}', fontsize=10, fontweight='bold')
-    ax.set_ylabel('Frequency', fontsize=9)
-    ax.tick_params(labelsize=8)
-    if i == 3:
-        ax.text(0.5, 1.15, 'TREATMENT', transform=ax.transAxes,
-               ha='center', fontsize=11, fontweight='bold',
-               bbox=dict(boxstyle='round', facecolor='#E74C3C', alpha=0.3))
-
-# Add explanatory text
-fig.text(0.725, 0.52, 'Tight spacing within groups\n→ Clear visual grouping',
-         ha='center', fontsize=9, style='italic', color='green')
-
-plt.savefig('proximity_principle.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data for 6 panels</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data_sets <span class="op">=</span> [np.random.randn(<span class="dv">50</span>) <span class="op">+</span> i<span class="op">*</span><span class="dv">2</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>)]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">10</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Equal spacing (no grouping information)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.25</span>, <span class="fl">0.95</span>, <span class="st">'❌ BAD: Equal Spacing (No Visual Grouping)'</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>gs_bad <span class="op">=</span> fig.add_gridspec(<span class="dv">3</span>, <span class="dv">2</span>, left<span class="op">=</span><span class="fl">0.05</span>, right<span class="op">=</span><span class="fl">0.45</span>, top<span class="op">=</span><span class="fl">0.85</span>, bottom<span class="op">=</span><span class="fl">0.55</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                          wspace<span class="op">=</span><span class="fl">0.3</span>, hspace<span class="op">=</span><span class="fl">0.4</span>)  <span class="co"># Equal spacing</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>):</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> fig.add_subplot(gs_bad[i<span class="op">//</span><span class="dv">2</span>, i<span class="op">%</span><span class="dv">2</span>])</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ax.hist(data_sets[i], bins<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Panel </span><span class="sc">{</span><span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i)<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Add misleading text</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.25</span>, <span class="fl">0.52</span>, <span class="st">'All panels equally spaced</span><span class="ch">\n</span><span class="st">→ No visual hierarchy or grouping'</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Grouped spacing (proximity shows relationship)</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.75</span>, <span class="fl">0.95</span>, <span class="st">'✓ GOOD: Grouped Spacing (Clear Relationship)'</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Create two groups: Control (A-C) and Treatment (D-F)</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 1: Tighter spacing within group</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>gs_good_ctrl <span class="op">=</span> fig.add_gridspec(<span class="dv">3</span>, <span class="dv">1</span>, left<span class="op">=</span><span class="fl">0.55</span>, right<span class="op">=</span><span class="fl">0.68</span>, top<span class="op">=</span><span class="fl">0.85</span>, bottom<span class="op">=</span><span class="fl">0.55</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                                hspace<span class="op">=</span><span class="fl">0.15</span>)  <span class="co"># Tight spacing</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 2: Separated from group 1</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>gs_good_trt <span class="op">=</span> fig.add_gridspec(<span class="dv">3</span>, <span class="dv">1</span>, left<span class="op">=</span><span class="fl">0.77</span>, right<span class="op">=</span><span class="fl">0.90</span>, top<span class="op">=</span><span class="fl">0.85</span>, bottom<span class="op">=</span><span class="fl">0.55</span>,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                               hspace<span class="op">=</span><span class="fl">0.15</span>)  <span class="co"># Tight spacing</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Control group</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> fig.add_subplot(gs_good_ctrl[i])</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    ax.hist(data_sets[i], bins<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span><span class="st">'#7F8C8D'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Panel </span><span class="sc">{</span><span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i)<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        ax.text(<span class="fl">0.5</span>, <span class="fl">1.15</span>, <span class="st">'CONTROL'</span>, transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>               ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>               bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'#7F8C8D'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Treatment group</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>, <span class="dv">6</span>):</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> fig.add_subplot(gs_good_trt[i<span class="op">-</span><span class="dv">3</span>])</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    ax.hist(data_sets[i], bins<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span><span class="st">'#E74C3C'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Panel </span><span class="sc">{</span><span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i)<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        ax.text(<span class="fl">0.5</span>, <span class="fl">1.15</span>, <span class="st">'TREATMENT'</span>, transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>               ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>               bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'#E74C3C'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>))</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Add explanatory text</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.725</span>, <span class="fl">0.52</span>, <span class="st">'Tight spacing within groups</span><span class="ch">\n</span><span class="st">→ Clear visual grouping'</span>,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>         ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'proximity_principle.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Code Example (R) - Proximity in Multi-Panel Layouts:</strong></p>
-<pre><code>library(ggplot2)
-library(patchwork)
-library(grid)
-
-set.seed(42)
-
-# Generate data
-data_list &lt;- lapply(1:6, function(i) {
-  data.frame(value = rnorm(50, mean = i*2, sd = 1))
-})
-
-# Create individual plots
-plots &lt;- lapply(1:6, function(i) {
-  ggplot(data_list[[i]], aes(x = value)) +
-    geom_histogram(bins = 15, fill = '#3498DB', color = 'black', alpha = 0.7) +
-    labs(title = paste0('Panel ', LETTERS[i]), y = 'Frequency') +
-    theme_classic(base_size = 9) +
-    theme(
-      plot.title = element_text(face = 'bold', size = 10, hjust = 0.5),
-      axis.title = element_text(face = 'bold', size = 9)
-    )
-})
-
-# BAD: Equal spacing
-p_bad &lt;- wrap_plots(plots, ncol = 2, nrow = 3) +
-  plot_annotation(
-    title = '❌ BAD: Equal Spacing (No Visual Grouping)',
-    subtitle = 'All panels equally spaced → No visual hierarchy or grouping',
-    theme = theme(
-      plot.title = element_text(face = 'bold', size = 14, color = 'red', hjust = 0.5),
-      plot.subtitle = element_text(face = 'italic', size = 9, color = 'red', hjust = 0.5)
-    )
-  )
-
-# GOOD: Grouped spacing
-# Control group (gray)
-plots_ctrl &lt;- lapply(1:3, function(i) {
-  ggplot(data_list[[i]], aes(x = value)) +
-    geom_histogram(bins = 15, fill = '#7F8C8D', color = 'black', alpha = 0.7) +
-    labs(title = paste0('Panel ', LETTERS[i]), y = 'Frequency') +
-    theme_classic(base_size = 9) +
-    theme(
-      plot.title = element_text(face = 'bold', size = 10, hjust = 0.5),
-      axis.title = element_text(face = 'bold', size = 9)
-    )
-})
-
-# Treatment group (red)
-plots_trt &lt;- lapply(4:6, function(i) {
-  ggplot(data_list[[i]], aes(x = value)) +
-    geom_histogram(bins = 15, fill = '#E74C3C', color = 'black', alpha = 0.7) +
-    labs(title = paste0('Panel ', LETTERS[i]), y = 'Frequency') +
-    theme_classic(base_size = 9) +
-    theme(
-      plot.title = element_text(face = 'bold', size = 10, hjust = 0.5),
-      axis.title = element_text(face = 'bold', size = 9)
-    )
-})
-
-# Combine with tight spacing within groups
-ctrl_combined &lt;- wrap_plots(plots_ctrl, ncol = 1) +
-  plot_annotation(title = 'CONTROL',
-                  theme = theme(plot.title = element_text(face = 'bold', size = 11, hjust = 0.5)))
-
-trt_combined &lt;- wrap_plots(plots_trt, ncol = 1) +
-  plot_annotation(title = 'TREATMENT',
-                  theme = theme(plot.title = element_text(face = 'bold', size = 11, hjust = 0.5)))
-
-p_good &lt;- (ctrl_combined | trt_combined) +
-  plot_annotation(
-    title = '✓ GOOD: Grouped Spacing (Clear Relationship)',
-    subtitle = 'Tight spacing within groups → Clear visual grouping',
-    theme = theme(
-      plot.title = element_text(face = 'bold', size = 14, color = 'darkgreen', hjust = 0.5),
-      plot.subtitle = element_text(face = 'italic', size = 9, color = 'darkgreen', hjust = 0.5)
-    )
-  )
-
-# Save (since we can't easily combine bad and good in one figure with patchwork,
-# we'll save separately or use grid)
-
-# For demonstration, save good example
-ggsave('proximity_principle_good.png', p_good, width = 14, height = 10,
-       dpi = 300, bg = 'white')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>data_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">value =</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">mean =</span> i<span class="sc">*</span><span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create individual plots</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data_list[[i]], <span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>, <span class="at">fill =</span> <span class="st">'#3498DB'</span>, <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">'Panel '</span>, LETTERS[i]), <span class="at">y =</span> <span class="st">'Frequency'</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">9</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Equal spacing</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>p_bad <span class="ot">&lt;-</span> <span class="fu">wrap_plots</span>(plots, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'❌ BAD: Equal Spacing (No Visual Grouping)'</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">'All panels equally spaced → No visual hierarchy or grouping'</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'italic'</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Grouped spacing</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Control group (gray)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plots_ctrl <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data_list[[i]], <span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>, <span class="at">fill =</span> <span class="st">'#7F8C8D'</span>, <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">'Panel '</span>, LETTERS[i]), <span class="at">y =</span> <span class="st">'Frequency'</span>) <span class="sc">+</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">9</span>)</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment group (red)</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>plots_trt <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(data_list[[i]], <span class="fu">aes</span>(<span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>, <span class="at">fill =</span> <span class="st">'#E74C3C'</span>, <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">'Panel '</span>, LETTERS[i]), <span class="at">y =</span> <span class="st">'Frequency'</span>) <span class="sc">+</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">9</span>)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine with tight spacing within groups</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>ctrl_combined <span class="ot">&lt;-</span> <span class="fu">wrap_plots</span>(plots_ctrl, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">'CONTROL'</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)))</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>trt_combined <span class="ot">&lt;-</span> <span class="fu">wrap_plots</span>(plots_trt, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">'TREATMENT'</span>,</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)))</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>p_good <span class="ot">&lt;-</span> (ctrl_combined <span class="sc">|</span> trt_combined) <span class="sc">+</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'✓ GOOD: Grouped Spacing (Clear Relationship)'</span>,</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">'Tight spacing within groups → Clear visual grouping'</span>,</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">color =</span> <span class="st">'darkgreen'</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'italic'</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> <span class="st">'darkgreen'</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Save (since we can't easily combine bad and good in one figure with patchwork,</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="co"># we'll save separately or use grid)</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="co"># For demonstration, save good example</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'proximity_principle_good.png'</span>, p_good, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">'white'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="principle-2-similarity-like-elements-group-together" class="level3">
@@ -650,64 +650,64 @@ Visual hierarchy = Information hierarchy</code></pre>
 <h3 class="anchored" data-anchor-id="layout-strategy-1-equal-weight-panels">Layout Strategy 1: Equal Weight Panels</h3>
 <p><strong>When to use:</strong> All panels equally important, same data type</p>
 <p><strong>Code Example (Python) - Balanced 2×2 Grid:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-# Generate different plot types
-plot_types = [
-    ('Scatter', 'scatter'),
-    ('Line', 'line'),
-    ('Bar', 'bar'),
-    ('Box', 'box')
-]
-
-for idx, (title, ptype) in enumerate(plot_types):
-    ax = axes.flat[idx]
-
-    if ptype == 'scatter':
-        x = np.random.randn(50)
-        y = 2*x + np.random.randn(50)
-        ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7, edgecolors='black', linewidths=0.5)
-        ax.set_xlabel('Variable X', fontsize=10, fontweight='bold')
-        ax.set_ylabel('Variable Y', fontsize=10, fontweight='bold')
-
-    elif ptype == 'line':
-        time = np.linspace(0, 10, 50)
-        signal = 5 + 2*np.sin(time) + np.random.randn(50)*0.5
-        ax.plot(time, signal, 'o-', color='#27AE60', linewidth=2, markersize=4)
-        ax.set_xlabel('Time (s)', fontsize=10, fontweight='bold')
-        ax.set_ylabel('Signal (mV)', fontsize=10, fontweight='bold')
-
-    elif ptype == 'bar':
-        categories = ['A', 'B', 'C', 'D']
-        values = [25, 32, 28, 35]
-        ax.bar(categories, values, color='#E74C3C', edgecolor='black', linewidth=1.5)
-        ax.set_ylabel('Response (AU)', fontsize=10, fontweight='bold')
-
-    elif ptype == 'box':
-        data = [np.random.normal(20+i*5, 3, 50) for i in range(4)]
-        bp = ax.boxplot(data, labels=['G1', 'G2', 'G3', 'G4'], patch_artist=True)
-        for patch in bp['boxes']:
-            patch.set_facecolor('#F39C12')
-        ax.set_ylabel('Measurement', fontsize=10, fontweight='bold')
-
-    # Panel label
-    ax.text(-0.15, 1.05, chr(65+idx), transform=ax.transAxes,
-           fontsize=16, fontweight='bold', va='top')
-
-    ax.set_title(f'{title} Plot', fontsize=11, fontweight='bold')
-    ax.grid(alpha=0.3)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-
-plt.suptitle('Equal Weight Grid Layout (2×2)', fontsize=14, fontweight='bold', y=0.98)
-plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('equal_weight_grid.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate different plot types</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plot_types <span class="op">=</span> [</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Scatter'</span>, <span class="st">'scatter'</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Line'</span>, <span class="st">'line'</span>),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Bar'</span>, <span class="st">'bar'</span>),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Box'</span>, <span class="st">'box'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, (title, ptype) <span class="kw">in</span> <span class="bu">enumerate</span>(plot_types):</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes.flat[idx]</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ptype <span class="op">==</span> <span class="st">'scatter'</span>:</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> np.random.randn(<span class="dv">50</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">50</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        ax.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">'Variable X'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Variable Y'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ptype <span class="op">==</span> <span class="st">'line'</span>:</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>        time <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>        signal <span class="op">=</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>np.sin(time) <span class="op">+</span> np.random.randn(<span class="dv">50</span>)<span class="op">*</span><span class="fl">0.5</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        ax.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">'Time (s)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Signal (mV)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ptype <span class="op">==</span> <span class="st">'bar'</span>:</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        categories <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        values <span class="op">=</span> [<span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">28</span>, <span class="dv">35</span>]</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        ax.bar(categories, values, color<span class="op">=</span><span class="st">'#E74C3C'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> ptype <span class="op">==</span> <span class="st">'box'</span>:</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> [np.random.normal(<span class="dv">20</span><span class="op">+</span>i<span class="op">*</span><span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">50</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>)]</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        bp <span class="op">=</span> ax.boxplot(data, labels<span class="op">=</span>[<span class="st">'G1'</span>, <span class="st">'G2'</span>, <span class="st">'G3'</span>, <span class="st">'G4'</span>], patch_artist<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> patch <span class="kw">in</span> bp[<span class="st">'boxes'</span>]:</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>            patch.set_facecolor(<span class="st">'#F39C12'</span>)</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Measurement'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Panel label</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    ax.text(<span class="op">-</span><span class="fl">0.15</span>, <span class="fl">1.05</span>, <span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>idx), transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>           fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss"> Plot'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Equal Weight Grid Layout (2×2)'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'equal_weight_grid.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="layout-strategy-2-dominant-panel-supporting-panels" class="level3">
@@ -724,150 +724,150 @@ plt.close()</code></pre>
 A: Large (60-70% of space) - Main result
 B, C: Small (15-20% each) - Supporting/methods</code></pre>
 <p><strong>Code Example (Python) - Dominant Layout:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-fig = plt.figure(figsize=(14, 8))
-
-# Create grid: 2 rows, 2 columns with different sizes
-gs = fig.add_gridspec(2, 2, width_ratios=[3, 1], height_ratios=[1, 1],
-                      hspace=0.3, wspace=0.3)
-
-# Panel A: Main result (large, spans 2 rows)
-ax_main = fig.add_subplot(gs[:, 0])
-x = np.random.randn(200)
-y = 2.5*x + np.random.randn(200)*1.5
-ax_main.scatter(x, y, s=60, color='#3498DB', alpha=0.6, edgecolors='black', linewidths=0.5)
-z = np.polyfit(x, y, 1)
-p = np.poly1d(z)
-x_line = np.linspace(x.min(), x.max(), 100)
-ax_main.plot(x_line, p(x_line), 'r--', linewidth=3, label=f'y = {z[1]:.2f} + {z[0]:.2f}x')
-ax_main.set_xlabel('Treatment Dose (μM)', fontsize=12, fontweight='bold')
-ax_main.set_ylabel('Cell Response (AU)', fontsize=12, fontweight='bold')
-ax_main.set_title('Main Result: Dose-Response Relationship', fontsize=13, fontweight='bold')
-ax_main.legend(loc='upper left', fontsize=11, frameon=True)
-ax_main.grid(alpha=0.3)
-ax_main.text(-0.1, 1.05, 'A', transform=ax_main.transAxes,
-            fontsize=18, fontweight='bold', va='top')
-
-# Panel B: Supporting (top right)
-ax_b = fig.add_subplot(gs[0, 1])
-categories = ['Control', 'Treated']
-values = [25, 35]
-errors = [3, 4]
-ax_b.bar(categories, values, color=['#7F8C8D', '#E74C3C'],
-        edgecolor='black', linewidth=1.5, width=0.5)
-ax_b.errorbar(categories, values, yerr=errors, fmt='none',
-             ecolor='black', capsize=6, linewidth=2)
-ax_b.set_ylabel('Viability (%)', fontsize=10, fontweight='bold')
-ax_b.set_title('Endpoint Viability', fontsize=10, fontweight='bold')
-ax_b.set_ylim(0, 50)
-ax_b.grid(axis='y', alpha=0.3)
-ax_b.text(-0.25, 1.1, 'B', transform=ax_b.transAxes,
-         fontsize=16, fontweight='bold', va='top')
-
-# Panel C: Supporting (bottom right)
-ax_c = fig.add_subplot(gs[1, 1])
-time = np.linspace(0, 24, 50)
-signal = 100 + 20*np.sin(2*np.pi*time/24) + np.random.randn(50)*3
-ax_c.plot(time, signal, 'o-', color='#27AE60', linewidth=2, markersize=3)
-ax_c.set_xlabel('Time (h)', fontsize=10, fontweight='bold')
-ax_c.set_ylabel('Signal', fontsize=10, fontweight='bold')
-ax_c.set_title('Temporal Control', fontsize=10, fontweight='bold')
-ax_c.grid(alpha=0.3)
-ax_c.text(-0.25, 1.1, 'C', transform=ax_c.transAxes,
-         fontsize=16, fontweight='bold', va='top')
-
-plt.suptitle('Dominant Layout: Main Result + Supporting Evidence',
-            fontsize=14, fontweight='bold', y=0.98)
-
-plt.savefig('dominant_panel_layout.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create grid: 2 rows, 2 columns with different sizes</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>gs <span class="op">=</span> fig.add_gridspec(<span class="dv">2</span>, <span class="dv">2</span>, width_ratios<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">1</span>], height_ratios<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                      hspace<span class="op">=</span><span class="fl">0.3</span>, wspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Main result (large, spans 2 rows)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>ax_main <span class="op">=</span> fig.add_subplot(gs[:, <span class="dv">0</span>])</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">200</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">200</span>)<span class="op">*</span><span class="fl">1.5</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>ax_main.scatter(x, y, s<span class="op">=</span><span class="dv">60</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.polyfit(x, y, <span class="dv">1</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(z)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>x_line <span class="op">=</span> np.linspace(x.<span class="bu">min</span>(), x.<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ax_main.plot(x_line, p(x_line), <span class="st">'r--'</span>, linewidth<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f'y = </span><span class="sc">{</span>z[<span class="dv">1</span>]<span class="sc">:.2f}</span><span class="ss"> + </span><span class="sc">{</span>z[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">x'</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>ax_main.set_xlabel(<span class="st">'Treatment Dose (μM)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>ax_main.set_ylabel(<span class="st">'Cell Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>ax_main.set_title(<span class="st">'Main Result: Dose-Response Relationship'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>ax_main.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ax_main.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>ax_main.text(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">1.05</span>, <span class="st">'A'</span>, transform<span class="op">=</span>ax_main.transAxes,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">18</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Supporting (top right)</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>ax_b <span class="op">=</span> fig.add_subplot(gs[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'Control'</span>, <span class="st">'Treated'</span>]</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">25</span>, <span class="dv">35</span>]</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">4</span>]</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>ax_b.bar(categories, values, color<span class="op">=</span>[<span class="st">'#7F8C8D'</span>, <span class="st">'#E74C3C'</span>],</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, width<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>ax_b.errorbar(categories, values, yerr<span class="op">=</span>errors, fmt<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>             ecolor<span class="op">=</span><span class="st">'black'</span>, capsize<span class="op">=</span><span class="dv">6</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>ax_b.set_ylabel(<span class="st">'Viability (%)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>ax_b.set_title(<span class="st">'Endpoint Viability'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>ax_b.set_ylim(<span class="dv">0</span>, <span class="dv">50</span>)</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>ax_b.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>ax_b.text(<span class="op">-</span><span class="fl">0.25</span>, <span class="fl">1.1</span>, <span class="st">'B'</span>, transform<span class="op">=</span>ax_b.transAxes,</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>         fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel C: Supporting (bottom right)</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>ax_c <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">24</span>, <span class="dv">50</span>)</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="dv">100</span> <span class="op">+</span> <span class="dv">20</span><span class="op">*</span>np.sin(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>time<span class="op">/</span><span class="dv">24</span>) <span class="op">+</span> np.random.randn(<span class="dv">50</span>)<span class="op">*</span><span class="dv">3</span></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>ax_c.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>ax_c.set_xlabel(<span class="st">'Time (h)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>ax_c.set_ylabel(<span class="st">'Signal'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>ax_c.set_title(<span class="st">'Temporal Control'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>ax_c.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>ax_c.text(<span class="op">-</span><span class="fl">0.25</span>, <span class="fl">1.1</span>, <span class="st">'C'</span>, transform<span class="op">=</span>ax_c.transAxes,</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>         fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Dominant Layout: Main Result + Supporting Evidence'</span>,</span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'dominant_panel_layout.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Code Example (R) - Dominant Layout:</strong></p>
-<pre><code>library(ggplot2)
-library(patchwork)
-
-set.seed(42)
-
-# Panel A: Main result (large)
-data_main &lt;- data.frame(
-  dose = rnorm(200, 0, 1),
-  response = 2.5 * rnorm(200, 0, 1) + rnorm(200, 0, 1.5)
-)
-
-p_main &lt;- ggplot(data_main, aes(x = dose, y = response)) +
-  geom_point(size = 3, color = '#3498DB', alpha = 0.6) +
-  geom_smooth(method = 'lm', se = TRUE, color = 'red', linetype = 'dashed', size = 1.5) +
-  labs(x = 'Treatment Dose (μM)', y = 'Cell Response (AU)',
-       title = 'Main Result: Dose-Response Relationship') +
-  theme_classic(base_size = 12) +
-  theme(
-    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5),
-    axis.title = element_text(face = 'bold', size = 12),
-    panel.grid.major = element_line(color = 'gray90', size = 0.3)
-  )
-
-# Panel B: Supporting
-data_b &lt;- data.frame(
-  category = factor(c('Control', 'Treated'), levels = c('Control', 'Treated')),
-  value = c(25, 35),
-  error = c(3, 4)
-)
-
-p_b &lt;- ggplot(data_b, aes(x = category, y = value, fill = category)) +
-  geom_bar(stat = 'identity', color = 'black', size = 1, width = 0.5) +
-  geom_errorbar(aes(ymin = value - error, ymax = value + error),
-               width = 0.2, size = 1) +
-  scale_fill_manual(values = c('Control' = '#7F8C8D', 'Treated' = '#E74C3C')) +
-  labs(y = 'Viability (%)', title = 'Endpoint Viability') +
-  ylim(0, 50) +
-  theme_classic(base_size = 10) +
-  theme(
-    plot.title = element_text(face = 'bold', size = 10, hjust = 0.5),
-    axis.title.x = element_blank(),
-    axis.title.y = element_text(face = 'bold', size = 10),
-    legend.position = 'none',
-    panel.grid.major.y = element_line(color = 'gray90', size = 0.3)
-  )
-
-# Panel C: Supporting
-data_c &lt;- data.frame(
-  time = seq(0, 24, length.out = 50),
-  signal = 100 + 20*sin(2*pi*seq(0, 24, length.out = 50)/24) + rnorm(50, 0, 3)
-)
-
-p_c &lt;- ggplot(data_c, aes(x = time, y = signal)) +
-  geom_line(color = '#27AE60', size = 1.2) +
-  geom_point(color = '#27AE60', size = 2) +
-  labs(x = 'Time (h)', y = 'Signal', title = 'Temporal Control') +
-  theme_classic(base_size = 10) +
-  theme(
-    plot.title = element_text(face = 'bold', size = 10, hjust = 0.5),
-    axis.title = element_text(face = 'bold', size = 10),
-    panel.grid.major = element_line(color = 'gray90', size = 0.3)
-  )
-
-# Combine with dominant layout
-layout &lt;- "
-AAB
-AAC
-"
-
-combined &lt;- p_main + p_b + p_c +
-  plot_layout(design = layout) +
-  plot_annotation(
-    title = 'Dominant Layout: Main Result + Supporting Evidence',
-    tag_levels = 'A',
-    theme = theme(
-      plot.title = element_text(face = 'bold', size = 14, hjust = 0.5),
-      plot.tag = element_text(size = 18, face = 'bold')
-    )
-  )
-
-ggsave('dominant_panel_layout.png', combined, width = 14, height = 8,
-       dpi = 300, bg = 'white')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Main result (large)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>data_main <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">dose =</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fl">2.5</span> <span class="sc">*</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">0</span>, <span class="fl">1.5</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>p_main <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_main, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> response)) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'#3498DB'</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">'lm'</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">linetype =</span> <span class="st">'dashed'</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Treatment Dose (μM)'</span>, <span class="at">y =</span> <span class="st">'Cell Response (AU)'</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'Main Result: Dose-Response Relationship'</span>) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">13</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Supporting</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>data_b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">category =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">'Control'</span>, <span class="st">'Treated'</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'Control'</span>, <span class="st">'Treated'</span>)),</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">35</span>),</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">error =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>p_b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_b, <span class="fu">aes</span>(<span class="at">x =</span> category, <span class="at">y =</span> value, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">'black'</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> value <span class="sc">-</span> error, <span class="at">ymax =</span> value <span class="sc">+</span> error),</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'Control'</span> <span class="ot">=</span> <span class="st">'#7F8C8D'</span>, <span class="st">'Treated'</span> <span class="ot">=</span> <span class="st">'#E74C3C'</span>)) <span class="sc">+</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">'Viability (%)'</span>, <span class="at">title =</span> <span class="st">'Endpoint Viability'</span>) <span class="sc">+</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">50</span>) <span class="sc">+</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">'none'</span>,</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel C: Supporting</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>data_c <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">24</span>, <span class="at">length.out =</span> <span class="dv">50</span>),</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">signal =</span> <span class="dv">100</span> <span class="sc">+</span> <span class="dv">20</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">24</span>, <span class="at">length.out =</span> <span class="dv">50</span>)<span class="sc">/</span><span class="dv">24</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>p_c <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_c, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> signal)) <span class="sc">+</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">'#27AE60'</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">'#27AE60'</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Time (h)'</span>, <span class="at">y =</span> <span class="st">'Signal'</span>, <span class="at">title =</span> <span class="st">'Temporal Control'</span>) <span class="sc">+</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>)</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine with dominant layout</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="st">AAB</span></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="st">AAC</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> p_main <span class="sc">+</span> p_b <span class="sc">+</span> p_c <span class="sc">+</span></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">design =</span> layout) <span class="sc">+</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Dominant Layout: Main Result + Supporting Evidence'</span>,</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">'A'</span>,</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">theme</span>(</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">'bold'</span>)</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'dominant_panel_layout.png'</span>, combined, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">8</span>,</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">'white'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="layout-strategy-3-sequentialnarrative-flow" class="level3">
@@ -946,60 +946,60 @@ Example: 1:2 or 9:16</code></pre>
 Example: 1:1</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Aspect Ratio Effects:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Generate time series data
-time = np.linspace(0, 24, 100)
-signal = 100 + 20*np.sin(2*np.pi*time/24) + np.random.randn(100)*3
-
-fig, axes = plt.subplots(3, 1, figsize=(12, 12))
-
-# Aspect ratio 1: Too tall (vertical bias)
-ax1 = axes[0]
-ax1.plot(time, signal, 'o-', color='#3498DB', linewidth=2, markersize=3)
-ax1.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
-ax1.set_ylabel('Response', fontsize=10, fontweight='bold')
-ax1.set_title('❌ TOO TALL (1:3 aspect)\nEmphasizes vertical, hard to see temporal pattern',
-             fontsize=11, fontweight='bold', color='red')
-ax1.set_aspect('auto')
-ax1.grid(alpha=0.3)
-
-# Aspect ratio 2: Good (horizontal emphasis)
-ax2 = axes[1]
-ax2.plot(time, signal, 'o-', color='#27AE60', linewidth=2, markersize=3)
-ax2.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
-ax2.set_ylabel('Response', fontsize=10, fontweight='bold')
-ax2.set_title('✓ GOOD (3:1 aspect)\nEmphasizes horizontal flow, clear temporal pattern',
-             fontsize=11, fontweight='bold', color='green')
-ax2.set_aspect('auto')
-ax2.grid(alpha=0.3)
-
-# For comparison: Make ax2 appear wider by adjusting position
-pos = ax2.get_position()
-ax2.set_position([pos.x0, pos.y0, pos.width, pos.height*0.5])
-
-# Aspect ratio 3: Square (no directional emphasis)
-ax3 = axes[2]
-ax3.plot(time, signal, 'o-', color='#E67E22', linewidth=2, markersize=3)
-ax3.set_xlabel('Time (hours)', fontsize=10, fontweight='bold')
-ax3.set_ylabel('Response', fontsize=10, fontweight='bold')
-ax3.set_title('⚠ SQUARE (1:1 aspect)\nNo directional bias, but less ideal for time series',
-             fontsize=11, fontweight='bold', color='orange')
-ax3.set_aspect('auto')
-ax3.grid(alpha=0.3)
-
-plt.suptitle('Aspect Ratio Impact on Time Series Perception',
-            fontsize=14, fontweight='bold', y=0.98)
-
-plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('aspect_ratio_effects.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Aspect ratio affects data perception")
-print("✓ Match ratio to data structure (wide for time, square for symmetric)")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate time series data</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">24</span>, <span class="dv">100</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="dv">100</span> <span class="op">+</span> <span class="dv">20</span><span class="op">*</span>np.sin(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>time<span class="op">/</span><span class="dv">24</span>) <span class="op">+</span> np.random.randn(<span class="dv">100</span>)<span class="op">*</span><span class="dv">3</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect ratio 1: Too tall (vertical bias)</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>ax1.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Response'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ TOO TALL (1:3 aspect)</span><span class="ch">\n</span><span class="st">Emphasizes vertical, hard to see temporal pattern'</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>ax1.set_aspect(<span class="st">'auto'</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>ax1.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect ratio 2: Good (horizontal emphasis)</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>ax2.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Response'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD (3:1 aspect)</span><span class="ch">\n</span><span class="st">Emphasizes horizontal flow, clear temporal pattern'</span>,</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>ax2.set_aspect(<span class="st">'auto'</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a><span class="co"># For comparison: Make ax2 appear wider by adjusting position</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> ax2.get_position()</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>ax2.set_position([pos.x0, pos.y0, pos.width, pos.height<span class="op">*</span><span class="fl">0.5</span>])</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Aspect ratio 3: Square (no directional emphasis)</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>ax3.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#E67E22'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>ax3.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="st">'Response'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'⚠ SQUARE (1:1 aspect)</span><span class="ch">\n</span><span class="st">No directional bias, but less ideal for time series'</span>,</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'orange'</span>)</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>ax3.set_aspect(<span class="st">'auto'</span>)</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>ax3.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Aspect Ratio Impact on Time Series Perception'</span>,</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'aspect_ratio_effects.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Aspect ratio affects data perception"</span>)</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Match ratio to data structure (wide for time, square for symmetric)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="panel-size-consistency-rules" class="level3">
@@ -1060,58 +1060,58 @@ Optimal (40-60%):
 → Professional appearance</code></pre>
 <hr>
 <p><strong>Code Example (Python) - White Space Management:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Sample data
-categories = ['Group A', 'Group B', 'Group C', 'Group D']
-values = [25, 32, 28, 35]
-errors = [3, 4, 3.5, 4.2]
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# BAD: Too cramped (insufficient white space)
-ax1 = axes[0]
-bars = ax1.bar(categories, values, width=0.95, color='#3498DB',  # Width = 0.95 (very wide)
-              edgecolor='black', linewidth=1.5)
-ax1.errorbar(categories, values, yerr=errors, fmt='none',
-            ecolor='black', capsize=8, linewidth=2)
-ax1.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
-ax1.set_title('❌ BAD: Insufficient White Space\n(Cramped, hard to distinguish)',
-             fontsize=12, fontweight='bold', color='red')
-ax1.set_ylim(0, 45)
-ax1.grid(axis='y', alpha=0.3)
-# Add cluttered annotations
-for i, (bar, val) in enumerate(zip(bars, values)):
-    ax1.text(i, val + errors[i] + 1, f'{val}±{errors[i]:.1f}',
-            ha='center', fontsize=8)
-# Remove spines
-ax1.spines['top'].set_visible(False)
-ax1.spines['right'].set_visible(False)
-
-# GOOD: Appropriate white space
-ax2 = axes[1]
-bars = ax2.bar(categories, values, width=0.6, color='#27AE60',  # Width = 0.6 (breathing room)
-              edgecolor='black', linewidth=1.5)
-ax2.errorbar(categories, values, yerr=errors, fmt='none',
-            ecolor='black', capsize=8, linewidth=2)
-ax2.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
-ax2.set_title('✓ GOOD: Appropriate White Space\n(Clear, easy to read)',
-             fontsize=12, fontweight='bold', color='green')
-ax2.set_ylim(0, 45)
-ax2.grid(axis='y', alpha=0.3)
-# Spaced annotations
-for i, (bar, val) in enumerate(zip(bars, values)):
-    ax2.text(i, 42, f'n=15', ha='center', fontsize=9, style='italic')
-ax2.spines['top'].set_visible(False)
-ax2.spines['right'].set_visible(False)
-
-plt.tight_layout()
-plt.savefig('white_space_importance.png', dpi=300,
-           bbox_inches='tight', facecolor='white')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'Group A'</span>, <span class="st">'Group B'</span>, <span class="st">'Group C'</span>, <span class="st">'Group D'</span>]</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">28</span>, <span class="dv">35</span>]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">4</span>, <span class="fl">3.5</span>, <span class="fl">4.2</span>]</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Too cramped (insufficient white space)</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax1.bar(categories, values, width<span class="op">=</span><span class="fl">0.95</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>,  <span class="co"># Width = 0.95 (very wide)</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>              edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>ax1.errorbar(categories, values, yerr<span class="op">=</span>errors, fmt<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>            ecolor<span class="op">=</span><span class="st">'black'</span>, capsize<span class="op">=</span><span class="dv">8</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Insufficient White Space</span><span class="ch">\n</span><span class="st">(Cramped, hard to distinguish)'</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="dv">45</span>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>ax1.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Add cluttered annotations</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (bar, val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(bars, values)):</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    ax1.text(i, val <span class="op">+</span> errors[i] <span class="op">+</span> <span class="dv">1</span>, <span class="ss">f'</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">±</span><span class="sc">{</span>errors[i]<span class="sc">:.1f}</span><span class="ss">'</span>,</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove spines</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Appropriate white space</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax2.bar(categories, values, width<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>,  <span class="co"># Width = 0.6 (breathing room)</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>              edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>ax2.errorbar(categories, values, yerr<span class="op">=</span>errors, fmt<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>            ecolor<span class="op">=</span><span class="st">'black'</span>, capsize<span class="op">=</span><span class="dv">8</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Appropriate White Space</span><span class="ch">\n</span><span class="st">(Clear, easy to read)'</span>,</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">45</span>)</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>ax2.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Spaced annotations</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (bar, val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(bars, values)):</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    ax2.text(i, <span class="dv">42</span>, <span class="ss">f'n=15'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>)</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'white_space_importance.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="margin-and-padding-guidelines" class="level3">
@@ -1130,15 +1130,15 @@ Between elements within panel:
 - Tick labels to axis label: ~0.15 inches
 - Title to plot area: ~0.2 inches</code></pre>
 <p><strong>In code (Python):</strong></p>
-<pre><code># Set spacing explicitly
-plt.tight_layout(pad=1.5,      # Outer padding
-                h_pad=2.0,     # Vertical spacing between panels
-                w_pad=2.0)     # Horizontal spacing between panels
-
-# Or manually with subplots_adjust
-plt.subplots_adjust(left=0.1, right=0.95,   # Outer margins
-                   top=0.92, bottom=0.08,
-                   hspace=0.3, wspace=0.3)  # Internal spacing</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set spacing explicitly</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(pad<span class="op">=</span><span class="fl">1.5</span>,      <span class="co"># Outer padding</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                h_pad<span class="op">=</span><span class="fl">2.0</span>,     <span class="co"># Vertical spacing between panels</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                w_pad<span class="op">=</span><span class="fl">2.0</span>)     <span class="co"># Horizontal spacing between panels</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Or manually with subplots_adjust</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.95</span>,   <span class="co"># Outer margins</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                   top<span class="op">=</span><span class="fl">0.92</span>, bottom<span class="op">=</span><span class="fl">0.08</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                   hspace<span class="op">=</span><span class="fl">0.3</span>, wspace<span class="op">=</span><span class="fl">0.3</span>)  <span class="co"># Internal spacing</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -1176,86 +1176,86 @@ plt.subplots_adjust(left=0.1, right=0.95,   # Outer margins
 <section id="template-system-implementation" class="level3">
 <h3 class="anchored" data-anchor-id="template-system-implementation">Template System Implementation</h3>
 <p><strong>Python template:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-
-# Define once, use everywhere
-FIGURE_STYLE = {
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial', 'Helvetica'],
-    'font.size': 9,
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'axes.linewidth': 1.5,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 9,
-    'figure.titlesize': 14,
-    'lines.linewidth': 2.5,
-    'lines.markersize': 6,
-    'grid.alpha': 0.3,
-    'grid.linewidth': 0.5
-}
-
-# Colors (semantic consistency)
-COLORS = {
-    'control': '#7F8C8D',
-    'treatment_a': '#3498DB',
-    'treatment_b': '#E74C3C',
-    'significant': '#E67E22'
-}
-
-# Apply globally
-plt.rcParams.update(FIGURE_STYLE)
-
-# Function to set consistent panel formatting
-def format_panel(ax, xlabel, ylabel, title, panel_label):
-    """Apply consistent formatting to all panels"""
-    ax.set_xlabel(xlabel, fontweight='bold')
-    ax.set_ylabel(ylabel, fontweight='bold')
-    ax.set_title(title, fontweight='bold')
-    ax.text(-0.15, 1.05, panel_label, transform=ax.transAxes,
-           fontsize=16, fontweight='bold', va='top')
-    ax.grid(alpha=0.3)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    return ax
-
-# Example usage
-fig, ax = plt.subplots(figsize=(7, 5))
-ax.plot([1, 2, 3], [1, 4, 2], color=COLORS['treatment_a'])
-format_panel(ax, 'Time (s)', 'Response (AU)', 'Example Plot', 'A')
-plt.savefig('consistent_figure.png', dpi=300, bbox_inches='tight')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define once, use everywhere</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>FIGURE_STYLE <span class="op">=</span> {</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.family'</span>: <span class="st">'sans-serif'</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.sans-serif'</span>: [<span class="st">'Arial'</span>, <span class="st">'Helvetica'</span>],</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.size'</span>: <span class="dv">9</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.labelsize'</span>: <span class="dv">11</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.titlesize'</span>: <span class="dv">12</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.linewidth'</span>: <span class="fl">1.5</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'xtick.labelsize'</span>: <span class="dv">9</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ytick.labelsize'</span>: <span class="dv">9</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'legend.fontsize'</span>: <span class="dv">9</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'figure.titlesize'</span>: <span class="dv">14</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lines.linewidth'</span>: <span class="fl">2.5</span>,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lines.markersize'</span>: <span class="dv">6</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'grid.alpha'</span>: <span class="fl">0.3</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'grid.linewidth'</span>: <span class="fl">0.5</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors (semantic consistency)</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>COLORS <span class="op">=</span> {</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'control'</span>: <span class="st">'#7F8C8D'</span>,</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'treatment_a'</span>: <span class="st">'#3498DB'</span>,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'treatment_b'</span>: <span class="st">'#E74C3C'</span>,</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'significant'</span>: <span class="st">'#E67E22'</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply globally</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update(FIGURE_STYLE)</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to set consistent panel formatting</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_panel(ax, xlabel, ylabel, title, panel_label):</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply consistent formatting to all panels"""</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(xlabel, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(ylabel, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    ax.text(<span class="op">-</span><span class="fl">0.15</span>, <span class="fl">1.05</span>, panel_label, transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>           fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>    ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>    ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>    ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>ax.plot([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>], color<span class="op">=</span>COLORS[<span class="st">'treatment_a'</span>])</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>format_panel(ax, <span class="st">'Time (s)'</span>, <span class="st">'Response (AU)'</span>, <span class="st">'Example Plot'</span>, <span class="st">'A'</span>)</span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'consistent_figure.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>R template:</strong></p>
-<pre><code>library(ggplot2)
-
-# Define theme once
-manuscript_theme &lt;- theme_classic(base_size = 11, base_family = 'Arial') +
-  theme(
-    axis.title = element_text(face = 'bold', size = 11),
-    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
-    axis.text = element_text(size = 9),
-    legend.text = element_text(size = 9),
-    legend.title = element_text(face = 'bold', size = 9),
-    panel.grid.major = element_line(color = 'gray90', size = 0.3),
-    plot.tag = element_text(size = 16, face = 'bold')
-  )
-
-# Colors (semantic consistency)
-COLORS &lt;- list(
-  control = '#7F8C8D',
-  treatment_a = '#3498DB',
-  treatment_b = '#E74C3C',
-  significant = '#E67E22'
-)
-
-# Example usage
-p &lt;- ggplot(data, aes(x = time, y = response)) +
-  geom_line(color = COLORS$treatment_a, size = 1.5) +
-  labs(x = 'Time (s)', y = 'Response (AU)', title = 'Example Plot', tag = 'A') +
-  manuscript_theme
-
-ggsave('consistent_figure.png', p, width = 7, height = 5, dpi = 300)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define theme once</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>manuscript_theme <span class="ot">&lt;-</span> <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">11</span>, <span class="at">base_family =</span> <span class="st">'Arial'</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">'bold'</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors (semantic consistency)</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>COLORS <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="st">'#7F8C8D'</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">treatment_a =</span> <span class="st">'#3498DB'</span>,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">treatment_b =</span> <span class="st">'#E74C3C'</span>,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">significant =</span> <span class="st">'#E67E22'</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> response)) <span class="sc">+</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> COLORS<span class="sc">$</span>treatment_a, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Time (s)'</span>, <span class="at">y =</span> <span class="st">'Response (AU)'</span>, <span class="at">title =</span> <span class="st">'Example Plot'</span>, <span class="at">tag =</span> <span class="st">'A'</span>) <span class="sc">+</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  manuscript_theme</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'consistent_figure.png'</span>, p, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="cross-figure-checklist" class="level3">
@@ -2116,72 +2116,71 @@ Color scale integrity:
 <h2 class="anchored" data-anchor-id="part-viii-software-specific-quick-commands">Part VIII: Software-Specific Quick Commands</h2>
 <section id="python-matplotlib-essential-commands" class="level3">
 <h3 class="anchored" data-anchor-id="python-matplotlib-essential-commands">Python (Matplotlib) Essential Commands</h3>
-<pre><code>import matplotlib.pyplot as plt
-
-# Global style setup (run once at start)
-plt.rcParams.update({
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial', 'Helvetica'],
-    'font.size': 9,
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'lines.linewidth': 2.5,
-    'grid.alpha': 0.3
-})
-
-# Okabe-Ito colorblind-safe palette
-OKABE_ITO = {
-    'orange': '#E69F00',
-    'sky_blue': '#56B4E9',
-    'bluish_green': '#009E73',
-    'yellow': '#F0E442',
-    'blue': '#0072B2',
-    'vermilion': '#D55E00',
-    'reddish_purple': '#CC79A7',
-    'black': '#000000'
-}
-
-# Remove top and right spines (cleaner look)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-# Save at publication quality
-plt.savefig('figure.png', dpi=300, bbox_inches='tight', facecolor='white')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Global style setup (run once at start)</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.family'</span>: <span class="st">'sans-serif'</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.sans-serif'</span>: [<span class="st">'Arial'</span>, <span class="st">'Helvetica'</span>],</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'font.size'</span>: <span class="dv">9</span>,</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.labelsize'</span>: <span class="dv">11</span>,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'axes.titlesize'</span>: <span class="dv">12</span>,</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lines.linewidth'</span>: <span class="fl">2.5</span>,</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'grid.alpha'</span>: <span class="fl">0.3</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Okabe-Ito colorblind-safe palette</span></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>OKABE_ITO <span class="op">=</span> {</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'orange'</span>: <span class="st">'#E69F00'</span>,</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sky_blue'</span>: <span class="st">'#56B4E9'</span>,</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bluish_green'</span>: <span class="st">'#009E73'</span>,</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'yellow'</span>: <span class="st">'#F0E442'</span>,</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'blue'</span>: <span class="st">'#0072B2'</span>,</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'vermilion'</span>: <span class="st">'#D55E00'</span>,</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'reddish_purple'</span>: <span class="st">'#CC79A7'</span>,</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'black'</span>: <span class="st">'#000000'</span></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove top and right spines (cleaner look)</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Save at publication quality</span></span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="r-ggplot2-essential-commands" class="level3">
 <h3 class="anchored" data-anchor-id="r-ggplot2-essential-commands">R (ggplot2) Essential Commands</h3>
-<pre><code>library(ggplot2)
-
-# Reusable theme
-manuscript_theme &lt;- theme_classic(base_size = 11, base_family = 'Arial') +
-  theme(
-    axis.title = element_text(face = 'bold', size = 11),
-    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
-    axis.text = element_text(size = 9),
-    panel.grid.major = element_line(color = 'gray90', size = 0.3),
-    plot.tag = element_text(size = 16, face = 'bold')
-  )
-
-# Okabe-Ito palette
-OKABE_ITO &lt;- c(
-  orange = '#E69F00',
-  sky_blue = '#56B4E9',
-  bluish_green = '#009E73',
-  yellow = '#F0E442',
-  blue = '#0072B2',
-  vermilion = '#D55E00',
-  reddish_purple = '#CC79A7',
-  black = '#000000'
-)
-
-# Apply to plot
-p &lt;- ggplot(...) +
-  geom_point(color = OKABE_ITO['sky_blue']) +
-  manuscript_theme
-
-# Save at publication quality
-ggsave('figure.png', p, width = 7, height = 5, dpi = 300, bg = 'white')
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reusable theme</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>manuscript_theme <span class="ot">&lt;-</span> <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">11</span>, <span class="at">base_family =</span> <span class="st">'Arial'</span>) <span class="sc">+</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.tag =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">face =</span> <span class="st">'bold'</span>)</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Okabe-Ito palette</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>OKABE_ITO <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">orange =</span> <span class="st">'#E69F00'</span>,</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">sky_blue =</span> <span class="st">'#56B4E9'</span>,</span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">bluish_green =</span> <span class="st">'#009E73'</span>,</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">yellow =</span> <span class="st">'#F0E442'</span>,</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">blue =</span> <span class="st">'#0072B2'</span>,</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">vermilion =</span> <span class="st">'#D55E00'</span>,</span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">reddish_purple =</span> <span class="st">'#CC79A7'</span>,</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">black =</span> <span class="st">'#000000'</span></span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply to plot</span></span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(...) <span class="sc">+</span></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> OKABE_ITO[<span class="st">'sky_blue'</span>]) <span class="sc">+</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  manuscript_theme</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Save at publication quality</span></span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'figure.png'</span>, p, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">'white'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>

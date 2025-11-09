@@ -309,211 +309,211 @@ Merged images:
 If images are cropped, state: "Representative cropped regions shown"</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Adding Scale Bars to Microscopy Images:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Rectangle
-from matplotlib_scalebar.scalebar import ScaleBar
-
-# Simulate microscopy image (grayscale)
-np.random.seed(42)
-image = np.random.rand(512, 512) * 0.3  # Background noise
-
-# Add some "cells" (bright circular regions)
-for _ in range(15):
-    x, y = np.random.randint(50, 462, 2)
-    r = np.random.randint(20, 40)
-    Y, X = np.ogrid[:512, :512]
-    mask = (X - x)**2 + (Y - y)**2 &lt;= r**2
-    image[mask] += np.random.rand() * 0.5 + 0.3
-
-# Clip to 0-1 range
-image = np.clip(image, 0, 1)
-
-# Image metadata
-pixel_size_um = 0.5  # 0.5 µm per pixel
-scale_bar_um = 50  # 50 µm scale bar
-
-fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-# === PANEL A: BAD - No scale bar ===
-ax1 = axes[0]
-ax1.imshow(image, cmap='gray', interpolation='nearest')
-ax1.axis('off')
-ax1.set_title('❌ BAD: No Scale Bar\n(Cannot determine size)',
-             fontsize=12, fontweight='bold', color='red', pad=10)
-
-# === PANEL B: GOOD - Manual scale bar ===
-ax2 = axes[1]
-ax2.imshow(image, cmap='gray', interpolation='nearest')
-ax2.axis('off')
-
-# Calculate scale bar length in pixels
-scale_bar_pixels = scale_bar_um / pixel_size_um
-
-# Add scale bar as rectangle
-scale_bar_height = 5  # pixels
-scale_bar_x = 20  # pixels from left
-scale_bar_y = 512 - 30  # pixels from bottom
-
-rect = Rectangle((scale_bar_x, scale_bar_y), scale_bar_pixels, scale_bar_height,
-                linewidth=0, edgecolor='none', facecolor='white')
-ax2.add_patch(rect)
-
-# Add scale bar label
-ax2.text(scale_bar_x + scale_bar_pixels/2, scale_bar_y - 10,
-        f'{scale_bar_um} µm',
-        color='white', fontsize=10, fontweight='bold', ha='center', va='top')
-
-ax2.set_title('✓ GOOD: Manual Scale Bar\n(Clear size reference)',
-             fontsize=12, fontweight='bold', color='green', pad=10)
-
-# === PANEL C: BEST - Using matplotlib-scalebar library ===
-ax3 = axes[2]
-ax3.imshow(image, cmap='gray', interpolation='nearest')
-ax3.axis('off')
-
-# Add scalebar using library (more professional)
-scalebar = ScaleBar(pixel_size_um, "um", length_fraction=0.2,
-                   location='lower left', box_alpha=0.5, color='white',
-                   font_properties={'size': 10, 'weight': 'bold'})
-ax3.add_artist(scalebar)
-
-ax3.set_title('✓ BEST: Professional Scale Bar\n(Automated, consistent)',
-             fontsize=12, fontweight='bold', color='green', pad=10)
-
-# Add panel labels
-for i, ax in enumerate(axes):
-    ax.text(0.02, 0.98, chr(65+i), transform=ax.transAxes,
-           fontsize=16, fontweight='bold', color='white', va='top',
-           bbox=dict(boxstyle='round', facecolor='black', alpha=0.7))
-
-plt.tight_layout()
-plt.savefig('microscopy_scale_bars.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Microscopy scale bar examples created")
-print(f"Image size: {image.shape[0]} × {image.shape[1]} pixels")
-print(f"Pixel size: {pixel_size_um} µm/pixel")
-print(f"Scale bar: {scale_bar_um} µm = {scale_bar_pixels} pixels")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib_scalebar.scalebar <span class="im">import</span> ScaleBar</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate microscopy image (grayscale)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> np.random.rand(<span class="dv">512</span>, <span class="dv">512</span>) <span class="op">*</span> <span class="fl">0.3</span>  <span class="co"># Background noise</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add some "cells" (bright circular regions)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> np.random.randint(<span class="dv">50</span>, <span class="dv">462</span>, <span class="dv">2</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.random.randint(<span class="dv">20</span>, <span class="dv">40</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    Y, X <span class="op">=</span> np.ogrid[:<span class="dv">512</span>, :<span class="dv">512</span>]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (X <span class="op">-</span> x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (Y <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span> <span class="op">&lt;=</span> r<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    image[mask] <span class="op">+=</span> np.random.rand() <span class="op">*</span> <span class="fl">0.5</span> <span class="op">+</span> <span class="fl">0.3</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Clip to 0-1 range</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> np.clip(image, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Image metadata</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>pixel_size_um <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># 0.5 µm per pixel</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>scale_bar_um <span class="op">=</span> <span class="dv">50</span>  <span class="co"># 50 µm scale bar</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">5</span>))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL A: BAD - No scale bar ===</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>ax1.imshow(image, cmap<span class="op">=</span><span class="st">'gray'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: No Scale Bar</span><span class="ch">\n</span><span class="st">(Cannot determine size)'</span>,</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL B: GOOD - Manual scale bar ===</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>ax2.imshow(image, cmap<span class="op">=</span><span class="st">'gray'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate scale bar length in pixels</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>scale_bar_pixels <span class="op">=</span> scale_bar_um <span class="op">/</span> pixel_size_um</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Add scale bar as rectangle</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>scale_bar_height <span class="op">=</span> <span class="dv">5</span>  <span class="co"># pixels</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>scale_bar_x <span class="op">=</span> <span class="dv">20</span>  <span class="co"># pixels from left</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>scale_bar_y <span class="op">=</span> <span class="dv">512</span> <span class="op">-</span> <span class="dv">30</span>  <span class="co"># pixels from bottom</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>rect <span class="op">=</span> Rectangle((scale_bar_x, scale_bar_y), scale_bar_pixels, scale_bar_height,</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                linewidth<span class="op">=</span><span class="dv">0</span>, edgecolor<span class="op">=</span><span class="st">'none'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>ax2.add_patch(rect)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Add scale bar label</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>ax2.text(scale_bar_x <span class="op">+</span> scale_bar_pixels<span class="op">/</span><span class="dv">2</span>, scale_bar_y <span class="op">-</span> <span class="dv">10</span>,</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'</span><span class="sc">{</span>scale_bar_um<span class="sc">}</span><span class="ss"> µm'</span>,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'white'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Manual Scale Bar</span><span class="ch">\n</span><span class="st">(Clear size reference)'</span>,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL C: BEST - Using matplotlib-scalebar library ===</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>ax3.imshow(image, cmap<span class="op">=</span><span class="st">'gray'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>ax3.axis(<span class="st">'off'</span>)</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Add scalebar using library (more professional)</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>scalebar <span class="op">=</span> ScaleBar(pixel_size_um, <span class="st">"um"</span>, length_fraction<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>                   location<span class="op">=</span><span class="st">'lower left'</span>, box_alpha<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>                   font_properties<span class="op">=</span>{<span class="st">'size'</span>: <span class="dv">10</span>, <span class="st">'weight'</span>: <span class="st">'bold'</span>})</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>ax3.add_artist(scalebar)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'✓ BEST: Professional Scale Bar</span><span class="ch">\n</span><span class="st">(Automated, consistent)'</span>,</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Add panel labels</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    ax.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i), transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>           fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'white'</span>, va<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>           bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'microscopy_scale_bars.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Microscopy scale bar examples created"</span>)</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Image size: </span><span class="sc">{</span>image<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> × </span><span class="sc">{</span>image<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> pixels"</span>)</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Pixel size: </span><span class="sc">{</span>pixel_size_um<span class="sc">}</span><span class="ss"> µm/pixel"</span>)</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Scale bar: </span><span class="sc">{</span>scale_bar_um<span class="sc">}</span><span class="ss"> µm = </span><span class="sc">{</span>scale_bar_pixels<span class="sc">}</span><span class="ss"> pixels"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Code Example (Python) - Multi-Channel Fluorescence Imaging:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Simulate 3-channel fluorescence image
-size = 256
-
-# Channel 1: DAPI (nuclei, blue)
-dapi = np.zeros((size, size))
-for _ in range(30):
-    x, y = np.random.randint(20, size-20, 2)
-    r = np.random.randint(8, 15)
-    Y, X = np.ogrid[:size, :size]
-    mask = (X - x)**2 + (Y - y)**2 &lt;= r**2
-    dapi[mask] = np.random.rand() * 0.8 + 0.2
-
-# Channel 2: GFP (cytoplasm, green)
-gfp = np.zeros((size, size))
-for _ in range(25):
-    x, y = np.random.randint(15, size-15, 2)
-    r = np.random.randint(15, 25)
-    Y, X = np.ogrid[:size, :size]
-    mask = (X - x)**2 + (Y - y)**2 &lt;= r**2
-    gfp[mask] = np.random.rand() * 0.6 + 0.1
-
-# Channel 3: RFP (marker, red)
-rfp = np.zeros((size, size))
-for _ in range(20):
-    x, y = np.random.randint(20, size-20, 2)
-    r = np.random.randint(5, 10)
-    Y, X = np.ogrid[:size, :size]
-    mask = (X - x)**2 + (Y - y)**2 &lt;= r**2
-    rfp[mask] = np.random.rand() * 0.9 + 0.1
-
-# Create RGB composite
-merged = np.zeros((size, size, 3))
-merged[:, :, 2] = dapi  # Blue channel
-merged[:, :, 1] = gfp   # Green channel
-merged[:, :, 0] = rfp   # Red channel
-
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-
-# Individual channels
-channel_data = [
-    (dapi, 'Blues', 'DAPI (Nuclei)', '#3498DB'),
-    (gfp, 'Greens', 'GFP (Cytoplasm)', '#27AE60'),
-    (rfp, 'Reds', 'RFP (Marker)', '#E74C3C')
-]
-
-for i, (data, cmap, title, color) in enumerate(channel_data):
-    ax = axes[0, i]
-    ax.imshow(data, cmap=cmap, interpolation='nearest')
-    ax.axis('off')
-    ax.set_title(title, fontsize=12, fontweight='bold', color=color, pad=10)
-
-    # Add channel wavelength
-    wavelengths = ['405 nm', '488 nm', '561 nm']
-    ax.text(0.5, 0.02, wavelengths[i], transform=ax.transAxes,
-           fontsize=9, ha='center', color='white', fontweight='bold',
-           bbox=dict(boxstyle='round', facecolor='black', alpha=0.7))
-
-    # Panel label
-    ax.text(0.02, 0.98, chr(65+i), transform=ax.transAxes,
-           fontsize=16, fontweight='bold', color='white', va='top',
-           bbox=dict(boxstyle='round', facecolor='black', alpha=0.7))
-
-# Merged image
-ax_merge = axes[1, 0]
-ax_merge.imshow(merged, interpolation='nearest')
-ax_merge.axis('off')
-ax_merge.set_title('D. Merge (All Channels)', fontsize=12, fontweight='bold', pad=10)
-ax_merge.text(0.02, 0.98, 'D', transform=ax_merge.transAxes,
-             fontsize=16, fontweight='bold', color='white', va='top',
-             bbox=dict(boxstyle='round', facecolor='black', alpha=0.7))
-
-# Merge with only DAPI + GFP
-merge_dg = np.zeros((size, size, 3))
-merge_dg[:, :, 2] = dapi
-merge_dg[:, :, 1] = gfp
-ax_dg = axes[1, 1]
-ax_dg.imshow(merge_dg, interpolation='nearest')
-ax_dg.axis('off')
-ax_dg.set_title('E. DAPI + GFP', fontsize=12, fontweight='bold', pad=10)
-ax_dg.text(0.02, 0.98, 'E', transform=ax_dg.transAxes,
-          fontsize=16, fontweight='bold', color='white', va='top',
-          bbox=dict(boxstyle='round', facecolor='black', alpha=0.7))
-
-# Quantification example
-ax_quant = axes[1, 2]
-categories = ['DAPI+', 'GFP+', 'RFP+', 'Colocalized']
-counts = [30, 25, 20, 15]
-colors_bar = ['#3498DB', '#27AE60', '#E74C3C', '#F39C12']
-
-bars = ax_quant.bar(range(len(categories)), counts, color=colors_bar,
-                    edgecolor='black', linewidth=1.5, width=0.6)
-ax_quant.set_xticks(range(len(categories)))
-ax_quant.set_xticklabels(categories, rotation=45, ha='right', fontsize=10)
-ax_quant.set_ylabel('Cell Count', fontsize=11, fontweight='bold')
-ax_quant.set_title('F. Quantification', fontsize=12, fontweight='bold', pad=10)
-ax_quant.spines['top'].set_visible(False)
-ax_quant.spines['right'].set_visible(False)
-ax_quant.grid(axis='y', alpha=0.3)
-
-# Add counts on bars
-for bar, count in zip(bars, counts):
-    height = bar.get_height()
-    ax_quant.text(bar.get_x() + bar.get_width()/2., height + 1,
-                 f'{count}', ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-ax_quant.text(0.02, 0.98, 'F', transform=ax_quant.transAxes,
-             fontsize=16, fontweight='bold', va='top')
-
-plt.tight_layout()
-plt.savefig('fluorescence_multichannel.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Multi-channel fluorescence example created")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 3-channel fluorescence image</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> <span class="dv">256</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Channel 1: DAPI (nuclei, blue)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>dapi <span class="op">=</span> np.zeros((size, size))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">30</span>):</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> np.random.randint(<span class="dv">20</span>, size<span class="op">-</span><span class="dv">20</span>, <span class="dv">2</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.random.randint(<span class="dv">8</span>, <span class="dv">15</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    Y, X <span class="op">=</span> np.ogrid[:size, :size]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (X <span class="op">-</span> x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (Y <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span> <span class="op">&lt;=</span> r<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    dapi[mask] <span class="op">=</span> np.random.rand() <span class="op">*</span> <span class="fl">0.8</span> <span class="op">+</span> <span class="fl">0.2</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Channel 2: GFP (cytoplasm, green)</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>gfp <span class="op">=</span> np.zeros((size, size))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">25</span>):</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> np.random.randint(<span class="dv">15</span>, size<span class="op">-</span><span class="dv">15</span>, <span class="dv">2</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.random.randint(<span class="dv">15</span>, <span class="dv">25</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    Y, X <span class="op">=</span> np.ogrid[:size, :size]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (X <span class="op">-</span> x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (Y <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span> <span class="op">&lt;=</span> r<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    gfp[mask] <span class="op">=</span> np.random.rand() <span class="op">*</span> <span class="fl">0.6</span> <span class="op">+</span> <span class="fl">0.1</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Channel 3: RFP (marker, red)</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>rfp <span class="op">=</span> np.zeros((size, size))</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">20</span>):</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> np.random.randint(<span class="dv">20</span>, size<span class="op">-</span><span class="dv">20</span>, <span class="dv">2</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> np.random.randint(<span class="dv">5</span>, <span class="dv">10</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    Y, X <span class="op">=</span> np.ogrid[:size, :size]</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (X <span class="op">-</span> x)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (Y <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span> <span class="op">&lt;=</span> r<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    rfp[mask] <span class="op">=</span> np.random.rand() <span class="op">*</span> <span class="fl">0.9</span> <span class="op">+</span> <span class="fl">0.1</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Create RGB composite</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> np.zeros((size, size, <span class="dv">3</span>))</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>merged[:, :, <span class="dv">2</span>] <span class="op">=</span> dapi  <span class="co"># Blue channel</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>merged[:, :, <span class="dv">1</span>] <span class="op">=</span> gfp   <span class="co"># Green channel</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>merged[:, :, <span class="dv">0</span>] <span class="op">=</span> rfp   <span class="co"># Red channel</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Individual channels</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>channel_data <span class="op">=</span> [</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    (dapi, <span class="st">'Blues'</span>, <span class="st">'DAPI (Nuclei)'</span>, <span class="st">'#3498DB'</span>),</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    (gfp, <span class="st">'Greens'</span>, <span class="st">'GFP (Cytoplasm)'</span>, <span class="st">'#27AE60'</span>),</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    (rfp, <span class="st">'Reds'</span>, <span class="st">'RFP (Marker)'</span>, <span class="st">'#E74C3C'</span>)</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (data, cmap, title, color) <span class="kw">in</span> <span class="bu">enumerate</span>(channel_data):</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[<span class="dv">0</span>, i]</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    ax.imshow(data, cmap<span class="op">=</span>cmap, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span>color, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add channel wavelength</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    wavelengths <span class="op">=</span> [<span class="st">'405 nm'</span>, <span class="st">'488 nm'</span>, <span class="st">'561 nm'</span>]</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    ax.text(<span class="fl">0.5</span>, <span class="fl">0.02</span>, wavelengths[i], transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>           fontsize<span class="op">=</span><span class="dv">9</span>, ha<span class="op">=</span><span class="st">'center'</span>, color<span class="op">=</span><span class="st">'white'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>           bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Panel label</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    ax.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i), transform<span class="op">=</span>ax.transAxes,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>           fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'white'</span>, va<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>           bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Merged image</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>ax_merge <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>ax_merge.imshow(merged, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>ax_merge.axis(<span class="st">'off'</span>)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>ax_merge.set_title(<span class="st">'D. Merge (All Channels)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>ax_merge.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'D'</span>, transform<span class="op">=</span>ax_merge.transAxes,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'white'</span>, va<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>             bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge with only DAPI + GFP</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>merge_dg <span class="op">=</span> np.zeros((size, size, <span class="dv">3</span>))</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>merge_dg[:, :, <span class="dv">2</span>] <span class="op">=</span> dapi</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>merge_dg[:, :, <span class="dv">1</span>] <span class="op">=</span> gfp</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>ax_dg <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>ax_dg.imshow(merge_dg, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>ax_dg.axis(<span class="st">'off'</span>)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>ax_dg.set_title(<span class="st">'E. DAPI + GFP'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>ax_dg.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'E'</span>, transform<span class="op">=</span>ax_dg.transAxes,</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>          fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'white'</span>, va<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>          bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantification example</span></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>ax_quant <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'DAPI+'</span>, <span class="st">'GFP+'</span>, <span class="st">'RFP+'</span>, <span class="st">'Colocalized'</span>]</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> [<span class="dv">30</span>, <span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">15</span>]</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>colors_bar <span class="op">=</span> [<span class="st">'#3498DB'</span>, <span class="st">'#27AE60'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#F39C12'</span>]</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax_quant.bar(<span class="bu">range</span>(<span class="bu">len</span>(categories)), counts, color<span class="op">=</span>colors_bar,</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>                    edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>ax_quant.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(categories)))</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>ax_quant.set_xticklabels(categories, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>ax_quant.set_ylabel(<span class="st">'Cell Count'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>ax_quant.set_title(<span class="st">'F. Quantification'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>ax_quant.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>ax_quant.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>ax_quant.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="co"># Add counts on bars</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, count <span class="kw">in</span> <span class="bu">zip</span>(bars, counts):</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> bar.get_height()</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>    ax_quant.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="fl">2.</span>, height <span class="op">+</span> <span class="dv">1</span>,</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f'</span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>ax_quant.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'F'</span>, transform<span class="op">=</span>ax_quant.transAxes,</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'fluorescence_multichannel.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Multi-channel fluorescence example created"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="microscopy-figure-best-practices-checklist" class="level3">
@@ -575,188 +575,188 @@ Panel C: Quantification
 - Statistical comparisons</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Simulated Western Blot Figure:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Rectangle
-
-np.random.seed(42)
-
-# Simulate gel/blot images
-def generate_blot_lane(target_level, loading_level=1.0, width=30, height=200):
-    """Generate simulated Western blot lane"""
-    lane = np.zeros((height, width))
-
-    # Target protein band (variable intensity)
-    target_pos = 80  # Position from top
-    target_width = 25
-    for i in range(target_width):
-        y_start = max(0, target_pos - i)
-        y_end = min(height, target_pos + i)
-        intensity = target_level * np.exp(-i/5) + np.random.rand(1)[0] * 0.1
-        lane[y_start:y_end, :] = np.maximum(lane[y_start:y_end, :], intensity)
-
-    # Loading control band (consistent intensity)
-    loading_pos = 150
-    loading_width = 20
-    for i in range(loading_width):
-        y_start = max(0, loading_pos - i)
-        y_end = min(height, loading_pos + i)
-        intensity = loading_level * np.exp(-i/4) + np.random.rand(1)[0] * 0.05
-        lane[y_start:y_end, :] = np.maximum(lane[y_start:y_end, :], intensity)
-
-    return lane
-
-# Generate blot with 5 lanes
-n_lanes = 5
-lane_width = 30
-lane_spacing = 10
-total_width = n_lanes * lane_width + (n_lanes - 1) * lane_spacing
-
-# Target protein levels (control vs treatments)
-target_levels = [0.5, 0.5, 0.8, 1.2, 1.5]  # Relative to control
-labels = ['Ctrl 1', 'Ctrl 2', 'Low', 'Med', 'High']
-
-# Create blot image
-blot_image = np.zeros((200, total_width))
-lane_positions = []
-
-for i, target_level in enumerate(target_levels):
-    lane = generate_blot_lane(target_level, loading_level=1.0)
-    x_start = i * (lane_width + lane_spacing)
-    x_end = x_start + lane_width
-    blot_image[:, x_start:x_end] = lane
-    lane_positions.append((x_start, x_end))
-
-# Quantification data
-normalized_intensities = np.array(target_levels)
-errors = np.random.rand(n_lanes) * 0.15
-
-# Create figure
-fig = plt.figure(figsize=(14, 10))
-gs = fig.add_gridspec(3, 2, height_ratios=[1, 1, 1.2], hspace=0.3, wspace=0.3)
-
-# === PANEL A: Target protein blot ===
-ax_target = fig.add_subplot(gs[0, :])
-ax_target.imshow(blot_image, cmap='gray_r', aspect='auto', interpolation='nearest')
-ax_target.axis('off')
-ax_target.set_title('A. Target Protein (e.g., phospho-ERK)',
-                   fontsize=12, fontweight='bold', pad=10)
-
-# Add lane labels
-for i, (x_start, x_end) in enumerate(lane_positions):
-    x_mid = (x_start + x_end) / 2
-    ax_target.text(x_mid, blot_image.shape[0] + 10, labels[i],
-                  ha='center', fontsize=9, fontweight='bold')
-
-# Add molecular weight marker
-ax_target.text(-15, 80, '50 kDa', fontsize=8, ha='right', va='center')
-ax_target.plot([-10, -5], [80, 80], 'k-', linewidth=2)
-
-# Panel label
-ax_target.text(0.02, 0.98, 'A', transform=ax_target.transAxes,
-              fontsize=16, fontweight='bold', va='top')
-
-# === PANEL B: Loading control blot ===
-# Generate loading control image (consistent across lanes)
-loading_control = np.zeros((200, total_width))
-for i in range(n_lanes):
-    lane = generate_blot_lane(0.3, loading_level=0.8)  # Consistent loading
-    x_start = i * (lane_width + lane_spacing)
-    x_end = x_start + lane_width
-    loading_control[:, x_start:x_end] = lane
-
-ax_loading = fig.add_subplot(gs[1, :])
-ax_loading.imshow(loading_control, cmap='gray_r', aspect='auto', interpolation='nearest')
-ax_loading.axis('off')
-ax_loading.set_title('B. Loading Control (β-actin)',
-                    fontsize=12, fontweight='bold', pad=10)
-
-# Add lane labels
-for i, (x_start, x_end) in enumerate(lane_positions):
-    x_mid = (x_start + x_end) / 2
-    ax_loading.text(x_mid, loading_control.shape[0] + 10, labels[i],
-                   ha='center', fontsize=9, fontweight='bold')
-
-# Add molecular weight marker
-ax_loading.text(-15, 150, '42 kDa', fontsize=8, ha='right', va='center')
-ax_loading.plot([-10, -5], [150, 150], 'k-', linewidth=2)
-
-ax_loading.text(0.02, 0.98, 'B', transform=ax_loading.transAxes,
-               fontsize=16, fontweight='bold', va='top')
-
-# === PANEL C: Quantification ===
-ax_quant = fig.add_subplot(gs[2, 0])
-
-categories = ['Control', 'Control', 'Low Dose', 'Med Dose', 'High Dose']
-x_pos = np.arange(len(categories))
-colors_quant = ['#7F8C8D', '#7F8C8D', '#3498DB', '#3498DB', '#E74C3C']
-
-bars = ax_quant.bar(x_pos, normalized_intensities, yerr=errors,
-                   color=colors_quant, edgecolor='black', linewidth=1.5,
-                   capsize=8, width=0.6, error_kw={'linewidth': 2})
-
-ax_quant.set_xticks(x_pos)
-ax_quant.set_xticklabels(categories, rotation=45, ha='right', fontsize=10)
-ax_quant.set_ylabel('Normalized Intensity\n(Target / Loading Control)',
-                   fontsize=11, fontweight='bold')
-ax_quant.set_title('C. Quantification (n=3 biological replicates)',
-                  fontsize=12, fontweight='bold')
-ax_quant.set_ylim(0, 2.0)
-ax_quant.grid(axis='y', alpha=0.3)
-ax_quant.spines['top'].set_visible(False)
-ax_quant.spines['right'].set_visible(False)
-
-# Add statistical comparisons
-ax_quant.plot([0.5, 4], [1.8, 1.8], 'k-', linewidth=1.5)
-ax_quant.text(2.25, 1.85, '**', ha='center', fontsize=14, fontweight='bold')
-
-ax_quant.text(0.02, 0.98, 'C', transform=ax_quant.transAxes,
-             fontsize=16, fontweight='bold', va='top')
-
-# === PANEL D: Representative image note ===
-ax_note = fig.add_subplot(gs[2, 1])
-ax_note.axis('off')
-
-note_text = """
-D. Experimental Details
-
-• Representative blot from 3
-  independent experiments
-
-• Quantification based on 3
-  biological replicates
-
-• Statistical test: One-way ANOVA
-  with Dunnett's post-hoc
-
-• ** p &lt; 0.01 vs. Control
-
-• Blot image: Linear adjustments
-  only, applied uniformly
-
-• Full unprocessed blots available
-  in supplementary materials
-"""
-
-ax_note.text(0.1, 0.9, note_text, transform=ax_note.transAxes,
-            fontsize=9, va='top', family='monospace',
-            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
-
-ax_note.text(0.02, 0.98, 'D', transform=ax_note.transAxes,
-            fontsize=16, fontweight='bold', va='top')
-
-plt.suptitle('Western Blot Analysis: Publication-Ready Format',
-            fontsize=14, fontweight='bold', y=0.98)
-
-plt.savefig('western_blot_figure.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Western blot figure created")
-print("Key components:")
-print("  - Target protein blot (Panel A)")
-print("  - Loading control blot (Panel B)")
-print("  - Quantification with statistics (Panel C)")
-print("  - Methods documentation (Panel D)")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate gel/blot images</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_blot_lane(target_level, loading_level<span class="op">=</span><span class="fl">1.0</span>, width<span class="op">=</span><span class="dv">30</span>, height<span class="op">=</span><span class="dv">200</span>):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Generate simulated Western blot lane"""</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    lane <span class="op">=</span> np.zeros((height, width))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Target protein band (variable intensity)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    target_pos <span class="op">=</span> <span class="dv">80</span>  <span class="co"># Position from top</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    target_width <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(target_width):</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        y_start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, target_pos <span class="op">-</span> i)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        y_end <span class="op">=</span> <span class="bu">min</span>(height, target_pos <span class="op">+</span> i)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        intensity <span class="op">=</span> target_level <span class="op">*</span> np.exp(<span class="op">-</span>i<span class="op">/</span><span class="dv">5</span>) <span class="op">+</span> np.random.rand(<span class="dv">1</span>)[<span class="dv">0</span>] <span class="op">*</span> <span class="fl">0.1</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        lane[y_start:y_end, :] <span class="op">=</span> np.maximum(lane[y_start:y_end, :], intensity)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loading control band (consistent intensity)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    loading_pos <span class="op">=</span> <span class="dv">150</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    loading_width <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(loading_width):</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        y_start <span class="op">=</span> <span class="bu">max</span>(<span class="dv">0</span>, loading_pos <span class="op">-</span> i)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        y_end <span class="op">=</span> <span class="bu">min</span>(height, loading_pos <span class="op">+</span> i)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        intensity <span class="op">=</span> loading_level <span class="op">*</span> np.exp(<span class="op">-</span>i<span class="op">/</span><span class="dv">4</span>) <span class="op">+</span> np.random.rand(<span class="dv">1</span>)[<span class="dv">0</span>] <span class="op">*</span> <span class="fl">0.05</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        lane[y_start:y_end, :] <span class="op">=</span> np.maximum(lane[y_start:y_end, :], intensity)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lane</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate blot with 5 lanes</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>n_lanes <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>lane_width <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>lane_spacing <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>total_width <span class="op">=</span> n_lanes <span class="op">*</span> lane_width <span class="op">+</span> (n_lanes <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> lane_spacing</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Target protein levels (control vs treatments)</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>target_levels <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">1.2</span>, <span class="fl">1.5</span>]  <span class="co"># Relative to control</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="st">'Ctrl 1'</span>, <span class="st">'Ctrl 2'</span>, <span class="st">'Low'</span>, <span class="st">'Med'</span>, <span class="st">'High'</span>]</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Create blot image</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>blot_image <span class="op">=</span> np.zeros((<span class="dv">200</span>, total_width))</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>lane_positions <span class="op">=</span> []</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, target_level <span class="kw">in</span> <span class="bu">enumerate</span>(target_levels):</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    lane <span class="op">=</span> generate_blot_lane(target_level, loading_level<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    x_start <span class="op">=</span> i <span class="op">*</span> (lane_width <span class="op">+</span> lane_spacing)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    x_end <span class="op">=</span> x_start <span class="op">+</span> lane_width</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    blot_image[:, x_start:x_end] <span class="op">=</span> lane</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    lane_positions.append((x_start, x_end))</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantification data</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>normalized_intensities <span class="op">=</span> np.array(target_levels)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> np.random.rand(n_lanes) <span class="op">*</span> <span class="fl">0.15</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>gs <span class="op">=</span> fig.add_gridspec(<span class="dv">3</span>, <span class="dv">2</span>, height_ratios<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">1.2</span>], hspace<span class="op">=</span><span class="fl">0.3</span>, wspace<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL A: Target protein blot ===</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>ax_target <span class="op">=</span> fig.add_subplot(gs[<span class="dv">0</span>, :])</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>ax_target.imshow(blot_image, cmap<span class="op">=</span><span class="st">'gray_r'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>ax_target.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>ax_target.set_title(<span class="st">'A. Target Protein (e.g., phospho-ERK)'</span>,</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>                   fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Add lane labels</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (x_start, x_end) <span class="kw">in</span> <span class="bu">enumerate</span>(lane_positions):</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>    x_mid <span class="op">=</span> (x_start <span class="op">+</span> x_end) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>    ax_target.text(x_mid, blot_image.shape[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">10</span>, labels[i],</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>                  ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Add molecular weight marker</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>ax_target.text(<span class="op">-</span><span class="dv">15</span>, <span class="dv">80</span>, <span class="st">'50 kDa'</span>, fontsize<span class="op">=</span><span class="dv">8</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>ax_target.plot([<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">5</span>], [<span class="dv">80</span>, <span class="dv">80</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel label</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>ax_target.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'A'</span>, transform<span class="op">=</span>ax_target.transAxes,</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL B: Loading control blot ===</span></span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate loading control image (consistent across lanes)</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>loading_control <span class="op">=</span> np.zeros((<span class="dv">200</span>, total_width))</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_lanes):</span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>    lane <span class="op">=</span> generate_blot_lane(<span class="fl">0.3</span>, loading_level<span class="op">=</span><span class="fl">0.8</span>)  <span class="co"># Consistent loading</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>    x_start <span class="op">=</span> i <span class="op">*</span> (lane_width <span class="op">+</span> lane_spacing)</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>    x_end <span class="op">=</span> x_start <span class="op">+</span> lane_width</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>    loading_control[:, x_start:x_end] <span class="op">=</span> lane</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>ax_loading <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, :])</span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>ax_loading.imshow(loading_control, cmap<span class="op">=</span><span class="st">'gray_r'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>, interpolation<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>ax_loading.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>ax_loading.set_title(<span class="st">'B. Loading Control (β-actin)'</span>,</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>                    fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Add lane labels</span></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (x_start, x_end) <span class="kw">in</span> <span class="bu">enumerate</span>(lane_positions):</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>    x_mid <span class="op">=</span> (x_start <span class="op">+</span> x_end) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>    ax_loading.text(x_mid, loading_control.shape[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">10</span>, labels[i],</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>                   ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Add molecular weight marker</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>ax_loading.text(<span class="op">-</span><span class="dv">15</span>, <span class="dv">150</span>, <span class="st">'42 kDa'</span>, fontsize<span class="op">=</span><span class="dv">8</span>, ha<span class="op">=</span><span class="st">'right'</span>, va<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>ax_loading.plot([<span class="op">-</span><span class="dv">10</span>, <span class="op">-</span><span class="dv">5</span>], [<span class="dv">150</span>, <span class="dv">150</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>ax_loading.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'B'</span>, transform<span class="op">=</span>ax_loading.transAxes,</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>               fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL C: Quantification ===</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>ax_quant <span class="op">=</span> fig.add_subplot(gs[<span class="dv">2</span>, <span class="dv">0</span>])</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'Control'</span>, <span class="st">'Control'</span>, <span class="st">'Low Dose'</span>, <span class="st">'Med Dose'</span>, <span class="st">'High Dose'</span>]</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>x_pos <span class="op">=</span> np.arange(<span class="bu">len</span>(categories))</span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>colors_quant <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#7F8C8D'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>]</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax_quant.bar(x_pos, normalized_intensities, yerr<span class="op">=</span>errors,</span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>                   color<span class="op">=</span>colors_quant, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>                   capsize<span class="op">=</span><span class="dv">8</span>, width<span class="op">=</span><span class="fl">0.6</span>, error_kw<span class="op">=</span>{<span class="st">'linewidth'</span>: <span class="dv">2</span>})</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>ax_quant.set_xticks(x_pos)</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>ax_quant.set_xticklabels(categories, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>ax_quant.set_ylabel(<span class="st">'Normalized Intensity</span><span class="ch">\n</span><span class="st">(Target / Loading Control)'</span>,</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>                   fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>ax_quant.set_title(<span class="st">'C. Quantification (n=3 biological replicates)'</span>,</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>                  fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>ax_quant.set_ylim(<span class="dv">0</span>, <span class="fl">2.0</span>)</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>ax_quant.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>ax_quant.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>ax_quant.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Add statistical comparisons</span></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>ax_quant.plot([<span class="fl">0.5</span>, <span class="dv">4</span>], [<span class="fl">1.8</span>, <span class="fl">1.8</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>ax_quant.text(<span class="fl">2.25</span>, <span class="fl">1.85</span>, <span class="st">'**'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>ax_quant.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'C'</span>, transform<span class="op">=</span>ax_quant.transAxes,</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL D: Representative image note ===</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>ax_note <span class="op">=</span> fig.add_subplot(gs[<span class="dv">2</span>, <span class="dv">1</span>])</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>ax_note.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>note_text <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="st">D. Experimental Details</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="st">• Representative blot from 3</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="st">  independent experiments</span></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="st">• Quantification based on 3</span></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="st">  biological replicates</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="st">• Statistical test: One-way ANOVA</span></span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="st">  with Dunnett's post-hoc</span></span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="st">• ** p &lt; 0.01 vs. Control</span></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="st">• Blot image: Linear adjustments</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="st">  only, applied uniformly</span></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="st">• Full unprocessed blots available</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="st">  in supplementary materials</span></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>ax_note.text(<span class="fl">0.1</span>, <span class="fl">0.9</span>, note_text, transform<span class="op">=</span>ax_note.transAxes,</span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, va<span class="op">=</span><span class="st">'top'</span>, family<span class="op">=</span><span class="st">'monospace'</span>,</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>            bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'lightyellow'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>ax_note.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'D'</span>, transform<span class="op">=</span>ax_note.transAxes,</span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Western Blot Analysis: Publication-Ready Format'</span>,</span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'western_blot_figure.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Western blot figure created"</span>)</span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Key components:"</span>)</span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  - Target protein blot (Panel A)"</span>)</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  - Loading control blot (Panel B)"</span>)</span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  - Quantification with statistics (Panel C)"</span>)</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"  - Methods documentation (Panel D)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="western-blot-best-practices-checklist" class="level3">
@@ -824,198 +824,198 @@ Scatter parameters: Linear scale</code></pre>
 - Gate name/definition</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Flow Cytometry Figure:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Rectangle, Polygon
-
-np.random.seed(42)
-
-# Simulate flow cytometry data (2 populations)
-n_cells = 10000
-
-# Population 1: CD4+ cells (high CD4, low CD8)
-cd4_pos = np.random.lognormal(mean=3.5, sigma=0.5, size=4000)
-cd8_neg = np.random.lognormal(mean=1.5, sigma=0.5, size=4000)
-
-# Population 2: CD8+ cells (low CD4, high CD8)
-cd4_neg = np.random.lognormal(mean=1.5, sigma=0.5, size=3000)
-cd8_pos = np.random.lognormal(mean=3.5, sigma=0.5, size=3000)
-
-# Population 3: Double negative (low both)
-cd4_dn = np.random.lognormal(mean=1.5, sigma=0.5, size=2000)
-cd8_dn = np.random.lognormal(mean=1.5, sigma=0.5, size=2000)
-
-# Population 4: Double positive (high both) - rare
-cd4_dp = np.random.lognormal(mean=3.5, sigma=0.5, size=1000)
-cd8_dp = np.random.lognormal(mean=3.5, sigma=0.5, size=1000)
-
-# Combine all populations
-cd4_all = np.concatenate([cd4_pos, cd4_neg, cd4_dn, cd4_dp])
-cd8_all = np.concatenate([cd8_neg, cd8_pos, cd8_dn, cd8_dp])
-
-# Log transform for display
-cd4_log = np.log10(cd4_all)
-cd8_log = np.log10(cd8_all)
-
-# Define gates (in log space)
-cd4_threshold = 2.5  # 10^2.5
-cd8_threshold = 2.5
-
-# Calculate quadrant percentages
-q1 = np.sum((cd4_log &lt; cd4_threshold) &amp; (cd8_log &gt; cd8_threshold)) / len(cd4_log) * 100  # CD4- CD8+
-q2 = np.sum((cd4_log &gt; cd4_threshold) &amp; (cd8_log &gt; cd8_threshold)) / len(cd4_log) * 100  # CD4+ CD8+
-q3 = np.sum((cd4_log &lt; cd4_threshold) &amp; (cd8_log &lt; cd8_threshold)) / len(cd4_log) * 100  # CD4- CD8-
-q4 = np.sum((cd4_log &gt; cd4_threshold) &amp; (cd8_log &lt; cd8_threshold)) / len(cd4_log) * 100  # CD4+ CD8-
-
-# Create figure
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-
-# === PANEL A: Dot plot (standard) ===
-ax1 = axes[0, 0]
-
-# Plot cells as scatter
-ax1.scatter(cd4_log, cd8_log, s=1, alpha=0.3, c='#3498DB', rasterized=True)
-
-# Add gates (cross-hairs)
-ax1.axhline(cd8_threshold, color='red', linewidth=2, linestyle='--')
-ax1.axvline(cd4_threshold, color='red', linewidth=2, linestyle='--')
-
-# Add quadrant percentages
-ax1.text(1.5, 3.5, f'CD4⁻ CD8⁺\n{q1:.1f}%', fontsize=10, fontweight='bold',
-        ha='center', va='center',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-ax1.text(3.5, 3.5, f'CD4⁺ CD8⁺\n{q2:.1f}%', fontsize=10, fontweight='bold',
-        ha='center', va='center',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-ax1.text(1.5, 1.5, f'CD4⁻ CD8⁻\n{q3:.1f}%', fontsize=10, fontweight='bold',
-        ha='center', va='center',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-ax1.text(3.5, 1.5, f'CD4⁺ CD8⁻\n{q4:.1f}%', fontsize=10, fontweight='bold',
-        ha='center', va='center',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
-
-ax1.set_xlabel('CD4-FITC (log₁₀)', fontsize=11, fontweight='bold')
-ax1.set_ylabel('CD8-PE (log₁₀)', fontsize=11, fontweight='bold')
-ax1.set_title('A. Dot Plot with Quadrant Gates', fontsize=12, fontweight='bold')
-ax1.set_xlim(0.5, 4.5)
-ax1.set_ylim(0.5, 4.5)
-ax1.grid(alpha=0.3)
-
-# Panel label
-ax1.text(0.02, 0.98, 'A', transform=ax1.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-# === PANEL B: Contour plot (density) ===
-ax2 = axes[0, 1]
-
-# Create 2D histogram for contour
-from scipy.stats import gaussian_kde
-
-# Subsample for KDE (faster computation)
-sample_idx = np.random.choice(len(cd4_log), size=2000, replace=False)
-cd4_sample = cd4_log[sample_idx]
-cd8_sample = cd8_log[sample_idx]
-
-# Create grid
-x_grid = np.linspace(0.5, 4.5, 100)
-y_grid = np.linspace(0.5, 4.5, 100)
-X, Y = np.meshgrid(x_grid, y_grid)
-positions = np.vstack([X.ravel(), Y.ravel()])
-
-# Calculate density
-kernel = gaussian_kde([cd4_sample, cd8_sample])
-Z = kernel(positions).reshape(X.shape)
-
-# Plot contours
-contours = ax2.contour(X, Y, Z, levels=8, colors='#3498DB', linewidths=1.5)
-ax2.contourf(X, Y, Z, levels=8, cmap='Blues', alpha=0.6)
-
-# Add gates
-ax2.axhline(cd8_threshold, color='red', linewidth=2, linestyle='--')
-ax2.axvline(cd4_threshold, color='red', linewidth=2, linestyle='--')
-
-# Add quadrant percentages
-ax2.text(3.5, 1.5, f'{q4:.1f}%', fontsize=11, fontweight='bold',
-        ha='center', va='center',
-        bbox=dict(boxstyle='round', facecolor='white', alpha=0.9))
-
-ax2.set_xlabel('CD4-FITC (log₁₀)', fontsize=11, fontweight='bold')
-ax2.set_ylabel('CD8-PE (log₁₀)', fontsize=11, fontweight='bold')
-ax2.set_title('B. Contour Plot (Density)', fontsize=12, fontweight='bold')
-ax2.set_xlim(0.5, 4.5)
-ax2.set_ylim(0.5, 4.5)
-
-ax2.text(0.02, 0.98, 'B', transform=ax2.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-# === PANEL C: Histogram overlay (CD4 expression) ===
-ax3 = axes[1, 0]
-
-# Separate populations
-cd4_pos_cells = cd4_log[cd4_log &gt; cd4_threshold]
-cd4_neg_cells = cd4_log[cd4_log &lt;= cd4_threshold]
-
-ax3.hist(cd4_neg_cells, bins=50, alpha=0.6, color='#7F8C8D',
-        edgecolor='black', linewidth=0.5, label=f'CD4⁻ ({q3+q1:.1f}%)')
-ax3.hist(cd4_pos_cells, bins=50, alpha=0.6, color='#E74C3C',
-        edgecolor='black', linewidth=0.5, label=f'CD4⁺ ({q4+q2:.1f}%)')
-
-# Add gate threshold
-ax3.axvline(cd4_threshold, color='red', linewidth=2, linestyle='--')
-
-ax3.set_xlabel('CD4-FITC (log₁₀)', fontsize=11, fontweight='bold')
-ax3.set_ylabel('Cell Count', fontsize=11, fontweight='bold')
-ax3.set_title('C. Histogram Overlay: CD4 Expression', fontsize=12, fontweight='bold')
-ax3.legend(loc='upper right', frameon=True, fontsize=10)
-ax3.grid(axis='y', alpha=0.3)
-ax3.spines['top'].set_visible(False)
-ax3.spines['right'].set_visible(False)
-
-ax3.text(0.02, 0.98, 'C', transform=ax3.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-# === PANEL D: Quantification bar chart ===
-ax4 = axes[1, 1]
-
-populations = ['CD4⁺\nCD8⁻', 'CD4⁻\nCD8⁺', 'CD4⁺\nCD8⁺', 'CD4⁻\nCD8⁻']
-percentages = [q4, q1, q2, q3]
-colors_pop = ['#E74C3C', '#3498DB', '#9B59B6', '#7F8C8D']
-
-bars = ax4.bar(range(len(populations)), percentages, color=colors_pop,
-              edgecolor='black', linewidth=1.5, width=0.6)
-
-# Add percentage labels on bars
-for bar, pct in zip(bars, percentages):
-    height = bar.get_height()
-    ax4.text(bar.get_x() + bar.get_width()/2., height + 1,
-            f'{pct:.1f}%', ha='center', va='bottom', fontsize=10, fontweight='bold')
-
-ax4.set_xticks(range(len(populations)))
-ax4.set_xticklabels(populations, fontsize=10, fontweight='bold')
-ax4.set_ylabel('% of Total Cells', fontsize=11, fontweight='bold')
-ax4.set_title('D. Population Frequencies', fontsize=12, fontweight='bold')
-ax4.set_ylim(0, max(percentages) + 10)
-ax4.grid(axis='y', alpha=0.3)
-ax4.spines['top'].set_visible(False)
-ax4.spines['right'].set_visible(False)
-
-ax4.text(0.02, 0.98, 'D', transform=ax4.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-plt.suptitle(f'Flow Cytometry Analysis (n = {len(cd4_log):,} cells)',
-            fontsize=14, fontweight='bold', y=0.98)
-
-plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('flow_cytometry_figure.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Flow cytometry figure created")
-print(f"Total cells analyzed: {len(cd4_log):,}")
-print(f"\nPopulation frequencies:")
-print(f"  CD4+ CD8- (Helper T cells): {q4:.2f}%")
-print(f"  CD4- CD8+ (Cytotoxic T cells): {q1:.2f}%")
-print(f"  CD4+ CD8+ (Double positive): {q2:.2f}%")
-print(f"  CD4- CD8- (Double negative): {q3:.2f}%")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Rectangle, Polygon</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate flow cytometry data (2 populations)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>n_cells <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Population 1: CD4+ cells (high CD4, low CD8)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>cd4_pos <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">3.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">4000</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>cd8_neg <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">1.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">4000</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Population 2: CD8+ cells (low CD4, high CD8)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>cd4_neg <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">1.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">3000</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>cd8_pos <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">3.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">3000</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Population 3: Double negative (low both)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>cd4_dn <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">1.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">2000</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>cd8_dn <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">1.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">2000</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Population 4: Double positive (high both) - rare</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>cd4_dp <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">3.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>cd8_dp <span class="op">=</span> np.random.lognormal(mean<span class="op">=</span><span class="fl">3.5</span>, sigma<span class="op">=</span><span class="fl">0.5</span>, size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine all populations</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>cd4_all <span class="op">=</span> np.concatenate([cd4_pos, cd4_neg, cd4_dn, cd4_dp])</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>cd8_all <span class="op">=</span> np.concatenate([cd8_neg, cd8_pos, cd8_dn, cd8_dp])</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Log transform for display</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>cd4_log <span class="op">=</span> np.log10(cd4_all)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>cd8_log <span class="op">=</span> np.log10(cd8_all)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Define gates (in log space)</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>cd4_threshold <span class="op">=</span> <span class="fl">2.5</span>  <span class="co"># 10^2.5</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>cd8_threshold <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate quadrant percentages</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>q1 <span class="op">=</span> np.<span class="bu">sum</span>((cd4_log <span class="op">&lt;</span> cd4_threshold) <span class="op">&amp;</span> (cd8_log <span class="op">&gt;</span> cd8_threshold)) <span class="op">/</span> <span class="bu">len</span>(cd4_log) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># CD4- CD8+</span></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>q2 <span class="op">=</span> np.<span class="bu">sum</span>((cd4_log <span class="op">&gt;</span> cd4_threshold) <span class="op">&amp;</span> (cd8_log <span class="op">&gt;</span> cd8_threshold)) <span class="op">/</span> <span class="bu">len</span>(cd4_log) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># CD4+ CD8+</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>q3 <span class="op">=</span> np.<span class="bu">sum</span>((cd4_log <span class="op">&lt;</span> cd4_threshold) <span class="op">&amp;</span> (cd8_log <span class="op">&lt;</span> cd8_threshold)) <span class="op">/</span> <span class="bu">len</span>(cd4_log) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># CD4- CD8-</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>q4 <span class="op">=</span> np.<span class="bu">sum</span>((cd4_log <span class="op">&gt;</span> cd4_threshold) <span class="op">&amp;</span> (cd8_log <span class="op">&lt;</span> cd8_threshold)) <span class="op">/</span> <span class="bu">len</span>(cd4_log) <span class="op">*</span> <span class="dv">100</span>  <span class="co"># CD4+ CD8-</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL A: Dot plot (standard) ===</span></span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot cells as scatter</span></span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>ax1.scatter(cd4_log, cd8_log, s<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, c<span class="op">=</span><span class="st">'#3498DB'</span>, rasterized<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Add gates (cross-hairs)</span></span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>ax1.axhline(cd8_threshold, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>ax1.axvline(cd4_threshold, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Add quadrant percentages</span></span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">1.5</span>, <span class="fl">3.5</span>, <span class="ss">f'CD4⁻ CD8⁺</span><span class="ch">\n</span><span class="sc">{</span>q1<span class="sc">:.1f}</span><span class="ss">%'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">3.5</span>, <span class="fl">3.5</span>, <span class="ss">f'CD4⁺ CD8⁺</span><span class="ch">\n</span><span class="sc">{</span>q2<span class="sc">:.1f}</span><span class="ss">%'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="ss">f'CD4⁻ CD8⁻</span><span class="ch">\n</span><span class="sc">{</span>q3<span class="sc">:.1f}</span><span class="ss">%'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">3.5</span>, <span class="fl">1.5</span>, <span class="ss">f'CD4⁺ CD8⁻</span><span class="ch">\n</span><span class="sc">{</span>q4<span class="sc">:.1f}</span><span class="ss">%'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'CD4-FITC (log₁₀)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'CD8-PE (log₁₀)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-73"><a href="#cb13-73" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'A. Dot Plot with Quadrant Gates'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-74"><a href="#cb13-74" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb13-75"><a href="#cb13-75" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb13-76"><a href="#cb13-76" aria-hidden="true" tabindex="-1"></a>ax1.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-77"><a href="#cb13-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-78"><a href="#cb13-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel label</span></span>
+<span id="cb13-79"><a href="#cb13-79" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'A'</span>, transform<span class="op">=</span>ax1.transAxes,</span>
+<span id="cb13-80"><a href="#cb13-80" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-81"><a href="#cb13-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-82"><a href="#cb13-82" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL B: Contour plot (density) ===</span></span>
+<span id="cb13-83"><a href="#cb13-83" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb13-84"><a href="#cb13-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-85"><a href="#cb13-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Create 2D histogram for contour</span></span>
+<span id="cb13-86"><a href="#cb13-86" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> gaussian_kde</span>
+<span id="cb13-87"><a href="#cb13-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-88"><a href="#cb13-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsample for KDE (faster computation)</span></span>
+<span id="cb13-89"><a href="#cb13-89" aria-hidden="true" tabindex="-1"></a>sample_idx <span class="op">=</span> np.random.choice(<span class="bu">len</span>(cd4_log), size<span class="op">=</span><span class="dv">2000</span>, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb13-90"><a href="#cb13-90" aria-hidden="true" tabindex="-1"></a>cd4_sample <span class="op">=</span> cd4_log[sample_idx]</span>
+<span id="cb13-91"><a href="#cb13-91" aria-hidden="true" tabindex="-1"></a>cd8_sample <span class="op">=</span> cd8_log[sample_idx]</span>
+<span id="cb13-92"><a href="#cb13-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-93"><a href="#cb13-93" aria-hidden="true" tabindex="-1"></a><span class="co"># Create grid</span></span>
+<span id="cb13-94"><a href="#cb13-94" aria-hidden="true" tabindex="-1"></a>x_grid <span class="op">=</span> np.linspace(<span class="fl">0.5</span>, <span class="fl">4.5</span>, <span class="dv">100</span>)</span>
+<span id="cb13-95"><a href="#cb13-95" aria-hidden="true" tabindex="-1"></a>y_grid <span class="op">=</span> np.linspace(<span class="fl">0.5</span>, <span class="fl">4.5</span>, <span class="dv">100</span>)</span>
+<span id="cb13-96"><a href="#cb13-96" aria-hidden="true" tabindex="-1"></a>X, Y <span class="op">=</span> np.meshgrid(x_grid, y_grid)</span>
+<span id="cb13-97"><a href="#cb13-97" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> np.vstack([X.ravel(), Y.ravel()])</span>
+<span id="cb13-98"><a href="#cb13-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-99"><a href="#cb13-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate density</span></span>
+<span id="cb13-100"><a href="#cb13-100" aria-hidden="true" tabindex="-1"></a>kernel <span class="op">=</span> gaussian_kde([cd4_sample, cd8_sample])</span>
+<span id="cb13-101"><a href="#cb13-101" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> kernel(positions).reshape(X.shape)</span>
+<span id="cb13-102"><a href="#cb13-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-103"><a href="#cb13-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot contours</span></span>
+<span id="cb13-104"><a href="#cb13-104" aria-hidden="true" tabindex="-1"></a>contours <span class="op">=</span> ax2.contour(X, Y, Z, levels<span class="op">=</span><span class="dv">8</span>, colors<span class="op">=</span><span class="st">'#3498DB'</span>, linewidths<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb13-105"><a href="#cb13-105" aria-hidden="true" tabindex="-1"></a>ax2.contourf(X, Y, Z, levels<span class="op">=</span><span class="dv">8</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb13-106"><a href="#cb13-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-107"><a href="#cb13-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Add gates</span></span>
+<span id="cb13-108"><a href="#cb13-108" aria-hidden="true" tabindex="-1"></a>ax2.axhline(cd8_threshold, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb13-109"><a href="#cb13-109" aria-hidden="true" tabindex="-1"></a>ax2.axvline(cd4_threshold, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb13-110"><a href="#cb13-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-111"><a href="#cb13-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Add quadrant percentages</span></span>
+<span id="cb13-112"><a href="#cb13-112" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">3.5</span>, <span class="fl">1.5</span>, <span class="ss">f'</span><span class="sc">{</span>q4<span class="sc">:.1f}</span><span class="ss">%'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb13-113"><a href="#cb13-113" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb13-114"><a href="#cb13-114" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>))</span>
+<span id="cb13-115"><a href="#cb13-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-116"><a href="#cb13-116" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'CD4-FITC (log₁₀)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-117"><a href="#cb13-117" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'CD8-PE (log₁₀)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-118"><a href="#cb13-118" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'B. Contour Plot (Density)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-119"><a href="#cb13-119" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb13-120"><a href="#cb13-120" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb13-121"><a href="#cb13-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-122"><a href="#cb13-122" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'B'</span>, transform<span class="op">=</span>ax2.transAxes,</span>
+<span id="cb13-123"><a href="#cb13-123" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-124"><a href="#cb13-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-125"><a href="#cb13-125" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL C: Histogram overlay (CD4 expression) ===</span></span>
+<span id="cb13-126"><a href="#cb13-126" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb13-127"><a href="#cb13-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-128"><a href="#cb13-128" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate populations</span></span>
+<span id="cb13-129"><a href="#cb13-129" aria-hidden="true" tabindex="-1"></a>cd4_pos_cells <span class="op">=</span> cd4_log[cd4_log <span class="op">&gt;</span> cd4_threshold]</span>
+<span id="cb13-130"><a href="#cb13-130" aria-hidden="true" tabindex="-1"></a>cd4_neg_cells <span class="op">=</span> cd4_log[cd4_log <span class="op">&lt;=</span> cd4_threshold]</span>
+<span id="cb13-131"><a href="#cb13-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-132"><a href="#cb13-132" aria-hidden="true" tabindex="-1"></a>ax3.hist(cd4_neg_cells, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'#7F8C8D'</span>,</span>
+<span id="cb13-133"><a href="#cb13-133" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="ss">f'CD4⁻ (</span><span class="sc">{</span>q3<span class="op">+</span>q1<span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb13-134"><a href="#cb13-134" aria-hidden="true" tabindex="-1"></a>ax3.hist(cd4_pos_cells, bins<span class="op">=</span><span class="dv">50</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">'#E74C3C'</span>,</span>
+<span id="cb13-135"><a href="#cb13-135" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="ss">f'CD4⁺ (</span><span class="sc">{</span>q4<span class="op">+</span>q2<span class="sc">:.1f}</span><span class="ss">%)'</span>)</span>
+<span id="cb13-136"><a href="#cb13-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-137"><a href="#cb13-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Add gate threshold</span></span>
+<span id="cb13-138"><a href="#cb13-138" aria-hidden="true" tabindex="-1"></a>ax3.axvline(cd4_threshold, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb13-139"><a href="#cb13-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-140"><a href="#cb13-140" aria-hidden="true" tabindex="-1"></a>ax3.set_xlabel(<span class="st">'CD4-FITC (log₁₀)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-141"><a href="#cb13-141" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="st">'Cell Count'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-142"><a href="#cb13-142" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'C. Histogram Overlay: CD4 Expression'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a>ax3.legend(loc<span class="op">=</span><span class="st">'upper right'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a>ax3.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a>ax3.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a>ax3.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a>ax3.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'C'</span>, transform<span class="op">=</span>ax3.transAxes,</span>
+<span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-150"><a href="#cb13-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-151"><a href="#cb13-151" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL D: Quantification bar chart ===</span></span>
+<span id="cb13-152"><a href="#cb13-152" aria-hidden="true" tabindex="-1"></a>ax4 <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb13-153"><a href="#cb13-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-154"><a href="#cb13-154" aria-hidden="true" tabindex="-1"></a>populations <span class="op">=</span> [<span class="st">'CD4⁺</span><span class="ch">\n</span><span class="st">CD8⁻'</span>, <span class="st">'CD4⁻</span><span class="ch">\n</span><span class="st">CD8⁺'</span>, <span class="st">'CD4⁺</span><span class="ch">\n</span><span class="st">CD8⁺'</span>, <span class="st">'CD4⁻</span><span class="ch">\n</span><span class="st">CD8⁻'</span>]</span>
+<span id="cb13-155"><a href="#cb13-155" aria-hidden="true" tabindex="-1"></a>percentages <span class="op">=</span> [q4, q1, q2, q3]</span>
+<span id="cb13-156"><a href="#cb13-156" aria-hidden="true" tabindex="-1"></a>colors_pop <span class="op">=</span> [<span class="st">'#E74C3C'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#9B59B6'</span>, <span class="st">'#7F8C8D'</span>]</span>
+<span id="cb13-157"><a href="#cb13-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-158"><a href="#cb13-158" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax4.bar(<span class="bu">range</span>(<span class="bu">len</span>(populations)), percentages, color<span class="op">=</span>colors_pop,</span>
+<span id="cb13-159"><a href="#cb13-159" aria-hidden="true" tabindex="-1"></a>              edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a><span class="co"># Add percentage labels on bars</span></span>
+<span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, pct <span class="kw">in</span> <span class="bu">zip</span>(bars, percentages):</span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> bar.get_height()</span>
+<span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a>    ax4.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="fl">2.</span>, height <span class="op">+</span> <span class="dv">1</span>,</span>
+<span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'</span><span class="sc">{</span>pct<span class="sc">:.1f}</span><span class="ss">%'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-167"><a href="#cb13-167" aria-hidden="true" tabindex="-1"></a>ax4.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(populations)))</span>
+<span id="cb13-168"><a href="#cb13-168" aria-hidden="true" tabindex="-1"></a>ax4.set_xticklabels(populations, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-169"><a href="#cb13-169" aria-hidden="true" tabindex="-1"></a>ax4.set_ylabel(<span class="st">'</span><span class="sc">% o</span><span class="st">f Total Cells'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-170"><a href="#cb13-170" aria-hidden="true" tabindex="-1"></a>ax4.set_title(<span class="st">'D. Population Frequencies'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-171"><a href="#cb13-171" aria-hidden="true" tabindex="-1"></a>ax4.set_ylim(<span class="dv">0</span>, <span class="bu">max</span>(percentages) <span class="op">+</span> <span class="dv">10</span>)</span>
+<span id="cb13-172"><a href="#cb13-172" aria-hidden="true" tabindex="-1"></a>ax4.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-173"><a href="#cb13-173" aria-hidden="true" tabindex="-1"></a>ax4.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb13-174"><a href="#cb13-174" aria-hidden="true" tabindex="-1"></a>ax4.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb13-175"><a href="#cb13-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-176"><a href="#cb13-176" aria-hidden="true" tabindex="-1"></a>ax4.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'D'</span>, transform<span class="op">=</span>ax4.transAxes,</span>
+<span id="cb13-177"><a href="#cb13-177" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb13-178"><a href="#cb13-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-179"><a href="#cb13-179" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="ss">f'Flow Cytometry Analysis (n = </span><span class="sc">{</span><span class="bu">len</span>(cd4_log)<span class="sc">:,}</span><span class="ss"> cells)'</span>,</span>
+<span id="cb13-180"><a href="#cb13-180" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb13-181"><a href="#cb13-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-182"><a href="#cb13-182" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span>
+<span id="cb13-183"><a href="#cb13-183" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'flow_cytometry_figure.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb13-184"><a href="#cb13-184" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb13-185"><a href="#cb13-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-186"><a href="#cb13-186" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Flow cytometry figure created"</span>)</span>
+<span id="cb13-187"><a href="#cb13-187" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total cells analyzed: </span><span class="sc">{</span><span class="bu">len</span>(cd4_log)<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb13-188"><a href="#cb13-188" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Population frequencies:"</span>)</span>
+<span id="cb13-189"><a href="#cb13-189" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  CD4+ CD8- (Helper T cells): </span><span class="sc">{</span>q4<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb13-190"><a href="#cb13-190" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  CD4- CD8+ (Cytotoxic T cells): </span><span class="sc">{</span>q1<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb13-191"><a href="#cb13-191" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  CD4+ CD8+ (Double positive): </span><span class="sc">{</span>q2<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb13-192"><a href="#cb13-192" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  CD4- CD8- (Double negative): </span><span class="sc">{</span>q3<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="flow-cytometry-best-practices-checklist" class="level3">
@@ -1062,142 +1062,142 @@ Common mistakes:
 5. Root: Outgroup or midpoint</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Phylogenetic Tree:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import FancyBboxPatch
-from scipy.cluster.hierarchy import dendrogram, linkage
-
-np.random.seed(42)
-
-# Simulate sequence distance matrix (phylogenetic distances)
-species = ['Human', 'Chimp', 'Gorilla', 'Orangutan', 'Macaque',
-          'Mouse', 'Rat', 'Dog', 'Cat', 'Cow']
-n_species = len(species)
-
-# Create distance matrix (lower triangle)
-distances = np.random.rand(n_species, n_species) * 0.5
-distances = (distances + distances.T) / 2  # Make symmetric
-np.fill_diagonal(distances, 0)
-
-# Adjust to reflect known phylogeny (primates closer to each other)
-# Primates (0-4): closer
-distances[0:5, 0:5] *= 0.3
-# Rodents (5-6): closer
-distances[5:7, 5:7] *= 0.3
-# Carnivores (7-9): closer
-distances[7:9, 7:9] *= 0.3
-
-# Perform hierarchical clustering
-Z = linkage(distances[np.triu_indices(n_species, k=1)], method='average')
-
-# Create figure
-fig, axes = plt.subplots(1, 2, figsize=(14, 8))
-
-# === PANEL A: Standard dendrogram ===
-ax1 = axes[0]
-
-dendro = dendrogram(Z, labels=species, orientation='right', ax=ax1,
-                   color_threshold=0.5, above_threshold_color='#3498DB')
-
-ax1.set_xlabel('Evolutionary Distance (substitutions/site)', fontsize=11, fontweight='bold')
-ax1.set_title('A. Phylogenetic Tree\n(UPGMA clustering)',
-             fontsize=12, fontweight='bold')
-ax1.grid(axis='x', alpha=0.3)
-ax1.spines['top'].set_visible(False)
-ax1.spines['right'].set_visible(False)
-
-# Add scale bar
-scale_bar_length = 0.1
-ax1.plot([0, scale_bar_length], [-1, -1], 'k-', linewidth=3)
-ax1.text(scale_bar_length/2, -1.5, '0.1 substitutions/site',
-        ha='center', fontsize=9, fontweight='bold')
-
-# Add bootstrap values (simulated) at major nodes
-# In real analysis, these come from resampling
-node_positions = [(0.15, 3.5, 95), (0.12, 6.5, 88), (0.25, 7.5, 78)]
-for x, y, boot in node_positions:
-    ax1.text(x, y, str(boot), fontsize=9, fontweight='bold',
-            bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
-
-# Highlight clades
-# Primates
-primate_y = [i for i, sp in enumerate(dendro['ivl']) if sp in ['Human', 'Chimp', 'Gorilla', 'Orangutan', 'Macaque']]
-if primate_y:
-    y_min, y_max = min(primate_y), max(primate_y)
-    rect = FancyBboxPatch((-0.02, y_min-0.5), 0.02, y_max-y_min+1,
-                         boxstyle="round,pad=0.02",
-                         edgecolor='#E74C3C', facecolor='none',
-                         linewidth=2, transform=ax1.transData)
-    ax1.add_patch(rect)
-    ax1.text(-0.04, (y_min+y_max)/2, 'Primates', rotation=90, va='center',
-            fontsize=9, fontweight='bold', color='#E74C3C')
-
-ax1.text(0.02, 0.98, 'A', transform=ax1.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-# === PANEL B: Circular tree (radial layout) ===
-ax2 = axes[1]
-ax2.set_aspect('equal')
-ax2.axis('off')
-
-# Simplified circular tree representation
-n_leaves = len(species)
-angles = np.linspace(0, 2*np.pi, n_leaves, endpoint=False)
-
-# Plot leaf labels
-radius = 1.0
-for i, (angle, sp) in enumerate(zip(angles, species)):
-    x = radius * np.cos(angle)
-    y = radius * np.sin(angle)
-
-    # Leaf node
-    ax2.plot(x, y, 'o', markersize=8, color='#3498DB')
-
-    # Label
-    angle_deg = np.degrees(angle)
-    if -90 &lt;= angle_deg &lt;= 90:
-        ha = 'left'
-        rotation = angle_deg
-        x_text = x * 1.15
-    else:
-        ha = 'right'
-        rotation = angle_deg + 180
-        x_text = x * 1.15
-
-    ax2.text(x_text, y * 1.15, sp, ha=ha, va='center',
-            rotation=rotation, fontsize=9, fontweight='bold')
-
-# Draw simplified branches (radial from center)
-for i, angle in enumerate(angles):
-    x_inner = 0.3 * np.cos(angle)
-    y_inner = 0.3 * np.sin(angle)
-    x_outer = radius * np.cos(angle)
-    y_outer = radius * np.sin(angle)
-    ax2.plot([0, x_inner], [0, y_inner], 'k-', linewidth=1, alpha=0.5)
-    ax2.plot([x_inner, x_outer], [y_inner, y_outer], color='#3498DB', linewidth=2)
-
-# Central node
-ax2.plot(0, 0, 'ko', markersize=10)
-
-# Title
-ax2.set_title('B. Circular Phylogenetic Tree\n(Alternative layout)',
-             fontsize=12, fontweight='bold')
-ax2.set_xlim(-1.5, 1.5)
-ax2.set_ylim(-1.5, 1.5)
-
-ax2.text(0.02, 0.98, 'B', transform=ax2.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-plt.suptitle('Phylogenetic Analysis: Tree Visualization',
-            fontsize=14, fontweight='bold', y=0.96)
-
-plt.tight_layout(rect=[0, 0, 1, 0.94])
-plt.savefig('phylogenetic_tree.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Phylogenetic tree figure created")
-print(f"Species analyzed: {n_species}")
-print("Tree construction: UPGMA clustering method")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> FancyBboxPatch</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> dendrogram, linkage</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate sequence distance matrix (phylogenetic distances)</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>species <span class="op">=</span> [<span class="st">'Human'</span>, <span class="st">'Chimp'</span>, <span class="st">'Gorilla'</span>, <span class="st">'Orangutan'</span>, <span class="st">'Macaque'</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Mouse'</span>, <span class="st">'Rat'</span>, <span class="st">'Dog'</span>, <span class="st">'Cat'</span>, <span class="st">'Cow'</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>n_species <span class="op">=</span> <span class="bu">len</span>(species)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create distance matrix (lower triangle)</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> np.random.rand(n_species, n_species) <span class="op">*</span> <span class="fl">0.5</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> (distances <span class="op">+</span> distances.T) <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Make symmetric</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>np.fill_diagonal(distances, <span class="dv">0</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust to reflect known phylogeny (primates closer to each other)</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Primates (0-4): closer</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>distances[<span class="dv">0</span>:<span class="dv">5</span>, <span class="dv">0</span>:<span class="dv">5</span>] <span class="op">*=</span> <span class="fl">0.3</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Rodents (5-6): closer</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>distances[<span class="dv">5</span>:<span class="dv">7</span>, <span class="dv">5</span>:<span class="dv">7</span>] <span class="op">*=</span> <span class="fl">0.3</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Carnivores (7-9): closer</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>distances[<span class="dv">7</span>:<span class="dv">9</span>, <span class="dv">7</span>:<span class="dv">9</span>] <span class="op">*=</span> <span class="fl">0.3</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> linkage(distances[np.triu_indices(n_species, k<span class="op">=</span><span class="dv">1</span>)], method<span class="op">=</span><span class="st">'average'</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL A: Standard dendrogram ===</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>dendro <span class="op">=</span> dendrogram(Z, labels<span class="op">=</span>species, orientation<span class="op">=</span><span class="st">'right'</span>, ax<span class="op">=</span>ax1,</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>                   color_threshold<span class="op">=</span><span class="fl">0.5</span>, above_threshold_color<span class="op">=</span><span class="st">'#3498DB'</span>)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Evolutionary Distance (substitutions/site)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'A. Phylogenetic Tree</span><span class="ch">\n</span><span class="st">(UPGMA clustering)'</span>,</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>ax1.grid(axis<span class="op">=</span><span class="st">'x'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Add scale bar</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>scale_bar_length <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>ax1.plot([<span class="dv">0</span>, scale_bar_length], [<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>ax1.text(scale_bar_length<span class="op">/</span><span class="dv">2</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="st">'0.1 substitutions/site'</span>,</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Add bootstrap values (simulated) at major nodes</span></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a><span class="co"># In real analysis, these come from resampling</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>node_positions <span class="op">=</span> [(<span class="fl">0.15</span>, <span class="fl">3.5</span>, <span class="dv">95</span>), (<span class="fl">0.12</span>, <span class="fl">6.5</span>, <span class="dv">88</span>), (<span class="fl">0.25</span>, <span class="fl">7.5</span>, <span class="dv">78</span>)]</span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y, boot <span class="kw">in</span> node_positions:</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    ax1.text(x, y, <span class="bu">str</span>(boot), fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>            bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'yellow'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlight clades</span></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Primates</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>primate_y <span class="op">=</span> [i <span class="cf">for</span> i, sp <span class="kw">in</span> <span class="bu">enumerate</span>(dendro[<span class="st">'ivl'</span>]) <span class="cf">if</span> sp <span class="kw">in</span> [<span class="st">'Human'</span>, <span class="st">'Chimp'</span>, <span class="st">'Gorilla'</span>, <span class="st">'Orangutan'</span>, <span class="st">'Macaque'</span>]]</span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> primate_y:</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>    y_min, y_max <span class="op">=</span> <span class="bu">min</span>(primate_y), <span class="bu">max</span>(primate_y)</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> FancyBboxPatch((<span class="op">-</span><span class="fl">0.02</span>, y_min<span class="op">-</span><span class="fl">0.5</span>), <span class="fl">0.02</span>, y_max<span class="op">-</span>y_min<span class="op">+</span><span class="dv">1</span>,</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>                         boxstyle<span class="op">=</span><span class="st">"round,pad=0.02"</span>,</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>                         edgecolor<span class="op">=</span><span class="st">'#E74C3C'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>                         linewidth<span class="op">=</span><span class="dv">2</span>, transform<span class="op">=</span>ax1.transData)</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>    ax1.add_patch(rect)</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>    ax1.text(<span class="op">-</span><span class="fl">0.04</span>, (y_min<span class="op">+</span>y_max)<span class="op">/</span><span class="dv">2</span>, <span class="st">'Primates'</span>, rotation<span class="op">=</span><span class="dv">90</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'#E74C3C'</span>)</span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'A'</span>, transform<span class="op">=</span>ax1.transAxes,</span>
+<span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL B: Circular tree (radial layout) ===</span></span>
+<span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>ax2.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified circular tree representation</span></span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>n_leaves <span class="op">=</span> <span class="bu">len</span>(species)</span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>angles <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>np.pi, n_leaves, endpoint<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot leaf labels</span></span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>radius <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (angle, sp) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(angles, species)):</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> radius <span class="op">*</span> np.cos(angle)</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> radius <span class="op">*</span> np.sin(angle)</span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Leaf node</span></span>
+<span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a>    ax2.plot(x, y, <span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">8</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>)</span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Label</span></span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a>    angle_deg <span class="op">=</span> np.degrees(angle)</span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">-</span><span class="dv">90</span> <span class="op">&lt;=</span> angle_deg <span class="op">&lt;=</span> <span class="dv">90</span>:</span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>        ha <span class="op">=</span> <span class="st">'left'</span></span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>        rotation <span class="op">=</span> angle_deg</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>        x_text <span class="op">=</span> x <span class="op">*</span> <span class="fl">1.15</span></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>        ha <span class="op">=</span> <span class="st">'right'</span></span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>        rotation <span class="op">=</span> angle_deg <span class="op">+</span> <span class="dv">180</span></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>        x_text <span class="op">=</span> x <span class="op">*</span> <span class="fl">1.15</span></span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a>    ax2.text(x_text, y <span class="op">*</span> <span class="fl">1.15</span>, sp, ha<span class="op">=</span>ha, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a>            rotation<span class="op">=</span>rotation, fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw simplified branches (radial from center)</span></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, angle <span class="kw">in</span> <span class="bu">enumerate</span>(angles):</span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>    x_inner <span class="op">=</span> <span class="fl">0.3</span> <span class="op">*</span> np.cos(angle)</span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>    y_inner <span class="op">=</span> <span class="fl">0.3</span> <span class="op">*</span> np.sin(angle)</span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a>    x_outer <span class="op">=</span> radius <span class="op">*</span> np.cos(angle)</span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a>    y_outer <span class="op">=</span> radius <span class="op">*</span> np.sin(angle)</span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>    ax2.plot([<span class="dv">0</span>, x_inner], [<span class="dv">0</span>, y_inner], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>    ax2.plot([x_inner, x_outer], [y_inner, y_outer], color<span class="op">=</span><span class="st">'#3498DB'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a><span class="co"># Central node</span></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>ax2.plot(<span class="dv">0</span>, <span class="dv">0</span>, <span class="st">'ko'</span>, markersize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Title</span></span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'B. Circular Phylogenetic Tree</span><span class="ch">\n</span><span class="st">(Alternative layout)'</span>,</span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'B'</span>, transform<span class="op">=</span>ax2.transAxes,</span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Phylogenetic Analysis: Tree Visualization'</span>,</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.96</span>)</span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.94</span>])</span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'phylogenetic_tree.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Phylogenetic tree figure created"</span>)</span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Species analyzed: </span><span class="sc">{</span>n_species<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tree construction: UPGMA clustering method"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="phylogenetic-tree-best-practices" class="level3">
@@ -1249,152 +1249,152 @@ Node color: Often encodes category or expression
 Edge width: Often encodes interaction strength</code></pre>
 <hr>
 <p><strong>Code Example (Python) - Network Diagram:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-import networkx as nx
-
-np.random.seed(42)
-
-# Create a gene regulatory network (simplified)
-G = nx.Graph()
-
-# Add nodes (genes)
-genes = ['GENE_A', 'GENE_B', 'GENE_C', 'GENE_D', 'GENE_E',
-        'GENE_F', 'GENE_G', 'GENE_H', 'GENE_I', 'GENE_J']
-
-# Gene categories (functional groups)
-categories = {
-    'GENE_A': 'Transcription Factor',
-    'GENE_B': 'Transcription Factor',
-    'GENE_C': 'Signaling',
-    'GENE_D': 'Signaling',
-    'GENE_E': 'Signaling',
-    'GENE_F': 'Metabolic',
-    'GENE_G': 'Metabolic',
-    'GENE_H': 'Structural',
-    'GENE_I': 'Structural',
-    'GENE_J': 'Receptor'
-}
-
-# Expression levels (fold change)
-expression = {
-    'GENE_A': 2.5, 'GENE_B': 1.8, 'GENE_C': -1.5,
-    'GENE_D': 3.2, 'GENE_E': -2.1, 'GENE_F': 1.2,
-    'GENE_G': -1.8, 'GENE_H': 0.5, 'GENE_I': 2.8, 'GENE_J': 1.5
-}
-
-# Add nodes with attributes
-for gene in genes:
-    G.add_node(gene, category=categories[gene], expression=expression[gene])
-
-# Add edges (interactions)
-interactions = [
-    ('GENE_A', 'GENE_C', 0.9),  # (gene1, gene2, correlation)
-    ('GENE_A', 'GENE_D', 0.85),
-    ('GENE_B', 'GENE_C', 0.75),
-    ('GENE_B', 'GENE_E', 0.8),
-    ('GENE_C', 'GENE_F', 0.7),
-    ('GENE_D', 'GENE_G', 0.65),
-    ('GENE_E', 'GENE_H', 0.6),
-    ('GENE_F', 'GENE_I', 0.9),
-    ('GENE_G', 'GENE_J', 0.7),
-    ('GENE_H', 'GENE_I', 0.85),
-    ('GENE_I', 'GENE_J', 0.75),
-    ('GENE_A', 'GENE_B', 0.95)
-]
-
-for gene1, gene2, weight in interactions:
-    G.add_edge(gene1, gene2, weight=weight)
-
-# Create figure
-fig, axes = plt.subplots(1, 2, figsize=(16, 7))
-
-# === PANEL A: Network colored by category ===
-ax1 = axes[0]
-
-# Layout
-pos = nx.spring_layout(G, k=0.5, iterations=50, seed=42)
-
-# Node colors by category
-category_colors = {
-    'Transcription Factor': '#E74C3C',
-    'Signaling': '#3498DB',
-    'Metabolic': '#27AE60',
-    'Structural': '#F39C12',
-    'Receptor': '#9B59B6'
-}
-
-node_colors = [category_colors[categories[node]] for node in G.nodes()]
-
-# Node sizes by degree (number of connections)
-node_sizes = [G.degree(node) * 300 for node in G.nodes()]
-
-# Edge widths by correlation
-edge_widths = [G[u][v]['weight'] * 3 for u, v in G.edges()]
-
-# Draw network
-nx.draw_networkx_nodes(G, pos, node_color=node_colors, node_size=node_sizes,
-                      edgecolors='black', linewidths=2, ax=ax1)
-nx.draw_networkx_edges(G, pos, width=edge_widths, alpha=0.6, edge_color='gray', ax=ax1)
-nx.draw_networkx_labels(G, pos, font_size=8, font_weight='bold', ax=ax1)
-
-ax1.set_title('A. Gene Regulatory Network\n(Colored by functional category)',
-             fontsize=12, fontweight='bold')
-ax1.axis('off')
-
-# Legend
-from matplotlib.patches import Patch
-legend_elements = [Patch(facecolor=color, edgecolor='black', label=cat)
-                  for cat, color in category_colors.items()]
-ax1.legend(handles=legend_elements, loc='upper left', frameon=True, fontsize=9,
-          title='Functional Category', title_fontsize=10)
-
-ax1.text(0.02, 0.98, 'A', transform=ax1.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-# === PANEL B: Network colored by expression ===
-ax2 = axes[1]
-
-# Node colors by expression level
-expr_values = [expression[node] for node in G.nodes()]
-node_colors_expr = plt.cm.RdBu_r([(x + 3) / 6 for x in expr_values])  # Normalize to 0-1
-
-# Draw network
-nx.draw_networkx_nodes(G, pos, node_color=node_colors_expr, node_size=node_sizes,
-                      edgecolors='black', linewidths=2, ax=ax2)
-nx.draw_networkx_edges(G, pos, width=edge_widths, alpha=0.6, edge_color='gray', ax=ax2)
-nx.draw_networkx_labels(G, pos, font_size=8, font_weight='bold', ax=ax2)
-
-ax2.set_title('B. Gene Regulatory Network\n(Colored by fold change)',
-             fontsize=12, fontweight='bold')
-ax2.axis('off')
-
-# Colorbar for expression
-from matplotlib.colorbar import ColorbarBase
-from matplotlib.colors import Normalize
-import matplotlib.cm as cm
-
-# Create colorbar axis
-cbar_ax = fig.add_axes([0.92, 0.15, 0.02, 0.7])
-norm = Normalize(vmin=-3, vmax=3)
-cb = ColorbarBase(cbar_ax, cmap=cm.RdBu_r, norm=norm, orientation='vertical')
-cb.set_label('Log₂ Fold Change', fontsize=10, fontweight='bold')
-
-ax2.text(0.02, 0.98, 'B', transform=ax2.transAxes,
-        fontsize=16, fontweight='bold', va='top')
-
-plt.suptitle(f'Network Analysis: {len(G.nodes())} genes, {len(G.edges())} interactions',
-            fontsize=14, fontweight='bold', y=0.95)
-
-plt.tight_layout(rect=[0, 0, 0.9, 0.93])
-plt.savefig('network_diagram.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.close()
-
-print("✓ Network diagram created")
-print(f"Nodes (genes): {len(G.nodes())}")
-print(f"Edges (interactions): {len(G.edges())}")
-print(f"Network density: {nx.density(G):.3f}")
-print(f"Average clustering coefficient: {nx.average_clustering(G):.3f}")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a gene regulatory network (simplified)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Add nodes (genes)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>genes <span class="op">=</span> [<span class="st">'GENE_A'</span>, <span class="st">'GENE_B'</span>, <span class="st">'GENE_C'</span>, <span class="st">'GENE_D'</span>, <span class="st">'GENE_E'</span>,</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'GENE_F'</span>, <span class="st">'GENE_G'</span>, <span class="st">'GENE_H'</span>, <span class="st">'GENE_I'</span>, <span class="st">'GENE_J'</span>]</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Gene categories (functional groups)</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> {</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_A'</span>: <span class="st">'Transcription Factor'</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_B'</span>: <span class="st">'Transcription Factor'</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_C'</span>: <span class="st">'Signaling'</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_D'</span>: <span class="st">'Signaling'</span>,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_E'</span>: <span class="st">'Signaling'</span>,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_F'</span>: <span class="st">'Metabolic'</span>,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_G'</span>: <span class="st">'Metabolic'</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_H'</span>: <span class="st">'Structural'</span>,</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_I'</span>: <span class="st">'Structural'</span>,</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_J'</span>: <span class="st">'Receptor'</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Expression levels (fold change)</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>expression <span class="op">=</span> {</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_A'</span>: <span class="fl">2.5</span>, <span class="st">'GENE_B'</span>: <span class="fl">1.8</span>, <span class="st">'GENE_C'</span>: <span class="op">-</span><span class="fl">1.5</span>,</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_D'</span>: <span class="fl">3.2</span>, <span class="st">'GENE_E'</span>: <span class="op">-</span><span class="fl">2.1</span>, <span class="st">'GENE_F'</span>: <span class="fl">1.2</span>,</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'GENE_G'</span>: <span class="op">-</span><span class="fl">1.8</span>, <span class="st">'GENE_H'</span>: <span class="fl">0.5</span>, <span class="st">'GENE_I'</span>: <span class="fl">2.8</span>, <span class="st">'GENE_J'</span>: <span class="fl">1.5</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Add nodes with attributes</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene <span class="kw">in</span> genes:</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    G.add_node(gene, category<span class="op">=</span>categories[gene], expression<span class="op">=</span>expression[gene])</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Add edges (interactions)</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>interactions <span class="op">=</span> [</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_A'</span>, <span class="st">'GENE_C'</span>, <span class="fl">0.9</span>),  <span class="co"># (gene1, gene2, correlation)</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_A'</span>, <span class="st">'GENE_D'</span>, <span class="fl">0.85</span>),</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_B'</span>, <span class="st">'GENE_C'</span>, <span class="fl">0.75</span>),</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_B'</span>, <span class="st">'GENE_E'</span>, <span class="fl">0.8</span>),</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_C'</span>, <span class="st">'GENE_F'</span>, <span class="fl">0.7</span>),</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_D'</span>, <span class="st">'GENE_G'</span>, <span class="fl">0.65</span>),</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_E'</span>, <span class="st">'GENE_H'</span>, <span class="fl">0.6</span>),</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_F'</span>, <span class="st">'GENE_I'</span>, <span class="fl">0.9</span>),</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_G'</span>, <span class="st">'GENE_J'</span>, <span class="fl">0.7</span>),</span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_H'</span>, <span class="st">'GENE_I'</span>, <span class="fl">0.85</span>),</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_I'</span>, <span class="st">'GENE_J'</span>, <span class="fl">0.75</span>),</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'GENE_A'</span>, <span class="st">'GENE_B'</span>, <span class="fl">0.95</span>)</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gene1, gene2, weight <span class="kw">in</span> interactions:</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>    G.add_edge(gene1, gene2, weight<span class="op">=</span>weight)</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">7</span>))</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL A: Network colored by category ===</span></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Layout</span></span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> nx.spring_layout(G, k<span class="op">=</span><span class="fl">0.5</span>, iterations<span class="op">=</span><span class="dv">50</span>, seed<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Node colors by category</span></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>category_colors <span class="op">=</span> {</span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Transcription Factor'</span>: <span class="st">'#E74C3C'</span>,</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Signaling'</span>: <span class="st">'#3498DB'</span>,</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Metabolic'</span>: <span class="st">'#27AE60'</span>,</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Structural'</span>: <span class="st">'#F39C12'</span>,</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Receptor'</span>: <span class="st">'#9B59B6'</span></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>node_colors <span class="op">=</span> [category_colors[categories[node]] <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Node sizes by degree (number of connections)</span></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>node_sizes <span class="op">=</span> [G.degree(node) <span class="op">*</span> <span class="dv">300</span> <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Edge widths by correlation</span></span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="op">=</span> [G[u][v][<span class="st">'weight'</span>] <span class="op">*</span> <span class="dv">3</span> <span class="cf">for</span> u, v <span class="kw">in</span> G.edges()]</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw network</span></span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, node_color<span class="op">=</span>node_colors, node_size<span class="op">=</span>node_sizes,</span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>                      edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">2</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, width<span class="op">=</span>edge_widths, alpha<span class="op">=</span><span class="fl">0.6</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, font_size<span class="op">=</span><span class="dv">8</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, ax<span class="op">=</span>ax1)</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'A. Gene Regulatory Network</span><span class="ch">\n</span><span class="st">(Colored by functional category)'</span>,</span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend</span></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Patch</span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a>legend_elements <span class="op">=</span> [Patch(facecolor<span class="op">=</span>color, edgecolor<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span>cat)</span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">for</span> cat, color <span class="kw">in</span> category_colors.items()]</span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>ax1.legend(handles<span class="op">=</span>legend_elements, loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a>          title<span class="op">=</span><span class="st">'Functional Category'</span>, title_fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'A'</span>, transform<span class="op">=</span>ax1.transAxes,</span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a><span class="co"># === PANEL B: Network colored by expression ===</span></span>
+<span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Node colors by expression level</span></span>
+<span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a>expr_values <span class="op">=</span> [expression[node] <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a>node_colors_expr <span class="op">=</span> plt.cm.RdBu_r([(x <span class="op">+</span> <span class="dv">3</span>) <span class="op">/</span> <span class="dv">6</span> <span class="cf">for</span> x <span class="kw">in</span> expr_values])  <span class="co"># Normalize to 0-1</span></span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw network</span></span>
+<span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, node_color<span class="op">=</span>node_colors_expr, node_size<span class="op">=</span>node_sizes,</span>
+<span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a>                      edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">2</span>, ax<span class="op">=</span>ax2)</span>
+<span id="cb19-114"><a href="#cb19-114" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, width<span class="op">=</span>edge_widths, alpha<span class="op">=</span><span class="fl">0.6</span>, edge_color<span class="op">=</span><span class="st">'gray'</span>, ax<span class="op">=</span>ax2)</span>
+<span id="cb19-115"><a href="#cb19-115" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, font_size<span class="op">=</span><span class="dv">8</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, ax<span class="op">=</span>ax2)</span>
+<span id="cb19-116"><a href="#cb19-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'B. Gene Regulatory Network</span><span class="ch">\n</span><span class="st">(Colored by fold change)'</span>,</span>
+<span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a><span class="co"># Colorbar for expression</span></span>
+<span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colorbar <span class="im">import</span> ColorbarBase</span>
+<span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> Normalize</span>
+<span id="cb19-124"><a href="#cb19-124" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.cm <span class="im">as</span> cm</span>
+<span id="cb19-125"><a href="#cb19-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-126"><a href="#cb19-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Create colorbar axis</span></span>
+<span id="cb19-127"><a href="#cb19-127" aria-hidden="true" tabindex="-1"></a>cbar_ax <span class="op">=</span> fig.add_axes([<span class="fl">0.92</span>, <span class="fl">0.15</span>, <span class="fl">0.02</span>, <span class="fl">0.7</span>])</span>
+<span id="cb19-128"><a href="#cb19-128" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> Normalize(vmin<span class="op">=-</span><span class="dv">3</span>, vmax<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb19-129"><a href="#cb19-129" aria-hidden="true" tabindex="-1"></a>cb <span class="op">=</span> ColorbarBase(cbar_ax, cmap<span class="op">=</span>cm.RdBu_r, norm<span class="op">=</span>norm, orientation<span class="op">=</span><span class="st">'vertical'</span>)</span>
+<span id="cb19-130"><a href="#cb19-130" aria-hidden="true" tabindex="-1"></a>cb.set_label(<span class="st">'Log₂ Fold Change'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb19-131"><a href="#cb19-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-132"><a href="#cb19-132" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.02</span>, <span class="fl">0.98</span>, <span class="st">'B'</span>, transform<span class="op">=</span>ax2.transAxes,</span>
+<span id="cb19-133"><a href="#cb19-133" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
+<span id="cb19-134"><a href="#cb19-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-135"><a href="#cb19-135" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="ss">f'Network Analysis: </span><span class="sc">{</span><span class="bu">len</span>(G.nodes())<span class="sc">}</span><span class="ss"> genes, </span><span class="sc">{</span><span class="bu">len</span>(G.edges())<span class="sc">}</span><span class="ss"> interactions'</span>,</span>
+<span id="cb19-136"><a href="#cb19-136" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.95</span>)</span>
+<span id="cb19-137"><a href="#cb19-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-138"><a href="#cb19-138" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.9</span>, <span class="fl">0.93</span>])</span>
+<span id="cb19-139"><a href="#cb19-139" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'network_diagram.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb19-140"><a href="#cb19-140" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb19-141"><a href="#cb19-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-142"><a href="#cb19-142" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ Network diagram created"</span>)</span>
+<span id="cb19-143"><a href="#cb19-143" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Nodes (genes): </span><span class="sc">{</span><span class="bu">len</span>(G.nodes())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-144"><a href="#cb19-144" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Edges (interactions): </span><span class="sc">{</span><span class="bu">len</span>(G.edges())<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-145"><a href="#cb19-145" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Network density: </span><span class="sc">{</span>nx<span class="sc">.</span>density(G)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb19-146"><a href="#cb19-146" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average clustering coefficient: </span><span class="sc">{</span>nx<span class="sc">.</span>average_clustering(G)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="network-diagram-best-practices" class="level3">

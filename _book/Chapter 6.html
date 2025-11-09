@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -297,74 +332,74 @@ Hybrid approach:
 - Save graph as vector
 - Ensure embedded images are high-resolution</code></pre>
 <p><strong>Code Example (Python) - Setting DPI Correctly:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Method 1: Set figure size and DPI at creation
-fig, ax = plt.subplots(figsize=(7, 5), dpi=300)  # 7"×5" at 300 DPI = 2100×1500 pixels
-
-x = np.random.randn(100)
-y = 2*x + np.random.randn(100)
-ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7, edgecolors='black', linewidths=0.5)
-ax.set_xlabel('Variable X (units)', fontsize=11, fontweight='bold')
-ax.set_ylabel('Variable Y (units)', fontsize=11, fontweight='bold')
-ax.set_title('High-Resolution Figure (300 DPI)', fontsize=12, fontweight='bold')
-ax.grid(alpha=0.3)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-# Save with explicit DPI (this overrides figure DPI if different)
-plt.savefig('figure_300dpi.png', dpi=300, bbox_inches='tight', facecolor='white')
-plt.savefig('figure_600dpi.png', dpi=600, bbox_inches='tight', facecolor='white')  # For fine details
-
-plt.close()
-
-# Check file sizes
-import os
-size_300 = os.path.getsize('figure_300dpi.png') / 1024  # KB
-size_600 = os.path.getsize('figure_600dpi.png') / 1024  # KB
-
-print(f"300 DPI file size: {size_300:.1f} KB")
-print(f"600 DPI file size: {size_600:.1f} KB")
-print(f"Ratio: {size_600/size_300:.1f}x larger at 600 DPI")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1: Set figure size and DPI at creation</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>), dpi<span class="op">=</span><span class="dv">300</span>)  <span class="co"># 7"×5" at 300 DPI = 2100×1500 pixels</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Variable X (units)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Variable Y (units)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'High-Resolution Figure (300 DPI)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Save with explicit DPI (this overrides figure DPI if different)</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_300dpi.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_600dpi.png'</span>, dpi<span class="op">=</span><span class="dv">600</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)  <span class="co"># For fine details</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Check file sizes</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>size_300 <span class="op">=</span> os.path.getsize(<span class="st">'figure_300dpi.png'</span>) <span class="op">/</span> <span class="dv">1024</span>  <span class="co"># KB</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>size_600 <span class="op">=</span> os.path.getsize(<span class="st">'figure_600dpi.png'</span>) <span class="op">/</span> <span class="dv">1024</span>  <span class="co"># KB</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"300 DPI file size: </span><span class="sc">{</span>size_300<span class="sc">:.1f}</span><span class="ss"> KB"</span>)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"600 DPI file size: </span><span class="sc">{</span>size_600<span class="sc">:.1f}</span><span class="ss"> KB"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Ratio: </span><span class="sc">{</span>size_600<span class="op">/</span>size_300<span class="sc">:.1f}</span><span class="ss">x larger at 600 DPI"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Code Example (R) - Setting DPI Correctly:</strong></p>
-<pre><code>library(ggplot2)
-
-set.seed(42)
-data &lt;- data.frame(
-  x = rnorm(100),
-  y = 2*rnorm(100) + rnorm(100)
-)
-
-p &lt;- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 3, color = '#3498DB', alpha = 0.7) +
-  labs(x = 'Variable X (units)',
-       y = 'Variable Y (units)',
-       title = 'High-Resolution Figure (300 DPI)') +
-  theme_classic(base_size = 11) +
-  theme(
-    plot.title = element_text(face = 'bold', size = 12, hjust = 0.5),
-    axis.title = element_text(face = 'bold'),
-    panel.grid.major = element_line(color = 'gray90', size = 0.3)
-  )
-
-# Save at different DPI levels
-ggsave('figure_300dpi.png', p,
-       width = 7, height = 5, dpi = 300, bg = 'white')
-
-ggsave('figure_600dpi.png', p,
-       width = 7, height = 5, dpi = 600, bg = 'white')
-
-# Check file sizes
-file_info_300 &lt;- file.info('figure_300dpi.png')
-file_info_600 &lt;- file.info('figure_600dpi.png')
-
-cat(sprintf("300 DPI file size: %.1f KB\n", file_info_300$size / 1024))
-cat(sprintf("600 DPI file size: %.1f KB\n", file_info_600$size / 1024))
-cat(sprintf("Ratio: %.1fx larger at 600 DPI\n",
-            file_info_600$size / file_info_300$size))</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="dv">100</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'#3498DB'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Variable X (units)'</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Variable Y (units)'</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">'High-Resolution Figure (300 DPI)'</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'gray90'</span>, <span class="at">size =</span> <span class="fl">0.3</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Save at different DPI levels</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'figure_300dpi.png'</span>, p,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">bg =</span> <span class="st">'white'</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'figure_600dpi.png'</span>, p,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">600</span>, <span class="at">bg =</span> <span class="st">'white'</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Check file sizes</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>file_info_300 <span class="ot">&lt;-</span> <span class="fu">file.info</span>(<span class="st">'figure_300dpi.png'</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>file_info_600 <span class="ot">&lt;-</span> <span class="fu">file.info</span>(<span class="st">'figure_600dpi.png'</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"300 DPI file size: %.1f KB</span><span class="sc">\n</span><span class="st">"</span>, file_info_300<span class="sc">$</span>size <span class="sc">/</span> <span class="dv">1024</span>))</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"600 DPI file size: %.1f KB</span><span class="sc">\n</span><span class="st">"</span>, file_info_600<span class="sc">$</span>size <span class="sc">/</span> <span class="dv">1024</span>))</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Ratio: %.1fx larger at 600 DPI</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>            file_info_600<span class="sc">$</span>size <span class="sc">/</span> file_info_300<span class="sc">$</span>size))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -454,48 +489,48 @@ cat(sprintf("Ratio: %.1fx larger at 600 DPI\n",
 <h3 class="anchored" data-anchor-id="why-jpeg-is-dangerous-for-scientific-figures">Why JPEG is Dangerous for Scientific Figures</h3>
 <p><strong>JPEG compression creates artifacts that can distort data:</strong></p>
 <p><strong>Code Example (Python) - JPEG Artifact Demonstration:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
-
-# Create a figure with sharp edges
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-# Original high-quality image
-ax1 = axes[0]
-data = np.random.randint(0, 256, (100, 100, 3), dtype=np.uint8)
-ax1.imshow(data)
-ax1.set_title('Original (Random Pixels)', fontsize=12, fontweight='bold')
-ax1.axis('off')
-
-# Save and reload as PNG (lossless)
-plt.savefig('temp_lossless.png', dpi=300, bbox_inches='tight')
-img_png = Image.open('temp_lossless.png')
-ax2 = axes[1]
-ax2.imshow(img_png)
-ax2.set_title('✓ PNG (Lossless)\nNo artifacts', fontsize=12, fontweight='bold', color='green')
-ax2.axis('off')
-
-# Save and reload as JPEG (lossy)
-plt.savefig('temp_lossy.jpg', dpi=300, bbox_inches='tight', quality=85)
-img_jpg = Image.open('temp_lossy.jpg')
-ax3 = axes[2]
-ax3.imshow(img_jpg)
-ax3.set_title('❌ JPEG (Lossy)\nCompression artifacts visible',
-             fontsize=12, fontweight='bold', color='red')
-ax3.axis('off')
-
-plt.tight_layout()
-plt.savefig('jpeg_artifacts_demo.png', dpi=300, bbox_inches='tight')
-plt.close()
-
-# Clean up temp files
-import os
-os.remove('temp_lossless.png')
-os.remove('temp_lossy.jpg')
-
-print("JPEG artifacts demonstration created")
-print("Notice: Blocky patterns (8×8 pixel blocks) visible in JPEG version")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure with sharp edges</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Original high-quality image</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">256</span>, (<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">3</span>), dtype<span class="op">=</span>np.uint8)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>ax1.imshow(data)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Original (Random Pixels)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and reload as PNG (lossless)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'temp_lossless.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>img_png <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'temp_lossless.png'</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>ax2.imshow(img_png)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ PNG (Lossless)</span><span class="ch">\n</span><span class="st">No artifacts'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Save and reload as JPEG (lossy)</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'temp_lossy.jpg'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, quality<span class="op">=</span><span class="dv">85</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>img_jpg <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'temp_lossy.jpg'</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>ax3.imshow(img_jpg)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'❌ JPEG (Lossy)</span><span class="ch">\n</span><span class="st">Compression artifacts visible'</span>,</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>ax3.axis(<span class="st">'off'</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'jpeg_artifacts_demo.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up temp files</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>os.remove(<span class="st">'temp_lossless.png'</span>)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>os.remove(<span class="st">'temp_lossy.jpg'</span>)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"JPEG artifacts demonstration created"</span>)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Notice: Blocky patterns (8×8 pixel blocks) visible in JPEG version"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Visual evidence of JPEG problems:</strong></p>
 <pre><code>Sharp edges → Ringing artifacts (halos around edges)
 Flat colors → Blockiness (8×8 pixel compression blocks)
@@ -549,18 +584,18 @@ You convert to CMYK → Colors shift → Looks dull
 ✓ CORRECT:
 Submit RGB → Journal's printer converts → Optimized conversion</code></pre>
 <p><strong>How to check your image color mode:</strong></p>
-<pre><code># Python
-from PIL import Image
-img = Image.open('figure.png')
-print(f"Color mode: {img.mode}")  # Should be 'RGB' or 'RGBA'</code></pre>
-<pre><code># R
-library(png)
-img &lt;- readPNG('figure.png')
-if (dim(img)[3] == 3) {
-  cat("Color mode: RGB\n")
-} else if (dim(img)[3] == 4) {
-  cat("Color mode: RGBA (RGB + alpha channel)\n")
-}</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'figure.png'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Color mode: </span><span class="sc">{</span>img<span class="sc">.</span>mode<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># Should be 'RGB' or 'RGBA'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>img <span class="ot">&lt;-</span> <span class="fu">readPNG</span>(<span class="st">'figure.png'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">dim</span>(img)[<span class="dv">3</span>] <span class="sc">==</span> <span class="dv">3</span>) {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Color mode: RGB</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">dim</span>(img)[<span class="dv">3</span>] <span class="sc">==</span> <span class="dv">4</span>) {</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Color mode: RGBA (RGB + alpha channel)</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -641,64 +676,64 @@ if (dim(img)[3] == 3) {
 <section id="pre-submission-checklist-builder" class="level3">
 <h3 class="anchored" data-anchor-id="pre-submission-checklist-builder">Pre-Submission Checklist Builder</h3>
 <p><strong>Generate custom checklist based on target journal:</strong></p>
-<pre><code>def generate_journal_checklist(journal_name):
-    """
-    Create custom pre-submission checklist for specific journal
-    """
-    guidelines = {
-        'Nature': {
-            'dimensions': ['89mm (single column)', '183mm (double)', '247mm (full)'],
-            'format': ['TIFF', 'EPS', 'PDF'],
-            'resolution': '300 DPI (photos), 600 DPI (line art)',
-            'color': 'RGB',
-            'font_min': '7pt after reduction',
-            'special': 'Submit at intended size, embed fonts'
-        },
-        'Cell': {
-            'dimensions': ['85mm (1 col)', '178mm (2 col)'],
-            'format': ['TIFF', 'EPS', 'PDF', 'AI'],
-            'resolution': '300-600 DPI',
-            'color': 'RGB',
-            'font_min': 'Readable after 75% reduction',
-            'special': 'May be reduced up to 75%'
-        },
-        'PLOS ONE': {
-            'dimensions': ['670-2010 pixels width'],
-            'format': ['TIFF', 'EPS', 'PDF', 'PNG'],
-            'resolution': '300-600 DPI',
-            'color': 'RGB',
-            'font_min': 'No minimum specified',
-            'special': 'CC-BY license (open access)'
-        }
-    }
-
-    if journal_name not in guidelines:
-        return "Journal not in database. Check journal website."
-
-    specs = guidelines[journal_name]
-
-    checklist = f"""
-    === {journal_name} Figure Submission Checklist ===
-
-     Dimensions match journal specs: {', '.join(specs['dimensions'])}
-     File format: {', '.join(specs['format'])}
-     Resolution: {specs['resolution']}
-     Color mode: {specs['color']}
-     Font size: {specs['font_min']}
-     Special requirements: {specs['special']}
-
-     All panels labeled (A, B, C...)
-     Scale bars present (if applicable)
-     Captions complete and self-contained
-     Supplementary figures numbered separately
-     Files named according to journal convention
-     Image integrity: No manipulation beyond linear adjustments
-    """
-
-    return checklist
-
-# Example usage
-print(generate_journal_checklist('Nature'))</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_journal_checklist(journal_name):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Create custom pre-submission checklist for specific journal</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    guidelines <span class="op">=</span> {</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Nature'</span>: {</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">'dimensions'</span>: [<span class="st">'89mm (single column)'</span>, <span class="st">'183mm (double)'</span>, <span class="st">'247mm (full)'</span>],</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">'format'</span>: [<span class="st">'TIFF'</span>, <span class="st">'EPS'</span>, <span class="st">'PDF'</span>],</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">'resolution'</span>: <span class="st">'300 DPI (photos), 600 DPI (line art)'</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">'color'</span>: <span class="st">'RGB'</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'font_min'</span>: <span class="st">'7pt after reduction'</span>,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'special'</span>: <span class="st">'Submit at intended size, embed fonts'</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Cell'</span>: {</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'dimensions'</span>: [<span class="st">'85mm (1 col)'</span>, <span class="st">'178mm (2 col)'</span>],</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">'format'</span>: [<span class="st">'TIFF'</span>, <span class="st">'EPS'</span>, <span class="st">'PDF'</span>, <span class="st">'AI'</span>],</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">'resolution'</span>: <span class="st">'300-600 DPI'</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">'color'</span>: <span class="st">'RGB'</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">'font_min'</span>: <span class="st">'Readable after 75</span><span class="sc">% r</span><span class="st">eduction'</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">'special'</span>: <span class="st">'May be reduced up to 75%'</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'PLOS ONE'</span>: {</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">'dimensions'</span>: [<span class="st">'670-2010 pixels width'</span>],</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">'format'</span>: [<span class="st">'TIFF'</span>, <span class="st">'EPS'</span>, <span class="st">'PDF'</span>, <span class="st">'PNG'</span>],</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>            <span class="st">'resolution'</span>: <span class="st">'300-600 DPI'</span>,</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'color'</span>: <span class="st">'RGB'</span>,</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            <span class="st">'font_min'</span>: <span class="st">'No minimum specified'</span>,</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">'special'</span>: <span class="st">'CC-BY license (open access)'</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> journal_name <span class="kw">not</span> <span class="kw">in</span> guidelines:</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Journal not in database. Check journal website."</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>    specs <span class="op">=</span> guidelines[journal_name]</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    checklist <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="ss">    === </span><span class="sc">{</span>journal_name<span class="sc">}</span><span class="ss"> Figure Submission Checklist ===</span></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="ss">     Dimensions match journal specs: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(specs[<span class="st">'dimensions'</span>])<span class="sc">}</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="ss">     File format: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(specs[<span class="st">'format'</span>])<span class="sc">}</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a><span class="ss">     Resolution: </span><span class="sc">{</span>specs[<span class="st">'resolution'</span>]<span class="sc">}</span></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="ss">     Color mode: </span><span class="sc">{</span>specs[<span class="st">'color'</span>]<span class="sc">}</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="ss">     Font size: </span><span class="sc">{</span>specs[<span class="st">'font_min'</span>]<span class="sc">}</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="ss">     Special requirements: </span><span class="sc">{</span>specs[<span class="st">'special'</span>]<span class="sc">}</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="ss">     All panels labeled (A, B, C...)</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="ss">     Scale bars present (if applicable)</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="ss">     Captions complete and self-contained</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="ss">     Supplementary figures numbered separately</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="ss">     Files named according to journal convention</span></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="ss">     Image integrity: No manipulation beyond linear adjustments</span></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> checklist</span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(generate_journal_checklist(<span class="st">'Nature'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -731,54 +766,54 @@ Rule: Pixels = Inches × DPI</code></pre>
 ✓ Keep layers if journal requires editable files
 ✓ Flatten layers for final submission if allowed</code></pre>
 <p><strong>Code Example (Python) - Image Optimization:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from PIL import Image
-import os
-
-np.random.seed(42)
-
-# Create sample figure
-fig, ax = plt.subplots(figsize=(7, 5))
-x = np.random.randn(100)
-y = 2*x + np.random.randn(100)
-ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
-ax.set_xlabel('Variable X', fontsize=11, fontweight='bold')
-ax.set_ylabel('Variable Y', fontsize=11, fontweight='bold')
-ax.set_title('File Size Optimization Demo', fontsize=12, fontweight='bold')
-ax.grid(alpha=0.3)
-
-# Save with different formats and settings
-formats = {
-    'PNG_default': {'format': 'png', 'dpi': 300},
-    'PNG_compressed': {'format': 'png', 'dpi': 300, 'optimize': True},
-    'TIFF_uncompressed': {'format': 'tiff', 'dpi': 300},
-    'TIFF_LZW': {'format': 'tiff', 'dpi': 300, 'compression': 'tiff_lzw'},
-    'PDF_vector': {'format': 'pdf', 'dpi': 300}
-}
-
-file_sizes = {}
-
-for name, kwargs in formats.items():
-    filename = f'test_{name}.{kwargs["format"]}'
-    plt.savefig(filename, bbox_inches='tight', facecolor='white', **kwargs)
-    file_sizes[name] = os.path.getsize(filename) / 1024  # KB
-
-    # Clean up
-    os.remove(filename)
-
-plt.close()
-
-# Display comparison
-print("File Size Comparison (same figure, different formats):")
-print("=" * 50)
-for name, size in sorted(file_sizes.items(), key=lambda x: x[1]):
-    print(f"{name:20} : {size:6.1f} KB")
-
-# Calculate savings
-largest = max(file_sizes.values())
-smallest = min(file_sizes.values())
-print(f"\nOptimization savings: {(1 - smallest/largest)*100:.1f}% size reduction")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample figure</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Variable X'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Variable Y'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'File Size Optimization Demo'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Save with different formats and settings</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>formats <span class="op">=</span> {</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'PNG_default'</span>: {<span class="st">'format'</span>: <span class="st">'png'</span>, <span class="st">'dpi'</span>: <span class="dv">300</span>},</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'PNG_compressed'</span>: {<span class="st">'format'</span>: <span class="st">'png'</span>, <span class="st">'dpi'</span>: <span class="dv">300</span>, <span class="st">'optimize'</span>: <span class="va">True</span>},</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TIFF_uncompressed'</span>: {<span class="st">'format'</span>: <span class="st">'tiff'</span>, <span class="st">'dpi'</span>: <span class="dv">300</span>},</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TIFF_LZW'</span>: {<span class="st">'format'</span>: <span class="st">'tiff'</span>, <span class="st">'dpi'</span>: <span class="dv">300</span>, <span class="st">'compression'</span>: <span class="st">'tiff_lzw'</span>},</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'PDF_vector'</span>: {<span class="st">'format'</span>: <span class="st">'pdf'</span>, <span class="st">'dpi'</span>: <span class="dv">300</span>}</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>file_sizes <span class="op">=</span> {}</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, kwargs <span class="kw">in</span> formats.items():</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="ss">f'test_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>kwargs[<span class="st">"format"</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    plt.savefig(filename, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, <span class="op">**</span>kwargs)</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    file_sizes[name] <span class="op">=</span> os.path.getsize(filename) <span class="op">/</span> <span class="dv">1024</span>  <span class="co"># KB</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Clean up</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    os.remove(filename)</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Display comparison</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"File Size Comparison (same figure, different formats):"</span>)</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">50</span>)</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, size <span class="kw">in</span> <span class="bu">sorted</span>(file_sizes.items(), key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>]):</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>name<span class="sc">:20}</span><span class="ss"> : </span><span class="sc">{</span>size<span class="sc">:6.1f}</span><span class="ss"> KB"</span>)</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate savings</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>largest <span class="op">=</span> <span class="bu">max</span>(file_sizes.values())</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>smallest <span class="op">=</span> <span class="bu">min</span>(file_sizes.values())</span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Optimization savings: </span><span class="sc">{</span>(<span class="dv">1</span> <span class="op">-</span> smallest<span class="op">/</span>largest)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% size reduction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Expected output:</strong></p>
 <pre><code>File Size Comparison (same figure, different formats):
 ==================================================
@@ -816,58 +851,58 @@ Optimization savings: 94.9% size reduction</code></pre>
    - Less critical figures → supplement
    - High-resolution originals → supplement, lower-res in main text</code></pre>
 <p><strong>Code Example (Python) - Batch Image Optimization:</strong></p>
-<pre><code>from PIL import Image
-import os
-
-def optimize_image(input_path, output_path, max_size_mb=10, target_dpi=300):
-    """
-    Optimize image while preserving quality
-
-    Parameters:
-    - input_path: Source image file
-    - output_path: Destination file
-    - max_size_mb: Maximum file size in MB
-    - target_dpi: Target DPI (will downsample if higher)
-    """
-    img = Image.open(input_path)
-
-    # Get current DPI
-    dpi = img.info.get('dpi', (300, 300))
-    current_dpi = dpi[0] if isinstance(dpi, tuple) else dpi
-
-    # Downsample if exceeds target DPI
-    if current_dpi &gt; target_dpi:
-        scale_factor = target_dpi / current_dpi
-        new_size = tuple(int(dim * scale_factor) for dim in img.size)
-        img = img.resize(new_size, Image.Resampling.LANCZOS)
-        print(f"Downsampled from {current_dpi} to {target_dpi} DPI")
-
-    # Save with optimization
-    save_kwargs = {
-        'dpi': (target_dpi, target_dpi),
-        'optimize': True
-    }
-
-    if output_path.lower().endswith('.png'):
-        save_kwargs['compress_level'] = 9  # Maximum PNG compression
-    elif output_path.lower().endswith(('.tif', '.tiff')):
-        save_kwargs['compression'] = 'tiff_lzw'  # LZW compression for TIFF
-
-    img.save(output_path, **save_kwargs)
-
-    # Check file size
-    size_mb = os.path.getsize(output_path) / (1024 * 1024)
-
-    if size_mb &gt; max_size_mb:
-        print(f"Warning: File size {size_mb:.2f} MB exceeds {max_size_mb} MB")
-        print("Consider: Reducing dimensions, splitting figure, or moving to supplement")
-    else:
-        print(f"✓ Optimized file size: {size_mb:.2f} MB (within {max_size_mb} MB limit)")
-
-    return size_mb
-
-# Example usage
-# optimize_image('large_figure.png', 'optimized_figure.png', max_size_mb=10, target_dpi=300)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optimize_image(input_path, output_path, max_size_mb<span class="op">=</span><span class="dv">10</span>, target_dpi<span class="op">=</span><span class="dv">300</span>):</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Optimize image while preserving quality</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - input_path: Source image file</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">    - output_path: Destination file</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">    - max_size_mb: Maximum file size in MB</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">    - target_dpi: Target DPI (will downsample if higher)</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> Image.<span class="bu">open</span>(input_path)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get current DPI</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    dpi <span class="op">=</span> img.info.get(<span class="st">'dpi'</span>, (<span class="dv">300</span>, <span class="dv">300</span>))</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    current_dpi <span class="op">=</span> dpi[<span class="dv">0</span>] <span class="cf">if</span> <span class="bu">isinstance</span>(dpi, <span class="bu">tuple</span>) <span class="cf">else</span> dpi</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Downsample if exceeds target DPI</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> current_dpi <span class="op">&gt;</span> target_dpi:</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>        scale_factor <span class="op">=</span> target_dpi <span class="op">/</span> current_dpi</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>        new_size <span class="op">=</span> <span class="bu">tuple</span>(<span class="bu">int</span>(dim <span class="op">*</span> scale_factor) <span class="cf">for</span> dim <span class="kw">in</span> img.size)</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> img.resize(new_size, Image.Resampling.LANCZOS)</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Downsampled from </span><span class="sc">{</span>current_dpi<span class="sc">}</span><span class="ss"> to </span><span class="sc">{</span>target_dpi<span class="sc">}</span><span class="ss"> DPI"</span>)</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Save with optimization</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    save_kwargs <span class="op">=</span> {</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>        <span class="st">'dpi'</span>: (target_dpi, target_dpi),</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">'optimize'</span>: <span class="va">True</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> output_path.lower().endswith(<span class="st">'.png'</span>):</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>        save_kwargs[<span class="st">'compress_level'</span>] <span class="op">=</span> <span class="dv">9</span>  <span class="co"># Maximum PNG compression</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> output_path.lower().endswith((<span class="st">'.tif'</span>, <span class="st">'.tiff'</span>)):</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>        save_kwargs[<span class="st">'compression'</span>] <span class="op">=</span> <span class="st">'tiff_lzw'</span>  <span class="co"># LZW compression for TIFF</span></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    img.save(output_path, <span class="op">**</span>save_kwargs)</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check file size</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>    size_mb <span class="op">=</span> os.path.getsize(output_path) <span class="op">/</span> (<span class="dv">1024</span> <span class="op">*</span> <span class="dv">1024</span>)</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> size_mb <span class="op">&gt;</span> max_size_mb:</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Warning: File size </span><span class="sc">{</span>size_mb<span class="sc">:.2f}</span><span class="ss"> MB exceeds </span><span class="sc">{</span>max_size_mb<span class="sc">}</span><span class="ss"> MB"</span>)</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Consider: Reducing dimensions, splitting figure, or moving to supplement"</span>)</span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"✓ Optimized file size: </span><span class="sc">{</span>size_mb<span class="sc">:.2f}</span><span class="ss"> MB (within </span><span class="sc">{</span>max_size_mb<span class="sc">}</span><span class="ss"> MB limit)"</span>)</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> size_mb</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="co"># optimize_image('large_figure.png', 'optimized_figure.png', max_size_mb=10, target_dpi=300)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 <p><strong>End of Chapter 6: Technical Specifications &amp; Publication Requirements</strong></p>
 <p><strong>Key Takeaways:</strong> - <strong>300 DPI minimum</strong> for publication (600 DPI for line art) - <strong>Create at target size</strong>, don’t upsample later - <strong>TIFF or PNG</strong> for raster images (never JPEG) - <strong>PDF</strong> for vector graphics - <strong>RGB color mode</strong> (unless journal specifies CMYK) - <strong>Read journal guidelines</strong> carefully—requirements vary - <strong>Optimize file sizes</strong> without losing quality (compression, appropriate dimensions) - <strong>Check before submission</strong>: DPI, format, color mode, file size, dimensions</p>

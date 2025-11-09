@@ -660,38 +660,38 @@ Solution: Group panels A-B (related experiments) close together,
 ✗ TERRIBLE: Area/volume (3D bar chart)</code></pre>
 <p><strong>Why position is best:</strong> - Humans excel at judging positions along a common scale - Precise reading possible with gridlines - Direct comparison between elements - Minimal perceptual distortion</p>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-# Sample data: gene expression across 5 conditions
-genes = ['GeneA', 'GeneB', 'GeneC', 'GeneD', 'GeneE']
-expression = [2.3, 5.1, 3.7, 8.2, 4.9]
-
-# BEST: Position encoding (dot plot)
-fig, axes = plt.subplots(1, 3, figsize=(12, 3))
-
-# Plot 1: Position (best)
-axes[0].scatter(expression, genes, s=100, color='steelblue')
-axes[0].set_xlabel('Expression Level')
-axes[0].set_title('Position Channel (Best)')
-axes[0].grid(axis='x', alpha=0.3)
-
-# Plot 2: Length (good)
-axes[1].barh(genes, expression, color='steelblue')
-axes[1].set_xlabel('Expression Level')
-axes[1].set_title('Length Channel (Good)')
-
-# Plot 3: Area (poor - for comparison)
-# Normalize for bubble sizing
-sizes = (np.array(expression) ** 2) * 10
-axes[2].scatter([1]*len(genes), genes, s=sizes,
-                color='steelblue', alpha=0.6)
-axes[2].set_xlim(0.5, 1.5)
-axes[2].set_xticks([])
-axes[2].set_title('Area Channel (Poor)')
-
-plt.tight_layout()
-plt.savefig('channel_comparison.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data: gene expression across 5 conditions</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>genes <span class="op">=</span> [<span class="st">'GeneA'</span>, <span class="st">'GeneB'</span>, <span class="st">'GeneC'</span>, <span class="st">'GeneD'</span>, <span class="st">'GeneE'</span>]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>expression <span class="op">=</span> [<span class="fl">2.3</span>, <span class="fl">5.1</span>, <span class="fl">3.7</span>, <span class="fl">8.2</span>, <span class="fl">4.9</span>]</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BEST: Position encoding (dot plot)</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: Position (best)</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter(expression, genes, s<span class="op">=</span><span class="dv">100</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Expression Level'</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Position Channel (Best)'</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(axis<span class="op">=</span><span class="st">'x'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: Length (good)</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].barh(genes, expression, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Expression Level'</span>)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Length Channel (Good)'</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 3: Area (poor - for comparison)</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize for bubble sizing</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>sizes <span class="op">=</span> (np.array(expression) <span class="op">**</span> <span class="dv">2</span>) <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].scatter([<span class="dv">1</span>]<span class="op">*</span><span class="bu">len</span>(genes), genes, s<span class="op">=</span>sizes,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span><span class="st">'steelblue'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xlim(<span class="fl">0.5</span>, <span class="fl">1.5</span>)</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xticks([])</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="st">'Area Channel (Poor)'</span>)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'channel_comparison.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="ordinal-data-rankedordered-categories" class="level4">
 <h4 class="anchored" data-anchor-id="ordinal-data-rankedordered-categories">2. Ordinal Data (Ranked/Ordered Categories)</h4>
@@ -703,26 +703,26 @@ plt.savefig('channel_comparison.png', dpi=300, bbox_inches='tight')</code></pre>
 ✓ ACCEPTABLE: Size (small → medium → large markers)
 ✗ POOR: Color hue (red, blue, green - no inherent order)</code></pre>
 <p><strong>Code Example (R):</strong></p>
-<pre><code>library(ggplot2)
-library(RColorBrewer)
-
-# Sample data
-data &lt;- data.frame(
-  patient = 1:20,
-  severity = factor(sample(c("Mild", "Moderate", "Severe"), 20, replace=TRUE),
-                    levels = c("Mild", "Moderate", "Severe"),
-                    ordered = TRUE),
-  response = rnorm(20, 50, 10)
-)
-
-# GOOD: Position + sequential color for ordinal data
-ggplot(data, aes(x = severity, y = response, color = severity)) +
-  geom_jitter(size = 3, width = 0.2) +
-  scale_color_brewer(palette = "YlOrRd") +  # Sequential palette
-  labs(x = "Disease Severity", y = "Treatment Response",
-       title = "Position + Sequential Color for Ordinal Data") +
-  theme_minimal(base_size = 12) +
-  theme(legend.position = "none")  # Legend redundant when x-axis labeled</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">patient =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">severity =</span> <span class="fu">factor</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Mild"</span>, <span class="st">"Moderate"</span>, <span class="st">"Severe"</span>), <span class="dv">20</span>, <span class="at">replace=</span><span class="cn">TRUE</span>),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Mild"</span>, <span class="st">"Moderate"</span>, <span class="st">"Severe"</span>),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">10</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Position + sequential color for ordinal data</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> severity, <span class="at">y =</span> response, <span class="at">color =</span> severity)) <span class="sc">+</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="sc">+</span>  <span class="co"># Sequential palette</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Disease Severity"</span>, <span class="at">y =</span> <span class="st">"Treatment Response"</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Position + Sequential Color for Ordinal Data"</span>) <span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)  <span class="co"># Legend redundant when x-axis labeled</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="categoricalnominal-data-unordered-groups" class="level4">
 <h4 class="anchored" data-anchor-id="categoricalnominal-data-unordered-groups">3. Categorical/Nominal Data (Unordered Groups)</h4>
@@ -734,42 +734,42 @@ ggplot(data, aes(x = severity, y = response, color = severity)) +
 ✓ ACCEPTABLE: Position (4 separate groups on x-axis)
 ✗ AVOID: Color luminance (implies ordering that doesn't exist)</code></pre>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import seaborn as sns
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# Sample data
-data = pd.DataFrame({
-    'cell_line': np.repeat(['A', 'B', 'C', 'D'], 50),
-    'time': np.tile(np.arange(50), 4),
-    'growth': np.concatenate([
-        np.cumsum(np.random.randn(50) + 0.5),
-        np.cumsum(np.random.randn(50) + 0.3),
-        np.cumsum(np.random.randn(50) + 0.7),
-        np.cumsum(np.random.randn(50) + 0.4)
-    ])
-})
-
-# GOOD: Color hue for categorical data
-fig, ax = plt.subplots(figsize=(8, 5))
-
-# Qualitative color palette
-colors = ['#E64B35', '#4DBBD5', '#00A087', '#3C5488']
-
-for i, cell_line in enumerate(['A', 'B', 'C', 'D']):
-    subset = data[data['cell_line'] == cell_line]
-    ax.plot(subset['time'], subset['growth'],
-            color=colors[i], linewidth=2, label=f'Cell Line {cell_line}')
-
-ax.set_xlabel('Time (hours)', fontsize=12)
-ax.set_ylabel('Cell Growth (AU)', fontsize=12)
-ax.set_title('Color Hue for Categorical Data', fontsize=14, fontweight='bold')
-ax.legend(frameon=True, loc='upper left')
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-plt.tight_layout()
-plt.savefig('categorical_channels.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cell_line'</span>: np.repeat([<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>], <span class="dv">50</span>),</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'time'</span>: np.tile(np.arange(<span class="dv">50</span>), <span class="dv">4</span>),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'growth'</span>: np.concatenate([</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        np.cumsum(np.random.randn(<span class="dv">50</span>) <span class="op">+</span> <span class="fl">0.5</span>),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        np.cumsum(np.random.randn(<span class="dv">50</span>) <span class="op">+</span> <span class="fl">0.3</span>),</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        np.cumsum(np.random.randn(<span class="dv">50</span>) <span class="op">+</span> <span class="fl">0.7</span>),</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        np.cumsum(np.random.randn(<span class="dv">50</span>) <span class="op">+</span> <span class="fl">0.4</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Color hue for categorical data</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Qualitative color palette</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#E64B35'</span>, <span class="st">'#4DBBD5'</span>, <span class="st">'#00A087'</span>, <span class="st">'#3C5488'</span>]</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, cell_line <span class="kw">in</span> <span class="bu">enumerate</span>([<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]):</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> data[data[<span class="st">'cell_line'</span>] <span class="op">==</span> cell_line]</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    ax.plot(subset[<span class="st">'time'</span>], subset[<span class="st">'growth'</span>],</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>colors[i], linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Cell Line </span><span class="sc">{</span>cell_line<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Cell Growth (AU)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Color Hue for Categorical Data'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>ax.legend(frameon<span class="op">=</span><span class="va">True</span>, loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'categorical_channels.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="channel-combination-rules" class="level3">
@@ -851,30 +851,30 @@ Treatment C: Green triangles
 ✗ If bubble chart necessary, scale radius (not area) linearly
   But still expect perceptual error</code></pre>
 <p><strong>Code to Demonstrate:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-values = np.array([100, 200, 300, 400])
-
-fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-
-# WRONG: Area proportional to value (default behavior)
-axes[0].scatter([1, 2, 3, 4], [1, 1, 1, 1], s=values, alpha=0.5)
-axes[0].set_xlim(0, 5)
-axes[0].set_ylim(0, 2)
-axes[0].set_title('WRONG: Area ∝ Value\n(Perceptually misleading)')
-axes[0].set_xticks([1, 2, 3, 4])
-axes[0].set_xticklabels(values)
-
-# BETTER: Length proportional to value
-axes[1].bar([1, 2, 3, 4], values, width=0.6, alpha=0.7)
-axes[1].set_title('BETTER: Length ∝ Value\n(Accurate perception)')
-axes[1].set_xticks([1, 2, 3, 4])
-axes[1].set_xticklabels(values)
-axes[1].set_ylabel('Value')
-
-plt.tight_layout()
-plt.savefig('area_vs_length.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> np.array([<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>])</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># WRONG: Area proportional to value (default behavior)</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].scatter([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], s<span class="op">=</span>values, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylim(<span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'WRONG: Area ∝ Value</span><span class="ch">\n</span><span class="st">(Perceptually misleading)'</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticks([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels(values)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># BETTER: Length proportional to value</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], values, width<span class="op">=</span><span class="fl">0.6</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'BETTER: Length ∝ Value</span><span class="ch">\n</span><span class="st">(Accurate perception)'</span>)</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticks([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels(values)</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'area_vs_length.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="mistake-2-rainbow-color-maps-for-quantitative-data" class="level4">
 <h4 class="anchored" data-anchor-id="mistake-2-rainbow-color-maps-for-quantitative-data">Mistake 2: Rainbow Color Maps for Quantitative Data</h4>
@@ -896,35 +896,35 @@ Issues:
 ✓ Use perceptually uniform colormaps
   Examples: viridis, plasma, cividis</code></pre>
 <p><strong>Demonstration:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-# Create sample heatmap data
-data = np.random.randn(10, 10).cumsum(axis=1)
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-# BAD: Rainbow
-im1 = axes[0].imshow(data, cmap='jet', aspect='auto')
-axes[0].set_title('BAD: Rainbow (jet)\nNon-uniform, no order', fontsize=12)
-plt.colorbar(im1, ax=axes[0])
-
-# BETTER: Sequential
-im2 = axes[1].imshow(data, cmap='Blues', aspect='auto')
-axes[1].set_title('BETTER: Sequential\nClear low→high', fontsize=12)
-plt.colorbar(im2, ax=axes[1])
-
-# BEST: Perceptually uniform
-im3 = axes[2].imshow(data, cmap='viridis', aspect='auto')
-axes[2].set_title('BEST: Viridis\nPerceptually uniform', fontsize=12)
-plt.colorbar(im3, ax=axes[2])
-
-for ax in axes:
-    ax.set_xticks([])
-    ax.set_yticks([])
-
-plt.tight_layout()
-plt.savefig('colormap_comparison.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample heatmap data</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.randn(<span class="dv">10</span>, <span class="dv">10</span>).cumsum(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>))</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Rainbow</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> axes[<span class="dv">0</span>].imshow(data, cmap<span class="op">=</span><span class="st">'jet'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'BAD: Rainbow (jet)</span><span class="ch">\n</span><span class="st">Non-uniform, no order'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im1, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="co"># BETTER: Sequential</span></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> axes[<span class="dv">1</span>].imshow(data, cmap<span class="op">=</span><span class="st">'Blues'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'BETTER: Sequential</span><span class="ch">\n</span><span class="st">Clear low→high'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im2, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="co"># BEST: Perceptually uniform</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>im3 <span class="op">=</span> axes[<span class="dv">2</span>].imshow(data, cmap<span class="op">=</span><span class="st">'viridis'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="st">'BEST: Viridis</span><span class="ch">\n</span><span class="st">Perceptually uniform'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im3, ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks([])</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks([])</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'colormap_comparison.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="mistake-3-using-3d-for-2d-data" class="level4">
 <h4 class="anchored" data-anchor-id="mistake-3-using-3d-for-2d-data">Mistake 3: Using 3D for 2D Data</h4>
@@ -1039,43 +1039,43 @@ Panel A: All upward trends (treatment responders)
 Panel B: All downward trends (treatment non-responders)
 → Visual coherence within each panel strengthens message</code></pre>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-# Demonstrate common fate grouping
-time = np.linspace(0, 10, 50)
-
-# Group 1: Similar upward trajectories (common fate)
-group1 = [time * 0.8 + np.random.randn(50) * 0.5,
-          time * 0.9 + np.random.randn(50) * 0.5,
-          time * 0.85 + np.random.randn(50) * 0.5]
-
-# Group 2: Similar flat trajectories (common fate)
-group2 = [5 + np.random.randn(50) * 0.5,
-          5.5 + np.random.randn(50) * 0.5,
-          4.8 + np.random.randn(50) * 0.5]
-
-fig, ax = plt.subplots(figsize=(8, 5))
-
-# Plot group 1 in shades of red (responders)
-for i, trajectory in enumerate(group1):
-    ax.plot(time, trajectory, color=plt.cm.Reds(0.5 + i*0.15),
-            linewidth=2, label=f'Responder {i+1}' if i &lt; 1 else '')
-
-# Plot group 2 in shades of blue (non-responders)
-for i, trajectory in enumerate(group2):
-    ax.plot(time, trajectory, color=plt.cm.Blues(0.5 + i*0.15),
-            linewidth=2, label=f'Non-responder {i+1}' if i &lt; 1 else '')
-
-ax.set_xlabel('Time (hours)', fontsize=12)
-ax.set_ylabel('Biomarker Level', fontsize=12)
-ax.set_title('Common Fate: Trajectories Naturally Group', fontsize=14, fontweight='bold')
-ax.legend(loc='upper left', frameon=True)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-plt.tight_layout()
-plt.savefig('common_fate_example.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate common fate grouping</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 1: Similar upward trajectories (common fate)</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>group1 <span class="op">=</span> [time <span class="op">*</span> <span class="fl">0.8</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>          time <span class="op">*</span> <span class="fl">0.9</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>          time <span class="op">*</span> <span class="fl">0.85</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>]</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 2: Similar flat trajectories (common fate)</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>group2 <span class="op">=</span> [<span class="dv">5</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>,</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>          <span class="fl">5.5</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>,</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>          <span class="fl">4.8</span> <span class="op">+</span> np.random.randn(<span class="dv">50</span>) <span class="op">*</span> <span class="fl">0.5</span>]</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot group 1 in shades of red (responders)</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, trajectory <span class="kw">in</span> <span class="bu">enumerate</span>(group1):</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>    ax.plot(time, trajectory, color<span class="op">=</span>plt.cm.Reds(<span class="fl">0.5</span> <span class="op">+</span> i<span class="op">*</span><span class="fl">0.15</span>),</span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Responder </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">''</span>)</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot group 2 in shades of blue (non-responders)</span></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, trajectory <span class="kw">in</span> <span class="bu">enumerate</span>(group2):</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    ax.plot(time, trajectory, color<span class="op">=</span>plt.cm.Blues(<span class="fl">0.5</span> <span class="op">+</span> i<span class="op">*</span><span class="fl">0.15</span>),</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Non-responder </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">''</span>)</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Biomarker Level'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Common Fate: Trajectories Naturally Group'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'common_fate_example.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="symmetry-and-balance" class="level4">
 <h4 class="anchored" data-anchor-id="symmetry-and-balance">Symmetry and Balance</h4>
@@ -1095,39 +1095,39 @@ Asymmetric for emphasis (main result gets more space):
 [Panel C - large    ] [D]
 → Panels A &amp; C visually dominate</code></pre>
 <p><strong>Code Example (R):</strong></p>
-<pre><code>library(ggplot2)
-library(patchwork)
-
-# Create sample plots
-p1 &lt;- ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point() +
-  labs(title = "Panel A: Main Result") +
-  theme_classic()
-
-p2 &lt;- ggplot(mtcars, aes(x = hp, y = mpg)) +
-  geom_point() +
-  labs(title = "Panel B: Control") +
-  theme_classic()
-
-p3 &lt;- ggplot(mtcars, aes(x = disp, y = mpg)) +
-  geom_point() +
-  labs(title = "Panel C: Supplementary") +
-  theme_classic()
-
-p4 &lt;- ggplot(mtcars, aes(x = qsec, y = mpg)) +
-  geom_point() +
-  labs(title = "Panel D: Supplementary") +
-  theme_classic()
-
-# Symmetric layout
-symmetric &lt;- (p1 + p2) / (p3 + p4)
-
-# Asymmetric layout (emphasize A and C)
-asymmetric &lt;- (p1 + p2) / (p3 + p4) +
-  plot_layout(heights = c(2, 1))
-
-ggsave("symmetric_layout.png", symmetric, width = 8, height = 8, dpi = 300)
-ggsave("asymmetric_layout.png", asymmetric, width = 8, height = 8, dpi = 300)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample plots</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Panel A: Main Result"</span>) <span class="sc">+</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Panel B: Control"</span>) <span class="sc">+</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> disp, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Panel C: Supplementary"</span>) <span class="sc">+</span></span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> qsec, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Panel D: Supplementary"</span>) <span class="sc">+</span></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Symmetric layout</span></span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>symmetric <span class="ot">&lt;-</span> (p1 <span class="sc">+</span> p2) <span class="sc">/</span> (p3 <span class="sc">+</span> p4)</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Asymmetric layout (emphasize A and C)</span></span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>asymmetric <span class="ot">&lt;-</span> (p1 <span class="sc">+</span> p2) <span class="sc">/</span> (p3 <span class="sc">+</span> p4) <span class="sc">+</span></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"symmetric_layout.png"</span>, symmetric, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"asymmetric_layout.png"</span>, asymmetric, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="connectedness" class="level4">
 <h4 class="anchored" data-anchor-id="connectedness">Connectedness</h4>
@@ -1169,57 +1169,56 @@ Secondary: All other data points
 Tertiary: Grid, axes, legend
 → Lightest gray, thin lines</code></pre>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-# Generate data
-x = np.random.randn(100)
-y = 2*x + np.random.randn(100)
-
-# Identify "significant" outliers
-outlier_idx = np.where((y &gt; 4) | (y &lt; -4))[0]
-
-# Create figure with visual hierarchy
-fig, ax = plt.subplots(figsize=(8, 6))
-
-# Level 3: Grid (most subtle)
-ax.grid(True, alpha=0.2, linewidth=0.5, color='gray', zorder=0)
-
-# Level 2: Regular data points (secondary)
-regular_idx = np.setdiff1d(np.arange(len(x)), outlier_idx)
-ax.scatter(x[regular_idx], y[regular_idx],
-           s=30, color='lightgray', alpha=0.6, zorder=2, label='Regular')
-
-# Level 1: Outliers (PRIMARY FOCUS)
-ax.scatter(x[outlier_idx], y[outlier_idx],
-           s=200, color='#E63946', alpha=0.9, zorder=3,
-           edgecolors='darkred', linewidths=2, label='Outliers')
-
-# Annotate one key outlier
-if len(outlier_idx) &gt; 0:
-    key_outlier = outlier_idx[0]
-    ax.annotate('Key responder',
-                xy=(x[key_outlier], y[key_outlier]),
-                xytext=(x[key_outlier]-1, y[key_outlier]+1),
-                fontsize=11, fontweight='bold', color='#E63946',
-                arrowprops=dict(arrowstyle='-&gt;', color='#E63946', lw=2),
-                zorder=4)
-
-# Styling (de-emphasize axes - level 3)
-ax.set_xlabel('Drug Concentration (μM)', fontsize=11)
-ax.set_ylabel('Cell Response (AU)', fontsize=11)
-ax.set_title('Visual Hierarchy: Outliers Stand Out', fontsize=14, fontweight='bold')
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_color('gray')
-ax.spines['bottom'].set_color('gray')
-ax.legend(loc='lower right', frameon=True, fontsize=10)
-
-plt.tight_layout()
-plt.savefig('visual_hierarchy.png', dpi=300, bbox_inches='tight')
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">100</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify "significant" outliers</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>outlier_idx <span class="op">=</span> np.where((y <span class="op">&gt;</span> <span class="dv">4</span>) <span class="op">|</span> (y <span class="op">&lt;</span> <span class="op">-</span><span class="dv">4</span>))[<span class="dv">0</span>]</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with visual hierarchy</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Level 3: Grid (most subtle)</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.2</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'gray'</span>, zorder<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Level 2: Regular data points (secondary)</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>regular_idx <span class="op">=</span> np.setdiff1d(np.arange(<span class="bu">len</span>(x)), outlier_idx)</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>ax.scatter(x[regular_idx], y[regular_idx],</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>           s<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">'lightgray'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, zorder<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Regular'</span>)</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Level 1: Outliers (PRIMARY FOCUS)</span></span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>ax.scatter(x[outlier_idx], y[outlier_idx],</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>           s<span class="op">=</span><span class="dv">200</span>, color<span class="op">=</span><span class="st">'#E63946'</span>, alpha<span class="op">=</span><span class="fl">0.9</span>, zorder<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>           edgecolors<span class="op">=</span><span class="st">'darkred'</span>, linewidths<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Outliers'</span>)</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotate one key outlier</span></span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(outlier_idx) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>    key_outlier <span class="op">=</span> outlier_idx[<span class="dv">0</span>]</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>    ax.annotate(<span class="st">'Key responder'</span>,</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>                xy<span class="op">=</span>(x[key_outlier], y[key_outlier]),</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(x[key_outlier]<span class="op">-</span><span class="dv">1</span>, y[key_outlier]<span class="op">+</span><span class="dv">1</span>),</span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'#E63946'</span>,</span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'#E63946'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>                zorder<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Styling (de-emphasize axes - level 3)</span></span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Drug Concentration (μM)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Cell Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Visual Hierarchy: Outliers Stand Out'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'left'</span>].set_color(<span class="st">'gray'</span>)</span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'bottom'</span>].set_color(<span class="st">'gray'</span>)</span>
+<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'lower right'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb49-50"><a href="#cb49-50" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'visual_hierarchy.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="level-2-supporting-context" class="level4">
 <h4 class="anchored" data-anchor-id="level-2-supporting-context">Level 2: Supporting Context</h4>
@@ -1532,31 +1531,31 @@ Example: Temperature anomalies
 ✓ OK to zoom to 14.8-15.5°C range
 → These small changes are scientifically significant</code></pre>
 <p><strong>Code Example - Demonstrating the Effect:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-categories = ['Competitor A', 'Our Product']
-values = [98, 100]
-
-fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-
-# MISLEADING: Truncated axis for bar chart
-axes[0].bar(categories, values, color=['gray', 'steelblue'])
-axes[0].set_ylim(95, 101)
-axes[0].set_ylabel('Sales (units)')
-axes[0].set_title('MISLEADING: Truncated Axis\n(Appears 5x difference)',
-                   fontsize=11, color='red')
-axes[0].axhline(0, color='black', linewidth=0.8)
-
-# HONEST: Full axis from zero
-axes[1].bar(categories, values, color=['gray', 'steelblue'])
-axes[1].set_ylim(0, 110)
-axes[1].set_ylabel('Sales (units)')
-axes[1].set_title('HONEST: Full Axis\n(Shows 2% difference)',
-                   fontsize=11, color='green')
-
-plt.tight_layout()
-plt.savefig('truncated_axis_trap.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'Competitor A'</span>, <span class="st">'Our Product'</span>]</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">98</span>, <span class="dv">100</span>]</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co"># MISLEADING: Truncated axis for bar chart</span></span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].bar(categories, values, color<span class="op">=</span>[<span class="st">'gray'</span>, <span class="st">'steelblue'</span>])</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylim(<span class="dv">95</span>, <span class="dv">101</span>)</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Sales (units)'</span>)</span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'MISLEADING: Truncated Axis</span><span class="ch">\n</span><span class="st">(Appears 5x difference)'</span>,</span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>                   fontsize<span class="op">=</span><span class="dv">11</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a><span class="co"># HONEST: Full axis from zero</span></span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].bar(categories, values, color<span class="op">=</span>[<span class="st">'gray'</span>, <span class="st">'steelblue'</span>])</span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylim(<span class="dv">0</span>, <span class="dv">110</span>)</span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Sales (units)'</span>)</span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'HONEST: Full Axis</span><span class="ch">\n</span><span class="st">(Shows 2</span><span class="sc">% d</span><span class="st">ifference)'</span>,</span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a>                   fontsize<span class="op">=</span><span class="dv">11</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb64-23"><a href="#cb64-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-24"><a href="#cb64-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb64-25"><a href="#cb64-25" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'truncated_axis_trap.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Solution:</strong></p>
 <pre><code>For bar charts:
 ✓ Always start at zero (or explicitly show break if necessary)
@@ -1594,43 +1593,42 @@ For line graphs:
   - Use same scale factor (e.g., both per capita)
   - Make relationship explicit ("°F" vs "°C" - mathematically linked)</code></pre>
 <p><strong>Code Example (R):</strong></p>
-<pre><code>library(ggplot2)
-library(patchwork)
-
-# Sample data
-months &lt;- 1:12
-ice_cream &lt;- c(20, 25, 40, 55, 70, 85, 90, 85, 65, 45, 30, 22)
-drownings &lt;- c(2, 3, 5, 8, 12, 15, 16, 14, 10, 6, 4, 2)
-
-data &lt;- data.frame(month = months, ice_cream = ice_cream, drownings = drownings)
-
-# BAD: Dual axis (manipulable)
-p_bad &lt;- ggplot(data, aes(x = month)) +
-  geom_line(aes(y = ice_cream), color = "orange", size = 1.5) +
-  geom_line(aes(y = drownings * 6), color = "blue", size = 1.5) +  # Scaled to overlap
-  scale_y_continuous(
-    name = "Ice Cream Sales",
-    sec.axis = sec_axis(~./6, name = "Drownings")
-  ) +
-  labs(title = "MISLEADING: Dual Axis (Scales Manipulated)") +
-  theme_classic()
-
-# BETTER: Separate panels
-p1 &lt;- ggplot(data, aes(x = month, y = ice_cream)) +
-  geom_line(color = "orange", size = 1.5) +
-  labs(y = "Ice Cream Sales", title = "Ice Cream Sales") +
-  theme_classic()
-
-p2 &lt;- ggplot(data, aes(x = month, y = drownings)) +
-  geom_line(color = "blue", size = 1.5) +
-  labs(y = "Drownings", x = "Month", title = "Drowning Deaths") +
-  theme_classic()
-
-p_good &lt;- p1 / p2 + plot_annotation(title = "BETTER: Separate Panels (Honest Comparison)")
-
-ggsave("dual_axis_bad.png", p_bad, width = 7, height = 4, dpi = 300)
-ggsave("dual_axis_good.png", p_good, width = 7, height = 6, dpi = 300)
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>months <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>ice_cream <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>, <span class="dv">90</span>, <span class="dv">85</span>, <span class="dv">65</span>, <span class="dv">45</span>, <span class="dv">30</span>, <span class="dv">22</span>)</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>drownings <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">14</span>, <span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">2</span>)</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">month =</span> months, <span class="at">ice_cream =</span> ice_cream, <span class="at">drownings =</span> drownings)</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Dual axis (manipulable)</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>p_bad <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> month)) <span class="sc">+</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ice_cream), <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> drownings <span class="sc">*</span> <span class="dv">6</span>), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span>  <span class="co"># Scaled to overlap</span></span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Ice Cream Sales"</span>,</span>
+<span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span>.<span class="sc">/</span><span class="dv">6</span>, <span class="at">name =</span> <span class="st">"Drownings"</span>)</span>
+<span id="cb69-18"><a href="#cb69-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb69-19"><a href="#cb69-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MISLEADING: Dual Axis (Scales Manipulated)"</span>) <span class="sc">+</span></span>
+<span id="cb69-20"><a href="#cb69-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb69-21"><a href="#cb69-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-22"><a href="#cb69-22" aria-hidden="true" tabindex="-1"></a><span class="co"># BETTER: Separate panels</span></span>
+<span id="cb69-23"><a href="#cb69-23" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> ice_cream)) <span class="sc">+</span></span>
+<span id="cb69-24"><a href="#cb69-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb69-25"><a href="#cb69-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Ice Cream Sales"</span>, <span class="at">title =</span> <span class="st">"Ice Cream Sales"</span>) <span class="sc">+</span></span>
+<span id="cb69-26"><a href="#cb69-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb69-27"><a href="#cb69-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-28"><a href="#cb69-28" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> drownings)) <span class="sc">+</span></span>
+<span id="cb69-29"><a href="#cb69-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb69-30"><a href="#cb69-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Drownings"</span>, <span class="at">x =</span> <span class="st">"Month"</span>, <span class="at">title =</span> <span class="st">"Drowning Deaths"</span>) <span class="sc">+</span></span>
+<span id="cb69-31"><a href="#cb69-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb69-32"><a href="#cb69-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-33"><a href="#cb69-33" aria-hidden="true" tabindex="-1"></a>p_good <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p2 <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"BETTER: Separate Panels (Honest Comparison)"</span>)</span>
+<span id="cb69-34"><a href="#cb69-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-35"><a href="#cb69-35" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"dual_axis_bad.png"</span>, p_bad, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb69-36"><a href="#cb69-36" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"dual_axis_good.png"</span>, p_good, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="trap-3-cherry-picked-axis-ranges" class="level3">
 <h3 class="anchored" data-anchor-id="trap-3-cherry-picked-axis-ranges">Trap 3: Cherry-Picked Axis Ranges</h3>
@@ -1682,37 +1680,37 @@ Examples:
 ✓ Mention in caption: "Note logarithmic scale"
 ✓ Consider showing both linear and log versions</code></pre>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-# Exponential data
-x = np.linspace(0, 10, 50)
-y = np.exp(x/2)
-
-fig, axes = plt.subplots(1, 2, figsize=(12, 4))
-
-# Linear scale
-axes[0].plot(x, y, 'o-', color='steelblue', linewidth=2, markersize=4)
-axes[0].set_xlabel('Time')
-axes[0].set_ylabel('Cell Count')
-axes[0].set_title('LINEAR Scale\n(Emphasizes recent growth)', fontsize=12)
-axes[0].grid(alpha=0.3)
-
-# Log scale
-axes[1].plot(x, y, 'o-', color='coral', linewidth=2, markersize=4)
-axes[1].set_yscale('log')
-axes[1].set_xlabel('Time')
-axes[1].set_ylabel('Cell Count (log scale)', fontweight='bold')
-axes[1].set_title('LOGARITHMIC Scale\n(Shows exponential trend clearly)', fontsize=12)
-axes[1].grid(alpha=0.3, which='both')
-
-# Highlight log scale usage
-axes[1].text(0.5, 0.95, 'NOTE: Log scale', transform=axes[1].transAxes,
-             fontsize=11, ha='center', va='top',
-             bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
-
-plt.tight_layout()
-plt.savefig('log_scale_comparison.png', dpi=300, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponential data</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.exp(x<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear scale</span></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(x, y, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'steelblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Cell Count'</span>)</span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'LINEAR Scale</span><span class="ch">\n</span><span class="st">(Emphasizes recent growth)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Log scale</span></span>
+<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(x, y, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'coral'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Cell Count (log scale)'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'LOGARITHMIC Scale</span><span class="ch">\n</span><span class="st">(Shows exponential trend clearly)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>, which<span class="op">=</span><span class="st">'both'</span>)</span>
+<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-25"><a href="#cb75-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Highlight log scale usage</span></span>
+<span id="cb75-26"><a href="#cb75-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].text(<span class="fl">0.5</span>, <span class="fl">0.95</span>, <span class="st">'NOTE: Log scale'</span>, transform<span class="op">=</span>axes[<span class="dv">1</span>].transAxes,</span>
+<span id="cb75-27"><a href="#cb75-27" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">11</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>,</span>
+<span id="cb75-28"><a href="#cb75-28" aria-hidden="true" tabindex="-1"></a>             bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'yellow'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb75-29"><a href="#cb75-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-30"><a href="#cb75-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb75-31"><a href="#cb75-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'log_scale_comparison.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="trap-5-the-3d-disaster" class="level3">
 <h3 class="anchored" data-anchor-id="trap-5-the-3d-disaster">Trap 5: The 3D Disaster</h3>
