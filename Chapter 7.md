@@ -81,7 +81,7 @@ Ordered by value:
 
 **Code Example (Python) - Comprehensive Heatmap:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
@@ -194,7 +194,7 @@ print("2. heatmap_clustered.png - Full hierarchical clustering example")
 
 **Code Example (R) - Comprehensive Heatmap:**
 
-```
+```r
 library(ggplot2)
 library(pheatmap)
 library(RColorBrewer)
@@ -362,7 +362,7 @@ Quadrants:
 
 **Code Example (Python) - Volcano Plot:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -479,7 +479,7 @@ print(f"- P-value: {p_threshold} (-log₁₀ = {neg_log10_p_threshold:.2f})")
 
 **Code Example (R) - Volcano Plot:**
 
-```
+```r
 library(ggplot2)
 library(ggrepel)
 
@@ -687,7 +687,7 @@ Reveals:
 
 **Code Example (Python) - Comprehensive PCA Plot:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.decomposition import PCA
@@ -893,7 +893,7 @@ print(f"\nCumulative variance (first 3 PCs): {np.sum(var_explained[:3]):.2f}%")
 
 **Code Example (R) - Comprehensive PCA Plot:**
 
-```
+```r
 library(ggplot2)
 library(ggrepel)
 library(patchwork)
@@ -1090,7 +1090,7 @@ Avoid:
 
 **Code Example (Python) - Kaplan-Meier Survival Curve:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from lifelines import KaplanMeierFitter
@@ -1311,7 +1311,7 @@ Mark optimal threshold on curve:
 
 **Code Example (Python) - ROC Curve Analysis:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import roc_curve, auc, roc_auc_score
@@ -1471,7 +1471,7 @@ else:
 
 **Code Example (R) - ROC Curve Analysis:**
 
-```
+```r
 library(ggplot2)
 library(pROC)
 library(patchwork)

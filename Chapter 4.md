@@ -102,7 +102,7 @@ START: What am I trying to show?
 
 **Code Example (Python) - Proper Bar Chart:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -162,7 +162,7 @@ plt.close()
 
 **Code Example (R) - Proper Bar Chart:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -258,7 +258,7 @@ Components:
 
 **Code Example (Python) - Box Plot:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -335,7 +335,7 @@ plt.close()
 
 **Code Example (R) - Box Plot:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -429,7 +429,7 @@ ggsave('box_plot_example.png', p, width = 9, height = 6,
 
 **Code Example (Python) - Violin Plot:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -536,7 +536,7 @@ Modern approach: Try multiple, choose most informative
 
 **Code Example (Python) - Histogram Bin Selection:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -611,7 +611,7 @@ print(f"Freedman-Diaconis bins: {n_fd}")
 
 **Code Example (R) - Histogram Bin Selection:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -722,7 +722,7 @@ cat(paste0("Freedman-Diaconis bins: ", n_fd, "\n"))
 
 **Code Example (Python) - Density Plot Comparison:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
@@ -791,7 +791,7 @@ plt.close()
 
 **Code Example (R) - Density Plot Comparison:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -884,7 +884,7 @@ Four datasets with **identical** statistics:
 
 **Code Example (Python) - Anscombe's Quartet:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -959,7 +959,7 @@ plt.close()
 
 **Code Example (R) - Anscombe's Quartet:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 library(dplyr)
@@ -1156,7 +1156,7 @@ Not viable for print, but powerful for web/presentations
 
 **Code Example (Python) - Time Series Strategies:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1228,7 +1228,7 @@ plt.close()
 
 **Code Example (R) - Time Series Strategies:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -1333,7 +1333,7 @@ Options for showing variability:
 
 **Code Example (Python) - Error Bands:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1444,7 +1444,7 @@ Instead of pie chart, use:
 
 **Code Example (Python) - Pie Chart vs. Bar Chart:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1497,7 +1497,7 @@ plt.close()
 
 **Code Example (R) - Pie Chart vs. Bar Chart:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -1593,7 +1593,7 @@ BUT: Always justify in caption why dual axes are necessary
 
 **Code Example (Python) - Dual Axes Problem:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 

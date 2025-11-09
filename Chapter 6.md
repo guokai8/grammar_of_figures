@@ -79,7 +79,7 @@ Hybrid approach:
 
 **Code Example (Python) - Setting DPI Correctly:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -116,7 +116,7 @@ print(f"Ratio: {size_600/size_300:.1f}x larger at 600 DPI")
 
 **Code Example (R) - Setting DPI Correctly:**
 
-```
+```r
 library(ggplot2)
 
 set.seed(42)
@@ -194,7 +194,7 @@ Is your figure purely vector (lines, shapes, text)?
 
 **Code Example (Python) - JPEG Artifact Demonstration:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
@@ -313,14 +313,14 @@ Submit RGB → Journal's printer converts → Optimized conversion
 
 **How to check your image color mode:**
 
-```
+```python
 # Python
 from PIL import Image
 img = Image.open('figure.png')
 print(f"Color mode: {img.mode}")  # Should be 'RGB' or 'RGBA'
 ```
 
-```
+```r
 # R
 library(png)
 img <- readPNG('figure.png')
@@ -428,7 +428,7 @@ if (dim(img)[3] == 3) {
 
 **Generate custom checklist based on target journal:**
 
-```
+```python
 def generate_journal_checklist(journal_name):
     """
     Create custom pre-submission checklist for specific journal
@@ -532,7 +532,7 @@ Layered TIFF files can be 10x larger:
 
 **Code Example (Python) - Image Optimization:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
@@ -630,7 +630,7 @@ Optimization savings: 94.9% size reduction
 
 **Code Example (Python) - Batch Image Optimization:**
 
-```
+```python
 from PIL import Image
 import os
 

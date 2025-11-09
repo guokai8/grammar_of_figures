@@ -510,7 +510,7 @@ Showing gene expression levels across samples:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -565,7 +565,7 @@ Showing disease severity (mild, moderate, severe):
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(RColorBrewer)
 
@@ -608,7 +608,7 @@ Showing data from 4 different cell lines:
 
 **Code Example (Python):**
 
-```
+```python
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -744,7 +744,7 @@ Bubble chart where bubble size represents quantity:
 
 **Code to Demonstrate:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -800,7 +800,7 @@ Issues:
 
 **Demonstration:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -962,7 +962,7 @@ Panel B: All downward trends (treatment non-responders)
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1025,7 +1025,7 @@ Asymmetric for emphasis (main result gets more space):
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -1115,7 +1115,7 @@ Tertiary: Grid, axes, legend
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1560,7 +1560,7 @@ Example: Temperature anomalies
 
 **Code Example - Demonstrating the Effect:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1642,7 +1642,7 @@ Dual y-axes allow arbitrary scaling that can manufacture correlations or hide th
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -1756,7 +1756,7 @@ Examples:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 

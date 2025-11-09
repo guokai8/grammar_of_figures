@@ -34,7 +34,7 @@ STEP 4: Document what worked for future reference
 
 **Diagnosis:**
 
-```
+```python
 from PIL import Image
 img = Image.open('your_figure.png')
 print(f"Size: {img.size} pixels")
@@ -49,7 +49,7 @@ print(f"Effective DPI at {width_inches}\" width: {dpi_effective:.1f}")
 
 **Solutions:**
 
-```
+```python
 # Solution 1: Re-export at higher DPI
 import matplotlib.pyplot as plt
 
@@ -64,7 +64,7 @@ plt.savefig('figure_600dpi.png', dpi=600, bbox_inches='tight')
 
 **Common mistake: Upsampling after creation**
 
-```
+```python
 # ❌ WRONG: This doesn't add information
 from PIL import Image
 img = Image.open('low_res.png')
@@ -83,7 +83,7 @@ Cause: RGB (screen) vs CMYK (print) color space mismatch
 
 **Diagnosis:**
 
-```
+```python
 from PIL import Image
 img = Image.open('figure.png')
 print(f"Color mode: {img.mode}")
@@ -92,7 +92,7 @@ print(f"Color mode: {img.mode}")
 
 **Solutions:**
 
-```
+```python
 # Preventive: Use print-safe RGB colors from the start
 # Avoid highly saturated colors that can't be printed
 
@@ -126,7 +126,7 @@ plt.close()
 
 **Journal-specific fix:**
 
-```
+```python
 # Some journals require CMYK conversion
 # Do this ONLY if explicitly required
 
@@ -147,7 +147,7 @@ print("→ Preview before submission")
 
 **Diagnosis:**
 
-```
+```python
 import os
 
 file_path = 'large_figure.png'
@@ -162,7 +162,7 @@ if size_mb > limit_mb:
 
 **Solutions (in order of preference):**
 
-```
+```python
 # Solution 1: Optimize compression (lossless)
 from PIL import Image
 
@@ -197,7 +197,7 @@ img.save('compressed.tif', compression='tiff_lzw')
 
 **Solutions:**
 
-```
+```python
 # Matplotlib: Ensure fonts are embedded
 import matplotlib.pyplot as plt
 
@@ -213,7 +213,7 @@ plt.savefig('figure.png', dpi=300, bbox_inches='tight')  # Text as pixels
 
 **R:**
 
-```
+```r
 library(ggplot2)
 
 # Ensure fonts are embedded in PDF
@@ -230,7 +230,7 @@ ggsave('figure.png', plot,
 
 **Fallback: Use system fonts only**
 
-```
+```python
 # If custom fonts cause issues, stick to universals
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
@@ -248,7 +248,7 @@ plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
 
 **Solutions:**
 
-```
+```python
 # Solution 1: Use adjustText library (automatic label adjustment)
 from adjustText import adjust_text
 import matplotlib.pyplot as plt
@@ -282,7 +282,7 @@ plt.close()
 
 **R equivalent:**
 
-```
+```r
 library(ggplot2)
 library(ggrepel)  # Automatic label repelling
 
@@ -306,7 +306,7 @@ ggsave('label_overlap_fix.png', width = 14, height = 6, dpi = 300)
 
 **Solution 2: Selective labeling**
 
-```
+```python
 # Label only significant/important points
 significant_idx = [0, 5, 12, 20, 28]  # Indices of important points
 
@@ -331,7 +331,7 @@ for i in significant_idx:
 
 **Solutions:**
 
-```
+```python
 # Decluttering checklist:
 
 # 1. Remove unnecessary grid lines
@@ -363,7 +363,7 @@ fig, axes = plt.subplots(2, 2, figsize=(12, 10))  # Split into 4 panels
 
 **Before/After Example:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -410,7 +410,7 @@ plt.close()
 
 **Solutions:**
 
-```
+```python
 # Solution 1: Use consistent axis limits
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
 
@@ -445,7 +445,7 @@ for ax in [ax1, ax2, ax3, ax4]:
 
 **R equivalent:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -477,7 +477,7 @@ p4 <- ggplot(data4, aes(x, y)) + geom_point() +
 
 **Solutions:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -532,7 +532,7 @@ Dot plots/line plots: Truncation acceptable if clearly indicated
 
 **Solutions:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -601,7 +601,7 @@ for i, (bar, letter) in enumerate(zip(bars, letters)):
 
 **Solutions:**
 
-```
+```python
 # Guideline: Marker sizes for readability
 recommended_sizes = {
     'few_points': (10, 50),      # <20 points: 50-150 in plt units
@@ -680,7 +680,7 @@ Image Processing Protocol (for Methods section):
 
 **Systematic check:**
 
-```
+```python
 def validate_figure_specs(file_path, journal_specs):
     """
     Validate figure against journal requirements
@@ -750,7 +750,7 @@ validate_figure_specs('my_figure.png', nature_specs)
 
 **One-line fixes for common problems:**
 
-```
+```python
 # Problem: Text too small
 plt.rcParams['font.size'] = 11  # Increase base font size
 

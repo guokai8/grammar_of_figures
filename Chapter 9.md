@@ -68,7 +68,7 @@ Example workflow:
 
 **Code Example (Python) - Interactive Scatter Plot with Plotly:**
 
-```
+```python
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
@@ -192,7 +192,7 @@ print("  - Static PNG: static_volcano_plot.png (for manuscript)")
 
 **Code Example (Python) - Interactive Heatmap with Bokeh:**
 
-```
+```python
 from bokeh.plotting import figure, output_file, save
 from bokeh.models import HoverTool, ColorBar, LinearColorMapper
 from bokeh.palettes import RdBu11
@@ -275,7 +275,7 @@ print("  Features: Hover tooltips, pan, zoom, reset")
 
 **Code Example (R) - Interactive 3D PCA Plot:**
 
-```
+```r
 library(plotly)
 
 set.seed(42)
@@ -364,7 +364,7 @@ Requirements:
 
 **Code Example (Python) - Animated Time-Series:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
@@ -449,7 +449,7 @@ print("  - Note: For manuscripts, include static final frame as well")
 
 **Code Example (R) - Animated Time-Series with gganimate:**
 
-```
+```r
 library(ggplot2)
 library(gganimate)
 library(gifski)  # For GIF rendering
@@ -529,7 +529,7 @@ cat("  Frames: 200, FPS: 20\n")
 
 **Code Example (Python) - Linked Scatter Plots with Bokeh:**
 
-```
+```python
 from bokeh.plotting import figure, output_file, save
 from bokeh.layouts import row
 from bokeh.models import ColumnDataSource

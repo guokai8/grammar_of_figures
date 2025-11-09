@@ -2036,7 +2036,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(dplyr)
@@ -2170,7 +2170,7 @@ Saturation levels:
 
 **Code Example (Python) - Gene Expression Volcano Plot:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -2253,7 +2253,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -2406,7 +2406,7 @@ Correlation coefficient r ranges from -1.0 to +1.0
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -2458,7 +2458,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(dplyr)
@@ -2534,7 +2534,7 @@ Expression level (FPKM/TPM) is genuinely continuous
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -2625,7 +2625,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(dplyr)
@@ -2760,7 +2760,7 @@ Cell types are categorical:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -2823,7 +2823,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -3048,7 +3048,7 @@ Restrained color use suggests:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -3129,7 +3129,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -3273,7 +3273,7 @@ Figure 2: "Red = Treatment A" (changed!)
 
 **Code Example (Python) - Manuscript-Wide Consistency:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -3368,7 +3368,7 @@ print("✓ Control always Gray, Drug_A always Blue, Drug_B always Red")
 
 **Code Example (R) - Manuscript-Wide Consistency:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -3534,7 +3534,7 @@ Elevation:
 
 **Code Example - Climate Convention (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -3576,7 +3576,7 @@ plt.close()
 
 **Code Example - Climate Convention (R):**
 
-```
+```r
 library(ggplot2)
 
 set.seed(42)
@@ -3806,7 +3806,7 @@ Check: colorbrewer2.org has CVD-safe filter
 
 **Code Example (Python) - Okabe-Ito Implementation:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -3888,7 +3888,7 @@ print("✓ Distinguishable by all color vision types")
 
 **Code Example (R) - Okabe-Ito Implementation:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -3961,7 +3961,7 @@ cat("✓ Distinguishable by all color vision types\n")
 **Code Example (Python) - Redundant Encoding:**
 
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -4044,7 +4044,7 @@ print("✓ Information preserved even if color is lost")
 
 **Code Example (R) - Redundant Encoding:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -4208,7 +4208,7 @@ OR log-transform to make symmetric: log2(-10 to +10)
 
 **Code Example (Python) - Honest vs. Dishonest Scales:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -4249,7 +4249,7 @@ plt.close()
 
 **Code Example (R) - Honest vs. Dishonest Scales:**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(patchwork)
@@ -4472,7 +4472,7 @@ When the binary distinction (significant vs. non-significant) provides **no info
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -4544,7 +4544,7 @@ print("✓ When all values significant: encode magnitude, not binary threshold")
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(patchwork)
@@ -4657,7 +4657,7 @@ Leaving cells blank (white) when background is white
 
 **Code Example (Python) - Missing Data:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
@@ -4755,7 +4755,7 @@ print("✓ Never use gradient colors for NA values")
 
 **Code Example (R) - Missing Data:**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(dplyr)
@@ -4884,7 +4884,7 @@ Examples where zero is just lower bound:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -4946,7 +4946,7 @@ print("✓ Arbitrary zero → Sequential colormap")
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(patchwork)
@@ -5147,7 +5147,7 @@ Correct solution: Continuous yellow-orange-red gradient encoding fold change
 
 **Code Example (Python) - Cyclic Data:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -5207,7 +5207,7 @@ print("✓ Start and end colors must be perceptually similar")
 
 **Code Example (R) - Cyclic Data:**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(patchwork)
@@ -5308,7 +5308,7 @@ Gene expression (FPKM) in 3 tissues
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -5367,7 +5367,7 @@ print("✓ State ranges clearly in captions and colorbars")
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(reshape2)
 library(patchwork)

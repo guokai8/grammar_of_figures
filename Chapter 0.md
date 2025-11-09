@@ -205,7 +205,7 @@ For a time-series experiment with 3 treatment groups:
 
 **Create a functional but not polished version:**
 
-```
+```python
 # Python example - quick draft
 import matplotlib.pyplot as plt
 import numpy as np
@@ -272,7 +272,7 @@ You: (thinking: Oh no, I wanted them to notice the divergence at week 3)
 
 **Now focus on quality and professionalism:**
 
-```
+```python
 # Python example - polished version
 import matplotlib.pyplot as plt
 import numpy as np
@@ -449,7 +449,7 @@ There is no single "best" tool for creating scientific figures. Your choice depe
 **Core Libraries:**
 
 #### 1. Matplotlib – The Foundation
-```
+```python
 import matplotlib.pyplot as plt
 
 # Basic but flexible
@@ -471,7 +471,7 @@ ax.set_ylabel('Y Label')
 - Steeper learning curve
 
 #### 2. Seaborn – Statistical Visualization
-```
+```python
 import seaborn as sns
 
 # High-level interface with good defaults
@@ -491,7 +491,7 @@ sns.boxplot(data=df, x='group', y='value', palette='Set2')
 - Customization requires matplotlib knowledge
 
 #### 3. Plotly – Interactive Figures
-```
+```python
 import plotly.express as px
 
 # Interactive plots with hover information
@@ -519,7 +519,7 @@ fig.show()
 
 **Example: Complete Python Workflow**
 
-```
+```python
 # generate_figure1.py
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -573,7 +573,7 @@ print("Figure saved successfully")
 
 #### 1. ggplot2 – Grammar of Graphics
 
-```
+```r
 library(ggplot2)
 
 # Layered approach
@@ -598,7 +598,7 @@ ggplot(data, aes(x = time, y = value, color = group)) +
 
 #### 2. Cowplot & Patchwork – Multi-panel Layouts
 
-```
+```r
 library(cowplot)
 library(patchwork)
 
@@ -628,7 +628,7 @@ plot_grid(p1, p2, labels = c('A', 'B'), ncol = 2)
 
 **Example: Complete R Workflow**
 
-```
+```r
 # generate_figure1.R
 library(tidyverse)
 library(cowplot)

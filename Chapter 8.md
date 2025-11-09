@@ -61,7 +61,7 @@ If images are cropped, state: "Representative cropped regions shown"
 
 **Code Example (Python) - Adding Scale Bars to Microscopy Images:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
@@ -152,7 +152,7 @@ print(f"Scale bar: {scale_bar_um} µm = {scale_bar_pixels} pixels")
 
 **Code Example (Python) - Multi-Channel Fluorescence Imaging:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -348,7 +348,7 @@ Panel C: Quantification
 
 **Code Example (Python) - Simulated Western Blot Figure:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
@@ -621,7 +621,7 @@ Each gate/quadrant should show:
 
 **Code Example (Python) - Flow Cytometry Figure:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle, Polygon
@@ -871,7 +871,7 @@ Common mistakes:
 
 **Code Example (Python) - Phylogenetic Tree:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import FancyBboxPatch
@@ -1069,7 +1069,7 @@ Edge width: Often encodes interaction strength
 
 **Code Example (Python) - Network Diagram:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx

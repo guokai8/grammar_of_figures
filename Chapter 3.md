@@ -48,7 +48,7 @@ Essential text components:
 
 **Code Example (Python) - Text Hierarchy:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -99,7 +99,7 @@ plt.close()
 
 **Code Example (R) - Text Hierarchy:**
 
-```
+```r
 library(ggplot2)
 
 # Data
@@ -196,7 +196,7 @@ Liberation Sans: Metric-compatible with Arial (open-source)
 
 **Code Example (Python) - Font Consistency:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -238,7 +238,7 @@ print("✓ Consistent sizing across all text elements")
 
 **Code Example (R) - Font Consistency:**
 
-```
+```r
 library(ggplot2)
 
 # Sample data
@@ -398,7 +398,7 @@ Disadvantages:
 
 **Code Example (Python) - Panel Labels:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -468,7 +468,7 @@ print("✓ Panel labels: A, B, C, D (bold, outside panels)")
 
 **Code Example (R) - Panel Labels:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -630,7 +630,7 @@ n.s.  p ≥ 0.05  (not significant)
 
 **Code Example (Python) - Statistical Annotations:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -704,7 +704,7 @@ plt.close()
 
 **Code Example (R) - Statistical Annotations:**
 
-```
+```r
 library(ggplot2)
 library(ggsignif)
 
@@ -832,7 +832,7 @@ Caption: "** p = 0.008, *** p = 0.0003 (unpaired t-test)"
 
 **Code Example (Python) - Direct Labeling:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -895,7 +895,7 @@ plt.close()
 
 **Code Example (R) - Direct Labeling:**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(patchwork)
@@ -1622,7 +1622,7 @@ Code implementation: Set rcParams globally (Python) or theme (R)
 
 **Code Example (Python) - Consistent Sizing:**
 
-```
+```python
 import matplotlib.pyplot as plt
 
 # SET ONCE at beginning of script
@@ -1650,7 +1650,7 @@ plt.rcParams.update({
 
 **Code Example (R) - Consistent Sizing:**
 
-```
+```r
 library(ggplot2)
 
 # DEFINE ONCE
@@ -1745,7 +1745,7 @@ Output: Pass/Fail for WCAG standards
 
 **Code Example (Python) - Avoiding Overlap:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from adjustText import adjust_text  # pip install adjustText
@@ -1791,7 +1791,7 @@ plt.close()
 
 **Code Example (R) - Avoiding Overlap:**
 
-```
+```r
 library(ggplot2)
 library(ggrepel)  # For non-overlapping labels
 
@@ -1869,7 +1869,7 @@ Tick showing "5" = 5000 km
 
 **Code Example (Python) - Proper Axis Notation:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
@@ -1903,7 +1903,7 @@ plt.close()
 
 **Code Example (R) - Proper Axis Notation:**
 
-```
+```r
 library(ggplot2)
 library(scales)
 library(patchwork)

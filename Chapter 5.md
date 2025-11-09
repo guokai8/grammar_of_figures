@@ -32,7 +32,7 @@ The human visual system automatically organizes visual information according to 
 
 **Code Example (Python) - Proximity in Multi-Panel Layouts:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -108,7 +108,7 @@ plt.close()
 
 **Code Example (R) - Proximity in Multi-Panel Layouts:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 library(grid)
@@ -347,7 +347,7 @@ Common layouts:
 
 **Code Example (Python) - Balanced 2×2 Grid:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -429,7 +429,7 @@ B, C: Small (15-20% each) - Supporting/methods
 
 **Code Example (Python) - Dominant Layout:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -495,7 +495,7 @@ plt.close()
 
 **Code Example (R) - Dominant Layout:**
 
-```
+```r
 library(ggplot2)
 library(patchwork)
 
@@ -685,7 +685,7 @@ Example: 1:1
 
 **Code Example (Python) - Aspect Ratio Effects:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -815,7 +815,7 @@ Optimal (40-60%):
 
 **Code Example (Python) - White Space Management:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -893,7 +893,7 @@ Between elements within panel:
 
 **In code (Python):**
 
-```
+```python
 # Set spacing explicitly
 plt.tight_layout(pad=1.5,      # Outer padding
                 h_pad=2.0,     # Vertical spacing between panels
@@ -946,7 +946,7 @@ Document specifications:
 
 **Python template:**
 
-```
+```python
 import matplotlib.pyplot as plt
 
 # Define once, use everywhere
@@ -1001,7 +1001,7 @@ plt.close()
 
 **R template:**
 
-```
+```r
 library(ggplot2)
 
 # Define theme once
@@ -1762,7 +1762,7 @@ Color scale integrity:
 
 ### Python (Matplotlib) Essential Commands
 
-```
+```python
 import matplotlib.pyplot as plt
 
 # Global style setup (run once at start)
@@ -1798,7 +1798,7 @@ plt.savefig('figure.png', dpi=300, bbox_inches='tight', facecolor='white')
 
 ### R (ggplot2) Essential Commands
 
-```
+```r
 library(ggplot2)
 
 # Reusable theme
