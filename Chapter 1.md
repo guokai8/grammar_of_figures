@@ -1339,7 +1339,192 @@ Applies to: lines, fonts, borders
 
 ---
 
-## 1.5 Common Perceptual Traps and How to Avoid Them
+### **1.5 Theme Base Size and Font Scaling**
+
+**Principle:** Set appropriate base font sizes that account for potential figure reduction.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Font size calculation for figure reduction
+
+"""
+FONT SIZE PLANNING:
+
+Journals often reduce figures to fit column width:
+- 50% reduction common (7" → 3.5")
+- Font sizes reduce proportionally
+
+Minimum readable size: 6-7 points after reduction
+
+Calculation:
+If figure reduced 50%, you need DOUBLE the font size:
+- Want 8pt final → Use 16pt in original
+- Want 10pt final → Use 20pt in original
+
+Safe starting sizes (for 50% reduction):
+- Title: 24-28pt → becomes 12-14pt ✓
+- Axis labels: 20-22pt → becomes 10-11pt ✓
+- Tick labels: 16-18pt → becomes 8-9pt ✓
+- Legend: 16-18pt → becomes 8-9pt ✓
+"""
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# Panel A: TOO SMALL - Will be unreadable after reduction
+ax1 = axes[0, 0]
+x = np.linspace(0, 10, 50)
+y = 2*x + np.random.randn(50)*2
+
+ax1.scatter(x, y, s=30, color='#3498DB', alpha=0.7)
+ax1.set_xlabel('Variable X (units)', fontsize=8)  # TOO SMALL
+ax1.set_ylabel('Variable Y (units)', fontsize=8)  # TOO SMALL
+ax1.set_title('Too Small Fonts', fontsize=10)  # TOO SMALL
+ax1.tick_params(labelsize=7)  # TOO SMALL
+ax1.grid(alpha=0.3)
+
+ax1.text(0.5, 1.15, '❌ BAD: After 50% reduction\nTitle→5pt, Labels→4pt (UNREADABLE)',
+        transform=ax1.transAxes, ha='center', fontsize=10,
+        color='red', fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='#FFCCCC', alpha=0.8))
+
+# Panel B: CORRECT - Accounts for reduction
+ax2 = axes[0, 1]
+ax2.scatter(x, y, s=50, color='#27AE60', alpha=0.7, edgecolors='black', linewidths=0.5)
+ax2.set_xlabel('Variable X (units)', fontsize=14, fontweight='bold')  # GOOD
+ax2.set_ylabel('Variable Y (units)', fontsize=14, fontweight='bold')  # GOOD
+ax2.set_title('Correct Font Sizes', fontsize=16, fontweight='bold')  # GOOD
+ax2.tick_params(labelsize=12)  # GOOD
+ax2.grid(alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+ax2.text(0.5, 1.15, '✓ GOOD: After 50% reduction\nTitle→8pt, Labels→7pt (READABLE)',
+        transform=ax2.transAxes, ha='center', fontsize=10,
+        color='green', fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='#CCFFCC', alpha=0.8))
+
+# Panel C: Theme base_size comparison
+ax3 = axes[1, 0]
+
+# Matplotlib rcParams approach
+plt.rcParams.update({
+    'font.size': 18,  # Base size accounting for reduction
+    'axes.labelsize': 20,
+    'axes.titlesize': 22,
+    'xtick.labelsize': 16,
+    'ytick.labelsize': 16,
+    'legend.fontsize': 16
+})
+
+ax3.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
+ax3.set_xlabel('Variable X (units)', fontweight='bold')
+ax3.set_ylabel('Variable Y (units)', fontweight='bold')
+ax3.set_title('Using rcParams Base Size', fontweight='bold')
+ax3.grid(alpha=0.3)
+
+code_example = """
+# Set once at script start:
+plt.rcParams['font.size'] = 18
+plt.rcParams['axes.labelsize'] = 20
+plt.rcParams['axes.titlesize'] = 22
+
+# All subsequent plots inherit these sizes
+"""
+ax3.text(0.5, -0.25, code_example, transform=ax3.transAxes,
+        ha='center', fontsize=9, family='monospace',
+        bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.5))
+
+# Panel D: Test print guide
+ax4 = axes[1, 1]
+ax4.axis('off')
+
+test_guide = """
+FONT SIZE TEST PROCEDURE:
+
+1. Create figure at FINAL SIZE
+   fig, ax = plt.subplots(figsize=(3.5, 2.5))
+   # Not (7, 5) if it will be reduced to (3.5, 2.5)!
+
+2. Set fonts for FINAL SIZE
+   ax.set_xlabel('Label', fontsize=11)
+   # Not 22 if figure already at final size
+
+3. Save and PRINT at 100% scale
+   plt.savefig('test.pdf', dpi=300)
+   # Print without "fit to page"
+
+4. Check readability:
+   • Can you read smallest text from 1 foot away?
+   • Are subscripts/superscripts clear?
+   • Is legend distinguishable?
+
+5. If NO to any → Increase font sizes
+
+ALTERNATIVE: Scale test
+• Create at large size (7×5)
+• Print and physically reduce by 50%
+• Check readability
+"""
+
+ax4.text(0.05, 0.95, test_guide, transform=ax4.transAxes,
+        verticalalignment='top', fontsize=10, family='monospace',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
+ax4.set_title('Font Size Testing Guide',
+              fontsize=14, fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('font_size_reduction_planning.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+
+# Reset rcParams
+plt.rcParams.update(plt.rcParamsDefault)
+```
+
+**R equivalent:**
+
+```r
+library(ggplot2)
+
+# Base size in ggplot2 theme
+# Will scale all text proportionally
+
+# TOO SMALL (will be unreadable after reduction)
+p_bad <- ggplot(data, aes(x, y)) +
+  geom_point(size = 2, color = '#3498DB', alpha = 0.7) +
+  labs(x = 'Variable X (units)',
+       y = 'Variable Y (units)',
+       title = 'Too Small Fonts') +
+  theme_classic(base_size = 8) +  # TOO SMALL!
+  theme(plot.title = element_text(face = 'bold'))
+
+# GOOD (accounts for 50% reduction)
+p_good <- ggplot(data, aes(x, y)) +
+  geom_point(size = 3, color = '#27AE60', alpha = 0.7) +
+  labs(x = 'Variable X (units)',
+       y = 'Variable Y (units)',
+       title = 'Correct Font Sizes') +
+  theme_classic(base_size = 16) +  # GOOD!
+  theme(
+    plot.title = element_text(face = 'bold', size = 20),
+    axis.title = element_text(face = 'bold', size = 18),
+    axis.text = element_text(size = 14)
+  )
+
+# Save at final intended size
+ggsave('figure_correct_size.png', p_good,
+       width = 3.5, height = 2.5,  # Final size, not pre-reduction
+       dpi = 300)
+```
+
+---
+
+## 1.6 Common Perceptual Traps and How to Avoid Them
 
 ### Trap 1: The Truncated Axis
 
@@ -1500,6 +1685,7 @@ ggsave("dual_axis_good.png", p_good, width = 7, height = 6, dpi = 300)
 ### Trap 3: Cherry-Picked Axis Ranges
 
 **The Problem:**
+
 Selectively choosing axis ranges to emphasize or hide patterns.
 
 **Example:**
@@ -1650,7 +1836,7 @@ Even then, consider:
 
 ---
 
-### Exercise 1.5.1: Perceptual Trap Detection
+### Exercise 1.6.1: Perceptual Trap Detection
 
 **Objective:** Develop critical eye for misleading visualizations
 
@@ -1679,6 +1865,7 @@ Even then, consider:
    - Write 2-3 sentences on how perception changes
 
 **Example Analysis:**
+
 ```
 Figure: Bar chart from Company X press release
 Trap detected: Y-axis starts at 95%, goes to 100%

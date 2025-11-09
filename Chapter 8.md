@@ -1256,6 +1256,141 @@ Avoid:
 
 ---
 
+### **8.6 Novel Plot Types: Providing Context**
+
+**Principle:** Any non-standard plot type requires extra explanation to ensure reader understanding.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Wedge, Circle
+
+np.random.seed(42)
+
+fig = plt.figure(figsize=(16, 12))
+
+# Example: Circular plot (not commonly used in biology)
+# MUST provide sufficient context
+
+# Panel A: Novel plot WITHOUT explanation (confusing)
+ax1 = plt.subplot(2, 2, 1, projection='polar')
+theta = np.linspace(0, 2*np.pi, 24)
+r = 50 + 30*np.sin(3*theta) + np.random.randn(24)*5
+
+ax1.plot(theta, r, 'o-', linewidth=2, markersize=8, color='#3498DB')
+ax1.fill(theta, r, alpha=0.3, color='#3498DB')
+ax1.set_theta_zero_location('N')
+ax1.set_title('❌ BAD: No Explanation\n(What am I looking at?)',
+              fontsize=13, fontweight='bold', color='red', pad=20)
+
+# Panel B: Same plot WITH clear explanation
+ax2 = plt.subplot(2, 2, 2, projection='polar')
+ax2.plot(theta, r, 'o-', linewidth=2.5, markersize=8, color='#27AE60')
+ax2.fill(theta, r, alpha=0.3, color='#27AE60')
+ax2.set_theta_zero_location('N')
+ax2.set_theta_direction(-1)  # Clockwise
+
+# Add time labels
+hour_labels = [f'{h}:00' for h in range(0, 24, 3)]
+ax2.set_xticks(np.linspace(0, 2*np.pi, 8, endpoint=False))
+ax2.set_xticklabels(hour_labels, fontsize=10)
+
+# Add radial axis label
+ax2.set_ylabel('Activity Level', fontsize=11, fontweight='bold', labelpad=30)
+
+# Add annotations
+ax2.text(0, 85, 'Peak\nActivity', ha='center', fontsize=10,
+        fontweight='bold', color='red',
+        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.8))
+
+ax2.set_title('✓ GOOD: Clear Context\n"24-hour Circadian Activity Pattern"',
+              fontsize=13, fontweight='bold', color='green', pad=20)
+
+# Panel C: Novel plot with legend/key explaining elements
+ax3 = plt.subplot(2, 2, 3)
+
+# Example: Alluvial/Sankey-style plot
+# Simulate patient flow between disease states
+states = ['Healthy', 'Stage I', 'Stage II', 'Stage III']
+time_points = ['Baseline', 'Month 3', 'Month 6', 'Month 9']
+
+# Create flow diagram
+from matplotlib.sankey import Sankey
+
+# Simplified representation (actual Sankey would be more complex)
+ax3.text(0.5, 0.95, 'Disease Progression Flow Diagram',
+        ha='center', va='top', transform=ax3.transAxes,
+        fontsize=12, fontweight='bold')
+
+# Add explanatory text boxes
+explanations = [
+    "Arrow width = Number of patients",
+    "Color = Disease severity",
+    "Left → Right = Time progression",
+    "Splits show state transitions"
+]
+
+y_pos = 0.8
+for exp in explanations:
+    ax3.text(0.05, y_pos, f'• {exp}', transform=ax3.transAxes,
+            fontsize=10, verticalalignment='top',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    y_pos -= 0.15
+
+ax3.set_xlim(0, 1)
+ax3.set_ylim(0, 1)
+ax3.axis('off')
+ax3.set_title('✓ GOOD: Novel Plot with Key\n(All elements explained)',
+              fontsize=13, fontweight='bold', color='green', pad=20)
+
+# Panel D: Checklist for novel plots
+ax4 = plt.subplot(2, 2, 4)
+ax4.axis('off')
+
+checklist_text = """
+✓ CHECKLIST FOR NOVEL PLOT TYPES:
+
+ Title clearly states what plot shows
+   Example: "Circular Heatmap of Temporal Gene Expression"
+
+ All axes labeled with units
+   • Radial axis: What does distance mean?
+   • Angular axis: What does angle represent?
+
+ Legend explains all visual encodings
+   • Line thickness → Sample size
+   • Color → Statistical significance
+   • Pattern → Experimental group
+
+ Caption provides interpretation guide
+   "In this polar plot, each point represents
+    hourly measurements over 24 hours. Radial
+    distance indicates activity level (AU)."
+
+ Reference to similar plot if published
+   "Similar to circular genome plots (Zhang et al. 2020)"
+
+ Full methods in supplementary
+   • Software used
+   • Parameter settings
+   • Data processing steps
+"""
+
+ax4.text(0.05, 0.95, checklist_text, transform=ax4.transAxes,
+        fontsize=10, verticalalignment='top', family='monospace',
+        bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.3))
+
+ax4.set_title('Novel Plot Checklist',
+              fontsize=13, fontweight='bold', pad=20)
+
+plt.tight_layout()
+plt.savefig('novel_plots_explanation.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
 **End of Chapter 8: Specialized Field Visualizations**
 
 **Summary Table:**

@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -220,8 +255,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#common-caption-mistakes" id="toc-common-caption-mistakes" class="nav-link" data-scroll-target="#common-caption-mistakes">Common Caption Mistakes</a></li>
   <li><a href="#length-guidelines" id="toc-length-guidelines" class="nav-link" data-scroll-target="#length-guidelines">Length Guidelines</a></li>
   <li><a href="#journal-specific-requirements" id="toc-journal-specific-requirements" class="nav-link" data-scroll-target="#journal-specific-requirements">Journal-Specific Requirements</a></li>
+  <li><a href="#text-hierarchy-information-vs.-support-text" id="toc-text-hierarchy-information-vs.-support-text" class="nav-link" data-scroll-target="#text-hierarchy-information-vs.-support-text"><strong>3.9 Text Hierarchy: Information vs.&nbsp;Support Text</strong></a></li>
+  <li><a href="#coordinate-axes-and-legend-simplification" id="toc-coordinate-axes-and-legend-simplification" class="nav-link" data-scroll-target="#coordinate-axes-and-legend-simplification"><strong>3.10 Coordinate Axes and Legend Simplification</strong></a></li>
+  <li><a href="#information-text-gene-and-pathway-labels" id="toc-information-text-gene-and-pathway-labels" class="nav-link" data-scroll-target="#information-text-gene-and-pathway-labels"><strong>3.11 Information Text: Gene and Pathway Labels</strong></a></li>
   </ul></li>
-  <li><a href="#common-typography-mistakes-and-how-to-avoid-them" id="toc-common-typography-mistakes-and-how-to-avoid-them" class="nav-link" data-scroll-target="#common-typography-mistakes-and-how-to-avoid-them">3.8 Common Typography Mistakes and How to Avoid Them</a>
+  <li><a href="#common-typography-mistakes-and-how-to-avoid-them" id="toc-common-typography-mistakes-and-how-to-avoid-them" class="nav-link" data-scroll-target="#common-typography-mistakes-and-how-to-avoid-them">3.12 Common Typography Mistakes and How to Avoid Them</a>
   <ul class="collapse">
   <li><a href="#mistake-1-inconsistent-font-sizing" id="toc-mistake-1-inconsistent-font-sizing" class="nav-link" data-scroll-target="#mistake-1-inconsistent-font-sizing">Mistake 1: Inconsistent Font Sizing</a></li>
   <li><a href="#mistake-2-poor-contrast-low-readability" id="toc-mistake-2-poor-contrast-low-readability" class="nav-link" data-scroll-target="#mistake-2-poor-contrast-low-readability">Mistake 2: Poor Contrast (Low Readability)</a></li>
@@ -1246,9 +1284,353 @@ log₂ fold change vs. t=0. See Methods for sequencing details."
 - Less emphasis on biological replicates</code></pre>
 <hr>
 </section>
+<section id="text-hierarchy-information-vs.-support-text" class="level3">
+<h3 class="anchored" data-anchor-id="text-hierarchy-information-vs.-support-text"><strong>3.9 Text Hierarchy: Information vs.&nbsp;Support Text</strong></h3>
+<p><strong>Principle:</strong> Distinguish between <strong>information text</strong> (gene names, pathway labels) and <strong>support text</strong> (axes, legends).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: BAD - All text same size (no hierarchy)</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>genes <span class="op">=</span> [<span class="st">'TP53'</span>, <span class="st">'BRCA1'</span>, <span class="st">'MYC'</span>, <span class="st">'KRAS'</span>]</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>expression <span class="op">=</span> [<span class="dv">120</span>, <span class="dv">85</span>, <span class="dv">150</span>, <span class="dv">95</span>]</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.barh(genes, expression, color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Expression Level (FPKM)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Same size</span></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Gene'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Same size</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'Gene Expression Profile'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Same size!</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">180</span>)</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add values - also same size</span></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (gene, val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(genes, expression)):</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    ax1.text(val <span class="op">+</span> <span class="dv">3</span>, i, <span class="ss">f'</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Same size</span></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: All Text Same Size</span><span class="ch">\n</span><span class="st">(No hierarchy, everything equally important)'</span>,</span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: GOOD - Clear hierarchy (information &gt; support)</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.barh(genes, expression, color<span class="op">=</span><span class="st">'#27AE60'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="co"># INFORMATION TEXT: Larger, bold (what you want reader to remember)</span></span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Gene'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'black'</span>)  <span class="co"># Larger</span></span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, gene <span class="kw">in</span> <span class="bu">enumerate</span>(genes):</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a>    ax2.text(<span class="op">-</span><span class="dv">5</span>, i, gene, va<span class="op">=</span><span class="st">'center'</span>, ha<span class="op">=</span><span class="st">'right'</span>,</span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'black'</span>)  <span class="co"># Key information!</span></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Add expression values (also information)</span></span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (gene, val) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(genes, expression)):</span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>    ax2.text(val <span class="op">+</span> <span class="dv">3</span>, i, <span class="ss">f'</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a><span class="co"># SUPPORT TEXT: Smaller, lighter (provides context)</span></span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Expression Level (FPKM)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'gray'</span>)  <span class="co"># Smaller, gray</span></span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">9</span>, labelcolor<span class="op">=</span><span class="st">'gray'</span>)  <span class="co"># Support info</span></span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>ax2.set_yticks([])  <span class="co"># Remove y-tick labels (genes are directly labeled)</span></span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="op">-</span><span class="dv">20</span>, <span class="dv">180</span>)</span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Clear Text Hierarchy</span><span class="ch">\n</span><span class="st">(Information text &gt; Support text)'</span>,</span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'text_hierarchy_information_vs_support.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="coordinate-axes-and-legend-simplification" class="level3">
+<h3 class="anchored" data-anchor-id="coordinate-axes-and-legend-simplification"><strong>3.10 Coordinate Axes and Legend Simplification</strong></h3>
+<p><strong>Principle:</strong> Simplify coordinate labels and legends to reduce visual clutter while maintaining clarity.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">12</span>))</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD Example 1: Over-detailed axis labels</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">24</span>, <span class="fl">0.5</span>)</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> <span class="dv">50</span> <span class="op">+</span> <span class="dv">10</span><span class="op">*</span>np.sin(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>time<span class="op">/</span><span class="dv">12</span>) <span class="op">+</span> np.random.randn(<span class="bu">len</span>(time))<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>ax1.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, markersize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Over-detailed tick labels</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>ax1.set_xticks(np.arange(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">2</span>))</span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>ax1.set_xticklabels([<span class="ss">f'</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">:00:00'</span> <span class="cf">for</span> h <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">2</span>)],</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>                     rotation<span class="op">=</span><span class="dv">45</span>, fontsize<span class="op">=</span><span class="dv">8</span>)  <span class="co"># Too detailed!</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Time (hours:minutes:seconds)'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Signal Intensity (arbitrary units, normalized to baseline)'</span>,</span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>               fontsize<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Too wordy!</span></span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Over-Detailed Labels</span><span class="ch">\n</span><span class="st">(Unnecessary precision, hard to read)'</span>,</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>ax1.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD Example 1: Simplified axis labels</span></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>ax2.plot(time, signal, <span class="st">'o-'</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>, linewidth<span class="op">=</span><span class="fl">2.5</span>, markersize<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplified tick labels (just hours)</span></span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks(np.arange(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">4</span>))</span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels([<span class="ss">f'</span><span class="sc">{</span>h<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> h <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">4</span>)], fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)  <span class="co"># Simple, clear</span></span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Signal (AU)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)  <span class="co"># AU = Arbitrary Units</span></span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Simplified Labels</span><span class="ch">\n</span><span class="st">(Essential information only)'</span>,</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD Example 2: Redundant legend</span></span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>conditions <span class="op">=</span> [<span class="st">'Control Group (n=10, Mean±SD)'</span>,</span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Treatment Group A (n=10, Mean±SD)'</span>,</span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Treatment Group B (n=10, Mean±SD)'</span>]</span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>]</span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (cond, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(conditions, colors)):</span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="dv">50</span> <span class="op">+</span> i<span class="op">*</span><span class="dv">10</span> <span class="op">+</span> np.random.randn(<span class="bu">len</span>(time))<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>    ax3.plot(time, y, <span class="st">'o-'</span>, color<span class="op">=</span>color, linewidth<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a>            markersize<span class="op">=</span><span class="dv">4</span>, label<span class="op">=</span>cond)</span>
+<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a>ax3.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'❌ BAD: Redundant Legend Text</span><span class="ch">\n</span><span class="st">(Too much detail in legend)'</span>,</span>
+<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a>ax3.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, fontsize<span class="op">=</span><span class="dv">8</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a>ax3.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-60"><a href="#cb54-60" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD Example 2: Simplified legend</span></span>
+<span id="cb54-61"><a href="#cb54-61" aria-hidden="true" tabindex="-1"></a>ax4 <span class="op">=</span> axes[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb54-62"><a href="#cb54-62" aria-hidden="true" tabindex="-1"></a>conditions_simple <span class="op">=</span> [<span class="st">'Control'</span>, <span class="st">'Treatment A'</span>, <span class="st">'Treatment B'</span>]</span>
+<span id="cb54-63"><a href="#cb54-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-64"><a href="#cb54-64" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (cond, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(conditions_simple, colors)):</span>
+<span id="cb54-65"><a href="#cb54-65" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="dv">50</span> <span class="op">+</span> i<span class="op">*</span><span class="dv">10</span> <span class="op">+</span> np.random.randn(<span class="bu">len</span>(time))<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb54-66"><a href="#cb54-66" aria-hidden="true" tabindex="-1"></a>    ax4.plot(time, y, <span class="st">'o-'</span>, color<span class="op">=</span>color, linewidth<span class="op">=</span><span class="fl">2.5</span>,</span>
+<span id="cb54-67"><a href="#cb54-67" aria-hidden="true" tabindex="-1"></a>            markersize<span class="op">=</span><span class="dv">5</span>, label<span class="op">=</span>cond, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb54-68"><a href="#cb54-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-69"><a href="#cb54-69" aria-hidden="true" tabindex="-1"></a>ax4.set_xlabel(<span class="st">'Time (hours)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb54-70"><a href="#cb54-70" aria-hidden="true" tabindex="-1"></a>ax4.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb54-71"><a href="#cb54-71" aria-hidden="true" tabindex="-1"></a>ax4.set_title(<span class="st">'✓ GOOD: Simplified Legend</span><span class="ch">\n</span><span class="st">(Details in caption: "n=10, Mean±SD")'</span>,</span>
+<span id="cb54-72"><a href="#cb54-72" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb54-73"><a href="#cb54-73" aria-hidden="true" tabindex="-1"></a>ax4.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, frameon<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb54-74"><a href="#cb54-74" aria-hidden="true" tabindex="-1"></a>          framealpha<span class="op">=</span><span class="fl">0.9</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb54-75"><a href="#cb54-75" aria-hidden="true" tabindex="-1"></a>ax4.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb54-76"><a href="#cb54-76" aria-hidden="true" tabindex="-1"></a>ax4.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb54-77"><a href="#cb54-77" aria-hidden="true" tabindex="-1"></a>ax4.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb54-78"><a href="#cb54-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-79"><a href="#cb54-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Add note about caption</span></span>
+<span id="cb54-80"><a href="#cb54-80" aria-hidden="true" tabindex="-1"></a>ax4.text(<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.15</span>, <span class="st">'Note: "All data shown as mean ± SD, n=10 per group"'</span>,</span>
+<span id="cb54-81"><a href="#cb54-81" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>ax4.transAxes, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>,</span>
+<span id="cb54-82"><a href="#cb54-82" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span><span class="st">'italic'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb54-83"><a href="#cb54-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-84"><a href="#cb54-84" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb54-85"><a href="#cb54-85" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'simplify_axes_legend.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb54-86"><a href="#cb54-86" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb54-87"><a href="#cb54-87" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Guidelines for Axis Simplification:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplification Rules:</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. TIME AXES:</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD:  "Time (hours:minutes:seconds)"</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: "Time (hours)"  → Put precision in Methods</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. LONG VARIABLE NAMES:</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD:  "Relative Fluorescence Intensity (normalized to control)"</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: "Relative Intensity (AU)"  → Full description in caption</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. UNITS:</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD:  "Concentration (micromolar, μM)"</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: "Concentration (μM)"  → One unit symbol is enough</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. STATISTICAL INFO:</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD:  "Response (Mean ± Standard Error of Mean, n=5)"</span></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: "Response (AU)"  → Statistical details in caption</span></span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. LEGEND DETAILS:</span></span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD:  "Wild-type mice, age 8-12 weeks, n=15, p&lt;0.05 vs control"</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: "Wild-type"  → Details in caption or Methods</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="information-text-gene-and-pathway-labels" class="level3">
+<h3 class="anchored" data-anchor-id="information-text-gene-and-pathway-labels"><strong>3.11 Information Text: Gene and Pathway Labels</strong></h3>
+<p><strong>Principle:</strong> Make critical information (gene names, pathways) prominent and clear, but avoid overwhelming detail.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> FancyBboxPatch</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Too many gene labels (overwhelming)</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>n_genes <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(n_genes)</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.random.randn(n_genes)</span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.random.choice([<span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#27AE60'</span>], n_genes)</span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>gene_names <span class="op">=</span> [<span class="ss">f'Gene</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_genes)]</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>ax1.scatter(x, y, c<span class="op">=</span>colors, s<span class="op">=</span><span class="dv">80</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Label ALL genes (too many!)</span></span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, gene <span class="kw">in</span> <span class="bu">enumerate</span>(gene_names):</span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>    ax1.text(x[i], y[i], gene, fontsize<span class="op">=</span><span class="dv">6</span>, ha<span class="op">=</span><span class="st">'center'</span>)</span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'PC1'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'PC2'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Too Many Labels</span><span class="ch">\n</span><span class="st">(Overwhelming, unreadable)'</span>,</span>
+<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a>ax1.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Only label important genes</span></span>
+<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>ax2.scatter(x, y, c<span class="op">=</span>colors, s<span class="op">=</span><span class="dv">100</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify top 5 "significant" genes (example: most extreme positions)</span></span>
+<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> np.sqrt(x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> y<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a>top_indices <span class="op">=</span> np.argsort(distances)[<span class="op">-</span><span class="dv">5</span>:]</span>
+<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Label only important genes with clear callouts</span></span>
+<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> top_indices:</span>
+<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Gene point</span></span>
+<span id="cb56-41"><a href="#cb56-41" aria-hidden="true" tabindex="-1"></a>    ax2.scatter(x[idx], y[idx], s<span class="op">=</span><span class="dv">200</span>, facecolors<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb56-42"><a href="#cb56-42" aria-hidden="true" tabindex="-1"></a>               edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">3</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb56-43"><a href="#cb56-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-44"><a href="#cb56-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Callout annotation</span></span>
+<span id="cb56-45"><a href="#cb56-45" aria-hidden="true" tabindex="-1"></a>    ax2.annotate(gene_names[idx],</span>
+<span id="cb56-46"><a href="#cb56-46" aria-hidden="true" tabindex="-1"></a>                xy<span class="op">=</span>(x[idx], y[idx]),</span>
+<span id="cb56-47"><a href="#cb56-47" aria-hidden="true" tabindex="-1"></a>                xytext<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">20</span>), textcoords<span class="op">=</span><span class="st">'offset points'</span>,</span>
+<span id="cb56-48"><a href="#cb56-48" aria-hidden="true" tabindex="-1"></a>                fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb56-49"><a href="#cb56-49" aria-hidden="true" tabindex="-1"></a>                bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round,pad=0.5'</span>,</span>
+<span id="cb56-50"><a href="#cb56-50" aria-hidden="true" tabindex="-1"></a>                         facecolor<span class="op">=</span><span class="st">'yellow'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb56-51"><a href="#cb56-51" aria-hidden="true" tabindex="-1"></a>                         edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>),</span>
+<span id="cb56-52"><a href="#cb56-52" aria-hidden="true" tabindex="-1"></a>                arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>,</span>
+<span id="cb56-53"><a href="#cb56-53" aria-hidden="true" tabindex="-1"></a>                               connectionstyle<span class="op">=</span><span class="st">'arc3,rad=0.3'</span>,</span>
+<span id="cb56-54"><a href="#cb56-54" aria-hidden="true" tabindex="-1"></a>                               lw<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'black'</span>))</span>
+<span id="cb56-55"><a href="#cb56-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-56"><a href="#cb56-56" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'PC1'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb56-57"><a href="#cb56-57" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'PC2'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb56-58"><a href="#cb56-58" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Label Only Key Genes</span><span class="ch">\n</span><span class="st">(Clear focus on important information)'</span>,</span>
+<span id="cb56-59"><a href="#cb56-59" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb56-60"><a href="#cb56-60" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb56-61"><a href="#cb56-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-62"><a href="#cb56-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Add note</span></span>
+<span id="cb56-63"><a href="#cb56-63" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="ss">f'Top 5 of </span><span class="sc">{</span>n_genes<span class="sc">}</span><span class="ss"> genes labeled</span><span class="ch">\n</span><span class="ss">(Full list in Table S1)'</span>,</span>
+<span id="cb56-64"><a href="#cb56-64" aria-hidden="true" tabindex="-1"></a>        transform<span class="op">=</span>ax2.transAxes, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>,</span>
+<span id="cb56-65"><a href="#cb56-65" aria-hidden="true" tabindex="-1"></a>        verticalalignment<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb56-66"><a href="#cb56-66" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>))</span>
+<span id="cb56-67"><a href="#cb56-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-68"><a href="#cb56-68" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb56-69"><a href="#cb56-69" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'information_text_gene_labels.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb56-70"><a href="#cb56-70" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb56-71"><a href="#cb56-71" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pathway/Network Diagram Information Text:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create example pathway network</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> [<span class="st">'Receptor'</span>, <span class="st">'Kinase1'</span>, <span class="st">'Kinase2'</span>, <span class="st">'TF'</span>, <span class="st">'Gene'</span>]</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> [(<span class="st">'Receptor'</span>, <span class="st">'Kinase1'</span>), (<span class="st">'Kinase1'</span>, <span class="st">'Kinase2'</span>),</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>         (<span class="st">'Kinase2'</span>, <span class="st">'TF'</span>), (<span class="st">'TF'</span>, <span class="st">'Gene'</span>)]</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>G.add_nodes_from(nodes)</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>G.add_edges_from(edges)</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> {</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Receptor'</span>: (<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase1'</span>: (<span class="dv">1</span>, <span class="fl">0.5</span>),</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase2'</span>: (<span class="dv">2</span>, <span class="fl">0.5</span>),</span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TF'</span>: (<span class="dv">3</span>, <span class="fl">0.3</span>),</span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Gene'</span>: (<span class="dv">4</span>, <span class="dv">0</span>)</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Too much detail on diagram</span></span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>node_labels <span class="op">=</span> {</span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Receptor'</span>: <span class="st">'EGFR</span><span class="ch">\n</span><span class="st">(Epidermal Growth</span><span class="ch">\n</span><span class="st">Factor Receptor)</span><span class="ch">\n</span><span class="st">Membrane protein</span><span class="ch">\n</span><span class="st">Binds EGF ligand'</span>,</span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase1'</span>: <span class="st">'RAF</span><span class="ch">\n</span><span class="st">(Rapidly Accelerated</span><span class="ch">\n</span><span class="st">Fibrosarcoma)</span><span class="ch">\n</span><span class="st">Serine/threonine kinase'</span>,</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase2'</span>: <span class="st">'MEK</span><span class="ch">\n</span><span class="st">(MAP/ERK Kinase)</span><span class="ch">\n</span><span class="st">Dual-specificity kinase'</span>,</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TF'</span>: <span class="st">'ERK</span><span class="ch">\n</span><span class="st">(Extracellular signal-</span><span class="ch">\n</span><span class="st">Regulated Kinase)</span><span class="ch">\n</span><span class="st">Transcription regulator'</span>,</span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Gene'</span>: <span class="st">'Target Gene</span><span class="ch">\n</span><span class="st">(e.g., FOS, MYC)</span><span class="ch">\n</span><span class="st">Expression regulation'</span></span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, ax<span class="op">=</span>ax1, node_color<span class="op">=</span><span class="st">'#3498DB'</span>,</span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>                      node_size<span class="op">=</span><span class="dv">3000</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, ax<span class="op">=</span>ax1, edge_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>                      width<span class="op">=</span><span class="dv">2</span>, arrowsize<span class="op">=</span><span class="dv">20</span>, arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>)</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, node_labels, ax<span class="op">=</span>ax1,</span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>                       font_size<span class="op">=</span><span class="dv">7</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="op">-</span><span class="dv">1</span>, <span class="fl">1.5</span>)</span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Too Much Detail</span><span class="ch">\n</span><span class="st">(Cluttered, hard to read)'</span>,</span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Simplified labels, details in caption</span></span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>node_labels_simple <span class="op">=</span> {</span>
+<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Receptor'</span>: <span class="st">'EGFR'</span>,</span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase1'</span>: <span class="st">'RAF'</span>,</span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Kinase2'</span>: <span class="st">'MEK'</span>,</span>
+<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TF'</span>: <span class="st">'ERK'</span>,</span>
+<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Gene'</span>: <span class="st">'Target</span><span class="ch">\n</span><span class="st">Gene'</span></span>
+<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Color-code by function</span></span>
+<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>node_colors <span class="op">=</span> [<span class="st">'#E74C3C'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#F39C12'</span>, <span class="st">'#27AE60'</span>]</span>
+<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(G, pos, ax<span class="op">=</span>ax2, node_color<span class="op">=</span>node_colors,</span>
+<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a>                      node_size<span class="op">=</span><span class="dv">2500</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(G, pos, ax<span class="op">=</span>ax2, edge_color<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a>                      width<span class="op">=</span><span class="dv">3</span>, arrowsize<span class="op">=</span><span class="dv">25</span>, arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>)</span>
+<span id="cb57-62"><a href="#cb57-62" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_labels(G, pos, node_labels_simple, ax<span class="op">=</span>ax2,</span>
+<span id="cb57-63"><a href="#cb57-63" aria-hidden="true" tabindex="-1"></a>                       font_size<span class="op">=</span><span class="dv">12</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">4.5</span>)</span>
+<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="op">-</span><span class="dv">1</span>, <span class="fl">1.5</span>)</span>
+<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Simplified Labels</span><span class="ch">\n</span><span class="st">(Details in caption)'</span>,</span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-71"><a href="#cb57-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend for colors</span></span>
+<span id="cb57-72"><a href="#cb57-72" aria-hidden="true" tabindex="-1"></a>legend_elements <span class="op">=</span> [</span>
+<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a>    mpatches.Patch(facecolor<span class="op">=</span><span class="st">'#E74C3C'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span><span class="st">'Receptor'</span>),</span>
+<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a>    mpatches.Patch(facecolor<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span><span class="st">'Kinases'</span>),</span>
+<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a>    mpatches.Patch(facecolor<span class="op">=</span><span class="st">'#F39C12'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span><span class="st">'Transcription Factor'</span>),</span>
+<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a>    mpatches.Patch(facecolor<span class="op">=</span><span class="st">'#27AE60'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb57-80"><a href="#cb57-80" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span><span class="st">'Gene'</span>)</span>
+<span id="cb57-81"><a href="#cb57-81" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a>ax2.legend(handles<span class="op">=</span>legend_elements, loc<span class="op">=</span><span class="st">'upper right'</span>,</span>
+<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a>          fontsize<span class="op">=</span><span class="dv">10</span>, frameon<span class="op">=</span><span class="va">True</span>, title<span class="op">=</span><span class="st">'Component Type'</span>)</span>
+<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Caption text suggestion</span></span>
+<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.5</span>, <span class="fl">0.02</span>,</span>
+<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Caption example: "EGFR/RAF/MEK/ERK signaling cascade. '</span><span class="op">\</span></span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">'EGFR: Epidermal Growth Factor Receptor (membrane receptor). '</span><span class="op">\</span></span>
+<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RAF/MEK/ERK: Sequential kinase cascade (detailed in Methods)."'</span>,</span>
+<span id="cb57-90"><a href="#cb57-90" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>, wrap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb57-91"><a href="#cb57-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'pathway_information_text.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
 </section>
 <section id="common-typography-mistakes-and-how-to-avoid-them" class="level2">
-<h2 class="anchored" data-anchor-id="common-typography-mistakes-and-how-to-avoid-them">3.8 Common Typography Mistakes and How to Avoid Them</h2>
+<h2 class="anchored" data-anchor-id="common-typography-mistakes-and-how-to-avoid-them">3.12 Common Typography Mistakes and How to Avoid Them</h2>
 <section id="mistake-1-inconsistent-font-sizing" class="level3">
 <h3 class="anchored" data-anchor-id="mistake-1-inconsistent-font-sizing">Mistake 1: Inconsistent Font Sizing</h3>
 <p><strong>The Problem:</strong></p>

@@ -1223,7 +1223,372 @@ log₂ fold change vs. t=0. See Methods for sequencing details."
 
 ---
 
-## 3.8 Common Typography Mistakes and How to Avoid Them
+### **3.9 Text Hierarchy: Information vs. Support Text**
+
+**Principle:** Distinguish between **information text** (gene names, pathway labels) and **support text** (axes, legends).
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Panel A: BAD - All text same size (no hierarchy)
+ax1 = axes[0]
+genes = ['TP53', 'BRCA1', 'MYC', 'KRAS']
+expression = [120, 85, 150, 95]
+
+bars1 = ax1.barh(genes, expression, color='#3498DB', edgecolor='black', linewidth=1.5)
+ax1.set_xlabel('Expression Level (FPKM)', fontsize=10)  # Same size
+ax1.set_ylabel('Gene', fontsize=10)  # Same size
+ax1.set_title('Gene Expression Profile', fontsize=10)  # Same size!
+ax1.set_xlim(0, 180)
+
+# Add values - also same size
+for i, (gene, val) in enumerate(zip(genes, expression)):
+    ax1.text(val + 3, i, f'{val}', va='center', fontsize=10)  # Same size
+
+ax1.set_title('❌ BAD: All Text Same Size\n(No hierarchy, everything equally important)',
+              fontsize=12, fontweight='bold', color='red', pad=15)
+
+# Panel B: GOOD - Clear hierarchy (information > support)
+ax2 = axes[1]
+bars2 = ax2.barh(genes, expression, color='#27AE60', edgecolor='black', linewidth=1.5)
+
+# INFORMATION TEXT: Larger, bold (what you want reader to remember)
+ax2.set_ylabel('Gene', fontsize=14, fontweight='bold', color='black')  # Larger
+for i, gene in enumerate(genes):
+    ax2.text(-5, i, gene, va='center', ha='right',
+            fontsize=13, fontweight='bold', color='black')  # Key information!
+
+# Add expression values (also information)
+for i, (gene, val) in enumerate(zip(genes, expression)):
+    ax2.text(val + 3, i, f'{val}', va='center',
+            fontsize=12, fontweight='bold', color='black')
+
+# SUPPORT TEXT: Smaller, lighter (provides context)
+ax2.set_xlabel('Expression Level (FPKM)', fontsize=10, color='gray')  # Smaller, gray
+ax2.tick_params(axis='x', labelsize=9, labelcolor='gray')  # Support info
+ax2.set_yticks([])  # Remove y-tick labels (genes are directly labeled)
+ax2.set_xlim(-20, 180)
+
+ax2.set_title('✓ GOOD: Clear Text Hierarchy\n(Information text > Support text)',
+              fontsize=13, fontweight='bold', color='green', pad=15)
+
+plt.tight_layout()
+plt.savefig('text_hierarchy_information_vs_support.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.show()
+
+```
+
+---
+
+### **3.10 Coordinate Axes and Legend Simplification**
+
+**Principle:** Simplify coordinate labels and legends to reduce visual clutter while maintaining clarity.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# BAD Example 1: Over-detailed axis labels
+ax1 = axes[0, 0]
+time = np.arange(0, 24, 0.5)
+signal = 50 + 10*np.sin(2*np.pi*time/12) + np.random.randn(len(time))*2
+
+ax1.plot(time, signal, 'o-', color='#3498DB', linewidth=2, markersize=4)
+
+# Over-detailed tick labels
+ax1.set_xticks(np.arange(0, 25, 2))
+ax1.set_xticklabels([f'{h}:00:00' for h in range(0, 25, 2)],
+                     rotation=45, fontsize=8)  # Too detailed!
+ax1.set_xlabel('Time (hours:minutes:seconds)', fontsize=10)
+ax1.set_ylabel('Signal Intensity (arbitrary units, normalized to baseline)',
+               fontsize=10)  # Too wordy!
+ax1.set_title('❌ BAD: Over-Detailed Labels\n(Unnecessary precision, hard to read)',
+              fontsize=12, fontweight='bold', color='red')
+ax1.grid(alpha=0.3)
+
+# GOOD Example 1: Simplified axis labels
+ax2 = axes[0, 1]
+ax2.plot(time, signal, 'o-', color='#27AE60', linewidth=2.5, markersize=5)
+
+# Simplified tick labels (just hours)
+ax2.set_xticks(np.arange(0, 25, 4))
+ax2.set_xticklabels([f'{h}' for h in range(0, 25, 4)], fontsize=10)
+ax2.set_xlabel('Time (hours)', fontsize=12, fontweight='bold')  # Simple, clear
+ax2.set_ylabel('Signal (AU)', fontsize=12, fontweight='bold')  # AU = Arbitrary Units
+ax2.set_title('✓ GOOD: Simplified Labels\n(Essential information only)',
+              fontsize=13, fontweight='bold', color='green')
+ax2.grid(alpha=0.3)
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+# BAD Example 2: Redundant legend
+ax3 = axes[1, 0]
+conditions = ['Control Group (n=10, Mean±SD)',
+              'Treatment Group A (n=10, Mean±SD)',
+              'Treatment Group B (n=10, Mean±SD)']
+colors = ['#7F8C8D', '#3498DB', '#E74C3C']
+
+for i, (cond, color) in enumerate(zip(conditions, colors)):
+    y = 50 + i*10 + np.random.randn(len(time))*2
+    ax3.plot(time, y, 'o-', color=color, linewidth=2,
+            markersize=4, label=cond)
+
+ax3.set_xlabel('Time (hours)', fontsize=11, fontweight='bold')
+ax3.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax3.set_title('❌ BAD: Redundant Legend Text\n(Too much detail in legend)',
+              fontsize=12, fontweight='bold', color='red')
+ax3.legend(loc='upper left', fontsize=8, frameon=True)
+ax3.grid(alpha=0.3)
+
+# GOOD Example 2: Simplified legend
+ax4 = axes[1, 1]
+conditions_simple = ['Control', 'Treatment A', 'Treatment B']
+
+for i, (cond, color) in enumerate(zip(conditions_simple, colors)):
+    y = 50 + i*10 + np.random.randn(len(time))*2
+    ax4.plot(time, y, 'o-', color=color, linewidth=2.5,
+            markersize=5, label=cond, alpha=0.8)
+
+ax4.set_xlabel('Time (hours)', fontsize=12, fontweight='bold')
+ax4.set_ylabel('Response (AU)', fontsize=12, fontweight='bold')
+ax4.set_title('✓ GOOD: Simplified Legend\n(Details in caption: "n=10, Mean±SD")',
+              fontsize=13, fontweight='bold', color='green')
+ax4.legend(loc='upper left', fontsize=11, frameon=True,
+          framealpha=0.9, edgecolor='black')
+ax4.grid(alpha=0.3)
+ax4.spines['top'].set_visible(False)
+ax4.spines['right'].set_visible(False)
+
+# Add note about caption
+ax4.text(0.5, -0.15, 'Note: "All data shown as mean ± SD, n=10 per group"',
+        transform=ax4.transAxes, ha='center', fontsize=9,
+        style='italic', color='gray')
+
+plt.tight_layout()
+plt.savefig('simplify_axes_legend.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**Guidelines for Axis Simplification:**
+
+```python
+# Simplification Rules:
+
+# 1. TIME AXES:
+# BAD:  "Time (hours:minutes:seconds)"
+# GOOD: "Time (hours)"  → Put precision in Methods
+
+# 2. LONG VARIABLE NAMES:
+# BAD:  "Relative Fluorescence Intensity (normalized to control)"
+# GOOD: "Relative Intensity (AU)"  → Full description in caption
+
+# 3. UNITS:
+# BAD:  "Concentration (micromolar, μM)"
+# GOOD: "Concentration (μM)"  → One unit symbol is enough
+
+# 4. STATISTICAL INFO:
+# BAD:  "Response (Mean ± Standard Error of Mean, n=5)"
+# GOOD: "Response (AU)"  → Statistical details in caption
+
+# 5. LEGEND DETAILS:
+# BAD:  "Wild-type mice, age 8-12 weeks, n=15, p<0.05 vs control"
+# GOOD: "Wild-type"  → Details in caption or Methods
+```
+
+---
+
+### **3.11 Information Text: Gene and Pathway Labels**
+
+**Principle:** Make critical information (gene names, pathways) prominent and clear, but avoid overwhelming detail.
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+
+# BAD: Too many gene labels (overwhelming)
+ax1 = axes[0]
+n_genes = 50
+x = np.random.randn(n_genes)
+y = np.random.randn(n_genes)
+colors = np.random.choice(['#3498DB', '#E74C3C', '#27AE60'], n_genes)
+gene_names = [f'Gene{i+1}' for i in range(n_genes)]
+
+ax1.scatter(x, y, c=colors, s=80, alpha=0.6, edgecolors='black', linewidths=0.5)
+
+# Label ALL genes (too many!)
+for i, gene in enumerate(gene_names):
+    ax1.text(x[i], y[i], gene, fontsize=6, ha='center')
+
+ax1.set_xlabel('PC1', fontsize=11, fontweight='bold')
+ax1.set_ylabel('PC2', fontsize=11, fontweight='bold')
+ax1.set_title('❌ BAD: Too Many Labels\n(Overwhelming, unreadable)',
+              fontsize=13, fontweight='bold', color='red')
+ax1.grid(alpha=0.3)
+
+# GOOD: Only label important genes
+ax2 = axes[1]
+ax2.scatter(x, y, c=colors, s=100, alpha=0.6, edgecolors='black', linewidths=0.5)
+
+# Identify top 5 "significant" genes (example: most extreme positions)
+distances = np.sqrt(x**2 + y**2)
+top_indices = np.argsort(distances)[-5:]
+
+# Label only important genes with clear callouts
+for idx in top_indices:
+    # Gene point
+    ax2.scatter(x[idx], y[idx], s=200, facecolors='none',
+               edgecolors='black', linewidths=3, zorder=10)
+
+    # Callout annotation
+    ax2.annotate(gene_names[idx],
+                xy=(x[idx], y[idx]),
+                xytext=(20, 20), textcoords='offset points',
+                fontsize=11, fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.5',
+                         facecolor='yellow', alpha=0.8,
+                         edgecolor='black', linewidth=1.5),
+                arrowprops=dict(arrowstyle='->',
+                               connectionstyle='arc3,rad=0.3',
+                               lw=2, color='black'))
+
+ax2.set_xlabel('PC1', fontsize=12, fontweight='bold')
+ax2.set_ylabel('PC2', fontsize=12, fontweight='bold')
+ax2.set_title('✓ GOOD: Label Only Key Genes\n(Clear focus on important information)',
+              fontsize=13, fontweight='bold', color='green')
+ax2.grid(alpha=0.3)
+
+# Add note
+ax2.text(0.02, 0.02, f'Top 5 of {n_genes} genes labeled\n(Full list in Table S1)',
+        transform=ax2.transAxes, fontsize=9, style='italic',
+        verticalalignment='bottom',
+        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+
+plt.tight_layout()
+plt.savefig('information_text_gene_labels.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**Pathway/Network Diagram Information Text:**
+
+```python
+import matplotlib.pyplot as plt
+import networkx as nx
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+
+# Create example pathway network
+G = nx.DiGraph()
+nodes = ['Receptor', 'Kinase1', 'Kinase2', 'TF', 'Gene']
+edges = [('Receptor', 'Kinase1'), ('Kinase1', 'Kinase2'),
+         ('Kinase2', 'TF'), ('TF', 'Gene')]
+G.add_nodes_from(nodes)
+G.add_edges_from(edges)
+
+pos = {
+    'Receptor': (0, 0),
+    'Kinase1': (1, 0.5),
+    'Kinase2': (2, 0.5),
+    'TF': (3, 0.3),
+    'Gene': (4, 0)
+}
+
+# BAD: Too much detail on diagram
+ax1 = axes[0]
+node_labels = {
+    'Receptor': 'EGFR\n(Epidermal Growth\nFactor Receptor)\nMembrane protein\nBinds EGF ligand',
+    'Kinase1': 'RAF\n(Rapidly Accelerated\nFibrosarcoma)\nSerine/threonine kinase',
+    'Kinase2': 'MEK\n(MAP/ERK Kinase)\nDual-specificity kinase',
+    'TF': 'ERK\n(Extracellular signal-\nRegulated Kinase)\nTranscription regulator',
+    'Gene': 'Target Gene\n(e.g., FOS, MYC)\nExpression regulation'
+}
+
+nx.draw_networkx_nodes(G, pos, ax=ax1, node_color='#3498DB',
+                      node_size=3000, alpha=0.7)
+nx.draw_networkx_edges(G, pos, ax=ax1, edge_color='black',
+                      width=2, arrowsize=20, arrowstyle='->')
+nx.draw_networkx_labels(G, pos, node_labels, ax=ax1,
+                       font_size=7, font_weight='bold')
+
+ax1.set_xlim(-0.5, 4.5)
+ax1.set_ylim(-1, 1.5)
+ax1.axis('off')
+ax1.set_title('❌ BAD: Too Much Detail\n(Cluttered, hard to read)',
+              fontsize=13, fontweight='bold', color='red', pad=20)
+
+# GOOD: Simplified labels, details in caption
+ax2 = axes[1]
+node_labels_simple = {
+    'Receptor': 'EGFR',
+    'Kinase1': 'RAF',
+    'Kinase2': 'MEK',
+    'TF': 'ERK',
+    'Gene': 'Target\nGene'
+}
+
+# Color-code by function
+node_colors = ['#E74C3C', '#3498DB', '#3498DB', '#F39C12', '#27AE60']
+
+nx.draw_networkx_nodes(G, pos, ax=ax2, node_color=node_colors,
+                      node_size=2500, alpha=0.8, edgecolors='black', linewidths=2)
+nx.draw_networkx_edges(G, pos, ax=ax2, edge_color='black',
+                      width=3, arrowsize=25, arrowstyle='->')
+nx.draw_networkx_labels(G, pos, node_labels_simple, ax=ax2,
+                       font_size=12, font_weight='bold')
+
+ax2.set_xlim(-0.5, 4.5)
+ax2.set_ylim(-1, 1.5)
+ax2.axis('off')
+ax2.set_title('✓ GOOD: Simplified Labels\n(Details in caption)',
+              fontsize=13, fontweight='bold', color='green', pad=20)
+
+# Add legend for colors
+legend_elements = [
+    mpatches.Patch(facecolor='#E74C3C', edgecolor='black',
+                   label='Receptor'),
+    mpatches.Patch(facecolor='#3498DB', edgecolor='black',
+                   label='Kinases'),
+    mpatches.Patch(facecolor='#F39C12', edgecolor='black',
+                   label='Transcription Factor'),
+    mpatches.Patch(facecolor='#27AE60', edgecolor='black',
+                   label='Gene')
+]
+ax2.legend(handles=legend_elements, loc='upper right',
+          fontsize=10, frameon=True, title='Component Type')
+
+# Caption text suggestion
+fig.text(0.5, 0.02,
+        'Caption example: "EGFR/RAF/MEK/ERK signaling cascade. '\
+        'EGFR: Epidermal Growth Factor Receptor (membrane receptor). '\
+        'RAF/MEK/ERK: Sequential kinase cascade (detailed in Methods)."',
+        ha='center', fontsize=9, style='italic', wrap=True)
+
+plt.tight_layout(rect=[0, 0.05, 1, 1])
+plt.savefig('pathway_information_text.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+## 3.12 Common Typography Mistakes and How to Avoid Them
 
 ### Mistake 1: Inconsistent Font Sizing
 

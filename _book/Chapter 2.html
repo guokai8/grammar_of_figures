@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -260,6 +295,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#scenario-5-multiple-scales-in-one-figure" id="toc-scenario-5-multiple-scales-in-one-figure" class="nav-link" data-scroll-target="#scenario-5-multiple-scales-in-one-figure">Scenario 5: Multiple Scales in One Figure</a></li>
   <li><a href="#complete-logical-color-mapping-checklist" id="toc-complete-logical-color-mapping-checklist" class="nav-link" data-scroll-target="#complete-logical-color-mapping-checklist">Complete Logical Color Mapping Checklist</a></li>
   <li><a href="#summary-advanced-color-logic" id="toc-summary-advanced-color-logic" class="nav-link" data-scroll-target="#summary-advanced-color-logic">Summary: Advanced Color Logic</a></li>
+  <li><a href="#color-palette-design-principles" id="toc-color-palette-design-principles" class="nav-link" data-scroll-target="#color-palette-design-principles"><strong>2.8 Color Palette Design Principles</strong></a></li>
+  <li><a href="#rule-1-the-3-5-color-maximum" id="toc-rule-1-the-3-5-color-maximum" class="nav-link" data-scroll-target="#rule-1-the-3-5-color-maximum"><strong>Rule 1: The 3-5 Color Maximum</strong></a></li>
+  <li><a href="#rule-2-color-harmony---avoid-deep-light-mixing" id="toc-rule-2-color-harmony---avoid-deep-light-mixing" class="nav-link" data-scroll-target="#rule-2-color-harmony---avoid-deep-light-mixing"><strong>Rule 2: Color Harmony - Avoid Deep + Light Mixing</strong></a></li>
+  <li><a href="#rule-3-biological-logic-in-color-assignment" id="toc-rule-3-biological-logic-in-color-assignment" class="nav-link" data-scroll-target="#rule-3-biological-logic-in-color-assignment"><strong>Rule 3: Biological Logic in Color Assignment</strong></a></li>
+  <li><a href="#rule-4-namissing-data-color-strategy" id="toc-rule-4-namissing-data-color-strategy" class="nav-link" data-scroll-target="#rule-4-namissing-data-color-strategy"><strong>Rule 4: NA/Missing Data Color Strategy</strong></a></li>
+  <li><a href="#rule-5-sequential-colors---single-hue-families" id="toc-rule-5-sequential-colors---single-hue-families" class="nav-link" data-scroll-target="#rule-5-sequential-colors---single-hue-families"><strong>Rule 5: Sequential Colors - Single Hue Families</strong></a></li>
+  </ul></li>
+  <li><a href="#shape-selection-and-usage-new-section" id="toc-shape-selection-and-usage-new-section" class="nav-link" data-scroll-target="#shape-selection-and-usage-new-section"><strong>2.9 Shape Selection and Usage (NEW SECTION)</strong></a>
+  <ul class="collapse">
+  <li><a href="#rule-shape-must-provide-clear-contrast" id="toc-rule-shape-must-provide-clear-contrast" class="nav-link" data-scroll-target="#rule-shape-must-provide-clear-contrast"><strong>Rule: Shape Must Provide Clear Contrast</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -5116,7 +5161,557 @@ cat("✓ State ranges clearly in captions and colorbars\n")</code></pre>
 <p><strong>Common Violations:</strong> 1. Binary coloring when all values are in same category 2. Using gradient colors for missing data 3. Diverging colormap for data without meaningful center 4. Sequential colormap for cyclic data 5. Identical colormaps for vastly different scales without labeling</p>
 <p><strong>The Solution:</strong> - Match colormap type to data structure - Explicitly handle edge cases (NA, all significant, etc.) - Label everything clearly - Test interpretation: Can reader understand without reading caption?</p>
 <hr>
-<p><strong>End of Section 2.7 and Chapter 2</strong></p>
+</section>
+<section id="color-palette-design-principles" class="level3">
+<h3 class="anchored" data-anchor-id="color-palette-design-principles"><strong>2.8 Color Palette Design Principles</strong></h3>
+<p><strong>Core Principle:</strong> One figure page should contain <strong>3 colors ideally, maximum 5 colors</strong> (excluding specialized plots like UMAPs where categorical distinctions require more).</p>
+</section>
+<section id="rule-1-the-3-5-color-maximum" class="level3">
+<h3 class="anchored" data-anchor-id="rule-1-the-3-5-color-maximum"><strong>Rule 1: The 3-5 Color Maximum</strong></h3>
+<p><strong>Scientific Principle:</strong> Human working memory effectively tracks 3-5 distinct categories simultaneously. Beyond this, cognitive load increases exponentially.</p>
+<p><strong>Application:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CORRECT: 3-color palette (ideal)</span></span>
+<span id="cb131-5"><a href="#cb131-5" aria-hidden="true" tabindex="-1"></a>IDEAL_PALETTE <span class="op">=</span> {</span>
+<span id="cb131-6"><a href="#cb131-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WT'</span>: <span class="st">'#7F8C8D'</span>,        <span class="co"># Wild-type: neutral gray</span></span>
+<span id="cb131-7"><a href="#cb131-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'KO'</span>: <span class="st">'#E74C3C'</span>,        <span class="co"># Knockout: red (problem/loss)</span></span>
+<span id="cb131-8"><a href="#cb131-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Rescue'</span>: <span class="st">'#3498DB'</span>     <span class="co"># Rescue: blue (restoration)</span></span>
+<span id="cb131-9"><a href="#cb131-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb131-10"><a href="#cb131-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-11"><a href="#cb131-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Gene expression comparison</span></span>
+<span id="cb131-12"><a href="#cb131-12" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb131-13"><a href="#cb131-13" aria-hidden="true" tabindex="-1"></a>conditions <span class="op">=</span> [<span class="st">'WT'</span>, <span class="st">'KO'</span>, <span class="st">'Rescue'</span>]</span>
+<span id="cb131-14"><a href="#cb131-14" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">92</span>]  <span class="co"># Relative expression</span></span>
+<span id="cb131-15"><a href="#cb131-15" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> [<span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">9</span>]</span>
+<span id="cb131-16"><a href="#cb131-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-17"><a href="#cb131-17" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb131-18"><a href="#cb131-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-19"><a href="#cb131-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Good example (3 colors)</span></span>
+<span id="cb131-20"><a href="#cb131-20" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb131-21"><a href="#cb131-21" aria-hidden="true" tabindex="-1"></a>colors_good <span class="op">=</span> [IDEAL_PALETTE[c] <span class="cf">for</span> c <span class="kw">in</span> conditions]</span>
+<span id="cb131-22"><a href="#cb131-22" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.bar(conditions, values, yerr<span class="op">=</span>errors, capsize<span class="op">=</span><span class="dv">8</span>,</span>
+<span id="cb131-23"><a href="#cb131-23" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>colors_good, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb131-24"><a href="#cb131-24" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Relative Expression (%)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb131-25"><a href="#cb131-25" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="dv">120</span>)</span>
+<span id="cb131-26"><a href="#cb131-26" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'✓ GOOD: 3 Colors</span><span class="ch">\n</span><span class="st">(Clear, memorable)'</span>,</span>
+<span id="cb131-27"><a href="#cb131-27" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb131-28"><a href="#cb131-28" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb131-29"><a href="#cb131-29" aria-hidden="true" tabindex="-1"></a>ax1.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb131-30"><a href="#cb131-30" aria-hidden="true" tabindex="-1"></a>ax1.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb131-31"><a href="#cb131-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-32"><a href="#cb131-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Add interpretation annotations</span></span>
+<span id="cb131-33"><a href="#cb131-33" aria-hidden="true" tabindex="-1"></a>ax1.annotate(<span class="st">''</span>, xy<span class="op">=</span>(<span class="dv">0</span>, values[<span class="dv">0</span>]), xytext<span class="op">=</span>(<span class="dv">1</span>, values[<span class="dv">1</span>]),</span>
+<span id="cb131-34"><a href="#cb131-34" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>, color<span class="op">=</span><span class="st">'black'</span>, lw<span class="op">=</span><span class="dv">2</span>))</span>
+<span id="cb131-35"><a href="#cb131-35" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.5</span>, (values[<span class="dv">0</span>]<span class="op">+</span>values[<span class="dv">1</span>])<span class="op">/</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">10</span>, <span class="st">'Loss of</span><span class="ch">\n</span><span class="st">function'</span>,</span>
+<span id="cb131-36"><a href="#cb131-36" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>)</span>
+<span id="cb131-37"><a href="#cb131-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-38"><a href="#cb131-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Too many colors example</span></span>
+<span id="cb131-39"><a href="#cb131-39" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb131-40"><a href="#cb131-40" aria-hidden="true" tabindex="-1"></a>conditions_bad <span class="op">=</span> [<span class="st">'WT'</span>, <span class="st">'KO1'</span>, <span class="st">'KO2'</span>, <span class="st">'Rescue1'</span>, <span class="st">'Rescue2'</span>,</span>
+<span id="cb131-41"><a href="#cb131-41" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'Treatment A'</span>, <span class="st">'Treatment B'</span>, <span class="st">'Combination'</span>]</span>
+<span id="cb131-42"><a href="#cb131-42" aria-hidden="true" tabindex="-1"></a>values_bad <span class="op">=</span> np.random.randint(<span class="dv">40</span>, <span class="dv">100</span>, <span class="bu">len</span>(conditions_bad))</span>
+<span id="cb131-43"><a href="#cb131-43" aria-hidden="true" tabindex="-1"></a>colors_bad <span class="op">=</span> plt.cm.tab10(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="bu">len</span>(conditions_bad)))</span>
+<span id="cb131-44"><a href="#cb131-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-45"><a href="#cb131-45" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.bar(<span class="bu">range</span>(<span class="bu">len</span>(conditions_bad)), values_bad,</span>
+<span id="cb131-46"><a href="#cb131-46" aria-hidden="true" tabindex="-1"></a>                color<span class="op">=</span>colors_bad, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, width<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb131-47"><a href="#cb131-47" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks(<span class="bu">range</span>(<span class="bu">len</span>(conditions_bad)))</span>
+<span id="cb131-48"><a href="#cb131-48" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels(conditions_bad, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb131-49"><a href="#cb131-49" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Relative Expression (%)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb131-50"><a href="#cb131-50" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">120</span>)</span>
+<span id="cb131-51"><a href="#cb131-51" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'❌ BAD: 8 Colors</span><span class="ch">\n</span><span class="st">(Overwhelming, hard to distinguish)'</span>,</span>
+<span id="cb131-52"><a href="#cb131-52" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb131-53"><a href="#cb131-53" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb131-54"><a href="#cb131-54" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb131-55"><a href="#cb131-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-56"><a href="#cb131-56" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb131-57"><a href="#cb131-57" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'color_rule_3to5.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb131-58"><a href="#cb131-58" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb131-59"><a href="#cb131-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-60"><a href="#cb131-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"✓ 3-5 color rule demonstrated"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>When you MUST use &gt;5 colors (e.g., UMAP clustering):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution: Use numbers/labels instead of relying solely on color</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Circle</span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-8"><a href="#cb132-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate UMAP with 15 clusters</span></span>
+<span id="cb132-9"><a href="#cb132-9" aria-hidden="true" tabindex="-1"></a>n_cells <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb132-10"><a href="#cb132-10" aria-hidden="true" tabindex="-1"></a>umap1 <span class="op">=</span> np.random.randn(n_cells) <span class="op">*</span> <span class="dv">3</span></span>
+<span id="cb132-11"><a href="#cb132-11" aria-hidden="true" tabindex="-1"></a>umap2 <span class="op">=</span> np.random.randn(n_cells) <span class="op">*</span> <span class="dv">3</span></span>
+<span id="cb132-12"><a href="#cb132-12" aria-hidden="true" tabindex="-1"></a>clusters <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">15</span>, n_cells)</span>
+<span id="cb132-13"><a href="#cb132-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-14"><a href="#cb132-14" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">7</span>))</span>
+<span id="cb132-15"><a href="#cb132-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-16"><a href="#cb132-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel A: Color only (hard to distinguish)</span></span>
+<span id="cb132-17"><a href="#cb132-17" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb132-18"><a href="#cb132-18" aria-hidden="true" tabindex="-1"></a>scatter1 <span class="op">=</span> ax1.scatter(umap1, umap2, c<span class="op">=</span>clusters, cmap<span class="op">=</span><span class="st">'tab20'</span>,</span>
+<span id="cb132-19"><a href="#cb132-19" aria-hidden="true" tabindex="-1"></a>                       s<span class="op">=</span><span class="dv">20</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb132-20"><a href="#cb132-20" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'UMAP 1'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb132-21"><a href="#cb132-21" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'UMAP 2'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb132-22"><a href="#cb132-22" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ 15 Clusters: Color Only</span><span class="ch">\n</span><span class="st">(Hard to match legend)'</span>,</span>
+<span id="cb132-23"><a href="#cb132-23" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb132-24"><a href="#cb132-24" aria-hidden="true" tabindex="-1"></a>cbar1 <span class="op">=</span> plt.colorbar(scatter1, ax<span class="op">=</span>ax1)</span>
+<span id="cb132-25"><a href="#cb132-25" aria-hidden="true" tabindex="-1"></a>cbar1.set_label(<span class="st">'Cluster ID'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb132-26"><a href="#cb132-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-27"><a href="#cb132-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Panel B: Color + numbered labels (clear)</span></span>
+<span id="cb132-28"><a href="#cb132-28" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb132-29"><a href="#cb132-29" aria-hidden="true" tabindex="-1"></a>scatter2 <span class="op">=</span> ax2.scatter(umap1, umap2, c<span class="op">=</span>clusters, cmap<span class="op">=</span><span class="st">'tab20'</span>,</span>
+<span id="cb132-30"><a href="#cb132-30" aria-hidden="true" tabindex="-1"></a>                       s<span class="op">=</span><span class="dv">20</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb132-31"><a href="#cb132-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-32"><a href="#cb132-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Add cluster number labels at centroids</span></span>
+<span id="cb132-33"><a href="#cb132-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cluster_id <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>):</span>
+<span id="cb132-34"><a href="#cb132-34" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> clusters <span class="op">==</span> cluster_id</span>
+<span id="cb132-35"><a href="#cb132-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> np.<span class="bu">sum</span>(mask) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb132-36"><a href="#cb132-36" aria-hidden="true" tabindex="-1"></a>        centroid_x <span class="op">=</span> umap1[mask].mean()</span>
+<span id="cb132-37"><a href="#cb132-37" aria-hidden="true" tabindex="-1"></a>        centroid_y <span class="op">=</span> umap2[mask].mean()</span>
+<span id="cb132-38"><a href="#cb132-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-39"><a href="#cb132-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># White circle background for visibility</span></span>
+<span id="cb132-40"><a href="#cb132-40" aria-hidden="true" tabindex="-1"></a>        circle <span class="op">=</span> Circle((centroid_x, centroid_y), radius<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb132-41"><a href="#cb132-41" aria-hidden="true" tabindex="-1"></a>                       facecolor<span class="op">=</span><span class="st">'white'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb132-42"><a href="#cb132-42" aria-hidden="true" tabindex="-1"></a>                       linewidth<span class="op">=</span><span class="dv">2</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb132-43"><a href="#cb132-43" aria-hidden="true" tabindex="-1"></a>        ax2.add_patch(circle)</span>
+<span id="cb132-44"><a href="#cb132-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-45"><a href="#cb132-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Cluster number</span></span>
+<span id="cb132-46"><a href="#cb132-46" aria-hidden="true" tabindex="-1"></a>        ax2.text(centroid_x, centroid_y, <span class="bu">str</span>(cluster_id),</span>
+<span id="cb132-47"><a href="#cb132-47" aria-hidden="true" tabindex="-1"></a>                ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb132-48"><a href="#cb132-48" aria-hidden="true" tabindex="-1"></a>                fontweight<span class="op">=</span><span class="st">'bold'</span>, zorder<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb132-49"><a href="#cb132-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-50"><a href="#cb132-50" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'UMAP 1'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb132-51"><a href="#cb132-51" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'UMAP 2'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb132-52"><a href="#cb132-52" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ BETTER: Color + Numbers</span><span class="ch">\n</span><span class="st">(Easy to reference)'</span>,</span>
+<span id="cb132-53"><a href="#cb132-53" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb132-54"><a href="#cb132-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-55"><a href="#cb132-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb132-56"><a href="#cb132-56" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'many_clusters_solution.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb132-57"><a href="#cb132-57" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="rule-2-color-harmony---avoid-deep-light-mixing" class="level3">
+<h3 class="anchored" data-anchor-id="rule-2-color-harmony---avoid-deep-light-mixing"><strong>Rule 2: Color Harmony - Avoid Deep + Light Mixing</strong></h3>
+<p><strong>Principle:</strong> Mixing very dark and very light colors creates harsh, unbalanced contrast that looks unprofessional.</p>
+<p><strong>Solution:</strong> Keep colors within similar lightness ranges, or balance proportions intentionally.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors <span class="im">as</span> mcolors</span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb133-7"><a href="#cb133-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-8"><a href="#cb133-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD Example: Deep + Light mixing (unbalanced)</span></span>
+<span id="cb133-9"><a href="#cb133-9" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb133-10"><a href="#cb133-10" aria-hidden="true" tabindex="-1"></a>bad_colors <span class="op">=</span> [<span class="st">'#1A1A1A'</span>, <span class="st">'#EFEFEF'</span>, <span class="st">'#2C3E50'</span>, <span class="st">'#ECF0F1'</span>]  <span class="co"># Very dark + very light</span></span>
+<span id="cb133-11"><a href="#cb133-11" aria-hidden="true" tabindex="-1"></a>bad_labels <span class="op">=</span> [<span class="st">'Very Dark'</span>, <span class="st">'Very Light'</span>, <span class="st">'Dark'</span>, <span class="st">'Light'</span>]</span>
+<span id="cb133-12"><a href="#cb133-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-13"><a href="#cb133-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (c, label) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(bad_colors, bad_labels)):</span>
+<span id="cb133-14"><a href="#cb133-14" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> mpatches.Rectangle((i<span class="op">*</span><span class="fl">2.5</span>, <span class="dv">0</span>), <span class="dv">2</span>, <span class="dv">1</span>, facecolor<span class="op">=</span>c,</span>
+<span id="cb133-15"><a href="#cb133-15" aria-hidden="true" tabindex="-1"></a>                             edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb133-16"><a href="#cb133-16" aria-hidden="true" tabindex="-1"></a>    ax1.add_patch(rect)</span>
+<span id="cb133-17"><a href="#cb133-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-18"><a href="#cb133-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate lightness</span></span>
+<span id="cb133-19"><a href="#cb133-19" aria-hidden="true" tabindex="-1"></a>    rgb <span class="op">=</span> mcolors.hex2color(c)</span>
+<span id="cb133-20"><a href="#cb133-20" aria-hidden="true" tabindex="-1"></a>    lightness <span class="op">=</span> <span class="fl">0.299</span><span class="op">*</span>rgb[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.587</span><span class="op">*</span>rgb[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.114</span><span class="op">*</span>rgb[<span class="dv">2</span>]</span>
+<span id="cb133-21"><a href="#cb133-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-22"><a href="#cb133-22" aria-hidden="true" tabindex="-1"></a>    ax1.text(i<span class="op">*</span><span class="fl">2.5</span> <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.5</span>, <span class="ss">f'</span><span class="sc">{</span>label<span class="sc">}</span><span class="ch">\n</span><span class="ss">L=</span><span class="sc">{</span>lightness<span class="sc">:.2f}</span><span class="ss">'</span>,</span>
+<span id="cb133-23"><a href="#cb133-23" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb133-24"><a href="#cb133-24" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'white'</span> <span class="cf">if</span> lightness <span class="op">&lt;</span> <span class="fl">0.5</span> <span class="cf">else</span> <span class="st">'black'</span>)</span>
+<span id="cb133-25"><a href="#cb133-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-26"><a href="#cb133-26" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb133-27"><a href="#cb133-27" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb133-28"><a href="#cb133-28" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Deep + Light Mixing (Harsh Contrast, L range: 0.07-0.94)'</span>,</span>
+<span id="cb133-29"><a href="#cb133-29" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb133-30"><a href="#cb133-30" aria-hidden="true" tabindex="-1"></a>ax1.axis(<span class="st">'off'</span>)</span>
+<span id="cb133-31"><a href="#cb133-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-32"><a href="#cb133-32" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD Example: Balanced lightness</span></span>
+<span id="cb133-33"><a href="#cb133-33" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb133-34"><a href="#cb133-34" aria-hidden="true" tabindex="-1"></a>good_colors <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#27AE60'</span>]  <span class="co"># Balanced</span></span>
+<span id="cb133-35"><a href="#cb133-35" aria-hidden="true" tabindex="-1"></a>good_labels <span class="op">=</span> [<span class="st">'Gray'</span>, <span class="st">'Blue'</span>, <span class="st">'Red'</span>, <span class="st">'Green'</span>]</span>
+<span id="cb133-36"><a href="#cb133-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-37"><a href="#cb133-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (c, label) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(good_colors, good_labels)):</span>
+<span id="cb133-38"><a href="#cb133-38" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> mpatches.Rectangle((i<span class="op">*</span><span class="fl">2.5</span>, <span class="dv">0</span>), <span class="dv">2</span>, <span class="dv">1</span>, facecolor<span class="op">=</span>c,</span>
+<span id="cb133-39"><a href="#cb133-39" aria-hidden="true" tabindex="-1"></a>                             edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb133-40"><a href="#cb133-40" aria-hidden="true" tabindex="-1"></a>    ax2.add_patch(rect)</span>
+<span id="cb133-41"><a href="#cb133-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-42"><a href="#cb133-42" aria-hidden="true" tabindex="-1"></a>    rgb <span class="op">=</span> mcolors.hex2color(c)</span>
+<span id="cb133-43"><a href="#cb133-43" aria-hidden="true" tabindex="-1"></a>    lightness <span class="op">=</span> <span class="fl">0.299</span><span class="op">*</span>rgb[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.587</span><span class="op">*</span>rgb[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.114</span><span class="op">*</span>rgb[<span class="dv">2</span>]</span>
+<span id="cb133-44"><a href="#cb133-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-45"><a href="#cb133-45" aria-hidden="true" tabindex="-1"></a>    ax2.text(i<span class="op">*</span><span class="fl">2.5</span> <span class="op">+</span> <span class="dv">1</span>, <span class="fl">0.5</span>, <span class="ss">f'</span><span class="sc">{</span>label<span class="sc">}</span><span class="ch">\n</span><span class="ss">L=</span><span class="sc">{</span>lightness<span class="sc">:.2f}</span><span class="ss">'</span>,</span>
+<span id="cb133-46"><a href="#cb133-46" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb133-47"><a href="#cb133-47" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb133-48"><a href="#cb133-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-49"><a href="#cb133-49" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb133-50"><a href="#cb133-50" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb133-51"><a href="#cb133-51" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Balanced Lightness (L range: 0.35-0.55)'</span>,</span>
+<span id="cb133-52"><a href="#cb133-52" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb133-53"><a href="#cb133-53" aria-hidden="true" tabindex="-1"></a>ax2.axis(<span class="st">'off'</span>)</span>
+<span id="cb133-54"><a href="#cb133-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-55"><a href="#cb133-55" aria-hidden="true" tabindex="-1"></a><span class="co"># ACCEPTABLE: Intentional gradient (if needed)</span></span>
+<span id="cb133-56"><a href="#cb133-56" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb133-57"><a href="#cb133-57" aria-hidden="true" tabindex="-1"></a>gradient_colors <span class="op">=</span> [<span class="st">'#D6EAF8'</span>, <span class="st">'#85C1E9'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#21618C'</span>, <span class="st">'#1B4F72'</span>]  <span class="co"># Blue gradient</span></span>
+<span id="cb133-58"><a href="#cb133-58" aria-hidden="true" tabindex="-1"></a>gradient_labels <span class="op">=</span> [<span class="st">'Very Light'</span>, <span class="st">'Light'</span>, <span class="st">'Medium'</span>, <span class="st">'Dark'</span>, <span class="st">'Very Dark'</span>]</span>
+<span id="cb133-59"><a href="#cb133-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-60"><a href="#cb133-60" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (c, label) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(gradient_colors, gradient_labels)):</span>
+<span id="cb133-61"><a href="#cb133-61" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> mpatches.Rectangle((i<span class="op">*</span><span class="dv">2</span>, <span class="dv">0</span>), <span class="fl">1.8</span>, <span class="dv">1</span>, facecolor<span class="op">=</span>c,</span>
+<span id="cb133-62"><a href="#cb133-62" aria-hidden="true" tabindex="-1"></a>                             edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb133-63"><a href="#cb133-63" aria-hidden="true" tabindex="-1"></a>    ax3.add_patch(rect)</span>
+<span id="cb133-64"><a href="#cb133-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-65"><a href="#cb133-65" aria-hidden="true" tabindex="-1"></a>    rgb <span class="op">=</span> mcolors.hex2color(c)</span>
+<span id="cb133-66"><a href="#cb133-66" aria-hidden="true" tabindex="-1"></a>    lightness <span class="op">=</span> <span class="fl">0.299</span><span class="op">*</span>rgb[<span class="dv">0</span>] <span class="op">+</span> <span class="fl">0.587</span><span class="op">*</span>rgb[<span class="dv">1</span>] <span class="op">+</span> <span class="fl">0.114</span><span class="op">*</span>rgb[<span class="dv">2</span>]</span>
+<span id="cb133-67"><a href="#cb133-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-68"><a href="#cb133-68" aria-hidden="true" tabindex="-1"></a>    ax3.text(i<span class="op">*</span><span class="dv">2</span> <span class="op">+</span> <span class="fl">0.9</span>, <span class="fl">0.5</span>, <span class="ss">f'</span><span class="sc">{</span>label<span class="sc">}</span><span class="ch">\n</span><span class="ss">L=</span><span class="sc">{</span>lightness<span class="sc">:.2f}</span><span class="ss">'</span>,</span>
+<span id="cb133-69"><a href="#cb133-69" aria-hidden="true" tabindex="-1"></a>            ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb133-70"><a href="#cb133-70" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'white'</span> <span class="cf">if</span> lightness <span class="op">&lt;</span> <span class="fl">0.5</span> <span class="cf">else</span> <span class="st">'black'</span>)</span>
+<span id="cb133-71"><a href="#cb133-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-72"><a href="#cb133-72" aria-hidden="true" tabindex="-1"></a>ax3.set_xlim(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb133-73"><a href="#cb133-73" aria-hidden="true" tabindex="-1"></a>ax3.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb133-74"><a href="#cb133-74" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'✓ ACCEPTABLE: Intentional Gradient (Single Hue Family, Smooth Transition)'</span>,</span>
+<span id="cb133-75"><a href="#cb133-75" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb133-76"><a href="#cb133-76" aria-hidden="true" tabindex="-1"></a>ax3.axis(<span class="st">'off'</span>)</span>
+<span id="cb133-77"><a href="#cb133-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-78"><a href="#cb133-78" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb133-79"><a href="#cb133-79" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'color_balance_lightness.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb133-80"><a href="#cb133-80" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="rule-3-biological-logic-in-color-assignment" class="level3">
+<h3 class="anchored" data-anchor-id="rule-3-biological-logic-in-color-assignment"><strong>Rule 3: Biological Logic in Color Assignment</strong></h3>
+<p><strong>Principle:</strong> Colors should follow scientific conventions and intuitive associations.</p>
+<p><strong>Examples:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. WT, KO, Rescue: Color proximity reflects biological relationship</span></span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>BIOLOGICAL_LOGIC <span class="op">=</span> {</span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WT'</span>: <span class="st">'#7F8C8D'</span>,      <span class="co"># Wild-type: neutral gray (baseline)</span></span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Rescue'</span>: <span class="st">'#5D6D7E'</span>,  <span class="co"># Rescue: similar gray (close to WT) ← KEY POINT</span></span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'KO'</span>: <span class="st">'#E74C3C'</span>       <span class="co"># Knockout: red (different/problem)</span></span>
+<span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a><span class="co"># → WT and Rescue should have SIMILAR colors (both are functional states)</span></span>
+<span id="cb134-8"><a href="#cb134-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-9"><a href="#cb134-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Disease severity: Darker = more severe (intuitive)</span></span>
+<span id="cb134-10"><a href="#cb134-10" aria-hidden="true" tabindex="-1"></a>DISEASE_SEVERITY <span class="op">=</span> {</span>
+<span id="cb134-11"><a href="#cb134-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Healthy'</span>: <span class="st">'#D5F4E6'</span>,      <span class="co"># Very light green</span></span>
+<span id="cb134-12"><a href="#cb134-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Mild'</span>: <span class="st">'#82E0AA'</span>,         <span class="co"># Light green</span></span>
+<span id="cb134-13"><a href="#cb134-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Moderate'</span>: <span class="st">'#F39C12'</span>,     <span class="co"># Orange (warning)</span></span>
+<span id="cb134-14"><a href="#cb134-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Severe'</span>: <span class="st">'#E67E22'</span>,       <span class="co"># Dark orange</span></span>
+<span id="cb134-15"><a href="#cb134-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Critical'</span>: <span class="st">'#C0392B'</span>      <span class="co"># Dark red (danger)</span></span>
+<span id="cb134-16"><a href="#cb134-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb134-17"><a href="#cb134-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-18"><a href="#cb134-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Traffic light convention: Red=stop/problem, Green=go/healthy</span></span>
+<span id="cb134-19"><a href="#cb134-19" aria-hidden="true" tabindex="-1"></a>INTUITIVE_ASSOCIATIONS <span class="op">=</span> {</span>
+<span id="cb134-20"><a href="#cb134-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Control'</span>: <span class="st">'#27AE60'</span>,      <span class="co"># Green = healthy/baseline</span></span>
+<span id="cb134-21"><a href="#cb134-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Disease'</span>: <span class="st">'#E74C3C'</span>,      <span class="co"># Red = problem</span></span>
+<span id="cb134-22"><a href="#cb134-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Treatment'</span>: <span class="st">'#3498DB'</span>     <span class="co"># Blue = intervention</span></span>
+<span id="cb134-23"><a href="#cb134-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb134-24"><a href="#cb134-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-25"><a href="#cb134-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Temperature: Blue=cold, Red=hot</span></span>
+<span id="cb134-26"><a href="#cb134-26" aria-hidden="true" tabindex="-1"></a>TEMPERATURE_SCALE <span class="op">=</span> {</span>
+<span id="cb134-27"><a href="#cb134-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'cold'</span>: <span class="st">'#3498DB'</span>,</span>
+<span id="cb134-28"><a href="#cb134-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warm'</span>: <span class="st">'#F39C12'</span>,</span>
+<span id="cb134-29"><a href="#cb134-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'hot'</span>: <span class="st">'#E74C3C'</span></span>
+<span id="cb134-30"><a href="#cb134-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Code Example: WT-KO-Rescue Color Logic</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-6"><a href="#cb135-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb135-7"><a href="#cb135-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-8"><a href="#cb135-8" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: KO and Rescue have similar colors (confusing relationship)</span></span>
+<span id="cb135-9"><a href="#cb135-9" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb135-10"><a href="#cb135-10" aria-hidden="true" tabindex="-1"></a>conditions_bad <span class="op">=</span> [<span class="st">'WT'</span>, <span class="st">'KO'</span>, <span class="st">'Rescue'</span>]</span>
+<span id="cb135-11"><a href="#cb135-11" aria-hidden="true" tabindex="-1"></a>values_bad <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">95</span>]</span>
+<span id="cb135-12"><a href="#cb135-12" aria-hidden="true" tabindex="-1"></a>colors_bad <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#C0392B'</span>]  <span class="co"># KO and Rescue both reddish!</span></span>
+<span id="cb135-13"><a href="#cb135-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-14"><a href="#cb135-14" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.bar(conditions_bad, values_bad, color<span class="op">=</span>colors_bad,</span>
+<span id="cb135-15"><a href="#cb135-15" aria-hidden="true" tabindex="-1"></a>               edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb135-16"><a href="#cb135-16" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Function (%)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb135-17"><a href="#cb135-17" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="dv">120</span>)</span>
+<span id="cb135-18"><a href="#cb135-18" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: KO and Rescue Look Similar</span><span class="ch">\n</span><span class="st">(Implies they are related states)'</span>,</span>
+<span id="cb135-19"><a href="#cb135-19" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb135-20"><a href="#cb135-20" aria-hidden="true" tabindex="-1"></a>ax1.axhline(<span class="dv">100</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb135-21"><a href="#cb135-21" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">2.5</span>, <span class="dv">102</span>, <span class="st">'WT baseline'</span>, fontsize<span class="op">=</span><span class="dv">9</span>, style<span class="op">=</span><span class="st">'italic'</span>)</span>
+<span id="cb135-22"><a href="#cb135-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-23"><a href="#cb135-23" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: WT and Rescue similar (both functional), KO different</span></span>
+<span id="cb135-24"><a href="#cb135-24" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb135-25"><a href="#cb135-25" aria-hidden="true" tabindex="-1"></a>conditions_good <span class="op">=</span> [<span class="st">'WT'</span>, <span class="st">'KO'</span>, <span class="st">'Rescue'</span>]</span>
+<span id="cb135-26"><a href="#cb135-26" aria-hidden="true" tabindex="-1"></a>values_good <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">95</span>]</span>
+<span id="cb135-27"><a href="#cb135-27" aria-hidden="true" tabindex="-1"></a>colors_good <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#5D6D7E'</span>]  <span class="co"># WT and Rescue similar grays!</span></span>
+<span id="cb135-28"><a href="#cb135-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-29"><a href="#cb135-29" aria-hidden="true" tabindex="-1"></a>bars2 <span class="op">=</span> ax2.bar(conditions_good, values_good, color<span class="op">=</span>colors_good,</span>
+<span id="cb135-30"><a href="#cb135-30" aria-hidden="true" tabindex="-1"></a>               edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, width<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb135-31"><a href="#cb135-31" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Function (%)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb135-32"><a href="#cb135-32" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">120</span>)</span>
+<span id="cb135-33"><a href="#cb135-33" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: WT and Rescue Similar Colors</span><span class="ch">\n</span><span class="st">(Correctly shows functional relationship)'</span>,</span>
+<span id="cb135-34"><a href="#cb135-34" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb135-35"><a href="#cb135-35" aria-hidden="true" tabindex="-1"></a>ax2.axhline(<span class="dv">100</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb135-36"><a href="#cb135-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-37"><a href="#cb135-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotations showing color logic</span></span>
+<span id="cb135-38"><a href="#cb135-38" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="st">''</span>, xy<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">110</span>), xytext<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">110</span>),</span>
+<span id="cb135-39"><a href="#cb135-39" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'&lt;-&gt;'</span>, color<span class="op">=</span><span class="st">'green'</span>, lw<span class="op">=</span><span class="dv">3</span>))</span>
+<span id="cb135-40"><a href="#cb135-40" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="dv">1</span>, <span class="dv">113</span>, <span class="st">'Similar colors =</span><span class="ch">\n</span><span class="st">Similar function'</span>, ha<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb135-41"><a href="#cb135-41" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>,</span>
+<span id="cb135-42"><a href="#cb135-42" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'lightgreen'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb135-43"><a href="#cb135-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-44"><a href="#cb135-44" aria-hidden="true" tabindex="-1"></a>ax2.annotate(<span class="st">''</span>, xy<span class="op">=</span>(<span class="dv">1</span>, <span class="op">-</span><span class="dv">8</span>), xytext<span class="op">=</span>(<span class="dv">1</span>, <span class="op">-</span><span class="dv">8</span>),</span>
+<span id="cb135-45"><a href="#cb135-45" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-'</span>, color<span class="op">=</span><span class="st">'red'</span>, lw<span class="op">=</span><span class="dv">0</span>))</span>
+<span id="cb135-46"><a href="#cb135-46" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="dv">1</span>, <span class="op">-</span><span class="dv">12</span>, <span class="st">'Different color =</span><span class="ch">\n</span><span class="st">Loss of function'</span>, ha<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb135-47"><a href="#cb135-47" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb135-48"><a href="#cb135-48" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'#FFCCCC'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb135-49"><a href="#cb135-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-50"><a href="#cb135-50" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb135-51"><a href="#cb135-51" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'wt_ko_rescue_color_logic.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb135-52"><a href="#cb135-52" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="rule-4-namissing-data-color-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="rule-4-namissing-data-color-strategy"><strong>Rule 4: NA/Missing Data Color Strategy</strong></h3>
+<p><strong>Principle:</strong> NA colors must be distinguishable and EXCLUDED from the main color scheme.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb136"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-5"><a href="#cb136-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb136-6"><a href="#cb136-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-7"><a href="#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data with missing values</span></span>
+<span id="cb136-8"><a href="#cb136-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb136-9"><a href="#cb136-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Gene'</span>: [<span class="ss">f'Gene</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">26</span>)],</span>
+<span id="cb136-10"><a href="#cb136-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sample1'</span>: np.random.randn(<span class="dv">25</span>),</span>
+<span id="cb136-11"><a href="#cb136-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sample2'</span>: np.random.randn(<span class="dv">25</span>),</span>
+<span id="cb136-12"><a href="#cb136-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sample3'</span>: np.random.randn(<span class="dv">25</span>),</span>
+<span id="cb136-13"><a href="#cb136-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Sample4'</span>: np.random.randn(<span class="dv">25</span>)</span>
+<span id="cb136-14"><a href="#cb136-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb136-15"><a href="#cb136-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-16"><a href="#cb136-16" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data).set_index(<span class="st">'Gene'</span>)</span>
+<span id="cb136-17"><a href="#cb136-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-18"><a href="#cb136-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Introduce NA values</span></span>
+<span id="cb136-19"><a href="#cb136-19" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">3</span>:<span class="dv">6</span>, <span class="dv">1</span>] <span class="op">=</span> np.nan</span>
+<span id="cb136-20"><a href="#cb136-20" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">10</span>:<span class="dv">12</span>, <span class="dv">2</span>] <span class="op">=</span> np.nan</span>
+<span id="cb136-21"><a href="#cb136-21" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">18</span>, <span class="dv">3</span>] <span class="op">=</span> np.nan</span>
+<span id="cb136-22"><a href="#cb136-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-23"><a href="#cb136-23" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb136-24"><a href="#cb136-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-25"><a href="#cb136-25" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: NA color within main palette (confusing)</span></span>
+<span id="cb136-26"><a href="#cb136-26" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb136-27"><a href="#cb136-27" aria-hidden="true" tabindex="-1"></a>data_for_plot <span class="op">=</span> df.fillna(<span class="op">-</span><span class="dv">999</span>)  <span class="co"># Sentinel value</span></span>
+<span id="cb136-28"><a href="#cb136-28" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> ax1.imshow(data_for_plot, cmap<span class="op">=</span><span class="st">'RdBu_r'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>,</span>
+<span id="cb136-29"><a href="#cb136-29" aria-hidden="true" tabindex="-1"></a>                 vmin<span class="op">=-</span><span class="dv">2</span>, vmax<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb136-30"><a href="#cb136-30" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: NA Blends with Data</span><span class="ch">\n</span><span class="st">(Can</span><span class="ch">\'</span><span class="st">t distinguish missing values)'</span>,</span>
+<span id="cb136-31"><a href="#cb136-31" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb136-32"><a href="#cb136-32" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Samples'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb136-33"><a href="#cb136-33" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Genes'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb136-34"><a href="#cb136-34" aria-hidden="true" tabindex="-1"></a>ax1.set_xticks(<span class="bu">range</span>(<span class="dv">4</span>))</span>
+<span id="cb136-35"><a href="#cb136-35" aria-hidden="true" tabindex="-1"></a>ax1.set_xticklabels([<span class="st">'Sample1'</span>, <span class="st">'Sample2'</span>, <span class="st">'Sample3'</span>, <span class="st">'Sample4'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb136-36"><a href="#cb136-36" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im1, ax<span class="op">=</span>ax1, label<span class="op">=</span><span class="st">'Expression (Z-score)'</span>)</span>
+<span id="cb136-37"><a href="#cb136-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-38"><a href="#cb136-38" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: NA in distinct color (crosshatch or gray)</span></span>
+<span id="cb136-39"><a href="#cb136-39" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb136-40"><a href="#cb136-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-41"><a href="#cb136-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Create masked array</span></span>
+<span id="cb136-42"><a href="#cb136-42" aria-hidden="true" tabindex="-1"></a>data_masked <span class="op">=</span> np.ma.masked_where(np.isnan(df.values), df.values)</span>
+<span id="cb136-43"><a href="#cb136-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-44"><a href="#cb136-44" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> ax2.imshow(data_masked, cmap<span class="op">=</span><span class="st">'RdBu_r'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>,</span>
+<span id="cb136-45"><a href="#cb136-45" aria-hidden="true" tabindex="-1"></a>                 vmin<span class="op">=-</span><span class="dv">2</span>, vmax<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb136-46"><a href="#cb136-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-47"><a href="#cb136-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Add gray rectangles for NA values</span></span>
+<span id="cb136-48"><a href="#cb136-48" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(df.shape[<span class="dv">0</span>]):</span>
+<span id="cb136-49"><a href="#cb136-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(df.shape[<span class="dv">1</span>]):</span>
+<span id="cb136-50"><a href="#cb136-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.isnan(df.values[i, j]):</span>
+<span id="cb136-51"><a href="#cb136-51" aria-hidden="true" tabindex="-1"></a>            ax2.add_patch(plt.Rectangle((j<span class="op">-</span><span class="fl">0.5</span>, i<span class="op">-</span><span class="fl">0.5</span>), <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb136-52"><a href="#cb136-52" aria-hidden="true" tabindex="-1"></a>                                       facecolor<span class="op">=</span><span class="st">'#D3D3D3'</span>,</span>
+<span id="cb136-53"><a href="#cb136-53" aria-hidden="true" tabindex="-1"></a>                                       edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb136-54"><a href="#cb136-54" aria-hidden="true" tabindex="-1"></a>                                       linewidth<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb136-55"><a href="#cb136-55" aria-hidden="true" tabindex="-1"></a>                                       hatch<span class="op">=</span><span class="st">'///'</span>,</span>
+<span id="cb136-56"><a href="#cb136-56" aria-hidden="true" tabindex="-1"></a>                                       fill<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb136-57"><a href="#cb136-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-58"><a href="#cb136-58" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: NA in Distinct Color</span><span class="ch">\n</span><span class="st">(Crosshatch pattern, separate from scale)'</span>,</span>
+<span id="cb136-59"><a href="#cb136-59" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb136-60"><a href="#cb136-60" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Samples'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb136-61"><a href="#cb136-61" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Genes'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb136-62"><a href="#cb136-62" aria-hidden="true" tabindex="-1"></a>ax2.set_xticks(<span class="bu">range</span>(<span class="dv">4</span>))</span>
+<span id="cb136-63"><a href="#cb136-63" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels([<span class="st">'Sample1'</span>, <span class="st">'Sample2'</span>, <span class="st">'Sample3'</span>, <span class="st">'Sample4'</span>], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb136-64"><a href="#cb136-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-65"><a href="#cb136-65" aria-hidden="true" tabindex="-1"></a>cbar2 <span class="op">=</span> plt.colorbar(im2, ax<span class="op">=</span>ax2, label<span class="op">=</span><span class="st">'Expression (Z-score)'</span>)</span>
+<span id="cb136-66"><a href="#cb136-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-67"><a href="#cb136-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Add NA legend</span></span>
+<span id="cb136-68"><a href="#cb136-68" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> Patch</span>
+<span id="cb136-69"><a href="#cb136-69" aria-hidden="true" tabindex="-1"></a>na_patch <span class="op">=</span> Patch(facecolor<span class="op">=</span><span class="st">'#D3D3D3'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>,</span>
+<span id="cb136-70"><a href="#cb136-70" aria-hidden="true" tabindex="-1"></a>                hatch<span class="op">=</span><span class="st">'///'</span>, label<span class="op">=</span><span class="st">'NA / Missing'</span>)</span>
+<span id="cb136-71"><a href="#cb136-71" aria-hidden="true" tabindex="-1"></a>ax2.legend(handles<span class="op">=</span>[na_patch], loc<span class="op">=</span><span class="st">'upper right'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb136-72"><a href="#cb136-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb136-73"><a href="#cb136-73" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb136-74"><a href="#cb136-74" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'na_color_strategy.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb136-75"><a href="#cb136-75" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>R Equivalent:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data with NAs</span></span>
+<span id="cb137-6"><a href="#cb137-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb137-7"><a href="#cb137-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb137-8"><a href="#cb137-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Gene =</span> <span class="fu">paste0</span>(<span class="st">'Gene'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>),</span>
+<span id="cb137-9"><a href="#cb137-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> <span class="fu">paste0</span>(<span class="st">'Sample'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb137-10"><a href="#cb137-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb137-11"><a href="#cb137-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Expression =</span> <span class="fu">rnorm</span>(<span class="fu">n</span>()))</span>
+<span id="cb137-12"><a href="#cb137-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-13"><a href="#cb137-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Introduce NAs</span></span>
+<span id="cb137-14"><a href="#cb137-14" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Expression[<span class="dv">30</span><span class="sc">:</span><span class="dv">35</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb137-15"><a href="#cb137-15" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>Expression[<span class="dv">60</span><span class="sc">:</span><span class="dv">62</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb137-16"><a href="#cb137-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-17"><a href="#cb137-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with distinct NA handling</span></span>
+<span id="cb137-18"><a href="#cb137-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> Sample, <span class="at">y =</span> Gene, <span class="at">fill =</span> Expression)) <span class="sc">+</span></span>
+<span id="cb137-19"><a href="#cb137-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">'white'</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb137-20"><a href="#cb137-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-21"><a href="#cb137-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Main color scale (for non-NA values)</span></span>
+<span id="cb137-22"><a href="#cb137-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">'#3498DB'</span>, <span class="at">mid =</span> <span class="st">'white'</span>, <span class="at">high =</span> <span class="st">'#E74C3C'</span>,</span>
+<span id="cb137-23"><a href="#cb137-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">na.value =</span> <span class="st">'#D3D3D3'</span>,  <span class="co"># Gray for NA</span></span>
+<span id="cb137-24"><a href="#cb137-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="st">'Expression</span><span class="sc">\n</span><span class="st">(Z-score)'</span>) <span class="sc">+</span></span>
+<span id="cb137-25"><a href="#cb137-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-26"><a href="#cb137-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add pattern to NA tiles (requires ggpattern package)</span></span>
+<span id="cb137-27"><a href="#cb137-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># library(ggpattern)</span></span>
+<span id="cb137-28"><a href="#cb137-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_tile_pattern(data = filter(data, is.na(Expression)),</span></span>
+<span id="cb137-29"><a href="#cb137-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">#                   pattern = 'crosshatch', pattern_density = 0.5,</span></span>
+<span id="cb137-30"><a href="#cb137-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">#                   fill = '#D3D3D3', color = 'black', size = 1) +</span></span>
+<span id="cb137-31"><a href="#cb137-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-32"><a href="#cb137-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'✓ NA Values in Distinct Gray (Separate from Scale)'</span>,</span>
+<span id="cb137-33"><a href="#cb137-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Samples'</span>, <span class="at">y =</span> <span class="st">'Genes'</span>) <span class="sc">+</span></span>
+<span id="cb137-34"><a href="#cb137-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-35"><a href="#cb137-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb137-36"><a href="#cb137-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb137-37"><a href="#cb137-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">'bold'</span>, <span class="at">size =</span> <span class="dv">13</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">'darkgreen'</span>),</span>
+<span id="cb137-38"><a href="#cb137-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb137-39"><a href="#cb137-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">'right'</span></span>
+<span id="cb137-40"><a href="#cb137-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb137-41"><a href="#cb137-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-42"><a href="#cb137-42" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'na_color_strategy_r.png'</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+<section id="rule-5-sequential-colors---single-hue-families" class="level3">
+<h3 class="anchored" data-anchor-id="rule-5-sequential-colors---single-hue-families"><strong>Rule 5: Sequential Colors - Single Hue Families</strong></h3>
+<p><strong>When to use:</strong> Continuous data (e.g., expression levels, concentrations, counts)</p>
+<p><strong>Principle:</strong> Use gradations of a <strong>single hue</strong> to show magnitude, not rainbow colors.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb138"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> LinearSegmentedColormap</span>
+<span id="cb138-4"><a href="#cb138-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-5"><a href="#cb138-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb138-6"><a href="#cb138-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-7"><a href="#cb138-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate continuous data (e.g., gene expression)</span></span>
+<span id="cb138-8"><a href="#cb138-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.rand(<span class="dv">10</span>, <span class="dv">10</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb138-9"><a href="#cb138-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-10"><a href="#cb138-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">5</span>))</span>
+<span id="cb138-11"><a href="#cb138-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-12"><a href="#cb138-12" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Rainbow (not perceptually uniform, no clear magnitude)</span></span>
+<span id="cb138-13"><a href="#cb138-13" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb138-14"><a href="#cb138-14" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> ax1.imshow(data, cmap<span class="op">=</span><span class="st">'jet'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb138-15"><a href="#cb138-15" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Rainbow</span><span class="ch">\n</span><span class="st">(Unclear magnitude progression)'</span>,</span>
+<span id="cb138-16"><a href="#cb138-16" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb138-17"><a href="#cb138-17" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im1, ax<span class="op">=</span>ax1, label<span class="op">=</span><span class="st">'Expression'</span>)</span>
+<span id="cb138-18"><a href="#cb138-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-19"><a href="#cb138-19" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Single hue gradient (clear magnitude)</span></span>
+<span id="cb138-20"><a href="#cb138-20" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb138-21"><a href="#cb138-21" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> ax2.imshow(data, cmap<span class="op">=</span><span class="st">'Blues'</span>, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb138-22"><a href="#cb138-22" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: Single Hue (Blue)</span><span class="ch">\n</span><span class="st">(Clear: Light → Dark = Low → High)'</span>,</span>
+<span id="cb138-23"><a href="#cb138-23" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb138-24"><a href="#cb138-24" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im2, ax<span class="op">=</span>ax2, label<span class="op">=</span><span class="st">'Expression'</span>)</span>
+<span id="cb138-25"><a href="#cb138-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-26"><a href="#cb138-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ALSO GOOD: Custom single-hue gradient</span></span>
+<span id="cb138-27"><a href="#cb138-27" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb138-28"><a href="#cb138-28" aria-hidden="true" tabindex="-1"></a>colors_custom <span class="op">=</span> [<span class="st">'#FFFFFF'</span>, <span class="st">'#EBF5FB'</span>, <span class="st">'#D6EAF8'</span>, <span class="st">'#AED6F1'</span>,</span>
+<span id="cb138-29"><a href="#cb138-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">'#85C1E9'</span>, <span class="st">'#5DADE2'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#2E86C1'</span>,</span>
+<span id="cb138-30"><a href="#cb138-30" aria-hidden="true" tabindex="-1"></a>                <span class="st">'#2874A6'</span>, <span class="st">'#21618C'</span>]</span>
+<span id="cb138-31"><a href="#cb138-31" aria-hidden="true" tabindex="-1"></a>cmap_custom <span class="op">=</span> LinearSegmentedColormap.from_list(<span class="st">'custom_blues'</span>, colors_custom)</span>
+<span id="cb138-32"><a href="#cb138-32" aria-hidden="true" tabindex="-1"></a>im3 <span class="op">=</span> ax3.imshow(data, cmap<span class="op">=</span>cmap_custom, aspect<span class="op">=</span><span class="st">'auto'</span>)</span>
+<span id="cb138-33"><a href="#cb138-33" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'✓ ALSO GOOD: Custom Blue Gradient</span><span class="ch">\n</span><span class="st">(Smooth progression)'</span>,</span>
+<span id="cb138-34"><a href="#cb138-34" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb138-35"><a href="#cb138-35" aria-hidden="true" tabindex="-1"></a>plt.colorbar(im3, ax<span class="op">=</span>ax3, label<span class="op">=</span><span class="st">'Expression'</span>)</span>
+<span id="cb138-36"><a href="#cb138-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-37"><a href="#cb138-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb138-38"><a href="#cb138-38" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'sequential_color_single_hue.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb138-39"><a href="#cb138-39" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="shape-selection-and-usage-new-section" class="level2">
+<h2 class="anchored" data-anchor-id="shape-selection-and-usage-new-section"><strong>2.9 Shape Selection and Usage (NEW SECTION)</strong></h2>
+<section id="rule-shape-must-provide-clear-contrast" class="level3">
+<h3 class="anchored" data-anchor-id="rule-shape-must-provide-clear-contrast"><strong>Rule: Shape Must Provide Clear Contrast</strong></h3>
+<p><strong>Principle:</strong> Regular vs.&nbsp;irregular shapes, filled vs.&nbsp;open - use contrast to distinguish groups.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb139"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-6"><a href="#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data for different conditions</span></span>
+<span id="cb139-7"><a href="#cb139-7" aria-hidden="true" tabindex="-1"></a>conditions <span class="op">=</span> [<span class="st">'Control'</span>, <span class="st">'Treatment A'</span>, <span class="st">'Treatment B'</span>, <span class="st">'Treatment C'</span>]</span>
+<span id="cb139-8"><a href="#cb139-8" aria-hidden="true" tabindex="-1"></a>n_points <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb139-9"><a href="#cb139-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="#cb139-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb139-11"><a href="#cb139-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-12"><a href="#cb139-12" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: Similar shapes (hard to distinguish)</span></span>
+<span id="cb139-13"><a href="#cb139-13" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb139-14"><a href="#cb139-14" aria-hidden="true" tabindex="-1"></a>shapes_bad <span class="op">=</span> [<span class="st">'o'</span>, <span class="st">'s'</span>, <span class="st">'^'</span>, <span class="st">'v'</span>]  <span class="co"># All filled, similar sizes</span></span>
+<span id="cb139-15"><a href="#cb139-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (cond, marker) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(conditions, shapes_bad)):</span>
+<span id="cb139-16"><a href="#cb139-16" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.randn(n_points) <span class="op">+</span> i<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb139-17"><a href="#cb139-17" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.random.randn(n_points)</span>
+<span id="cb139-18"><a href="#cb139-18" aria-hidden="true" tabindex="-1"></a>    ax1.scatter(x, y, s<span class="op">=</span><span class="dv">80</span>, marker<span class="op">=</span>marker, color<span class="op">=</span><span class="st">'#3498DB'</span>,</span>
+<span id="cb139-19"><a href="#cb139-19" aria-hidden="true" tabindex="-1"></a>               alpha<span class="op">=</span><span class="fl">0.6</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb139-20"><a href="#cb139-20" aria-hidden="true" tabindex="-1"></a>               label<span class="op">=</span>cond)</span>
+<span id="cb139-21"><a href="#cb139-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-22"><a href="#cb139-22" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Variable X'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb139-23"><a href="#cb139-23" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Variable Y'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb139-24"><a href="#cb139-24" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ BAD: Subtle Shape Differences</span><span class="ch">\n</span><span class="st">(Hard to distinguish quickly)'</span>,</span>
+<span id="cb139-25"><a href="#cb139-25" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb139-26"><a href="#cb139-26" aria-hidden="true" tabindex="-1"></a>ax1.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb139-27"><a href="#cb139-27" aria-hidden="true" tabindex="-1"></a>ax1.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb139-28"><a href="#cb139-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-29"><a href="#cb139-29" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Contrasting shapes (easy to distinguish)</span></span>
+<span id="cb139-30"><a href="#cb139-30" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb139-31"><a href="#cb139-31" aria-hidden="true" tabindex="-1"></a>shapes_good <span class="op">=</span> [<span class="st">'o'</span>, <span class="st">'s'</span>, <span class="st">'^'</span>, <span class="st">'D'</span>]  <span class="co"># Mix of regular shapes</span></span>
+<span id="cb139-32"><a href="#cb139-32" aria-hidden="true" tabindex="-1"></a>fills <span class="op">=</span> [<span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">False</span>]  <span class="co"># Alternate filled/open</span></span>
+<span id="cb139-33"><a href="#cb139-33" aria-hidden="true" tabindex="-1"></a>colors_contrast <span class="op">=</span> [<span class="st">'#3498DB'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>, <span class="st">'#E74C3C'</span>]</span>
+<span id="cb139-34"><a href="#cb139-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-35"><a href="#cb139-35" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (cond, marker, filled, color) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(conditions, shapes_good, fills, colors_contrast)):</span>
+<span id="cb139-36"><a href="#cb139-36" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.random.randn(n_points) <span class="op">+</span> i<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb139-37"><a href="#cb139-37" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.random.randn(n_points)</span>
+<span id="cb139-38"><a href="#cb139-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-39"><a href="#cb139-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> filled:</span>
+<span id="cb139-40"><a href="#cb139-40" aria-hidden="true" tabindex="-1"></a>        ax2.scatter(x, y, s<span class="op">=</span><span class="dv">100</span>, marker<span class="op">=</span>marker, color<span class="op">=</span>color,</span>
+<span id="cb139-41"><a href="#cb139-41" aria-hidden="true" tabindex="-1"></a>                   alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolors<span class="op">=</span><span class="st">'black'</span>, linewidths<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb139-42"><a href="#cb139-42" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span>cond)</span>
+<span id="cb139-43"><a href="#cb139-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb139-44"><a href="#cb139-44" aria-hidden="true" tabindex="-1"></a>        ax2.scatter(x, y, s<span class="op">=</span><span class="dv">100</span>, marker<span class="op">=</span>marker, facecolors<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb139-45"><a href="#cb139-45" aria-hidden="true" tabindex="-1"></a>                   edgecolors<span class="op">=</span>color, linewidths<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb139-46"><a href="#cb139-46" aria-hidden="true" tabindex="-1"></a>                   label<span class="op">=</span>cond)</span>
+<span id="cb139-47"><a href="#cb139-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-48"><a href="#cb139-48" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">'Variable X'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb139-49"><a href="#cb139-49" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Variable Y'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb139-50"><a href="#cb139-50" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ GOOD: High Contrast Shapes</span><span class="ch">\n</span><span class="st">(Filled/Open + Color + Shape)'</span>,</span>
+<span id="cb139-51"><a href="#cb139-51" aria-hidden="true" tabindex="-1"></a>              fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb139-52"><a href="#cb139-52" aria-hidden="true" tabindex="-1"></a>ax2.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb139-53"><a href="#cb139-53" aria-hidden="true" tabindex="-1"></a>ax2.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb139-54"><a href="#cb139-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-55"><a href="#cb139-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb139-56"><a href="#cb139-56" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'shape_contrast.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb139-57"><a href="#cb139-57" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Shape Palette Recommendations:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb140"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Accessible shape combinations (easily distinguishable)</span></span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>SHAPE_PALETTE_GOOD <span class="op">=</span> {</span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group1'</span>: {<span class="st">'marker'</span>: <span class="st">'o'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">80</span>},    <span class="co"># Filled circle</span></span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group2'</span>: {<span class="st">'marker'</span>: <span class="st">'s'</span>, <span class="st">'fill'</span>: <span class="va">False</span>, <span class="st">'size'</span>: <span class="dv">80</span>},   <span class="co"># Open square</span></span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group3'</span>: {<span class="st">'marker'</span>: <span class="st">'^'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">100</span>},   <span class="co"># Filled triangle</span></span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group4'</span>: {<span class="st">'marker'</span>: <span class="st">'D'</span>, <span class="st">'fill'</span>: <span class="va">False</span>, <span class="st">'size'</span>: <span class="dv">70</span>}    <span class="co"># Open diamond</span></span>
+<span id="cb140-7"><a href="#cb140-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb140-8"><a href="#cb140-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-9"><a href="#cb140-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Bad: Too subtle differences</span></span>
+<span id="cb140-10"><a href="#cb140-10" aria-hidden="true" tabindex="-1"></a>SHAPE_PALETTE_BAD <span class="op">=</span> {</span>
+<span id="cb140-11"><a href="#cb140-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group1'</span>: {<span class="st">'marker'</span>: <span class="st">'o'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">80</span>},    <span class="co"># Filled circle</span></span>
+<span id="cb140-12"><a href="#cb140-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group2'</span>: {<span class="st">'marker'</span>: <span class="st">'o'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">90</span>},    <span class="co"># Slightly larger circle (!)</span></span>
+<span id="cb140-13"><a href="#cb140-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group3'</span>: {<span class="st">'marker'</span>: <span class="st">'o'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">70</span>},    <span class="co"># Slightly smaller circle (!)</span></span>
+<span id="cb140-14"><a href="#cb140-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group4'</span>: {<span class="st">'marker'</span>: <span class="st">'s'</span>, <span class="st">'fill'</span>: <span class="va">True</span>, <span class="st">'size'</span>: <span class="dv">80</span>}     <span class="co"># Square (finally different)</span></span>
+<span id="cb140-15"><a href="#cb140-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
 <p><strong>Chapter 2 Complete Summary:</strong></p>
 <p>You now understand: - <strong>Color theory</strong> (RGB, HSV, CIELAB) and perceptual uniformity - <strong>Palette types</strong> (sequential, diverging, qualitative) matched to data types - <strong>Saturation logic</strong> (deep=important/significant, light=background) - <strong>Restraint</strong> (3-color maximum) and <strong>consistency</strong> (same concept=same color) - <strong>Field conventions</strong> and when/how to deviate - <strong>Accessibility</strong> (colorblind-safe, redundant encoding, testing) - <strong>Integrity</strong> (no manipulation, symmetric scales, transparency) - <strong>Logical edge cases</strong> (all significant, missing data, meaningful zero, cyclic data, multiple scales)</p>
 <hr>

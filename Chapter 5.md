@@ -1055,6 +1055,7 @@ ggsave('consistent_figure.png', p, width = 7, height = 5, dpi = 300)
 
 ---
 
+
 ### Version Control for Figures
 
 **Best practices:**
@@ -1102,13 +1103,312 @@ Track changes:
 
 ---
 
+### **5.6 Irregular Shapes in Regular Frames**
+
+**Principle:** Irregular plots (network diagrams, UMAPs, dendrograms) should be contained in regular rectangular frames for easy comparison.
+
+```python
+import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+from matplotlib.patches import Rectangle
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# Panel A: BAD - Irregular network without frame
+ax1 = axes[0, 0]
+G1 = nx.random_geometric_graph(20, 0.3)
+pos1 = nx.spring_layout(G1)
+nx.draw_networkx(G1, pos=pos1, ax=ax1, node_color='#3498DB',
+                node_size=300, with_labels=False, edge_color='gray')
+ax1.set_title('❌ BAD: No Frame\n(Hard to compare size/scale)',
+              fontsize=12, fontweight='bold', color='red')
+ax1.axis('off')
+
+# Panel B: GOOD - Network in regular frame
+ax2 = axes[0, 1]
+G2 = nx.random_geometric_graph(20, 0.3)
+pos2 = nx.spring_layout(G2)
+nx.draw_networkx(G2, pos=pos2, ax=ax2, node_color='#27AE60',
+                node_size=300, with_labels=False, edge_color='gray')
+
+# Add visible frame
+ax2.set_xlim(-1.2, 1.2)
+ax2.set_ylim(-1.2, 1.2)
+for spine in ax2.spines.values():
+    spine.set_visible(True)
+    spine.set_linewidth(2)
+    spine.set_edgecolor('black')
+
+ax2.set_title('✓ GOOD: Regular Frame\n(Easy to compare)',
+              fontsize=12, fontweight='bold', color='green')
+ax2.set_aspect('equal')
+
+# Panel C: Multiple irregular shapes without frames (confusing)
+ax3 = axes[1, 0]
+ax3.axis('off')
+ax3.set_title('❌ BAD: Multiple Irregular Shapes\n(No alignment reference)',
+              fontsize=12, fontweight='bold', color='red')
+
+# Draw two networks at different positions/sizes
+G3a = nx.random_geometric_graph(15, 0.35)
+pos3a = nx.spring_layout(G3a, scale=0.3, center=(0.25, 0.7))
+nx.draw_networkx(G3a, pos=pos3a, ax=ax3, node_color='#3498DB',
+                node_size=200, with_labels=False, edge_color='gray')
+
+G3b = nx.random_geometric_graph(18, 0.3)
+pos3b = nx.spring_layout(G3b, scale=0.4, center=(0.75, 0.3))
+nx.draw_networkx(G3b, pos=pos3b, ax=ax3, node_color='#E74C3C',
+                node_size=200, with_labels=False, edge_color='gray')
+
+ax3.set_xlim(0, 1)
+ax3.set_ylim(0, 1)
+
+# Panel D: Same networks in regular frames (clear comparison)
+ax4 = axes[1, 1]
+ax4.axis('off')
+ax4.set_title('✓ GOOD: Regular Frames Enable Comparison',
+              fontsize=12, fontweight='bold', color='green')
+
+# Create two subplot axes within ax4
+from matplotlib.gridspec import GridSpec
+inner_gs = GridSpec(1, 2, figure=fig,
+                   left=0.52, right=0.98, bottom=0.05, top=0.45,
+                   wspace=0.1)
+
+ax4a = fig.add_subplot(inner_gs[0])
+ax4b = fig.add_subplot(inner_gs[1])
+
+# Network A in frame
+G4a = nx.random_geometric_graph(15, 0.35)
+pos4a = nx.spring_layout(G4a)
+nx.draw_networkx(G4a, pos=pos4a, ax=ax4a, node_color='#3498DB',
+                node_size=200, with_labels=False, edge_color='gray')
+ax4a.set_xlim(-1.2, 1.2)
+ax4a.set_ylim(-1.2, 1.2)
+ax4a.set_aspect('equal')
+for spine in ax4a.spines.values():
+    spine.set_visible(True)
+    spine.set_linewidth(2)
+    spine.set_edgecolor('black')
+ax4a.set_title('Network A', fontsize=10, fontweight='bold')
+
+# Network B in frame (same size frame!)
+G4b = nx.random_geometric_graph(18, 0.3)
+pos4b = nx.spring_layout(G4b)
+nx.draw_networkx(G4b, pos=pos4b, ax=ax4b, node_color='#E74C3C',
+                node_size=200, with_labels=False, edge_color='gray')
+ax4b.set_xlim(-1.2, 1.2)  # SAME LIMITS
+ax4b.set_ylim(-1.2, 1.2)  # SAME LIMITS
+ax4b.set_aspect('equal')
+for spine in ax4b.spines.values():
+    spine.set_visible(True)
+    spine.set_linewidth(2)
+    spine.set_edgecolor('black')
+ax4b.set_title('Network B', fontsize=10, fontweight='bold')
+
+# Add panel labels
+for i, ax in enumerate([ax1, ax2, ax3]):
+    ax.text(-0.1, 1.05, chr(65+i), transform=ax.transAxes,
+           fontsize=16, fontweight='bold', va='top')
+
+ax4.text(-0.1, 1.05, 'D', transform=ax4.transAxes,
+        fontsize=16, fontweight='bold', va='top')
+
+plt.savefig('irregular_shapes_regular_frames.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+### **5.7 Layout Logic: Reading Direction and Narrative Flow**
+
+**Principle:** Panel arrangement should follow logical narrative progression.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig = plt.figure(figsize=(16, 10))
+
+# Example: Experimental workflow visualization
+# Logical flow: Sample → Process → Analysis → Result
+
+# BAD layout: Random arrangement
+ax_bad = fig.add_subplot(2, 2, 1)
+ax_bad.text(0.5, 0.5, '❌ BAD LAYOUT\n\nRandom order:\nC → A → D → B\n\nNo logical flow!',
+           ha='center', va='center', fontsize=12, fontweight='bold',
+           bbox=dict(boxstyle='round', facecolor='#FFCCCC', alpha=0.8))
+ax_bad.axis('off')
+ax_bad.set_title('Random Panel Arrangement', fontsize=13, fontweight='bold', color='red')
+
+# GOOD layout: Left-to-right, top-to-bottom flow
+ax_good = fig.add_subplot(2, 2, 2)
+ax_good.text(0.5, 0.5, '✓ GOOD LAYOUT\n\nLogical order:\nA → B → C → D\n\nFollows workflow!',
+            ha='center', va='center', fontsize=12, fontweight='bold',
+            bbox=dict(boxstyle='round', facecolor='#CCFFCC', alpha=0.8))
+ax_good.axis('off')
+ax_good.set_title('Logical Panel Arrangement', fontsize=13, fontweight='bold', color='green')
+
+# Detailed example: Multi-step experiment
+gs = fig.add_gridspec(2, 4, left=0.05, right=0.95, bottom=0.05, top=0.45,
+                     hspace=0.3, wspace=0.3)
+
+# Panel A: Sample collection
+ax_a = fig.add_subplot(gs[0, 0])
+ax_a.bar(['Ctrl', 'Trt'], [10, 10], color=['#7F8C8D', '#3498DB'],
+        edgecolor='black', linewidth=2)
+ax_a.set_ylabel('Samples', fontsize=10, fontweight='bold')
+ax_a.set_title('A. Sample Collection', fontsize=11, fontweight='bold')
+ax_a.text(0.5, 0.95, 'STEP 1', transform=ax_a.transAxes,
+         ha='center', va='top', fontsize=9, fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Arrow to next step
+ax_arrow1 = fig.add_subplot(gs[0, :2])
+ax_arrow1.annotate('', xy=(0.75, 0.5), xytext=(0.25, 0.5),
+                  arrowprops=dict(arrowstyle='->', lw=3, color='black'),
+                  xycoords='axes fraction')
+ax_arrow1.axis('off')
+
+# Panel B: Processing
+ax_b = fig.add_subplot(gs[0, 1])
+# Simulate gel/blot
+gel_data = np.random.rand(10, 4)
+ax_b.imshow(gel_data, cmap='gray_r', aspect='auto')
+ax_b.set_title('B. Western Blot', fontsize=11, fontweight='bold')
+ax_b.axis('off')
+ax_b.text(0.5, 0.95, 'STEP 2', transform=ax_b.transAxes,
+         ha='center', va='top', fontsize=9, fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Panel C: Quantification
+ax_c = fig.add_subplot(gs[0, 2])
+values = [100, 145]
+ax_c.bar(['Ctrl', 'Trt'], values, color=['#7F8C8D', '#3498DB'],
+        edgecolor='black', linewidth=2)
+ax_c.set_ylabel('Protein Level (%)', fontsize=10, fontweight='bold')
+ax_c.set_title('C. Quantification', fontsize=11, fontweight='bold')
+ax_c.axhline(100, color='red', linestyle='--', linewidth=1, alpha=0.5)
+ax_c.text(0.5, 0.95, 'STEP 3', transform=ax_c.transAxes,
+         ha='center', va='top', fontsize=9, fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Panel D: Statistical analysis
+ax_d = fig.add_subplot(gs[0, 3])
+# Scatter with error bars
+x_data = [1, 2]
+y_data = [100, 145]
+errors = [8, 12]
+ax_d.errorbar(x_data, y_data, yerr=errors, fmt='o', markersize=12,
+             capsize=10, linewidth=2, color='black')
+ax_d.set_xlim(0.5, 2.5)
+ax_d.set_xticks([1, 2])
+ax_d.set_xticklabels(['Ctrl', 'Trt'])
+ax_d.set_ylabel('Protein Level (%)', fontsize=10, fontweight='bold')
+ax_d.set_title('D. Statistics (n=3)', fontsize=11, fontweight='bold')
+ax_d.plot([1, 2], [155, 155], 'k-', linewidth=2)
+ax_d.text(1.5, 158, '**', ha='center', fontsize=14, fontweight='bold')
+ax_d.text(0.5, 0.95, 'STEP 4', transform=ax_d.transAxes,
+         ha='center', va='top', fontsize=9, fontweight='bold',
+         bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Add flow arrows between all panels in bottom row
+for i in range(3):
+    ax_flow = fig.add_subplot(gs[0, :])
+    ax_flow.annotate('', xy=((i+1.5)/4, 0.5), xytext=((i+0.5)/4, 0.5),
+                    arrowprops=dict(arrowstyle='->', lw=2.5, color='blue'),
+                    xycoords='axes fraction')
+    ax_flow.axis('off')
+
+plt.savefig('layout_logic_narrative_flow.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+### **5.8 Panel Size Considerations: The A4 Paper Test**
+
+**Practical tip:** Use physical A4 paper to test figure size on screen.
+
+```python
+# Guideline for sizing figures
+
+"""
+FIGURE SIZE GUIDELINES:
+
+1. SINGLE COLUMN (journal dependent):
+   - Nature/Science: 89 mm (3.5 inches)
+   - Cell: 85 mm (3.35 inches)
+   - PLOS: 83 mm (3.27 inches)
+
+   → In code: figsize=(3.5, 2.5) for 3.5" × 2.5"
+
+2. DOUBLE COLUMN:
+   - Nature/Science: 183 mm (7.2 inches)
+   - Cell: 178 mm (7 inches)
+   - PLOS: 173 mm (6.8 inches)
+
+   → In code: figsize=(7, 5) for 7" × 5"
+
+3. A4 PAPER TEST:
+   - A4 = 210 mm × 297 mm (8.27" × 11.69")
+   - Print your figure at intended size
+   - Place on screen next to code
+   - Check:
+     * Can you read smallest text?
+     * Are symbols distinguishable?
+     * Is white space appropriate?
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Example: Create figure at publication size
+fig, axes = plt.subplots(2, 2, figsize=(7, 6))  # Double column width
+
+# ... add your plots ...
+
+# Before saving, test print:
+# 1. Save as PDF: plt.savefig('test_print.pdf', dpi=300)
+# 2. Print at 100% scale (NO "fit to page")
+# 3. Place printed version on screen
+# 4. Compare to on-screen version
+
+# Check minimum font sizes
+min_fontsize = 6  # points (minimum readable after reduction)
+
+for ax in axes.flat:
+    ax.set_xlabel('X Label', fontsize=11)  # Will reduce to ~8pt
+    ax.set_ylabel('Y Label', fontsize=11)
+    ax.tick_params(labelsize=9)  # Will reduce to ~6.5pt
+    ax.set_title('Title', fontsize=12)  # Will reduce to ~8.5pt
+
+# Journal may reduce figure by 50-75%
+# So design at final size, not current screen size!
+
+plt.tight_layout()
+plt.savefig('size_test_figure.png', dpi=300, bbox_inches='tight')
+plt.close()
+
+```
+
 ---
 
 # Scientific Figure Design: Comprehensive Quick Reference Guide
 
+---
+
 ## Part I: Pre-Design Decision Framework
 
 ### Step 1: Define Your Message
+
 ```
 Ask yourself:
 1. What is the ONE key finding this figure must communicate?
@@ -1118,6 +1418,7 @@ Ask yourself:
 
 → Answer determines: Plot type, layout complexity, detail level
 ```
+
 
 ### Step 2: Assess Your Data Structure
 ```
@@ -1529,6 +1830,7 @@ p <- ggplot(...) +
 
 # Save at publication quality
 ggsave('figure.png', p, width = 7, height = 5, dpi = 300, bg = 'white')
+
 ```
 
 ---

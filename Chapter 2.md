@@ -5478,7 +5478,597 @@ Color mapping must reflect data structure, not override it
 
 ---
 
-**End of Section 2.7 and Chapter 2**
+### **2.8 Color Palette Design Principles**
+
+**Core Principle:** One figure page should contain **3 colors ideally, maximum 5 colors** (excluding specialized plots like UMAPs where categorical distinctions require more).
+
+### **Rule 1: The 3-5 Color Maximum**
+
+**Scientific Principle:** Human working memory effectively tracks 3-5 distinct categories simultaneously. Beyond this, cognitive load increases exponentially.
+
+**Application:**
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# CORRECT: 3-color palette (ideal)
+IDEAL_PALETTE = {
+    'WT': '#7F8C8D',        # Wild-type: neutral gray
+    'KO': '#E74C3C',        # Knockout: red (problem/loss)
+    'Rescue': '#3498DB'     # Rescue: blue (restoration)
+}
+
+# Example: Gene expression comparison
+np.random.seed(42)
+conditions = ['WT', 'KO', 'Rescue']
+values = [100, 45, 92]  # Relative expression
+errors = [8, 6, 9]
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# Panel A: Good example (3 colors)
+ax1 = axes[0]
+colors_good = [IDEAL_PALETTE[c] for c in conditions]
+bars1 = ax1.bar(conditions, values, yerr=errors, capsize=8,
+                color=colors_good, edgecolor='black', linewidth=2, width=0.6)
+ax1.set_ylabel('Relative Expression (%)', fontsize=12, fontweight='bold')
+ax1.set_ylim(0, 120)
+ax1.set_title('✓ GOOD: 3 Colors\n(Clear, memorable)',
+              fontsize=13, fontweight='bold', color='green')
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+ax1.grid(axis='y', alpha=0.3)
+
+# Add interpretation annotations
+ax1.annotate('', xy=(0, values[0]), xytext=(1, values[1]),
+            arrowprops=dict(arrowstyle='<->', color='black', lw=2))
+ax1.text(0.5, (values[0]+values[1])/2 - 10, 'Loss of\nfunction',
+        ha='center', fontsize=9, style='italic')
+
+# Panel B: Too many colors example
+ax2 = axes[1]
+conditions_bad = ['WT', 'KO1', 'KO2', 'Rescue1', 'Rescue2',
+                  'Treatment A', 'Treatment B', 'Combination']
+values_bad = np.random.randint(40, 100, len(conditions_bad))
+colors_bad = plt.cm.tab10(np.linspace(0, 1, len(conditions_bad)))
+
+bars2 = ax2.bar(range(len(conditions_bad)), values_bad,
+                color=colors_bad, edgecolor='black', linewidth=1, width=0.7)
+ax2.set_xticks(range(len(conditions_bad)))
+ax2.set_xticklabels(conditions_bad, rotation=45, ha='right', fontsize=8)
+ax2.set_ylabel('Relative Expression (%)', fontsize=12, fontweight='bold')
+ax2.set_ylim(0, 120)
+ax2.set_title('❌ BAD: 8 Colors\n(Overwhelming, hard to distinguish)',
+              fontsize=13, fontweight='bold', color='red')
+ax2.spines['top'].set_visible(False)
+ax2.spines['right'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig('color_rule_3to5.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+
+print("✓ 3-5 color rule demonstrated")
+```
+
+**When you MUST use >5 colors (e.g., UMAP clustering):**
+
+```python
+# Solution: Use numbers/labels instead of relying solely on color
+import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate UMAP with 15 clusters
+n_cells = 1000
+umap1 = np.random.randn(n_cells) * 3
+umap2 = np.random.randn(n_cells) * 3
+clusters = np.random.randint(0, 15, n_cells)
+
+fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+# Panel A: Color only (hard to distinguish)
+ax1 = axes[0]
+scatter1 = ax1.scatter(umap1, umap2, c=clusters, cmap='tab20',
+                       s=20, alpha=0.6, edgecolors='none')
+ax1.set_xlabel('UMAP 1', fontsize=12, fontweight='bold')
+ax1.set_ylabel('UMAP 2', fontsize=12, fontweight='bold')
+ax1.set_title('❌ 15 Clusters: Color Only\n(Hard to match legend)',
+              fontsize=13, fontweight='bold', color='red')
+cbar1 = plt.colorbar(scatter1, ax=ax1)
+cbar1.set_label('Cluster ID', fontsize=11, fontweight='bold')
+
+# Panel B: Color + numbered labels (clear)
+ax2 = axes[1]
+scatter2 = ax2.scatter(umap1, umap2, c=clusters, cmap='tab20',
+                       s=20, alpha=0.6, edgecolors='none')
+
+# Add cluster number labels at centroids
+for cluster_id in range(15):
+    mask = clusters == cluster_id
+    if np.sum(mask) > 0:
+        centroid_x = umap1[mask].mean()
+        centroid_y = umap2[mask].mean()
+
+        # White circle background for visibility
+        circle = Circle((centroid_x, centroid_y), radius=0.5,
+                       facecolor='white', edgecolor='black',
+                       linewidth=2, zorder=10)
+        ax2.add_patch(circle)
+
+        # Cluster number
+        ax2.text(centroid_x, centroid_y, str(cluster_id),
+                ha='center', va='center', fontsize=10,
+                fontweight='bold', zorder=11)
+
+ax2.set_xlabel('UMAP 1', fontsize=12, fontweight='bold')
+ax2.set_ylabel('UMAP 2', fontsize=12, fontweight='bold')
+ax2.set_title('✓ BETTER: Color + Numbers\n(Easy to reference)',
+              fontsize=13, fontweight='bold', color='green')
+
+plt.tight_layout()
+plt.savefig('many_clusters_solution.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+### **Rule 2: Color Harmony - Avoid Deep + Light Mixing**
+
+**Principle:** Mixing very dark and very light colors creates harsh, unbalanced contrast that looks unprofessional.
+
+**Solution:** Keep colors within similar lightness ranges, or balance proportions intentionally.
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib import colors as mcolors
+import numpy as np
+
+fig, axes = plt.subplots(3, 1, figsize=(12, 10))
+
+# BAD Example: Deep + Light mixing (unbalanced)
+ax1 = axes[0]
+bad_colors = ['#1A1A1A', '#EFEFEF', '#2C3E50', '#ECF0F1']  # Very dark + very light
+bad_labels = ['Very Dark', 'Very Light', 'Dark', 'Light']
+
+for i, (c, label) in enumerate(zip(bad_colors, bad_labels)):
+    rect = mpatches.Rectangle((i*2.5, 0), 2, 1, facecolor=c,
+                             edgecolor='black', linewidth=2)
+    ax1.add_patch(rect)
+
+    # Calculate lightness
+    rgb = mcolors.hex2color(c)
+    lightness = 0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2]
+
+    ax1.text(i*2.5 + 1, 0.5, f'{label}\nL={lightness:.2f}',
+            ha='center', va='center', fontsize=10, fontweight='bold',
+            color='white' if lightness < 0.5 else 'black')
+
+ax1.set_xlim(0, 10)
+ax1.set_ylim(0, 1)
+ax1.set_title('❌ BAD: Deep + Light Mixing (Harsh Contrast, L range: 0.07-0.94)',
+              fontsize=13, fontweight='bold', color='red', pad=15)
+ax1.axis('off')
+
+# GOOD Example: Balanced lightness
+ax2 = axes[1]
+good_colors = ['#7F8C8D', '#3498DB', '#E74C3C', '#27AE60']  # Balanced
+good_labels = ['Gray', 'Blue', 'Red', 'Green']
+
+for i, (c, label) in enumerate(zip(good_colors, good_labels)):
+    rect = mpatches.Rectangle((i*2.5, 0), 2, 1, facecolor=c,
+                             edgecolor='black', linewidth=2)
+    ax2.add_patch(rect)
+
+    rgb = mcolors.hex2color(c)
+    lightness = 0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2]
+
+    ax2.text(i*2.5 + 1, 0.5, f'{label}\nL={lightness:.2f}',
+            ha='center', va='center', fontsize=10, fontweight='bold',
+            color='white')
+
+ax2.set_xlim(0, 10)
+ax2.set_ylim(0, 1)
+ax2.set_title('✓ GOOD: Balanced Lightness (L range: 0.35-0.55)',
+              fontsize=13, fontweight='bold', color='green', pad=15)
+ax2.axis('off')
+
+# ACCEPTABLE: Intentional gradient (if needed)
+ax3 = axes[2]
+gradient_colors = ['#D6EAF8', '#85C1E9', '#3498DB', '#21618C', '#1B4F72']  # Blue gradient
+gradient_labels = ['Very Light', 'Light', 'Medium', 'Dark', 'Very Dark']
+
+for i, (c, label) in enumerate(zip(gradient_colors, gradient_labels)):
+    rect = mpatches.Rectangle((i*2, 0), 1.8, 1, facecolor=c,
+                             edgecolor='black', linewidth=2)
+    ax3.add_patch(rect)
+
+    rgb = mcolors.hex2color(c)
+    lightness = 0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2]
+
+    ax3.text(i*2 + 0.9, 0.5, f'{label}\nL={lightness:.2f}',
+            ha='center', va='center', fontsize=9, fontweight='bold',
+            color='white' if lightness < 0.5 else 'black')
+
+ax3.set_xlim(0, 10)
+ax3.set_ylim(0, 1)
+ax3.set_title('✓ ACCEPTABLE: Intentional Gradient (Single Hue Family, Smooth Transition)',
+              fontsize=13, fontweight='bold', color='green', pad=15)
+ax3.axis('off')
+
+plt.tight_layout()
+plt.savefig('color_balance_lightness.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+### **Rule 3: Biological Logic in Color Assignment**
+
+**Principle:** Colors should follow scientific conventions and intuitive associations.
+
+**Examples:**
+
+```python
+# 1. WT, KO, Rescue: Color proximity reflects biological relationship
+BIOLOGICAL_LOGIC = {
+    'WT': '#7F8C8D',      # Wild-type: neutral gray (baseline)
+    'Rescue': '#5D6D7E',  # Rescue: similar gray (close to WT) ← KEY POINT
+    'KO': '#E74C3C'       # Knockout: red (different/problem)
+}
+# → WT and Rescue should have SIMILAR colors (both are functional states)
+
+# 2. Disease severity: Darker = more severe (intuitive)
+DISEASE_SEVERITY = {
+    'Healthy': '#D5F4E6',      # Very light green
+    'Mild': '#82E0AA',         # Light green
+    'Moderate': '#F39C12',     # Orange (warning)
+    'Severe': '#E67E22',       # Dark orange
+    'Critical': '#C0392B'      # Dark red (danger)
+}
+
+# 3. Traffic light convention: Red=stop/problem, Green=go/healthy
+INTUITIVE_ASSOCIATIONS = {
+    'Control': '#27AE60',      # Green = healthy/baseline
+    'Disease': '#E74C3C',      # Red = problem
+    'Treatment': '#3498DB'     # Blue = intervention
+}
+
+# 4. Temperature: Blue=cold, Red=hot
+TEMPERATURE_SCALE = {
+    'cold': '#3498DB',
+    'warm': '#F39C12',
+    'hot': '#E74C3C'
+}
+```
+
+**Code Example: WT-KO-Rescue Color Logic**
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# BAD: KO and Rescue have similar colors (confusing relationship)
+ax1 = axes[0]
+conditions_bad = ['WT', 'KO', 'Rescue']
+values_bad = [100, 45, 95]
+colors_bad = ['#7F8C8D', '#E74C3C', '#C0392B']  # KO and Rescue both reddish!
+
+bars1 = ax1.bar(conditions_bad, values_bad, color=colors_bad,
+               edgecolor='black', linewidth=2, width=0.6)
+ax1.set_ylabel('Function (%)', fontsize=12, fontweight='bold')
+ax1.set_ylim(0, 120)
+ax1.set_title('❌ BAD: KO and Rescue Look Similar\n(Implies they are related states)',
+              fontsize=13, fontweight='bold', color='red')
+ax1.axhline(100, color='black', linestyle='--', linewidth=1, alpha=0.5)
+ax1.text(2.5, 102, 'WT baseline', fontsize=9, style='italic')
+
+# GOOD: WT and Rescue similar (both functional), KO different
+ax2 = axes[1]
+conditions_good = ['WT', 'KO', 'Rescue']
+values_good = [100, 45, 95]
+colors_good = ['#7F8C8D', '#E74C3C', '#5D6D7E']  # WT and Rescue similar grays!
+
+bars2 = ax2.bar(conditions_good, values_good, color=colors_good,
+               edgecolor='black', linewidth=2, width=0.6)
+ax2.set_ylabel('Function (%)', fontsize=12, fontweight='bold')
+ax2.set_ylim(0, 120)
+ax2.set_title('✓ GOOD: WT and Rescue Similar Colors\n(Correctly shows functional relationship)',
+              fontsize=13, fontweight='bold', color='green')
+ax2.axhline(100, color='black', linestyle='--', linewidth=1, alpha=0.5)
+
+# Add annotations showing color logic
+ax2.annotate('', xy=(0, 110), xytext=(2, 110),
+            arrowprops=dict(arrowstyle='<->', color='green', lw=3))
+ax2.text(1, 113, 'Similar colors =\nSimilar function', ha='center',
+        fontsize=9, fontweight='bold', color='green',
+        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.7))
+
+ax2.annotate('', xy=(1, -8), xytext=(1, -8),
+            arrowprops=dict(arrowstyle='-', color='red', lw=0))
+ax2.text(1, -12, 'Different color =\nLoss of function', ha='center',
+        fontsize=9, fontweight='bold', color='red',
+        bbox=dict(boxstyle='round', facecolor='#FFCCCC', alpha=0.7))
+
+plt.tight_layout()
+plt.savefig('wt_ko_rescue_color_logic.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+### **Rule 4: NA/Missing Data Color Strategy**
+
+**Principle:** NA colors must be distinguishable and EXCLUDED from the main color scheme.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+# Simulate data with missing values
+data = {
+    'Gene': [f'Gene{i}' for i in range(1, 26)],
+    'Sample1': np.random.randn(25),
+    'Sample2': np.random.randn(25),
+    'Sample3': np.random.randn(25),
+    'Sample4': np.random.randn(25)
+}
+
+df = pd.DataFrame(data).set_index('Gene')
+
+# Introduce NA values
+df.iloc[3:6, 1] = np.nan
+df.iloc[10:12, 2] = np.nan
+df.iloc[18, 3] = np.nan
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# BAD: NA color within main palette (confusing)
+ax1 = axes[0]
+data_for_plot = df.fillna(-999)  # Sentinel value
+im1 = ax1.imshow(data_for_plot, cmap='RdBu_r', aspect='auto',
+                 vmin=-2, vmax=2)
+ax1.set_title('❌ BAD: NA Blends with Data\n(Can\'t distinguish missing values)',
+              fontsize=13, fontweight='bold', color='red')
+ax1.set_xlabel('Samples', fontsize=11, fontweight='bold')
+ax1.set_ylabel('Genes', fontsize=11, fontweight='bold')
+ax1.set_xticks(range(4))
+ax1.set_xticklabels(['Sample1', 'Sample2', 'Sample3', 'Sample4'], rotation=45, ha='right')
+plt.colorbar(im1, ax=ax1, label='Expression (Z-score)')
+
+# GOOD: NA in distinct color (crosshatch or gray)
+ax2 = axes[1]
+
+# Create masked array
+data_masked = np.ma.masked_where(np.isnan(df.values), df.values)
+
+im2 = ax2.imshow(data_masked, cmap='RdBu_r', aspect='auto',
+                 vmin=-2, vmax=2)
+
+# Add gray rectangles for NA values
+for i in range(df.shape[0]):
+    for j in range(df.shape[1]):
+        if np.isnan(df.values[i, j]):
+            ax2.add_patch(plt.Rectangle((j-0.5, i-0.5), 1, 1,
+                                       facecolor='#D3D3D3',
+                                       edgecolor='black',
+                                       linewidth=1.5,
+                                       hatch='///',
+                                       fill=True))
+
+ax2.set_title('✓ GOOD: NA in Distinct Color\n(Crosshatch pattern, separate from scale)',
+              fontsize=13, fontweight='bold', color='green')
+ax2.set_xlabel('Samples', fontsize=11, fontweight='bold')
+ax2.set_ylabel('Genes', fontsize=11, fontweight='bold')
+ax2.set_xticks(range(4))
+ax2.set_xticklabels(['Sample1', 'Sample2', 'Sample3', 'Sample4'], rotation=45, ha='right')
+
+cbar2 = plt.colorbar(im2, ax=ax2, label='Expression (Z-score)')
+
+# Add NA legend
+from matplotlib.patches import Patch
+na_patch = Patch(facecolor='#D3D3D3', edgecolor='black',
+                hatch='///', label='NA / Missing')
+ax2.legend(handles=[na_patch], loc='upper right', frameon=True)
+
+plt.tight_layout()
+plt.savefig('na_color_strategy.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**R Equivalent:**
+
+```r
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+# Create data with NAs
+set.seed(42)
+data <- expand.grid(
+  Gene = paste0('Gene', 1:25),
+  Sample = paste0('Sample', 1:4)
+) %>%
+  mutate(Expression = rnorm(n()))
+
+# Introduce NAs
+data$Expression[30:35] <- NA
+data$Expression[60:62] <- NA
+
+# Plot with distinct NA handling
+ggplot(data, aes(x = Sample, y = Gene, fill = Expression)) +
+  geom_tile(color = 'white', size = 0.5) +
+
+  # Main color scale (for non-NA values)
+  scale_fill_gradient2(low = '#3498DB', mid = 'white', high = '#E74C3C',
+                      midpoint = 0, na.value = '#D3D3D3',  # Gray for NA
+                      name = 'Expression\n(Z-score)') +
+
+  # Add pattern to NA tiles (requires ggpattern package)
+  # library(ggpattern)
+  # geom_tile_pattern(data = filter(data, is.na(Expression)),
+  #                   pattern = 'crosshatch', pattern_density = 0.5,
+  #                   fill = '#D3D3D3', color = 'black', size = 1) +
+
+  labs(title = '✓ NA Values in Distinct Gray (Separate from Scale)',
+       x = 'Samples', y = 'Genes') +
+
+  theme_minimal(base_size = 11) +
+  theme(
+    plot.title = element_text(face = 'bold', size = 13, hjust = 0.5, color = 'darkgreen'),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = 'right'
+  )
+
+ggsave('na_color_strategy_r.png', width = 10, height = 8, dpi = 300)
+```
+
+---
+
+### **Rule 5: Sequential Colors - Single Hue Families**
+
+**When to use:** Continuous data (e.g., expression levels, concentrations, counts)
+
+**Principle:** Use gradations of a **single hue** to show magnitude, not rainbow colors.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
+
+np.random.seed(42)
+
+# Simulate continuous data (e.g., gene expression)
+data = np.random.rand(10, 10) * 100
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# BAD: Rainbow (not perceptually uniform, no clear magnitude)
+ax1 = axes[0]
+im1 = ax1.imshow(data, cmap='jet', aspect='auto')
+ax1.set_title('❌ BAD: Rainbow\n(Unclear magnitude progression)',
+              fontsize=13, fontweight='bold', color='red')
+plt.colorbar(im1, ax=ax1, label='Expression')
+
+# GOOD: Single hue gradient (clear magnitude)
+ax2 = axes[1]
+im2 = ax2.imshow(data, cmap='Blues', aspect='auto')
+ax2.set_title('✓ GOOD: Single Hue (Blue)\n(Clear: Light → Dark = Low → High)',
+              fontsize=13, fontweight='bold', color='green')
+plt.colorbar(im2, ax=ax2, label='Expression')
+
+# ALSO GOOD: Custom single-hue gradient
+ax3 = axes[2]
+colors_custom = ['#FFFFFF', '#EBF5FB', '#D6EAF8', '#AED6F1',
+                '#85C1E9', '#5DADE2', '#3498DB', '#2E86C1',
+                '#2874A6', '#21618C']
+cmap_custom = LinearSegmentedColormap.from_list('custom_blues', colors_custom)
+im3 = ax3.imshow(data, cmap=cmap_custom, aspect='auto')
+ax3.set_title('✓ ALSO GOOD: Custom Blue Gradient\n(Smooth progression)',
+              fontsize=13, fontweight='bold', color='green')
+plt.colorbar(im3, ax=ax3, label='Expression')
+
+plt.tight_layout()
+plt.savefig('sequential_color_single_hue.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+## **2.9 Shape Selection and Usage (NEW SECTION)**
+
+### **Rule: Shape Must Provide Clear Contrast**
+
+**Principle:** Regular vs. irregular shapes, filled vs. open - use contrast to distinguish groups.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate data for different conditions
+conditions = ['Control', 'Treatment A', 'Treatment B', 'Treatment C']
+n_points = 30
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+# BAD: Similar shapes (hard to distinguish)
+ax1 = axes[0]
+shapes_bad = ['o', 's', '^', 'v']  # All filled, similar sizes
+for i, (cond, marker) in enumerate(zip(conditions, shapes_bad)):
+    x = np.random.randn(n_points) + i*2
+    y = np.random.randn(n_points)
+    ax1.scatter(x, y, s=80, marker=marker, color='#3498DB',
+               alpha=0.6, edgecolors='black', linewidths=1,
+               label=cond)
+
+ax1.set_xlabel('Variable X', fontsize=12, fontweight='bold')
+ax1.set_ylabel('Variable Y', fontsize=12, fontweight='bold')
+ax1.set_title('❌ BAD: Subtle Shape Differences\n(Hard to distinguish quickly)',
+              fontsize=13, fontweight='bold', color='red')
+ax1.legend(loc='upper left', frameon=True, fontsize=10)
+ax1.grid(alpha=0.3)
+
+# GOOD: Contrasting shapes (easy to distinguish)
+ax2 = axes[1]
+shapes_good = ['o', 's', '^', 'D']  # Mix of regular shapes
+fills = [True, False, True, False]  # Alternate filled/open
+colors_contrast = ['#3498DB', '#3498DB', '#E74C3C', '#E74C3C']
+
+for i, (cond, marker, filled, color) in enumerate(zip(conditions, shapes_good, fills, colors_contrast)):
+    x = np.random.randn(n_points) + i*2
+    y = np.random.randn(n_points)
+
+    if filled:
+        ax2.scatter(x, y, s=100, marker=marker, color=color,
+                   alpha=0.7, edgecolors='black', linewidths=1.5,
+                   label=cond)
+    else:
+        ax2.scatter(x, y, s=100, marker=marker, facecolors='none',
+                   edgecolors=color, linewidths=2,
+                   label=cond)
+
+ax2.set_xlabel('Variable X', fontsize=12, fontweight='bold')
+ax2.set_ylabel('Variable Y', fontsize=12, fontweight='bold')
+ax2.set_title('✓ GOOD: High Contrast Shapes\n(Filled/Open + Color + Shape)',
+              fontsize=13, fontweight='bold', color='green')
+ax2.legend(loc='upper left', frameon=True, fontsize=10)
+ax2.grid(alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('shape_contrast.png', dpi=300, bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**Shape Palette Recommendations:**
+
+```python
+# Accessible shape combinations (easily distinguishable)
+SHAPE_PALETTE_GOOD = {
+    'Group1': {'marker': 'o', 'fill': True, 'size': 80},    # Filled circle
+    'Group2': {'marker': 's', 'fill': False, 'size': 80},   # Open square
+    'Group3': {'marker': '^', 'fill': True, 'size': 100},   # Filled triangle
+    'Group4': {'marker': 'D', 'fill': False, 'size': 70}    # Open diamond
+}
+
+# Bad: Too subtle differences
+SHAPE_PALETTE_BAD = {
+    'Group1': {'marker': 'o', 'fill': True, 'size': 80},    # Filled circle
+    'Group2': {'marker': 'o', 'fill': True, 'size': 90},    # Slightly larger circle (!)
+    'Group3': {'marker': 'o', 'fill': True, 'size': 70},    # Slightly smaller circle (!)
+    'Group4': {'marker': 's', 'fill': True, 'size': 80}     # Square (finally different)
+}
+```
+---
 
 **Chapter 2 Complete Summary:**
 

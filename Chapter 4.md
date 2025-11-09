@@ -1735,6 +1735,271 @@ Remove:
 ```
 ---
 
+### **4.7 Bar Plot Error Bars: Correct Usage**
+
+**Critical Rule:** Error bars must be scientifically justified and clearly labeled.
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# Example data
+conditions = ['Control', 'Treatment A', 'Treatment B']
+n_replicates = 5
+
+# Simulate biological replicates
+data = {
+    'Control': np.random.normal(25, 3, n_replicates),
+    'Treatment A': np.random.normal(35, 4, n_replicates),
+    'Treatment B': np.random.normal(30, 3.5, n_replicates)
+}
+
+means = [np.mean(data[c]) for c in conditions]
+stds = [np.std(data[c], ddof=1) for c in conditions]  # Sample SD
+sems = [np.std(data[c], ddof=1) / np.sqrt(len(data[c])) for c in conditions]  # SEM
+
+# Panel A: BAD - No error bars 
+ax1.text(0.5, 0.95, 'No variability shown!\nHow reliable is this?',
+        transform=ax1.transAxes, ha='center', va='top',
+        fontsize=10, style='italic', color='red',
+        bbox=dict(boxstyle='round', facecolor='#FFCCCC', alpha=0.8))
+
+# Panel B: UNCLEAR - Error bars without label
+ax2 = axes[0, 1]
+ax2.bar(conditions, means, yerr=stds, capsize=8,
+       color='#3498DB', edgecolor='black', linewidth=1.5)
+ax2.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax2.set_ylim(0, 50)
+ax2.set_title('❌ UNCLEAR: Unlabeled Error Bars\n(SD? SEM? 95% CI?)',
+              fontsize=12, fontweight='bold', color='red')
+
+# Panel C: GOOD - SD with label
+ax3 = axes[1, 0]
+ax3.bar(conditions, means, yerr=stds, capsize=8,
+       color='#3498DB', edgecolor='black', linewidth=1.5)
+ax3.set_ylabel('Response (AU)\n(Mean ± SD)', fontsize=11, fontweight='bold')
+ax3.set_ylim(0, 50)
+ax3.set_title('✓ GOOD: Labeled as SD\n(Shows data spread)',
+              fontsize=12, fontweight='bold', color='green')
+
+# Add sample sizes
+for i, (cond, mean, std) in enumerate(zip(conditions, means, stds)):
+    ax3.text(i, mean + std + 2, f'n={n_replicates}',
+            ha='center', fontsize=9, style='italic')
+
+# Panel D: ALSO GOOD - SEM with label
+ax4 = axes[1, 1]
+ax4.bar(conditions, means, yerr=sems, capsize=8,
+       color='#27AE60', edgecolor='black', linewidth=1.5)
+ax4.set_ylabel('Response (AU)\n(Mean ± SEM)', fontsize=11, fontweight='bold')
+ax4.set_ylim(0, 50)
+ax4.set_title('✓ ALSO GOOD: Labeled as SEM\n(Shows precision of mean)',
+              fontsize=12, fontweight='bold', color='green')
+
+# Add sample sizes
+for i, (cond, mean, sem) in enumerate(zip(conditions, means, sems)):
+    ax4.text(i, mean + sem + 2, f'n={n_replicates}',
+            ha='center', fontsize=9, style='italic')
+
+plt.tight_layout()
+plt.savefig('error_bars_correct_usage.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**Decision Tree: Which Error Bar to Use?**
+
+```python
+"""
+WHEN TO USE EACH ERROR BAR TYPE:
+
+1. STANDARD DEVIATION (SD):
+   ✓ Shows spread/variability of the data
+   ✓ Use when: Describing population variability is important
+   ✓ Interpretation: ~68% of data falls within ±1 SD
+   ✓ Example: "Control group has high variability (SD=8)"
+
+2. STANDARD ERROR OF THE MEAN (SEM):
+   ✓ Shows precision of the mean estimate
+   ✓ Use when: Comparing means between groups
+   ✓ Interpretation: Narrower bars = more precise mean
+   ✓ Formula: SEM = SD / sqrt(n)
+   ✓ Note: ALWAYS report n (sample size)
+
+3. 95% CONFIDENCE INTERVAL:
+   ✓ Shows range likely to contain true mean
+   ✓ Use when: Making statistical inference
+   ✓ Interpretation: If bars don't overlap, likely significant difference
+   ✓ Formula: CI = mean ± (t_critical × SEM)
+
+GOLDEN RULE: ALWAYS LABEL WHICH TYPE YOU'RE USING!
+"""
+
+# Code example with all three types
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import stats
+
+np.random.seed(42)
+
+conditions = ['Control', 'Treatment']
+n = 10  # Sample size
+data_ctrl = np.random.normal(50, 10, n)
+data_trt = np.random.normal(65, 12, n)
+
+means = [data_ctrl.mean(), data_trt.mean()]
+sds = [data_ctrl.std(ddof=1), data_trt.std(ddof=1)]
+sems = [data_ctrl.std(ddof=1)/np.sqrt(n), data_trt.std(ddof=1)/np.sqrt(n)]
+
+# Calculate 95% CI
+t_crit = stats.t.ppf(0.975, df=n-1)  # Two-tailed, df=n-1
+ci95 = [sem * t_crit for sem in sems]
+
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+# Plot 1: SD
+ax1 = axes[0]
+ax1.bar(conditions, means, yerr=sds, capsize=10,
+       color='#3498DB', edgecolor='black', linewidth=2, width=0.5)
+ax1.set_ylabel('Response (AU)', fontsize=12, fontweight='bold')
+ax1.set_ylim(0, 100)
+ax1.set_title('Standard Deviation (SD)\nShows data spread',
+              fontsize=13, fontweight='bold')
+ax1.text(0.5, 0.95, f'n={n} per group', transform=ax1.transAxes,
+        ha='center', va='top', fontsize=10, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Plot 2: SEM
+ax2 = axes[1]
+ax2.bar(conditions, means, yerr=sems, capsize=10,
+       color='#27AE60', edgecolor='black', linewidth=2, width=0.5)
+ax2.set_ylabel('Response (AU)', fontsize=12, fontweight='bold')
+ax2.set_ylim(0, 100)
+ax2.set_title('Standard Error of Mean (SEM)\nShows precision of mean',
+              fontsize=13, fontweight='bold')
+ax2.text(0.5, 0.95, f'n={n} per group', transform=ax2.transAxes,
+        ha='center', va='top', fontsize=10, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Plot 3: 95% CI
+ax3 = axes[2]
+ax3.bar(conditions, means, yerr=ci95, capsize=10,
+       color='#E74C3C', edgecolor='black', linewidth=2, width=0.5)
+ax3.set_ylabel('Response (AU)', fontsize=12, fontweight='bold')
+ax3.set_ylim(0, 100)
+ax3.set_title('95% Confidence Interval\nLikely range of true mean',
+              fontsize=13, fontweight='bold')
+ax3.text(0.5, 0.95, f'n={n} per group', transform=ax3.transAxes,
+        ha='center', va='top', fontsize=10, fontweight='bold',
+        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
+
+# Add comparison note
+fig.text(0.5, 0.02, 'Note: Same data, different error bar types → Different visual impression',
+        ha='center', fontsize=11, style='italic', fontweight='bold')
+
+plt.tight_layout(rect=[0, 0.05, 1, 1])
+plt.savefig('error_bar_types_comparison.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+**Critical Mistake: Using Bar Plots When You Shouldn't**
+
+```python
+# Bar plots are often MISUSED - here are better alternatives
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(42)
+
+# Simulate data with different distributions
+control = np.random.normal(50, 10, 100)
+treatment = np.concatenate([
+    np.random.normal(40, 5, 50),   # Bimodal distribution!
+    np.random.normal(70, 5, 50)
+])
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+# BAD: Bar plot hides bimodal distribution
+ax1 = axes[0, 0]
+means = [control.mean(), treatment.mean()]
+stds = [control.std(), treatment.std()]
+conditions = ['Control', 'Treatment']
+
+ax1.bar(conditions, means, yerr=stds, capsize=8,
+       color='#3498DB', edgecolor='black', linewidth=2)
+ax1.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax1.set_ylim(0, 100)
+ax1.set_title('❌ BAD: Bar Plot\n(Hides important distribution shape)',
+              fontsize=12, fontweight='bold', color='red')
+
+# BETTER: Box plot shows distribution
+ax2 = axes[0, 1]
+bp = ax2.boxplot([control, treatment], labels=conditions,
+                 patch_artist=True, widths=0.5)
+for patch in bp['boxes']:
+    patch.set_facecolor('#3498DB')
+    patch.set_alpha(0.7)
+ax2.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax2.set_ylim(0, 100)
+ax2.set_title('✓ BETTER: Box Plot\n(Shows quartiles, outliers)',
+              fontsize=12, fontweight='bold', color='green')
+ax2.grid(axis='y', alpha=0.3)
+
+# EVEN BETTER: Violin plot shows full distribution
+ax3 = axes[1, 0]
+parts = ax3.violinplot([control, treatment], positions=[1, 2],
+                       widths=0.7, showmeans=True, showmedians=True)
+for pc in parts['bodies']:
+    pc.set_facecolor('#3498DB')
+    pc.set_alpha(0.7)
+ax3.set_xticks([1, 2])
+ax3.set_xticklabels(conditions)
+ax3.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax3.set_ylim(0, 100)
+ax3.set_title('✓ EVEN BETTER: Violin Plot\n(Shows BIMODAL distribution in treatment!)',
+              fontsize=12, fontweight='bold', color='green')
+ax3.grid(axis='y', alpha=0.3)
+
+# BEST: Show individual points + summary
+ax4 = axes[1, 1]
+# Scatter individual points with jitter
+x_ctrl = np.random.normal(1, 0.04, len(control))
+x_trt = np.random.normal(2, 0.04, len(treatment))
+ax4.scatter(x_ctrl, control, alpha=0.4, s=30, color='#3498DB', edgecolors='black', linewidths=0.5)
+ax4.scatter(x_trt, treatment, alpha=0.4, s=30, color='#E74C3C', edgecolors='black', linewidths=0.5)
+
+# Overlay mean ± SEM
+ax4.errorbar([1, 2], means, yerr=[s/np.sqrt(100) for s in stds],
+            fmt='D', markersize=12, color='black', markerfacecolor='yellow',
+            capsize=10, linewidth=3, label='Mean ± SEM')
+
+ax4.set_xticks([1, 2])
+ax4.set_xticklabels(conditions)
+ax4.set_xlim(0.5, 2.5)
+ax4.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
+ax4.set_ylim(0, 100)
+ax4.set_title('✓ BEST: Individual Points + Summary\n(Shows BOTH raw data and summary)',
+              fontsize=12, fontweight='bold', color='green')
+ax4.legend(loc='upper left', frameon=True, fontsize=10)
+ax4.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('when_not_to_use_barplot.png', dpi=300,
+           bbox_inches='tight', facecolor='white')
+plt.close()
+```
+
+---
+
+---
+
 ## Chapter 4 Summary: Complete Graph Selection Guide
 
 **Quick Reference Table:**
