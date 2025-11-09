@@ -363,38 +363,38 @@ Gray:        RGB(128, 128, 128)</code></pre>
 <p><strong>Weaknesses:</strong> - <strong>Not perceptually uniform</strong>: Equal RGB steps don’t produce equal visual differences - <strong>Hard to reason about</strong>: “What’s halfway between red and blue?” → Purple? Magenta? - <strong>Doesn’t separate color dimensions</strong>: Hue and brightness are entangled</p>
 <p><strong>When to Use:</strong> - Specifying colors for screen display - Digital-only figures - When starting from hex codes (e.g., #FF5733)</p>
 <p><strong>Code Example (Python):</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import numpy as np
-
-# Demonstrate RGB color space
-fig, ax = plt.subplots(figsize=(10, 4))
-
-# Create color samples
-colors_rgb = [
-    (1.0, 0.0, 0.0, 'Red\nRGB(255,0,0)'),
-    (0.0, 1.0, 0.0, 'Green\nRGB(0,255,0)'),
-    (0.0, 0.0, 1.0, 'Blue\nRGB(0,0,255)'),
-    (1.0, 1.0, 0.0, 'Yellow\nRGB(255,255,0)'),
-    (1.0, 0.0, 1.0, 'Magenta\nRGB(255,0,255)'),
-    (0.0, 1.0, 1.0, 'Cyan\nRGB(0,255,255)'),
-]
-
-for i, (r, g, b, label) in enumerate(colors_rgb):
-    rect = mpatches.Rectangle((i, 0), 1, 1, facecolor=(r, g, b))
-    ax.add_patch(rect)
-    ax.text(i+0.5, 0.5, label, ha='center', va='center',
-            fontsize=9, color='white' if (r+g+b) &lt; 1.5 else 'black')
-
-ax.set_xlim(0, len(colors_rgb))
-ax.set_ylim(0, 1)
-ax.set_aspect('equal')
-ax.axis('off')
-ax.set_title('RGB Color Model: Additive Primaries', fontsize=14, fontweight='bold', pad=20)
-
-plt.tight_layout()
-plt.savefig('rgb_color_model.png', dpi=300, bbox_inches='tight')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.patches <span class="im">as</span> mpatches</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrate RGB color space</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create color samples</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>colors_rgb <span class="op">=</span> [</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="st">'Red</span><span class="ch">\n</span><span class="st">RGB(255,0,0)'</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="st">'Green</span><span class="ch">\n</span><span class="st">RGB(0,255,0)'</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="st">'Blue</span><span class="ch">\n</span><span class="st">RGB(0,0,255)'</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="st">'Yellow</span><span class="ch">\n</span><span class="st">RGB(255,255,0)'</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="st">'Magenta</span><span class="ch">\n</span><span class="st">RGB(255,0,255)'</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    (<span class="fl">0.0</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="st">'Cyan</span><span class="ch">\n</span><span class="st">RGB(0,255,255)'</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (r, g, b, label) <span class="kw">in</span> <span class="bu">enumerate</span>(colors_rgb):</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    rect <span class="op">=</span> mpatches.Rectangle((i, <span class="dv">0</span>), <span class="dv">1</span>, <span class="dv">1</span>, facecolor<span class="op">=</span>(r, g, b))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ax.add_patch(rect)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    ax.text(i<span class="op">+</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, label, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'center'</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">9</span>, color<span class="op">=</span><span class="st">'white'</span> <span class="cf">if</span> (r<span class="op">+</span>g<span class="op">+</span>b) <span class="op">&lt;</span> <span class="fl">1.5</span> <span class="cf">else</span> <span class="st">'black'</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="bu">len</span>(colors_rgb))</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>ax.set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'RGB Color Model: Additive Primaries'</span>, fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'rgb_color_model.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Code Example (R):</strong></p>
 <pre><code>library(ggplot2)
 library(dplyr)

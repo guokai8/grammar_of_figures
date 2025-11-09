@@ -54,7 +54,7 @@ Gray:        RGB(128, 128, 128)
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
