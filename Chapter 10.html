@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -375,166 +410,164 @@ STEP 4: Document what worked for future reference</code></pre>
 <li>Image quality degrades when enlarged</li>
 </ul>
 <p><strong>Diagnosis:</strong></p>
-<pre><code>from PIL import Image
-img = Image.open('your_figure.png')
-print(f"Size: {img.size} pixels")
-print(f"DPI: {img.info.get('dpi', 'Not set')}")
-
-# Calculate effective DPI
-width_inches = 7  # Intended print width
-dpi_effective = img.size[0] / width_inches
-print(f"Effective DPI at {width_inches}\" width: {dpi_effective:.1f}")
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'your_figure.png'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Size: </span><span class="sc">{</span>img<span class="sc">.</span>size<span class="sc">}</span><span class="ss"> pixels"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"DPI: </span><span class="sc">{</span>img<span class="sc">.</span>info<span class="sc">.</span>get(<span class="st">'dpi'</span>, <span class="st">'Not set'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effective DPI</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>width_inches <span class="op">=</span> <span class="dv">7</span>  <span class="co"># Intended print width</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dpi_effective <span class="op">=</span> img.size[<span class="dv">0</span>] <span class="op">/</span> width_inches</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Effective DPI at </span><span class="sc">{</span>width_inches<span class="sc">}</span><span class="ch">\"</span><span class="ss"> width: </span><span class="sc">{</span>dpi_effective<span class="sc">:.1f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Solutions:</strong></p>
-<pre><code># Solution 1: Re-export at higher DPI
-import matplotlib.pyplot as plt
-
-# ... your plotting code ...
-
-# Save at 300 DPI (publication standard)
-plt.savefig('figure_300dpi.png', dpi=300, bbox_inches='tight')
-
-# For microscopy/detailed images, use 600 DPI
-plt.savefig('figure_600dpi.png', dpi=600, bbox_inches='tight')</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 1: Re-export at higher DPI</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ... your plotting code ...</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Save at 300 DPI (publication standard)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_300dpi.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For microscopy/detailed images, use 600 DPI</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure_600dpi.png'</span>, dpi<span class="op">=</span><span class="dv">600</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Common mistake: Upsampling after creation</strong></p>
-<pre><code># ❌ WRONG: This doesn't add information
-from PIL import Image
-img = Image.open('low_res.png')
-img_upsampled = img.resize((img.width*2, img.height*2), Image.LANCZOS)
-# → Still blurry, just larger file
-
-# ✓ CORRECT: Create at target resolution from start
-fig, ax = plt.subplots(figsize=(7, 5), dpi=300)  # Set DPI at creation</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ❌ WRONG: This doesn't add information</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'low_res.png'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>img_upsampled <span class="op">=</span> img.resize((img.width<span class="op">*</span><span class="dv">2</span>, img.height<span class="op">*</span><span class="dv">2</span>), Image.LANCZOS)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># → Still blurry, just larger file</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ✓ CORRECT: Create at target resolution from start</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">5</span>), dpi<span class="op">=</span><span class="dv">300</span>)  <span class="co"># Set DPI at creation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="problem-2-colors-look-different-on-screen-vs-print" class="level3">
 <h3 class="anchored" data-anchor-id="problem-2-colors-look-different-on-screen-vs-print">Problem 2: “Colors look different on screen vs print”</h3>
 <p>Cause: RGB (screen) vs CMYK (print) color space mismatch</p>
 <p><strong>Diagnosis:</strong></p>
-<pre><code>from PIL import Image
-img = Image.open('figure.png')
-print(f"Color mode: {img.mode}")
-# RGB = screen colors, CMYK = print colors</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'figure.png'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Color mode: </span><span class="sc">{</span>img<span class="sc">.</span>mode<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RGB = screen colors, CMYK = print colors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Solutions:</strong></p>
-<pre><code># Preventive: Use print-safe RGB colors from the start
-# Avoid highly saturated colors that can't be printed
-
-PRINT_SAFE_PALETTE = {
-    'blue': '#0066CC',      # Instead of pure #0000FF
-    'red': '#CC0000',       # Instead of pure #FF0000
-    'green': '#009900',     # Instead of pure #00FF00
-    'orange': '#CC6600',
-    'purple': '#9933CC'
-}
-
-# Test colors in grayscale (simulate print preview)
-import matplotlib.pyplot as plt
-import numpy as np
-
-fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-
-# Original colors
-data = np.random.rand(5, 5)
-im1 = axes[0].imshow(data, cmap='viridis')
-axes[0].set_title('Original (RGB)')
-
-# Grayscale preview (simulates black &amp; white print)
-im2 = axes[1].imshow(data, cmap='gray')
-axes[1].set_title('Grayscale Preview')
-
-plt.tight_layout()
-plt.savefig('color_test.png', dpi=300)
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preventive: Use print-safe RGB colors from the start</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Avoid highly saturated colors that can't be printed</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>PRINT_SAFE_PALETTE <span class="op">=</span> {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'blue'</span>: <span class="st">'#0066CC'</span>,      <span class="co"># Instead of pure #0000FF</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'red'</span>: <span class="st">'#CC0000'</span>,       <span class="co"># Instead of pure #FF0000</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'green'</span>: <span class="st">'#009900'</span>,     <span class="co"># Instead of pure #00FF00</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'orange'</span>: <span class="st">'#CC6600'</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'purple'</span>: <span class="st">'#9933CC'</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Test colors in grayscale (simulate print preview)</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Original colors</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.rand(<span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> axes[<span class="dv">0</span>].imshow(data, cmap<span class="op">=</span><span class="st">'viridis'</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Original (RGB)'</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Grayscale preview (simulates black &amp; white print)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> axes[<span class="dv">1</span>].imshow(data, cmap<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Grayscale Preview'</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'color_test.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Journal-specific fix:</strong></p>
-<pre><code># Some journals require CMYK conversion
-# Do this ONLY if explicitly required
-
-from PIL import Image
-
-# Convert RGB to CMYK
-img_rgb = Image.open('figure_rgb.png')
-img_cmyk = img_rgb.convert('CMYK')
-img_cmyk.save('figure_cmyk.tif')  # TIFF supports CMYK
-
-print("⚠ Warning: Colors may shift during conversion")
-print("→ Preview before submission")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Some journals require CMYK conversion</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Do this ONLY if explicitly required</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert RGB to CMYK</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>img_rgb <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'figure_rgb.png'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>img_cmyk <span class="op">=</span> img_rgb.convert(<span class="st">'CMYK'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>img_cmyk.save(<span class="st">'figure_cmyk.tif'</span>)  <span class="co"># TIFF supports CMYK</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"⚠ Warning: Colors may shift during conversion"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"→ Preview before submission"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="problem-3-file-size-too-large-for-submission" class="level3">
 <h3 class="anchored" data-anchor-id="problem-3-file-size-too-large-for-submission">Problem 3: “File size too large for submission”</h3>
 <p><strong>Diagnosis:</strong></p>
-<pre><code>import os
-
-file_path = 'large_figure.png'
-size_mb = os.path.getsize(file_path) / (1024 * 1024)
-print(f"Current file size: {size_mb:.2f} MB")
-
-# Check journal limit (common limits: 5-20 MB per figure)
-limit_mb = 10
-if size_mb &gt; limit_mb:
-    print(f"❌ Exceeds {limit_mb} MB limit")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">'large_figure.png'</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>size_mb <span class="op">=</span> os.path.getsize(file_path) <span class="op">/</span> (<span class="dv">1024</span> <span class="op">*</span> <span class="dv">1024</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Current file size: </span><span class="sc">{</span>size_mb<span class="sc">:.2f}</span><span class="ss"> MB"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check journal limit (common limits: 5-20 MB per figure)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>limit_mb <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> size_mb <span class="op">&gt;</span> limit_mb:</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"❌ Exceeds </span><span class="sc">{</span>limit_mb<span class="sc">}</span><span class="ss"> MB limit"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Solutions (in order of preference):</strong></p>
-<pre><code># Solution 1: Optimize compression (lossless)
-from PIL import Image
-
-img = Image.open('large_figure.png')
-
-# PNG optimization
-img.save('optimized.png', optimize=True, compress_level=9)
-
-# Check new size
-new_size = os.path.getsize('optimized.png') / (1024 * 1024)
-print(f"Optimized size: {new_size:.2f} MB ({(1-new_size/size_mb)*100:.1f}% reduction)")
-
-# Solution 2: Reduce dimensions (if too large)
-# Only if figure dimensions exceed journal specifications
-target_width = 7  # inches
-current_dpi = 300
-img_resized = img.resize((int(target_width * current_dpi),
-                         int(target_width * current_dpi * img.height / img.width)),
-                        Image.LANCZOS)
-img_resized.save('resized.png', optimize=True)
-
-# Solution 3: Use TIFF with LZW compression (lossless)
-img.save('compressed.tif', compression='tiff_lzw')
-
-# Solution 4: Split into multiple panels (if complex)
-# Save panels separately, combine in manuscript text</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 1: Optimize compression (lossless)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Image.<span class="bu">open</span>(<span class="st">'large_figure.png'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># PNG optimization</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>img.save(<span class="st">'optimized.png'</span>, optimize<span class="op">=</span><span class="va">True</span>, compress_level<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check new size</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>new_size <span class="op">=</span> os.path.getsize(<span class="st">'optimized.png'</span>) <span class="op">/</span> (<span class="dv">1024</span> <span class="op">*</span> <span class="dv">1024</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Optimized size: </span><span class="sc">{</span>new_size<span class="sc">:.2f}</span><span class="ss"> MB (</span><span class="sc">{</span>(<span class="dv">1</span><span class="op">-</span>new_size<span class="op">/</span>size_mb)<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% reduction)"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 2: Reduce dimensions (if too large)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Only if figure dimensions exceed journal specifications</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>target_width <span class="op">=</span> <span class="dv">7</span>  <span class="co"># inches</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>current_dpi <span class="op">=</span> <span class="dv">300</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>img_resized <span class="op">=</span> img.resize((<span class="bu">int</span>(target_width <span class="op">*</span> current_dpi),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                         <span class="bu">int</span>(target_width <span class="op">*</span> current_dpi <span class="op">*</span> img.height <span class="op">/</span> img.width)),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                        Image.LANCZOS)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>img_resized.save(<span class="st">'resized.png'</span>, optimize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 3: Use TIFF with LZW compression (lossless)</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>img.save(<span class="st">'compressed.tif'</span>, compression<span class="op">=</span><span class="st">'tiff_lzw'</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 4: Split into multiple panels (if complex)</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Save panels separately, combine in manuscript text</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="problem-4-fonts-look-different-after-export" class="level3">
 <h3 class="anchored" data-anchor-id="problem-4-fonts-look-different-after-export">Problem 4: “Fonts look different after export”</h3>
 <p><strong>Cause:</strong> Font embedding issues</p>
 <p><strong>Solutions:</strong></p>
-<pre><code># Matplotlib: Ensure fonts are embedded
-import matplotlib.pyplot as plt
-
-plt.rcParams['pdf.fonttype'] = 42  # TrueType (embeds fonts)
-plt.rcParams['ps.fonttype'] = 42
-
-# Or rasterize text (converts to pixels, always works)
-plt.savefig('figure.pdf', dpi=300, bbox_inches='tight')  # Text as vectors
-
-# If font still missing, use rasterization
-plt.savefig('figure.png', dpi=300, bbox_inches='tight')  # Text as pixels</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matplotlib: Ensure fonts are embedded</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'pdf.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span>  <span class="co"># TrueType (embeds fonts)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'ps.fonttype'</span>] <span class="op">=</span> <span class="dv">42</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Or rasterize text (converts to pixels, always works)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure.pdf'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)  <span class="co"># Text as vectors</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># If font still missing, use rasterization</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)  <span class="co"># Text as pixels</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>R:</strong></p>
-<pre><code>library(ggplot2)
-
-# Ensure fonts are embedded in PDF
-ggsave('figure.pdf', plot,
-       width = 7, height = 5,
-       device = cairo_pdf,  # Uses Cairo for better font handling
-       dpi = 300)
-
-# Or save as PNG (rasterizes everything)
-ggsave('figure.png', plot,
-       width = 7, height = 5,
-       dpi = 300)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure fonts are embedded in PDF</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'figure.pdf'</span>, plot,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> cairo_pdf,  <span class="co"># Uses Cairo for better font handling</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Or save as PNG (rasterizes everything)</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'figure.png'</span>, plot,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Fallback: Use system fonts only</strong></p>
-<pre><code># If custom fonts cause issues, stick to universals
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
-# System will use first available font
-</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If custom fonts cause issues, stick to universals</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.family'</span>] <span class="op">=</span> <span class="st">'sans-serif'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'Arial'</span>, <span class="st">'Helvetica'</span>, <span class="st">'DejaVu Sans'</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># System will use first available font</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -544,66 +577,66 @@ plt.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
 <h3 class="anchored" data-anchor-id="problem-5-text-is-overlapping-and-illegible">Problem 5: “Text is overlapping and illegible”</h3>
 <p><strong>Common in:</strong> Scatter plots with many labels, crowded axes</p>
 <p><strong>Solutions:</strong></p>
-<pre><code># Solution 1: Use adjustText library (automatic label adjustment)
-from adjustText import adjust_text
-import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-x = np.random.rand(30)
-y = np.random.rand(30)
-labels = [f'Gene_{i}' for i in range(30)]
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# Without adjustment (overlapping)
-ax1 = axes[0]
-ax1.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
-for i, label in enumerate(labels):
-    ax1.text(x[i], y[i], label, fontsize=8)
-ax1.set_title('❌ Without Adjustment\n(Overlapping labels)', color='red', fontweight='bold')
-
-# With adjustment (clean)
-ax2 = axes[1]
-ax2.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
-texts = [ax2.text(x[i], y[i], label, fontsize=8) for i, label in enumerate(labels)]
-adjust_text(texts, arrowprops=dict(arrowstyle='-', color='gray', lw=0.5))
-ax2.set_title('✓ With Adjustment\n(Clear labels)', color='green', fontweight='bold')
-
-plt.tight_layout()
-plt.savefig('label_overlap_fix.png', dpi=300, bbox_inches='tight')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 1: Use adjustText library (automatic label adjustment)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> adjustText <span class="im">import</span> adjust_text</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.rand(<span class="dv">30</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.random.rand(<span class="dv">30</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> [<span class="ss">f'Gene_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">30</span>)]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Without adjustment (overlapping)</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ax1.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(labels):</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    ax1.text(x[i], y[i], label, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ Without Adjustment</span><span class="ch">\n</span><span class="st">(Overlapping labels)'</span>, color<span class="op">=</span><span class="st">'red'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># With adjustment (clean)</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>ax2.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>texts <span class="op">=</span> [ax2.text(x[i], y[i], label, fontsize<span class="op">=</span><span class="dv">8</span>) <span class="cf">for</span> i, label <span class="kw">in</span> <span class="bu">enumerate</span>(labels)]</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>adjust_text(texts, arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-'</span>, color<span class="op">=</span><span class="st">'gray'</span>, lw<span class="op">=</span><span class="fl">0.5</span>))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ With Adjustment</span><span class="ch">\n</span><span class="st">(Clear labels)'</span>, color<span class="op">=</span><span class="st">'green'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'label_overlap_fix.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>R equivalent:</strong></p>
-<pre><code>library(ggplot2)
-library(ggrepel)  # Automatic label repelling
-
-# Without repelling (overlapping)
-p1 &lt;- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 3, color = '#3498DB', alpha = 0.7) +
-  geom_text(aes(label = label), size = 3) +  # Overlaps
-  labs(title = '❌ Without Repelling')
-
-# With repelling (clean)
-p2 &lt;- ggplot(data, aes(x = x, y = y)) +
-  geom_point(size = 3, color = '#3498DB', alpha = 0.7) +
-  geom_text_repel(aes(label = label), size = 3,  # Automatic adjustment
-                  box.padding = 0.5, max.overlaps = 20) +
-  labs(title = '✓ With Repelling')
-
-library(patchwork)
-p1 | p2
-ggsave('label_overlap_fix.png', width = 14, height = 6, dpi = 300)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)  <span class="co"># Automatic label repelling</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Without repelling (overlapping)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'#3498DB'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>  <span class="co"># Overlaps</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'❌ Without Repelling'</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># With repelling (clean)</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">'#3498DB'</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>,  <span class="co"># Automatic adjustment</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">box.padding =</span> <span class="fl">0.5</span>, <span class="at">max.overlaps =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'✓ With Repelling'</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">|</span> p2</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">'label_overlap_fix.png'</span>, <span class="at">width =</span> <span class="dv">14</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Solution 2: Selective labeling</strong></p>
-<pre><code># Label only significant/important points
-significant_idx = [0, 5, 12, 20, 28]  # Indices of important points
-
-ax.scatter(x, y, s=50, color='#3498DB', alpha=0.7)
-for i in significant_idx:
-    ax.annotate(labels[i], (x[i], y[i]),
-               xytext=(5, 5), textcoords='offset points',
-               fontsize=9, fontweight='bold',
-               bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-               arrowprops=dict(arrowstyle='-&gt;', lw=1))</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Label only significant/important points</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>significant_idx <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">20</span>, <span class="dv">28</span>]  <span class="co"># Indices of important points</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> significant_idx:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    ax.annotate(labels[i], (x[i], y[i]),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>               xytext<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>), textcoords<span class="op">=</span><span class="st">'offset points'</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>               fontsize<span class="op">=</span><span class="dv">9</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>               bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>               arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, lw<span class="op">=</span><span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="problem-6-figure-looks-clutteredtoo-busy" class="level3">
@@ -615,126 +648,126 @@ for i in significant_idx:
 <li>Dense gridlines overwhelm data</li>
 </ul>
 <p><strong>Solutions:</strong></p>
-<pre><code># Decluttering checklist:
-
-# 1. Remove unnecessary grid lines
-ax.grid(False)  # Remove all grids
-# Or: Use subtle grid
-ax.grid(axis='y', alpha=0.3, linewidth=0.5, color='gray')
-
-# 2. Remove top and right spines
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-
-# 3. Reduce color palette
-# ❌ BAD: Too many colors
-colors = plt.cm.tab20(np.linspace(0, 1, 15))  # 15 different colors!
-
-# ✓ GOOD: 3-4 colors maximum
-colors = ['#7F8C8D', '#3498DB', '#E74C3C']  # Gray, blue, red
-
-# 4. Increase white space
-plt.subplots_adjust(left=0.15, right=0.9, top=0.9, bottom=0.15)
-
-# 5. Use small multiples instead of overlaying everything
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))  # Split into 4 panels
-# Instead of cramming all data into one plot
-
-# 6. Remove redundant legends
-# If panel labels (A, B, C) are clear, legend may not be needed</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Decluttering checklist:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Remove unnecessary grid lines</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">False</span>)  <span class="co"># Remove all grids</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Or: Use subtle grid</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove top and right spines</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Reduce color palette</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ❌ BAD: Too many colors</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> plt.cm.tab20(np.linspace(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">15</span>))  <span class="co"># 15 different colors!</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># ✓ GOOD: 3-4 colors maximum</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#7F8C8D'</span>, <span class="st">'#3498DB'</span>, <span class="st">'#E74C3C'</span>]  <span class="co"># Gray, blue, red</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Increase white space</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.15</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, bottom<span class="op">=</span><span class="fl">0.15</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Use small multiples instead of overlaying everything</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))  <span class="co"># Split into 4 panels</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead of cramming all data into one plot</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Remove redundant legends</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co"># If panel labels (A, B, C) are clear, legend may not be needed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Before/After Example:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-x = np.linspace(0, 10, 100)
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# CLUTTERED VERSION
-ax1 = axes[0]
-for i in range(10):
-    y = np.sin(x + i/2) + np.random.rand(100)*0.1
-    ax1.plot(x, y, linewidth=1, label=f'Series {i+1}')
-ax1.grid(True, linewidth=1, alpha=0.7)  # Heavy grid
-ax1.legend(loc='best', fontsize=8, ncol=2)
-ax1.set_title('❌ Cluttered: Too Many Elements', color='red', fontweight='bold')
-
-# CLEAN VERSION
-ax2 = axes[1]
-# Show only 3 key series
-for i in [0, 4, 9]:
-    y = np.sin(x + i/2) + np.random.rand(100)*0.1
-    ax2.plot(x, y, linewidth=2.5, label=f'Series {i+1}', alpha=0.8)
-# Others in background (gray)
-for i in [1, 2, 3, 5, 6, 7, 8]:
-    y = np.sin(x + i/2) + np.random.rand(100)*0.1
-    ax2.plot(x, y, color='#CCCCCC', linewidth=0.8, alpha=0.3)
-ax2.grid(axis='y', alpha=0.3, linewidth=0.5)  # Subtle grid
-ax2.legend(loc='upper right', frameon=True, fontsize=10)
-ax2.spines['top'].set_visible(False)
-ax2.spines['right'].set_visible(False)
-ax2.set_title('✓ Clean: Focused Message', color='green', fontweight='bold')
-
-plt.tight_layout()
-plt.savefig('declutter_fix.png', dpi=300, bbox_inches='tight')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">5</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># CLUTTERED VERSION</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.sin(x <span class="op">+</span> i<span class="op">/</span><span class="dv">2</span>) <span class="op">+</span> np.random.rand(<span class="dv">100</span>)<span class="op">*</span><span class="fl">0.1</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    ax1.plot(x, y, linewidth<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="ss">f'Series </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)  <span class="co"># Heavy grid</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>ax1.legend(loc<span class="op">=</span><span class="st">'best'</span>, fontsize<span class="op">=</span><span class="dv">8</span>, ncol<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ Cluttered: Too Many Elements'</span>, color<span class="op">=</span><span class="st">'red'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># CLEAN VERSION</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only 3 key series</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">9</span>]:</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.sin(x <span class="op">+</span> i<span class="op">/</span><span class="dv">2</span>) <span class="op">+</span> np.random.rand(<span class="dv">100</span>)<span class="op">*</span><span class="fl">0.1</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    ax2.plot(x, y, linewidth<span class="op">=</span><span class="fl">2.5</span>, label<span class="op">=</span><span class="ss">f'Series </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Others in background (gray)</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>]:</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.sin(x <span class="op">+</span> i<span class="op">/</span><span class="dv">2</span>) <span class="op">+</span> np.random.rand(<span class="dv">100</span>)<span class="op">*</span><span class="fl">0.1</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    ax2.plot(x, y, color<span class="op">=</span><span class="st">'#CCCCCC'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>ax2.grid(axis<span class="op">=</span><span class="st">'y'</span>, alpha<span class="op">=</span><span class="fl">0.3</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># Subtle grid</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>ax2.legend(loc<span class="op">=</span><span class="st">'upper right'</span>, frameon<span class="op">=</span><span class="va">True</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>ax2.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ Clean: Focused Message'</span>, color<span class="op">=</span><span class="st">'green'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'declutter_fix.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="problem-7-panels-are-misaligned" class="level3">
 <h3 class="anchored" data-anchor-id="problem-7-panels-are-misaligned">Problem 7: “Panels are misaligned”</h3>
 <p><strong>Cause:</strong> Inconsistent axis ranges, label sizes, or spacing</p>
 <p><strong>Solutions:</strong></p>
-<pre><code># Solution 1: Use consistent axis limits
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-
-# Set same limits for all comparable plots
-xlim_range = (0, 10)
-ylim_range = (0, 100)
-
-for ax in axes.flat:
-    # ... plot data ...
-    ax.set_xlim(xlim_range)
-    ax.set_ylim(ylim_range)
-
-# Solution 2: Use GridSpec for precise control
-from matplotlib.gridspec import GridSpec
-
-fig = plt.figure(figsize=(12, 8))
-gs = GridSpec(2, 2, figure=fig,
-             width_ratios=[1, 1], height_ratios=[1, 1],
-             hspace=0.3, wspace=0.3)  # Consistent spacing
-
-ax1 = fig.add_subplot(gs[0, 0])
-ax2 = fig.add_subplot(gs[0, 1])
-ax3 = fig.add_subplot(gs[1, 0])
-ax4 = fig.add_subplot(gs[1, 1])
-
-# Solution 3: Match axis label sizes
-for ax in [ax1, ax2, ax3, ax4]:
-    ax.set_xlabel('X Label', fontsize=11, fontweight='bold')
-    ax.set_ylabel('Y Label', fontsize=11, fontweight='bold')
-    ax.tick_params(labelsize=9)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 1: Use consistent axis limits</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set same limits for all comparable plots</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>xlim_range <span class="op">=</span> (<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ylim_range <span class="op">=</span> (<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes.flat:</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... plot data ...</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(xlim_range)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim(ylim_range)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 2: Use GridSpec for precise control</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.gridspec <span class="im">import</span> GridSpec</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>gs <span class="op">=</span> GridSpec(<span class="dv">2</span>, <span class="dv">2</span>, figure<span class="op">=</span>fig,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>             width_ratios<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">1</span>], height_ratios<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">1</span>],</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>             hspace<span class="op">=</span><span class="fl">0.3</span>, wspace<span class="op">=</span><span class="fl">0.3</span>)  <span class="co"># Consistent spacing</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>ax4 <span class="op">=</span> fig.add_subplot(gs[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution 3: Match axis label sizes</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> [ax1, ax2, ax3, ax4]:</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'X Label'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Y Label'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>R equivalent:</strong></p>
-<pre><code>library(ggplot2)
-library(patchwork)
-
-# Create plots with consistent limits
-p1 &lt;- ggplot(data1, aes(x, y)) + geom_point() +
-  xlim(0, 10) + ylim(0, 100)
-
-p2 &lt;- ggplot(data2, aes(x, y)) + geom_point() +
-  xlim(0, 10) + ylim(0, 100)  # Same limits
-
-p3 &lt;- ggplot(data3, aes(x, y)) + geom_point() +
-  xlim(0, 10) + ylim(0, 100)
-
-p4 &lt;- ggplot(data4, aes(x, y)) + geom_point() +
-  xlim(0, 10) + ylim(0, 100)
-
-# Combine with patchwork (auto-aligns)
-(p1 | p2) / (p3 | p4) +
-  plot_layout(heights = c(1, 1), widths = c(1, 1))</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plots with consistent limits</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data1, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data2, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">100</span>)  <span class="co"># Same limits</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data3, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data4, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine with patchwork (auto-aligns)</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">|</span> p2) <span class="sc">/</span> (p3 <span class="sc">|</span> p4) <span class="sc">+</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -744,43 +777,43 @@ p4 &lt;- ggplot(data4, aes(x, y)) + geom_point() +
 <h3 class="anchored" data-anchor-id="problem-8-my-bar-chart-doesnt-show-the-difference-clearly">Problem 8: “My bar chart doesn’t show the difference clearly”</h3>
 <p><strong>Diagnosis:</strong> Likely truncated y-axis or wrong plot type</p>
 <p><strong>Solutions:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-data = [98, 100, 102, 104]  # Small differences
-categories = ['A', 'B', 'C', 'D']
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-# WRONG: Truncated axis (exaggerates difference)
-ax1 = axes[0]
-ax1.bar(categories, data, color='#3498DB', edgecolor='black', linewidth=1.5)
-ax1.set_ylim(95, 105)  # Truncated!
-ax1.set_ylabel('Value')
-ax1.set_title('❌ Misleading: Truncated Axis', color='red', fontweight='bold')
-ax1.text(0.5, 0.5, 'Exaggerates\ndifferences!', transform=ax1.transAxes,
-        ha='center', fontsize=12, color='red', fontweight='bold',
-        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.7))
-
-# CORRECT: Start at zero (shows true scale)
-ax2 = axes[1]
-ax2.bar(categories, data, color='#3498DB', edgecolor='black', linewidth=1.5)
-ax2.set_ylim(0, 110)  # Starts at zero
-ax2.set_ylabel('Value')
-ax2.set_title('✓ Correct: Zero Baseline', color='green', fontweight='bold')
-
-# ALTERNATIVE: Dot plot with range (if differences are small but real)
-ax3 = axes[2]
-ax3.plot(categories, data, 'o', markersize=12, color='#3498DB')
-ax3.set_ylim(95, 105)  # Can use truncated axis for dot plots
-ax3.axhline(100, color='gray', linestyle='--', linewidth=1, alpha=0.5, label='Baseline')
-ax3.set_ylabel('Value')
-ax3.set_title('✓ Alternative: Dot Plot\n(Truncation OK here)', color='green', fontweight='bold')
-ax3.legend()
-
-plt.tight_layout()
-plt.savefig('bar_chart_fix.png', dpi=300, bbox_inches='tight')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [<span class="dv">98</span>, <span class="dv">100</span>, <span class="dv">102</span>, <span class="dv">104</span>]  <span class="co"># Small differences</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">5</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># WRONG: Truncated axis (exaggerates difference)</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>ax1.bar(categories, data, color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">95</span>, <span class="dv">105</span>)  <span class="co"># Truncated!</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ Misleading: Truncated Axis'</span>, color<span class="op">=</span><span class="st">'red'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>ax1.text(<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="st">'Exaggerates</span><span class="ch">\n</span><span class="st">differences!'</span>, transform<span class="op">=</span>ax1.transAxes,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'red'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        bbox<span class="op">=</span><span class="bu">dict</span>(boxstyle<span class="op">=</span><span class="st">'round'</span>, facecolor<span class="op">=</span><span class="st">'yellow'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>))</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co"># CORRECT: Start at zero (shows true scale)</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>ax2.bar(categories, data, color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">110</span>)  <span class="co"># Starts at zero</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ Correct: Zero Baseline'</span>, color<span class="op">=</span><span class="st">'green'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ALTERNATIVE: Dot plot with range (if differences are small but real)</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> axes[<span class="dv">2</span>]</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>ax3.plot(categories, data, <span class="st">'o'</span>, markersize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>ax3.set_ylim(<span class="dv">95</span>, <span class="dv">105</span>)  <span class="co"># Can use truncated axis for dot plots</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>ax3.axhline(<span class="dv">100</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'Baseline'</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>ax3.set_ylabel(<span class="st">'Value'</span>)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>ax3.set_title(<span class="st">'✓ Alternative: Dot Plot</span><span class="ch">\n</span><span class="st">(Truncation OK here)'</span>, color<span class="op">=</span><span class="st">'green'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>ax3.legend()</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'bar_chart_fix.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Key rule:</strong></p>
 <pre><code>Bar charts: ALWAYS start at zero
 Dot plots/line plots: Truncation acceptable if clearly indicated</code></pre>
@@ -790,93 +823,93 @@ Dot plots/line plots: Truncation acceptable if clearly indicated</code></pre>
 <h3 class="anchored" data-anchor-id="problem-9-p-values-overlap-or-are-unreadable">Problem 9: “P-values overlap or are unreadable”</h3>
 <p><strong>Common in:</strong> Plots with many statistical comparisons</p>
 <p><strong>Solutions:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-
-np.random.seed(42)
-
-categories = ['A', 'B', 'C', 'D', 'E']
-values = [25, 32, 28, 40, 35]
-errors = [3, 4, 3, 5, 4]
-
-fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-# BAD: All comparisons shown (cluttered)
-ax1 = axes[0]
-bars = ax1.bar(categories, values, yerr=errors, capsize=5,
-              color='#3498DB', edgecolor='black', linewidth=1.5)
-ax1.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
-ax1.set_ylim(0, 60)
-
-# Draw all pairwise comparisons (too many!)
-y_max = 50
-for i in range(len(categories)-1):
-    y_max += 3
-    ax1.plot([i, i+1], [y_max, y_max], 'k-', linewidth=1.5)
-    ax1.text((i + i+1)/2, y_max + 0.5, '**', ha='center', fontsize=10)
-
-ax1.set_title('❌ Cluttered: Too Many Comparisons', color='red', fontweight='bold')
-
-# GOOD: Show only key comparisons
-ax2 = axes[1]
-bars = ax2.bar(categories, values, yerr=errors, capsize=5,
-              color='#3498DB', edgecolor='black', linewidth=1.5)
-ax2.set_ylabel('Response (AU)', fontsize=11, fontweight='bold')
-ax2.set_ylim(0, 55)
-
-# Show only comparisons vs. control (A) or most important
-# Comparison: D vs A
-ax2.plot([0, 3], [48, 48], 'k-', linewidth=2)
-ax2.text(1.5, 49, '** p&lt;0.01', ha='center', fontsize=11, fontweight='bold')
-
-# Comparison: E vs A
-ax2.plot([0, 4], [52, 52], 'k-', linewidth=2)
-ax2.text(2, 53, '* p&lt;0.05', ha='center', fontsize=11, fontweight='bold')
-
-ax2.set_title('✓ Clean: Key Comparisons Only', color='green', fontweight='bold')
-
-plt.tight_layout()
-plt.savefig('statistical_annotation_fix.png', dpi=300, bbox_inches='tight')
-plt.close()
-
-# Use letters instead of brackets (common in biology)
-ax.bar(categories, values, ...)
-
-# Add letters above bars
-letters = ['a', 'ab', 'ab', 'c', 'bc']  # Different letters = significant difference
-for i, (bar, letter) in enumerate(zip(bars, letters)):
-    height = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2., height + errors[i] + 1,
-           letter, ha='center', va='bottom', fontsize=12, fontweight='bold')
-
-# Caption: "Bars with different letters are significantly different (p&lt;0.05, Tukey HSD)"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>, <span class="st">'E'</span>]</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">25</span>, <span class="dv">32</span>, <span class="dv">28</span>, <span class="dv">40</span>, <span class="dv">35</span>]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>))</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># BAD: All comparisons shown (cluttered)</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax1.bar(categories, values, yerr<span class="op">=</span>errors, capsize<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>              color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(<span class="dv">0</span>, <span class="dv">60</span>)</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw all pairwise comparisons (too many!)</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(categories)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    y_max <span class="op">+=</span> <span class="dv">3</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    ax1.plot([i, i<span class="op">+</span><span class="dv">1</span>], [y_max, y_max], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    ax1.text((i <span class="op">+</span> i<span class="op">+</span><span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span>, y_max <span class="op">+</span> <span class="fl">0.5</span>, <span class="st">'**'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'❌ Cluttered: Too Many Comparisons'</span>, color<span class="op">=</span><span class="st">'red'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="co"># GOOD: Show only key comparisons</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax2.bar(categories, values, yerr<span class="op">=</span>errors, capsize<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>              color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Response (AU)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">55</span>)</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only comparisons vs. control (A) or most important</span></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparison: D vs A</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>ax2.plot([<span class="dv">0</span>, <span class="dv">3</span>], [<span class="dv">48</span>, <span class="dv">48</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="fl">1.5</span>, <span class="dv">49</span>, <span class="st">'** p&lt;0.01'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparison: E vs A</span></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>ax2.plot([<span class="dv">0</span>, <span class="dv">4</span>], [<span class="dv">52</span>, <span class="dv">52</span>], <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>ax2.text(<span class="dv">2</span>, <span class="dv">53</span>, <span class="st">'* p&lt;0.05'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">'✓ Clean: Key Comparisons Only'</span>, color<span class="op">=</span><span class="st">'green'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'statistical_annotation_fix.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Use letters instead of brackets (common in biology)</span></span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>ax.bar(categories, values, ...)</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Add letters above bars</span></span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'ab'</span>, <span class="st">'ab'</span>, <span class="st">'c'</span>, <span class="st">'bc'</span>]  <span class="co"># Different letters = significant difference</span></span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, (bar, letter) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">zip</span>(bars, letters)):</span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> bar.get_height()</span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_x() <span class="op">+</span> bar.get_width()<span class="op">/</span><span class="fl">2.</span>, height <span class="op">+</span> errors[i] <span class="op">+</span> <span class="dv">1</span>,</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>           letter, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'bottom'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Caption: "Bars with different letters are significantly different (p&lt;0.05, Tukey HSD)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="problem-10-data-points-are-too-small-or-large" class="level3">
 <h3 class="anchored" data-anchor-id="problem-10-data-points-are-too-small-or-large">Problem 10: “Data points are too small or large”</h3>
 <p><strong>Solutions:</strong></p>
-<pre><code># Guideline: Marker sizes for readability
-recommended_sizes = {
-    'few_points': (10, 50),      # &lt;20 points: 50-150 in plt units
-    'moderate': (50, 100),       # 20-100 points: 30-80
-    'many': (100, 500),          # 100-500 points: 20-50
-    'dense': (500, 1000),        # &gt;500 points: 10-30 or use hexbin
-    'very_dense': (1000, 10000)  # &gt;1000 points: 5-15 or 2D density
-}
-
-# Adjust based on figure size
-fig_inches = 7
-dpi = 300
-fig_pixels = fig_inches * dpi
-
-# Rule of thumb: marker diameter should be 1-3% of figure dimension
-marker_size_min = (0.01 * fig_pixels)**2  # matplotlib uses area, not diameter
-marker_size_max = (0.03 * fig_pixels)**2
-
-print(f"Recommended marker size range: {marker_size_min:.0f} - {marker_size_max:.0f}")
-
-# Example
-ax.scatter(x, y, s=50, ...)  # s = area in points^2</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guideline: Marker sizes for readability</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>recommended_sizes <span class="op">=</span> {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'few_points'</span>: (<span class="dv">10</span>, <span class="dv">50</span>),      <span class="co"># &lt;20 points: 50-150 in plt units</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'moderate'</span>: (<span class="dv">50</span>, <span class="dv">100</span>),       <span class="co"># 20-100 points: 30-80</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'many'</span>: (<span class="dv">100</span>, <span class="dv">500</span>),          <span class="co"># 100-500 points: 20-50</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'dense'</span>: (<span class="dv">500</span>, <span class="dv">1000</span>),        <span class="co"># &gt;500 points: 10-30 or use hexbin</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'very_dense'</span>: (<span class="dv">1000</span>, <span class="dv">10000</span>)  <span class="co"># &gt;1000 points: 5-15 or 2D density</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust based on figure size</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>fig_inches <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>dpi <span class="op">=</span> <span class="dv">300</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>fig_pixels <span class="op">=</span> fig_inches <span class="op">*</span> dpi</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Rule of thumb: marker diameter should be 1-3% of figure dimension</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>marker_size_min <span class="op">=</span> (<span class="fl">0.01</span> <span class="op">*</span> fig_pixels)<span class="op">**</span><span class="dv">2</span>  <span class="co"># matplotlib uses area, not diameter</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>marker_size_max <span class="op">=</span> (<span class="fl">0.03</span> <span class="op">*</span> fig_pixels)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recommended marker size range: </span><span class="sc">{</span>marker_size_min<span class="sc">:.0f}</span><span class="ss"> - </span><span class="sc">{</span>marker_size_max<span class="sc">:.0f}</span><span class="ss">"</span>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Example</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, s<span class="op">=</span><span class="dv">50</span>, ...)  <span class="co"># s = area in points^2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -922,103 +955,103 @@ Image Processing Protocol (for Methods section):
 <section id="problem-12-figure-doesnt-meet-journal-specifications" class="level3">
 <h3 class="anchored" data-anchor-id="problem-12-figure-doesnt-meet-journal-specifications">Problem 12: “Figure doesn’t meet journal specifications”</h3>
 <p><strong>Systematic check:</strong></p>
-<pre><code>def validate_figure_specs(file_path, journal_specs):
-    """
-    Validate figure against journal requirements
-
-    journal_specs = {
-        'max_width_inches': 7,
-        'min_dpi': 300,
-        'allowed_formats': ['TIFF', 'PNG', 'PDF'],
-        'max_file_size_mb': 10,
-        'color_mode': 'RGB'
-    }
-    """
-    from PIL import Image
-    import os
-
-    img = Image.open(file_path)
-    file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
-
-    issues = []
-
-    # Check format
-    if img.format not in journal_specs['allowed_formats']:
-        issues.append(f"❌ Format {img.format} not allowed. Use: {journal_specs['allowed_formats']}")
-
-    # Check DPI
-    dpi = img.info.get('dpi', (72, 72))[0]
-    if dpi &lt; journal_specs['min_dpi']:
-        issues.append(f"❌ DPI {dpi} &lt; required {journal_specs['min_dpi']}")
-
-    # Check dimensions
-    width_inches = img.size[0] / dpi
-    if width_inches &gt; journal_specs['max_width_inches']:
-        issues.append(f"❌ Width {width_inches:.2f}\" &gt; max {journal_specs['max_width_inches']}\"")
-
-    # Check file size
-    if file_size_mb &gt; journal_specs['max_file_size_mb']:
-        issues.append(f"❌ File size {file_size_mb:.2f} MB &gt; max {journal_specs['max_file_size_mb']} MB")
-
-    # Check color mode
-    if img.mode != journal_specs['color_mode']:
-        issues.append(f"⚠ Color mode {img.mode}, required: {journal_specs['color_mode']}")
-
-    if issues:
-        print("Issues found:")
-        for issue in issues:
-            print(f"  {issue}")
-        return False
-    else:
-        print("✓ All specifications met")
-        return True
-
-# Example usage
-nature_specs = {
-    'max_width_inches': 7.2,
-    'min_dpi': 300,
-    'allowed_formats': ['TIFF', 'PDF', 'EPS'],
-    'max_file_size_mb': 10,
-    'color_mode': 'RGB'
-}
-
-validate_figure_specs('my_figure.png', nature_specs)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_figure_specs(file_path, journal_specs):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Validate figure against journal requirements</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">    journal_specs = {</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">        'max_width_inches': 7,</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">        'min_dpi': 300,</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">        'allowed_formats': ['TIFF', 'PNG', 'PDF'],</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">        'max_file_size_mb': 10,</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">        'color_mode': 'RGB'</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">    }</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> os</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> Image.<span class="bu">open</span>(file_path)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    file_size_mb <span class="op">=</span> os.path.getsize(file_path) <span class="op">/</span> (<span class="dv">1024</span> <span class="op">*</span> <span class="dv">1024</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>    issues <span class="op">=</span> []</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check format</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> img.<span class="bu">format</span> <span class="kw">not</span> <span class="kw">in</span> journal_specs[<span class="st">'allowed_formats'</span>]:</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        issues.append(<span class="ss">f"❌ Format </span><span class="sc">{</span>img<span class="sc">.</span><span class="bu">format</span><span class="sc">}</span><span class="ss"> not allowed. Use: </span><span class="sc">{</span>journal_specs[<span class="st">'allowed_formats'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check DPI</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>    dpi <span class="op">=</span> img.info.get(<span class="st">'dpi'</span>, (<span class="dv">72</span>, <span class="dv">72</span>))[<span class="dv">0</span>]</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> dpi <span class="op">&lt;</span> journal_specs[<span class="st">'min_dpi'</span>]:</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>        issues.append(<span class="ss">f"❌ DPI </span><span class="sc">{</span>dpi<span class="sc">}</span><span class="ss"> &lt; required </span><span class="sc">{</span>journal_specs[<span class="st">'min_dpi'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check dimensions</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>    width_inches <span class="op">=</span> img.size[<span class="dv">0</span>] <span class="op">/</span> dpi</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> width_inches <span class="op">&gt;</span> journal_specs[<span class="st">'max_width_inches'</span>]:</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>        issues.append(<span class="ss">f"❌ Width </span><span class="sc">{</span>width_inches<span class="sc">:.2f}</span><span class="ch">\"</span><span class="ss"> &gt; max </span><span class="sc">{</span>journal_specs[<span class="st">'max_width_inches'</span>]<span class="sc">}</span><span class="ch">\"</span><span class="ss">"</span>)</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check file size</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> file_size_mb <span class="op">&gt;</span> journal_specs[<span class="st">'max_file_size_mb'</span>]:</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>        issues.append(<span class="ss">f"❌ File size </span><span class="sc">{</span>file_size_mb<span class="sc">:.2f}</span><span class="ss"> MB &gt; max </span><span class="sc">{</span>journal_specs[<span class="st">'max_file_size_mb'</span>]<span class="sc">}</span><span class="ss"> MB"</span>)</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check color mode</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> img.mode <span class="op">!=</span> journal_specs[<span class="st">'color_mode'</span>]:</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>        issues.append(<span class="ss">f"⚠ Color mode </span><span class="sc">{</span>img<span class="sc">.</span>mode<span class="sc">}</span><span class="ss">, required: </span><span class="sc">{</span>journal_specs[<span class="st">'color_mode'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> issues:</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Issues found:"</span>)</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> issue <span class="kw">in</span> issues:</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>issue<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"✓ All specifications met"</span>)</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>nature_specs <span class="op">=</span> {</span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_width_inches'</span>: <span class="fl">7.2</span>,</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_dpi'</span>: <span class="dv">300</span>,</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">'allowed_formats'</span>: [<span class="st">'TIFF'</span>, <span class="st">'PDF'</span>, <span class="st">'EPS'</span>],</span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_file_size_mb'</span>: <span class="dv">10</span>,</span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">'color_mode'</span>: <span class="st">'RGB'</span></span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a>validate_figure_specs(<span class="st">'my_figure.png'</span>, nature_specs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
 <section id="quick-fix-cheat-sheet" class="level2">
 <h2 class="anchored" data-anchor-id="quick-fix-cheat-sheet">10.6 Quick Fix Cheat Sheet</h2>
 <p><strong>One-line fixes for common problems:</strong></p>
-<pre><code># Problem: Text too small
-plt.rcParams['font.size'] = 11  # Increase base font size
-
-# Problem: Legend overlaps data
-ax.legend(loc='upper left', bbox_to_anchor=(1.02, 1))  # Outside plot area
-
-# Problem: Margins too tight
-plt.tight_layout(pad=2.0)  # Increase padding
-
-# Problem: Axes labels cut off
-plt.savefig('figure.png', bbox_inches='tight')  # Auto-adjust bounds
-
-# Problem: Colorbar too wide
-plt.colorbar(fraction=0.046, pad=0.04)  # Standard narrow colorbar
-
-# Problem: Tick labels overlap
-ax.tick_params(axis='x', rotation=45)  # Rotate 45°
-
-# Problem: Grid too prominent
-ax.grid(alpha=0.3, linewidth=0.5)  # Subtle grid
-
-# Problem: Too much white space
-plt.subplots_adjust(left=0.1, right=0.95, top=0.95, bottom=0.1)
-
-# Problem: Inconsistent line widths
-ax.plot(x, y, linewidth=2.5)  # Standard data line
-ax.spines['left'].set_linewidth(1.5)  # Standard axis line
-
-# Problem: Can't see error bars
-ax.errorbar(x, y, yerr=errors, capsize=6, capthick=2, linewidth=2)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Text too small</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.size'</span>] <span class="op">=</span> <span class="dv">11</span>  <span class="co"># Increase base font size</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Legend overlaps data</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.02</span>, <span class="dv">1</span>))  <span class="co"># Outside plot area</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Margins too tight</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(pad<span class="op">=</span><span class="fl">2.0</span>)  <span class="co"># Increase padding</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Axes labels cut off</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figure.png'</span>, bbox_inches<span class="op">=</span><span class="st">'tight'</span>)  <span class="co"># Auto-adjust bounds</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Colorbar too wide</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plt.colorbar(fraction<span class="op">=</span><span class="fl">0.046</span>, pad<span class="op">=</span><span class="fl">0.04</span>)  <span class="co"># Standard narrow colorbar</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Tick labels overlap</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)  <span class="co"># Rotate 45°</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Grid too prominent</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># Subtle grid</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Too much white space</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.95</span>, top<span class="op">=</span><span class="fl">0.95</span>, bottom<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Inconsistent line widths</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y, linewidth<span class="op">=</span><span class="fl">2.5</span>)  <span class="co"># Standard data line</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'left'</span>].set_linewidth(<span class="fl">1.5</span>)  <span class="co"># Standard axis line</span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem: Can't see error bars</span></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>ax.errorbar(x, y, yerr<span class="op">=</span>errors, capsize<span class="op">=</span><span class="dv">6</span>, capthick<span class="op">=</span><span class="dv">2</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 <p><strong>End of Chapter 10: Figure Troubleshooting Guide</strong></p>
 <p><strong>Emergency Checklist (use when deadline is tight):</strong></p>
