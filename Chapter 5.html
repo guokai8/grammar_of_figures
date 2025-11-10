@@ -560,50 +560,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 - Aligned edges create implicit boundaries
 - White space separates groups (implicit border)</code></pre>
 <p><strong>Code Example (Python) - Using Enclosure for Grouping:</strong></p>
-<pre><code>import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import FancyBboxPatch
-
-np.random.seed(42)
-
-fig, axes = plt.subplots(2, 3, figsize=(14, 8))
-
-# Generate sample data
-for i, ax in enumerate(axes.flat):
-    data = np.random.randn(100) + i
-    ax.hist(data, bins=15, color='#3498DB', edgecolor='black', alpha=0.7)
-    ax.set_title(f'Panel {chr(65+i)}', fontsize=11, fontweight='bold')
-    ax.set_ylabel('Frequency', fontsize=10)
-    ax.tick_params(labelsize=9)
-
-# Add enclosure boxes to create visual groups
-# Group 1: Panels A, B, C (top row - Method 1)
-bbox1 = FancyBboxPatch((0.08, 0.55), 0.85, 0.38,
-                       boxstyle="round,pad=0.01",
-                       edgecolor='#27AE60', facecolor='none',
-                       linewidth=3, transform=fig.transFigure,
-                       clip_on=False, zorder=10)
-fig.patches.append(bbox1)
-fig.text(0.5, 0.94, 'Method 1 Results', ha='center', fontsize=12,
-        fontweight='bold', color='#27AE60')
-
-# Group 2: Panels D, E, F (bottom row - Method 2)
-bbox2 = FancyBboxPatch((0.08, 0.08), 0.85, 0.38,
-                       boxstyle="round,pad=0.01",
-                       edgecolor='#E67E22', facecolor='none',
-                       linewidth=3, transform=fig.transFigure,
-                       clip_on=False, zorder=10)
-fig.patches.append(bbox2)
-fig.text(0.5, 0.47, 'Method 2 Results', ha='center', fontsize=12,
-        fontweight='bold', color='#E67E22')
-
-plt.suptitle('Using Enclosure to Create Visual Grouping\n(Closure Principle)',
-            fontsize=14, fontweight='bold', y=0.98)
-
-plt.tight_layout(rect=[0, 0, 1, 0.96])
-plt.savefig('closure_principle_grouping.png', dpi=300,
-           bbox_inches='tight', facecolor='white')
-plt.close()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.patches <span class="im">import</span> FancyBboxPatch</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes.flat):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> np.random.randn(<span class="dv">100</span>) <span class="op">+</span> i</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ax.hist(data, bins<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span><span class="st">'#3498DB'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f'Panel </span><span class="sc">{</span><span class="bu">chr</span>(<span class="dv">65</span><span class="op">+</span>i)<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">11</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(labelsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add enclosure boxes to create visual groups</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 1: Panels A, B, C (top row - Method 1)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>bbox1 <span class="op">=</span> FancyBboxPatch((<span class="fl">0.08</span>, <span class="fl">0.55</span>), <span class="fl">0.85</span>, <span class="fl">0.38</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                       boxstyle<span class="op">=</span><span class="st">"round,pad=0.01"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                       edgecolor<span class="op">=</span><span class="st">'#27AE60'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                       linewidth<span class="op">=</span><span class="dv">3</span>, transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                       clip_on<span class="op">=</span><span class="va">False</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>fig.patches.append(bbox1)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.5</span>, <span class="fl">0.94</span>, <span class="st">'Method 1 Results'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'#27AE60'</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Group 2: Panels D, E, F (bottom row - Method 2)</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>bbox2 <span class="op">=</span> FancyBboxPatch((<span class="fl">0.08</span>, <span class="fl">0.08</span>), <span class="fl">0.85</span>, <span class="fl">0.38</span>,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                       boxstyle<span class="op">=</span><span class="st">"round,pad=0.01"</span>,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                       edgecolor<span class="op">=</span><span class="st">'#E67E22'</span>, facecolor<span class="op">=</span><span class="st">'none'</span>,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                       linewidth<span class="op">=</span><span class="dv">3</span>, transform<span class="op">=</span>fig.transFigure,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                       clip_on<span class="op">=</span><span class="va">False</span>, zorder<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>fig.patches.append(bbox2)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>fig.text(<span class="fl">0.5</span>, <span class="fl">0.47</span>, <span class="st">'Method 2 Results'</span>, ha<span class="op">=</span><span class="st">'center'</span>, fontsize<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>        fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'#E67E22'</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Using Enclosure to Create Visual Grouping</span><span class="ch">\n</span><span class="st">(Closure Principle)'</span>,</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">14</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, y<span class="op">=</span><span class="fl">0.98</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.96</span>])</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'closure_principle_grouping.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>           bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="principle-4-continuity-eyes-follow-paths" class="level3">
