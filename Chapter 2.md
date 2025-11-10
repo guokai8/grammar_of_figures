@@ -91,7 +91,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -149,7 +149,7 @@ Black:        CMYK(0%, 0%, 0%, 100%)     [Pure black ink]
 
 **Code Example (Python):**
 
-```
+```python
 from PIL import Image
 import matplotlib.pyplot as plt
 
@@ -191,7 +191,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 
 # RGB to CMYK conversion approximation
@@ -272,7 +272,7 @@ ggsave('rgb_to_cmyk_conversion.png', width = 10, height = 4, dpi = 300)
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.colors import hsv_to_rgb
@@ -318,7 +318,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -409,7 +409,7 @@ Solution with CIELAB:
 
 **Code Example (Python) - Perceptual Uniformity:**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage import color
@@ -466,7 +466,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(colorspace)
 library(patchwork)
@@ -641,7 +641,7 @@ Good Sequential Palettes:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -676,7 +676,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(viridis)
 library(RColorBrewer)
@@ -773,7 +773,7 @@ Gene expression fold-change:
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -812,7 +812,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(RColorBrewer)
 library(patchwork)
@@ -902,7 +902,7 @@ ggsave('diverging_palettes.png', combined, width = 15, height = 5, dpi = 300)
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -971,7 +971,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(RColorBrewer)
 library(patchwork)
@@ -1352,7 +1352,7 @@ Applied to:
 
 **Python Example: Publication-Ready Light Theme**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1431,7 +1431,7 @@ print(f"  - Grid: Light gray, subtle")
 
 **R Example: Publication-Ready Light Theme**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -1522,7 +1522,7 @@ cat("  - Grid: Light gray, subtle\n")
 
 **Python Example: Dark Theme for Presentation**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1586,7 +1586,7 @@ print("Note: Convert to light theme for publication submission")
 
 **R Example: Dark Theme for Presentation**
 
-```
+```r
 library(ggplot2)
 
 # Same data
@@ -1802,7 +1802,7 @@ LEVEL 3 (Background/infrastructure): Light, desaturated colors
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -1859,7 +1859,7 @@ plt.close()
 
 **Code Example (R):**
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -1939,7 +1939,7 @@ ggsave('saturation_hierarchy.png', combined, width = 14, height = 5,
 
 **Code Example (Python):**
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
